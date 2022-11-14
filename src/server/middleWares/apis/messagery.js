@@ -5,21 +5,21 @@ module.exports = (server, config) =>{
 
     var io = socketIo.listen(server);
 
-    io.on('connection', (user)=>{
+    io.on('connection', (socket)=>{
 
         //envoie de message
-        user.on('msg', data =>{
+        socket.on('msg', data =>{
             
         })
 
         //rejoindre une reunion, conversation, conf, debat
-        user.on('join', data =>{
+        socket.on('join', data =>{
 
         })
 
         //quitter une reunion, conversation, conf, debat
-        user.on('leave', data =>{
-
+        socket.on('leave', data =>{
+            
         })
     });
 }

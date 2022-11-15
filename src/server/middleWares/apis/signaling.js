@@ -20,6 +20,7 @@ module.exports = (server, config) =>{
 
         socket.on('joinConf', data=>{
             var { userId, confId} = data;
+            //traitment
         })
 
         //rejoindre une reunion, conversation, conf, debat

@@ -1,10 +1,7 @@
-class Msg extends React.Component {
-    constructor(props){
-      super(props)
-    }
-    render() {
+const Msg = (props)=>{
       return (
-        <div>ECRIRE VOTRE CODE ICI</div>
+        <div>{props.msg}</div>
       );
     }
-  }
+
+export default Msg;

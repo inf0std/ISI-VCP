@@ -1,5 +1,3 @@
-const { useId } = require('react');
-const { useImperativeHandle } = require('react');
 const socketIo = require('socketio')
 
 
@@ -20,7 +18,6 @@ module.exports = (server, config) =>{
 
         socket.on('joinConf', data=>{
             var { userId, confId} = data;
-            //traitment
         })
 
         //rejoindre une reunion, conversation, conf, debat

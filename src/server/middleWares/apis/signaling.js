@@ -18,19 +18,46 @@ module.exports = (server, config) =>{
             //traitment
         })
 
+        //user userId joines conference convId
         socket.on('joinConf', data=>{
             var { userId, confId} = data;
             //traitment
         })
 
-        //rejoindre une reunion, conversation, conf, debat
-        socket.on('join', data =>{
-
+        //user userId joines conversation convId
+        socket.on('joinReun', data =>{
+            var { useriD , reunId } = data;
+            //traitment
         })
 
-        //quitter une reunion, conversation, conf, debat
-        socket.on('leave', data =>{
-            
+        //user userId joines conversation convId
+        socket.on('joinDebate', data =>{
+            var { userId, debateId } = data;
+            //traitment
         })
+
+
+        //user userId leavees conversation convId
+        socket.on('leaveConv', data=>{
+            var { useId, convId } = data; 
+            //traitment
+        })
+
+        socket.on('leaveConf', data=>{
+            var { userId, confId} = data;
+            //traitment
+        })
+
+        //releavedre une reunion, conversation, conf, debat
+        socket.on('leaveReun', data =>{
+            var { useriD , reunId } = data;
+            //traitment
+        })
+
+        socket.on('leaveDebate', data =>{
+            var { userId, debateId } = data;
+            //traitment
+        })
+
     });
 }

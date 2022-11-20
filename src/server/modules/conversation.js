@@ -1,4 +1,5 @@
 
+
 const Conversation = (config)=>{
     //les utilisateurs qui font partie de la conversation
     this.users = []
@@ -37,3 +38,10 @@ const Conversation = (config)=>{
 
 
 }
+/**
+ * contient la structure et fonctionnalite d'une conversation
+ * creation du room
+ * envoie de message
+ * 
+ */
+

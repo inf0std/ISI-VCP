@@ -1,0 +1,5 @@
+currentVideoCalls = []
+
+createVideoCall
+joinVideoCall
+closeVideoCall

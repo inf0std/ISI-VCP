@@ -1,5 +1,6 @@
-const socketIo = require('socketio')
+const conversationManager = require('../../modules/conversationManager')
 
+const socketIo = require('socketio')
 
 module.exports = (server, config) =>{
 

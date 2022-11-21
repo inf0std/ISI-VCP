@@ -7,7 +7,7 @@ const Schema = mongoose.Schema;
 
 const ConversationSchema = new Schema({
 
-         ConversationName:{
+         conversationName:{
          type:String, 
          trim: true,//enlever les espace
          }, 
@@ -25,7 +25,8 @@ const ConversationSchema = new Schema({
        content: { type: String,},
       
         type:String,
-       Datesent: {
+       
+    datesent: {
             type:Date,
             default:() => Date.now(),
             immutable:true},//cant change the value of creationdate

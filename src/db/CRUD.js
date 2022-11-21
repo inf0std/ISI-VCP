@@ -1,3 +1,9 @@
+const { default: mongoose } = require('mongoose');
+const bcrypt = require('bcrypt');
+const createError = require('http-errors');
+const User = require('../models/User');
+
+
 //veillez definir les parametres necessaire pour vous requete
 // file containing the CRUD API
 
@@ -15,7 +21,6 @@ createUser = async(newemail,newpassword)=>{
     };
     console.log(newUser)
     try {
-      //attendre Login  soit sauvgarder then create user
   const saveUser = await User.create({
     login: newUser,isadmin:false,
   });

@@ -1,4 +1,5 @@
 const { default: mongoose } = require('mongoose');
+const { text } = require('stream/consumers');
 const validator = require('validator');
 const User = require('./User')
 const Schema = mongoose.Schema;
@@ -18,10 +19,12 @@ const ConversationSchema = new Schema({
                 ref:"User",} ],// one  to many (one reunion to many participants)
         
          messages:
-        [
+        
+        [ 
        { sender: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
        content: { type: String,},
-        readBy: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+      
+        type:String,
        Datesent: {
             type:Date,
             default:() => Date.now(),

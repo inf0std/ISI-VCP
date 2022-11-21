@@ -2,7 +2,31 @@
 // file containing the CRUD API
 
 //create operation
-createUser = ()=>{ }
+createUser = async(newemail,newpassword)=>{
+
+
+  
+    const hashedPwd = await bcrypt.hash(newpassword, 10);
+    console.log(hashedPwd);
+
+    const newUser = {
+        email: newemail,
+        password: hashedPwd
+    };
+    console.log(newUser)
+    try {
+      //attendre Login  soit sauvgarder then create user
+  const saveUser = await User.create({
+    login: newUser,isadmin:false,
+  });
+  return(saveUser);
+   
+  } catch (e) {
+    console.log(e)
+    
+    }
+  
+  }
 createConversation = ()=>{ }
 createOrganization = ()=>{ }
 createReunion = ()=>{ }

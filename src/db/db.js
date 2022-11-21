@@ -1,34 +1,20 @@
-//veillez definir les parametres necessaire pour vous requete
-// file containing the CRUD API
+require('dotenv').config();
+const { default: mongoose, connect } = require('mongoose');
 
-//create operation
-createUser = ()=>{ }
-createConversation = ()=>{ }
-createOrganization = ()=>{ }
-createReunion = ()=>{ }
-createConference = ()=>{ }
-createDebate = ()=>{ }
 
-//Read operations
-readUser = ()=> { }
-readConversation = ()=> { }
-readOrganization = ()=> { }
-readReunion = ()=> { }
-readConference = ()=> { }
-readDebate = ()=> { }
+connectDb().catch(err =>console.log('db not connected'));
 
-//update operation
-updateUser = ()=> { }
-updateConversation = ()=> { }
-updateOrganization = ()=> { }
-updateReunion = ()=> { }
-updateConference = ()=> { }
-updateDebate = ()=> { }
 
-//delete operation
-deleteUser = ()=> { }
-deleteConversation = ()=> { }
-deleteOrganization = ()=> { }
-deleteReunion = ()=> { }
-deleteConference = ()=> { }
-deletedebate = ()=> { }
+
+
+async function connectDb (){
+
+ await mongoose.connect(process.env.MONGO_URL,{useNewUrlParser:true,useUnifiedTopology:true});
+console.log('db connect');
+};
+
+module.exports = {
+
+    connectDb
+
+}

@@ -1,13 +1,11 @@
-import './App.css';
-import ConversationTab from './component/conversationTab/ConversationTab'
+import React from 'react';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <ConversationTab />
-      <p>iman</p>
+    <div>
+      <p>bonjour vandam</p>
     </div>
   );
-}
+};
 
 export default App;

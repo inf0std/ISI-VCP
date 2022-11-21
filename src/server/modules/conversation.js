@@ -1,6 +1,7 @@
 
 
 const Conversation = (config)=>{
+    const { usersIds, nameConv, idConv, io} = config;
     //les utilisateurs qui font partie de la conversation
     this.users = []
     this.usersId = []
@@ -10,6 +11,7 @@ const Conversation = (config)=>{
     this.id = null;
     //la room de socket.io
     this.room = null;
+    this.creatorId = null;
 
     //ajouter un utilisateur a la liste des utilisateur connecte a la conversation
     this.addUser = (user)=>{

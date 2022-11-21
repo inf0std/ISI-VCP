@@ -1,48 +1,43 @@
-/**
- * contient les fonctionnalites de gestion des conversation
- * creation
- * recherche
- * rejoindre
- * chargement
- * fermeture
- * 
- */
-const conversation = require('./conversation')
+const conversation = require('./conversation');
 
 const currentConvs = []
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-const newConv = (ids)=>{
-
+const joinConv = (user, convId)=>{
+    var conv = findConv(convId);
+    if(!conv){
+        conv = loadConvFromDb(convId);
+        currentConvs[convId] = conv;
+    }
+    conv.addUser(user);
 }
 
-const getConv = (id)=>{
-
-}
-
-const joinConv = (userId, convId)=>{
-
-}
-
-const leaveConv = (userId, convId)=>{
-
-}
-
-const findConvById =(convId) =>{
-
+const leaveConv = (user, convId)=>{
+    
 }
 
 const loadConvFromDb = (convId) =>{
-
+    //empty for now
 }
 
->>>>>>> server
-=======
+const findConv = (id)=>{
+    return (currentConvs[id] ? currentConvs[id] : null)
+}
+
+const saveConvIntoDB = (conv)=>{
+    //empty for now
+}
 const createConv = (config)=>{
-    console.log(config)
+    const {nameConv, creatorId, usersId, idConv, moderator} = config;
+    var conv = new conversation(config);
+    try{
+        saveConvIntoDB(conv);
+    }catch(err){
+        console.log(err);
+    }
+    currentConvs[idConv] = conv;
 }
 
-createConv({name: 'converataionn test'});
->>>>>>> 384da524489aa4802b295bed5c186d5ab9d120d8
+
+module.exports = conversationManager(){
+    
+}

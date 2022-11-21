@@ -16,7 +16,6 @@ const userSchema = new Schema({
     },
     pic: {
         type: "String",
-        required: true,
         default:
           "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
       },
@@ -52,7 +51,7 @@ const userSchema = new Schema({
 
       isadmin:{type:Boolean,default:false,required: true,},       
     contacts:[  {type: mongoose.SchemaTypes.ObjectID,
-        ref:"Reunion",} ],
+        ref:"User",} ],
    
 },
 {timestamps: true,}//date of creation and date of update
@@ -60,9 +59,5 @@ const userSchema = new Schema({
 );
 
 
-//userSchema.virtual (pour ne pas sauvgarder au sein de database)????????
-
-//const User = mongoose.model('User', );
 module.exports = mongoose.model('User',userSchema);
-//model(nameof collection,the schema )
-//string is a schematype
+

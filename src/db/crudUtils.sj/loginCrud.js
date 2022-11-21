@@ -2,20 +2,13 @@ const { default: mongoose } = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcrypt');
 const createError = require('http-errors');
-
-
-
-const User = require('../models/User');
+const User = require('../schema/User');
 
 
 
 
-/////methode post
-const createLogin =  async(req,res,next)=>{
+const createUser =  async(newemail,newpassword)=>{
 
-    const newemail = req.body.email;
-      const newpassword= req.body.password;
-  
     const hashedPwd = await bcrypt.hash(newpassword, 10);
     console.log(hashedPwd);
 
@@ -27,56 +20,33 @@ const createLogin =  async(req,res,next)=>{
  
     
     try {
-      //attendre Login  soit sauvgarder then create user
+    
   const saveLogin = await User.create({
     login: newlogin,isadmin:false,
   });
-  res.status(201).send(saveLogin);
-   
+
+console.log(saveLogin)   
   } catch (e) {
     console.log(e)
-      res.status(400).send(e);
+    
     }
   
   }
   ;
-
-
-  // read all users
-   const readLogin= async(req,res,next)=>{
-    
-
+    // read one User
+  const readoneUser= async (id) => {
     try {
-  const Listlogins = await User.find({}).select('login');//trouver tout les users les {} bien vide
-  res.send(Listlogins);
-   
-  } catch (e) {
-      res.status(500).send(e);//aficher erreur 500 objet non trouver 
-    }
-  
-  };
-
-
-
-    // read one login
-  const readoneLogin= async (req, res, next) => {
-    try {
-      const id = req.params.id;
-      console.log(id);
+      const user = await User.findById(id)
     
-      const login = await User.findById(id).select('login');
-      console.log(login);
-
-
-      if (!login) {
+      if (!user) {
         throw createError(404, 'login does not exist.');
       }
-      res.send(login);
+     console.log(user);
     } 
     catch (error) {
         console.log(error.message);
         if (error instanceof mongoose.CastError) {
-          next(createError(400, 'Invalid login id'));
+          next(createError(400, 'Invalid User id'));
           return;
         }
         next(error);
@@ -87,16 +57,15 @@ const createLogin =  async(req,res,next)=>{
 
 
 //update login
- const UpdateLogin  = async (req, res, next) => {
-    const id = req.params.id;
-    const {newlogin} = req.body;
+ const UpdateLogin  = async (id,newlogin ) => {
+  
     try {
-      const result = await User.findByIdAndUpdate(id,{   $set: {login: newlogin }},{ new: true,  });
+      const result = await User.findByIdAndUpdate(id,{  $set: {login: newlogin }},{ new: true,  });
       console.log(result);
       if (!result) {
         throw createError(404, 'Product does not exist.');
       }
-      res.send(result);
+      console.log(result);
     } catch (error) {
       console.log(error.message);
       if (error instanceof mongoose.CastError) {
@@ -107,46 +76,28 @@ const createLogin =  async(req,res,next)=>{
     }
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+//update login
+const UpdateUser = async (id,newUser ) => {
   
-
-/*
-const createUser = async (req, res) => {
-    const { newemail, pwd } = req.body;
-    //if (!newemail || !pwd) return res.status(400).json({ 'message': 'email and password are required.' });//si sont vide
-
-    // check for duplicate usernames in the db
-   // const duplicate = await Login.findOne({ email: newemail }).exec();// trouver exactement username
-   // if (duplicate) return res.sendStatus(409).json({ 'message': 'user exist yet.' }); //Conflict /user exist
-
-    try {
-        //encrypt the password
-        const hashedPwd = await bcrypt.hash(pwd, 10);
-
-        //create and store the new user
-        const result = await Login.create({
-            "email": newemail,
-            "password": hashedPwd
-        });
-
-        console.log(result);
-
-        res.status(201).json({ 'success': `New user ${newemail} created!` });
-    } catch (err) {
-        res.status(500).json({ 'message': err.message });
+  try {
+    const result = await User.findByIdAndUpdate(id, {newUser},{ new: true,  });
+    console.log(result);
+    if (!result) {
+      throw createError(404, 'user does not exist.');
     }
+    console.log(result);
+  } catch (error) {
+    console.log(error.message);
+    if (error instanceof mongoose.CastError) {
+      next(createError(400, 'Invalid user id'));
+      return;
+    }
+    next(error);
+  }
 }
-*/
-module.exports = {createLogin, readLogin,readoneLogin,UpdateLogin};
+
+
+
+
+
+module.exports = {createUser,readoneUser,UpdateLogin,UpdateUser};

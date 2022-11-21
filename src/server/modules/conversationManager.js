@@ -37,7 +37,8 @@ const createConv = (config)=>{
     currentConvs[idConv] = conv;
 }
 
-
-module.exports = conversationManager(){
-    
+const conversationManager = (io)=>{
+    this.io = io;
 }
+
+module.exports = conversationManager;

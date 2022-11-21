@@ -4,7 +4,7 @@ const Conversation = (config)=>{
     const { usersIds, nameConv, idConv, io} = config;
     //les utilisateurs qui font partie de la conversation
     this.users = []
-    this.usersId = []
+    this.usersId = userIds | []
     //nom de la conversation
     this.name = '';
     //id de la conversation

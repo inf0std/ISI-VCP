@@ -54,6 +54,8 @@ const userSchema = new Schema({
     contacts:[  {type: mongoose.SchemaTypes.ObjectID,
         ref:"User",} ],
         lastseen:{type:Number}
+        ,
+        archive:{type:Boolean,default:false}
    
 },
 {timestamps: true,}//date of creation and date of update

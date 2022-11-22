@@ -10,17 +10,10 @@ const Reunion = require('../models/Reunion');
 
 
 /////methode post
-const createReunion =  async(req,res,next)=>{
-  const idU = req.params.idU
-   const newReunion_Name = req.body.Reunion_Name
-   const newParticipantsName= req.body.ParticipantsName
-   const newDate_begin= req.body.Date_begin
-  const newDuration= req.body.Duration
-    console.log(newReunion_Name);
+const createReunion =  async(id,newreunion)=>{
+
     
-    
-    
-    const reunion= new Reunion({
+    const newreunion= new Reunion({
      
         Reunion_Name: newReunion_Name,
         ParticipantsName:newParticipantsName,
@@ -37,12 +30,21 @@ const createReunion =  async(req,res,next)=>{
     console.log("reunionsaved: ",reunionsaved);
     const reunionsId = reunionsaved._id;
     return User.findByIdAndUpdate(idU,{reunions_id:reunionsId});
+    User.updateMany({age:{$gte:5}}, 
+      {name:"ABCD"}, function (err, docs) {
+      if (err){
+          console.log(err)
+      }
+      else{
+          console.log("Updated Docs : ", docs);
+      }
   });
-  res.status(201).send(savereunion);
+  });
+console.log(savereunion);
    
   } catch (e) {
     console.log(e)
-      res.status(400).send(e);
+     
     }
   
   }

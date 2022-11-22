@@ -10,6 +10,7 @@ const ConversationSchema = new Schema({
          conversationName:{
          type:String, 
          trim: true,//enlever les espace
+         default:'conversation_name'
          }, 
 
         isGroup: { type: Boolean, default: false },
@@ -21,12 +22,10 @@ const ConversationSchema = new Schema({
          messages:
         
         [ 
-       { sender: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-       content: { type: String,},
-      
-        type:String,
-       
-    datesent: {
+       { type:String, 
+        sender: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+        content: { type: String,},
+        datesent: {
             type:Date,
             default:() => Date.now(),
             immutable:true},//cant change the value of creationdate

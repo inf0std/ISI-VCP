@@ -2,91 +2,70 @@ const { default: mongoose } = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcrypt');
 const createError = require('http-errors');
-
-const User = require('../models/User');
-
-
-const Reunion = require('../models/Reunion');
+const User = require('../schema/User');
 
 
-  // read all Users
-   const readUser= async(req,res,next)=>{
-    
 
-    try {
-  const ListUsers = await User.find({})
-  .populate('conversations')
-  .populate('reunions')
-  
-  .exec();//trouver tout les Users les {} bien vide
+
+const createUser =  async(newemail,newpassword)=>{
+
+    const hashedPwd = await bcrypt.hash(newpassword, 10);
+    console.log(hashedPwd);
+
+    const newlogin = {
+        email: newemail,
+        password: hashedPwd
+    };
+    console.log(newlogin)
  
-  res.send(ListUsers);
-  console.log('userlistenvoyer');
+    
+    try {
+    
+  const saveLogin = await User.create({
+    login: newlogin,isadmin:false,
+  });
+
+console.log(saveLogin)   
   } catch (e) {
-      res.status(500).send(e);//aficher erreur 500 objet non trouver 
-      console.log('listUsers error')
+    console.log(e)
+    
     }
   
-  };
-
-
-
-// read one login
-const readoneUser= async (req, res, next) => {
+  }
+  ;
+    // read one User
+  const readoneUser= async (id) => {
     try {
-      const id = req.params.id;
-      console.log(id);
+      const user = await User.findById(id).exec();
     
-      const user = await User.findById(id)
-      .populate('conversations')
-      .populate('reunions')
-      
-      .exec();//trouver tout les Users les {} bien vide
-     ;
-      console.log(user);
-
-
       if (!user) {
-        throw createError(404, 'user does not exist.');
+        throw createError(404, 'login does not exist.');
       }
-      res.send(user);
+     console.log(user);
     } 
     catch (error) {
         console.log(error.message);
         if (error instanceof mongoose.CastError) {
-          next(createError(400, 'Invalid user id'));
+          next(createError(400, 'Invalid User id'));
           return;
         }
         next(error);
       }
   };
+
   
 
-//update Username
-const updateUsername = async (req, res, next) => {
- await User.findOneAndUpdate({_Id : req.params.id}, 
-        {$set : { username: req.body.username}}, 
-        {new : true}, (err, updatedObj) => {
-            if (err) {
-                res.status(422).json({status : false, error : "Item not updated"}); 
-            }
-            else {
-                res.send({ updatedObj }); 
-            }
-        })
-  };
 
-
-//delette User
- const deleteUser  = async (req, res, next) => {
-    const id = req.params.id;
+//update login
+ const UpdateLogin  = async (id,newlogin ) => {
+  
     try {
-      const result = await User.findByIdAndDelete(id);
+      const result = await User.findByIdAndUpdate(id,{  $set: {login: newlogin }},{ new: true,  });
       console.log(result);
       if (!result) {
         throw createError(404, 'Product does not exist.');
       }
-      res.send(result);
+      console.log(result);
     } catch (error) {
       console.log(error.message);
       if (error instanceof mongoose.CastError) {
@@ -95,30 +74,69 @@ const updateUsername = async (req, res, next) => {
       }
       next(error);
     }
-  };
+  }
+;
+//update login
+const UpdateUser = async (id,newUser ) => {
   
-//updateUser
-const updateUser = async (req, res, next) => {
   try {
-    const id = req.params.id;
-    console.log(id);
-    const updates = req.body;
-    console.log(updates);
-    const options = { new: true };
-    console.log(options);
-
-    const result = await User.findByIdAndUpdate(id, updates, options);
+    const result = await User.findByIdAndUpdate(id, {newUser},{ new: true,  });
     console.log(result);
-    res.send(result);
     if (!result) {
-      throw createError(404, 'User does not exist');
+      throw createError(404, 'user does not exist.');
     }
-    
-  }  catch (error) {
-    res.status(400);
-    throw new Error(error.message);
+    console.log(result);
+  } catch (error) {
+    console.log(error.message);
+    if (error instanceof mongoose.CastError) {
+      next(createError(400, 'Invalid user id'));
+      return;
+    }
+    next(error);
+  }
+};
+//update login
+const archiveUser = async (id ) => {
+  
+  try {
+    const result = await User.findByIdAndUpdate(id, {archive:true},{ new: true,  });
+    console.log(result);
+    if (!result) {
+      throw createError(404, 'user does not exist.');
+    }
+    console.log(result);
+  } catch (error) {
+    console.log(error.message);
+    if (error instanceof mongoose.CastError) {
+      next(createError(400, 'Invalid user id'));
+      return;
+    }
+    next(error);
+  }
+};
+//delette User
+const deleteUser  = async (id) => {
+ 
+  try {
+    const result = await User.findByIdAndDelete(id);
+    console.log(result);
+    if (!result) {
+      throw createError(404, 'user does not exist.');
+    }
+    res.send(result);
+  } catch (error) {
+    console.log(error.message);
+    if (error instanceof mongoose.CastError) {
+      next(createError(400, 'Invalid user id'));
+      return;
+    }
+    next(error);
   }
 };
 
 
-module.exports = { readUser,readoneUser,updateUsername ,deleteUser,updateUser};
+
+
+
+
+module.exports = {createUser,readoneUser,UpdateLogin,UpdateUser,archiveUser,deleteUser};

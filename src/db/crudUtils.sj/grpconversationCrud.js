@@ -1,33 +1,24 @@
 const { default: mongoose } = require('mongoose');
-const validator = require('validator');
+
 const bcrypt = require('bcrypt');
 const createError = require('http-errors');
-const asyncHandler = require("express-async-handler");
+
 const User = require('../models/User');
 
 const Conversation = require('../models/Conversation');
 
 
-const createGrpConversation = asyncHandler(async (req, res) => {
-    //if (!req.body.users || !req.body.name) {
-    //  return res.status(400).send({ message: "Please Fill all the feilds" });
-   // }
-    var IdU= req.params.idU;
-    //var users = JSON.parse(req.body.users);//faut ajoutter les token
-    var users = (req.body.users);
-    var grpname=req.body.grpname;
-    console.log(users);
+const createGrpConversation =async (IdU, users) => {
+  
     console.log(IdU)
 
-      if (!users || !grpname) {
+      if (!users || !IdU) {
      return res.status(400).send({ message: "Please Fill all the feilds" });
       }
 
 
     if (users.length < 2) {
-      return res
-        .status(400)
-        .send("More than 2 users are required to form a group Conversation");
+      return console.log("More than 2 users are required to form a group Conversation");
     }
   
    // users.push(req.user);//ajouter user actuelle a la liste des usersgrp
@@ -45,38 +36,30 @@ const createGrpConversation = asyncHandler(async (req, res) => {
       .populate("users")//.populate("users", "-password")
         .populate("groupAdmin");
   
-      res.status(200).json(fullGrpConversation);
+      console.log(fullGrpConversation);
     } catch (error) {
-      res.status(400);
+    console.log('error')
       throw new Error(error.message);
     }
-  });
+  };
 
+  const updateconversation= async (IdC, updates) => {
+ 
+  console.log( updates);
 
-
-
-
-
-  const renameGrp = asyncHandler(async (req, res) => {
-    const IdC = req.body.IdC;
-    const grpname=req.body.ConversationName;
-
-  console.log( grpname);
-
-    const updateConversation = await Conversation.findOneAndUpdate( {_id:IdC},
-   {   $set: {ConversationName: grpname, }},{ new: true,  })
+    const updatedConversation = await Conversation.findOneAndUpdate( {_id:IdC},
+   {  updates},{ new: true,  })
    
-    if (!updateConversation ) {
-      res.status(404);
+    if (!updatedConversation  ) {
+      
       throw new Error("Convesation Not Found");
     } else {
-      res.send(updateConversation);
+      console.log(updatedConversation );
     }
-  });
+  };
 
-  const removeFromGroup = asyncHandler(async (req, res) => {
-    const { IdC, IdU } = req.body;
-  
+  const removeFromGroup = async (IdC, IdU ) => {
+   
     // check if the requester is admin
   
     const removed = await Conversation.findByIdAndUpdate(
@@ -88,23 +71,20 @@ const createGrpConversation = asyncHandler(async (req, res) => {
         new: true,
       }
     )
-      .populate("users", "-login_id")
+      .populate("users", "-login")
       .populate("groupAdmin");
   
     if (!removed) {
-      res.status(404);
+     console.log('not removed')
       throw new Error("conversation Not Found");
     } else {
-      res.json(removed);
+     console.log(removed);
     }
-  });
+  };
 
 
-  const addToGroup = asyncHandler(async (req, res) => {
-    const { IdC, IdU } = req.body;
-  
-    // check if the requester is admin
-   // var currentConversation = await Conversation.findOneAndUpdate({_id: idC}, {$push: {messages: newMessage}});
+  const addToGroup =async ( IdC, IdU) => {
+
    const added = await Conversation.findByIdAndUpdate(
     IdC,
     {
@@ -114,17 +94,15 @@ const createGrpConversation = asyncHandler(async (req, res) => {
       new: true,
     }
   )
-    //  .populate("users", "-login_id")
-    //  .populate("groupAdmin");
-  
+
     if (!added) {
-      res.status(404);
+     console.log('not added')
       throw new Error("conversation Not Found");
     } else {
-      res.json(added);
+      console.log(' added')
     }
-  });
+  };
 
 
   module.exports = {
-    createGrpConversation ,renameGrp,removeFromGroup,addToGroup}
+    createGrpConversation , updateconversation,removeFromGroup,addToGroup}

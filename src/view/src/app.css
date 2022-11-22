@@ -1,0 +1,19 @@
+.container{
+    background-color: black;
+    
+    width:1200px;
+    height: 600px;
+
+}
+.nav{
+    position: absolute;
+    top: 6px;
+    z-index: 2;
+    right: 80px;
+}
+.navlink{
+    margin: 0px 8px 0px 8px;
+}
+.navbar{
+    height: 50px;
+}

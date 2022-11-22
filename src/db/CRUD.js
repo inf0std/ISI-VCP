@@ -1,7 +1,4 @@
-const { default: mongoose } = require('mongoose');
-const bcrypt = require('bcrypt');
-const createError = require('http-errors');
-const User = require('../models/User');
+
 
 
 //veillez definir les parametres necessaire pour vous requete

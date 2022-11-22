@@ -19,9 +19,7 @@ const ConversationSchema = new Schema({
             {type: mongoose.SchemaTypes.ObjectID,
                 ref:"User",} ],// one  to many (one reunion to many participants)
         
-         messages:
-        
-        [ 
+         messages:  [ 
        { type:String, 
         sender: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
         content: { type: String,},
@@ -30,14 +28,25 @@ const ConversationSchema = new Schema({
             default:() => Date.now(),
             immutable:true},//cant change the value of creationdate
       } ],
-
-
+      callvideo: 
+      [ 
+     { 
+      sender_call: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+      participant:[ {type: mongoose.Schema.Types.ObjectId, ref: "User"} ],
+      datebegin: {
+          type:Date,
+       
+          immutable:true},//cant change the value of creationdate
+   
+    datefinich:{
+        type:Date,
+      
+        immutable:true},//cant change the value of creationdate}
+    } ,  
+    ],
    archive:{type:Boolean,default:false}     
-    
-},
+    },
 { timestamps: true },
-
 );
-
 
 module.exports = mongoose.model('Conversation',ConversationSchema);

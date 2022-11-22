@@ -32,12 +32,6 @@ const ConversationSchema = new Schema({
       } ],
 
 
-      
-
-
-
-
-
    archive:{type:Boolean,default:false}     
     
 },

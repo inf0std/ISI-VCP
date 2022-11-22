@@ -8,30 +8,7 @@ const User = require('../models/User');
 // file containing the CRUD API
 
 //create operation
-createUser = async(newemail,newpassword)=>{
-
-
-  
-    const hashedPwd = await bcrypt.hash(newpassword, 10);
-    console.log(hashedPwd);
-
-    const newUser = {
-        email: newemail,
-        password: hashedPwd
-    };
-    console.log(newUser)
-    try {
-  const saveUser = await User.create({
-    login: newUser,isadmin:false,
-  });
-  return(saveUser);
-   
-  } catch (e) {
-    console.log(e)
-    
-    }
-  
-  }
+createUser = ()=>{}
 createConversation = ()=>{ }
 createOrganization = ()=>{ }
 createReunion = ()=>{ }

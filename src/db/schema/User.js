@@ -53,8 +53,7 @@ const userSchema = new Schema({
       isadmin:{type:Boolean,default:false,required: true,},       
     contacts:[  {type: mongoose.SchemaTypes.ObjectID,
         ref:"User",} ],
-        lastseen:{type:Number}
-        ,
+        lastseen:{type:Number},//dernier connexion
         archive:{type:Boolean,default:false}
    
 },

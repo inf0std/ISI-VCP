@@ -4,13 +4,12 @@ const bcrypt = require('bcrypt');
 const createError = require('http-errors');
 const User = require('../schema/User');
 
+const Conversation = require('../schema/Conversation');
+
 
 
 
 const createUser =  async(newemail,newpassword)=>{
-
-    const hashedPwd = await bcrypt.hash(newpassword, 10);
-    console.log(hashedPwd);
 
     const newlogin = {
         email: newemail,

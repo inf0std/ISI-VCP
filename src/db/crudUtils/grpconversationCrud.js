@@ -3,9 +3,9 @@ const { default: mongoose } = require('mongoose');
 const bcrypt = require('bcrypt');
 const createError = require('http-errors');
 
-const User = require('../models/User');
+const User = require('../schema/User');
 
-const Conversation = require('../models/Conversation');
+const Conversation = require('../schema/Conversation');
 
 
 const createGrpConversation =async (IdU, users) => {

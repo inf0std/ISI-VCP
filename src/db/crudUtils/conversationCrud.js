@@ -3,9 +3,9 @@ const { default: mongoose } = require('mongoose');
 const bcrypt = require('bcrypt');
 const createError = require('http-errors');
 
-const User = require('../models/User');
+const User = require('../schema/User');
 
-const Conversation = require('../models/Conversation');
+const Conversation = require('../schema/Conversation');
 
 
 const addConversation = async (ids, idR) => {
@@ -26,7 +26,11 @@ const addConversation = async (ids, idR) => {
           console.log(dest)
 
       if(!dest){console.log('destinataire introuveble')} else{
-      
+
+        isConversation = await User.populate(isConversation, {
+          path: "messages.sender",
+          select: "username pic",
+        });
       if (isConversation.length > 0) {
     console.log(isConversation[0]);//si la convesation length >0 donc il exist deja alors la recuperer directement
       } 

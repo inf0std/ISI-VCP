@@ -7,7 +7,7 @@ const Schema = mongoose.Schema;
 const ReunionSchema = new Schema({
     Reunion_Name:{
         Type:String,
-       default:'Reunion_Name'
+      // default:'Reunion_Name'
     },
     Reunion_Host:{type: mongoose.SchemaTypes.ObjectID,
     ref:"User",} //one to one

@@ -3,11 +3,9 @@ const validator = require('validator');
 const bcrypt = require('bcrypt');
 const createError = require('http-errors');
 
-const User = require('../models/User');
-const Reunion = require('../models/Reunion');
+const User = require('../schema/User');
 
-
-
+const Reunion = require('../schema/Conversation');
 
 /////methode post
 const createReunion =  async(id,newreunion)=>{

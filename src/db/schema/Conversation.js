@@ -1,5 +1,5 @@
 const { default: mongoose } = require('mongoose');
-const { text } = require('stream/consumers');
+
 const validator = require('validator');
 const User = require('./User')
 const Schema = mongoose.Schema;
@@ -38,10 +38,9 @@ const ConversationSchema = new Schema({
        
           immutable:true},//cant change the value of creationdate
    
-    datefinich:{
-        type:Date,
-      
-        immutable:true},//cant change the value of creationdate}
+    duration:{
+        type:Number,
+      },//cant change the value of creationdate}
     } ,  
     ],
    archive:{type:Boolean,default:false}     

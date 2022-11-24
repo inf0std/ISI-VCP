@@ -6,13 +6,6 @@ const port = process.env.PORT || 3000;//ebergement
 
 
 app.use(express.json());
-app.post('/users', createUser);
-app.get('/users/', readoneUser);
-app.patch('/users/', UpdateLogin);
-app.delete('/users/', deleteUser);
-
-app.patch('/users/', archiveUser);
-app.patch('/users/', UpdateUser);
 
 
 // lancer aplication sur notre port

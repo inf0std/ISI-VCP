@@ -28,7 +28,7 @@ const ConversationSchema = new Schema({
             default:() => Date.now(),
             immutable:true},//cant change the value of creationdate
       } ],
-      callvideo: 
+      videocalls: 
       [ 
      { 
       sender_call: { type: mongoose.Schema.Types.ObjectId, ref: "User" },

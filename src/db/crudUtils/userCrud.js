@@ -10,7 +10,7 @@ const Conversation = require('../schema/Conversation');
 
 
 const createUser =  async(newemail,newpassword)=>{
-
+  if(!newemail || !newpassword){throw createError(404, 'veuilleur saisir data'); };
     const newlogin = {
         email: newemail,
         password: hashedPwd
@@ -28,6 +28,8 @@ console.log(saveLogin)
   } catch (e) {
     console.log(e)
     
+    throw e
+    
     }
   
   }
@@ -35,21 +37,19 @@ console.log(saveLogin)
     // read one User
   const readoneUser= async (id) => {
     try {
-      const user = await User.findById(id).exec();
-    
+      const user = await User.findById(id, {archive:false}).exec();
+      console.log(user);
       if (!user) {
         throw createError(404, 'login does not exist.');
       }
-     console.log(user);
+    
     } 
     catch (error) {
         console.log(error.message);
-        if (error instanceof mongoose.CastError) {
-          next(createError(400, 'Invalid User id'));
-          return;
+        throw e
         }
-        next(error);
-      }
+     
+      
   };
 
   
@@ -67,17 +67,12 @@ console.log(saveLogin)
       console.log(result);
     } catch (error) {
       console.log(error.message);
-      if (error instanceof mongoose.CastError) {
-        next(createError(400, 'Invalid Product id'));
-        return;
-      }
-      next(error);
-    }
+      throw e
   }
-;
-//update login
+;};
+//update user
 const UpdateUser = async (id,newUser ) => {
-  
+  if(!newUser){throw createError(404, 'veuilleur saisir data'); };
   try {
     const result = await User.findByIdAndUpdate(id, {newUser},{ new: true,  });
     console.log(result);
@@ -87,13 +82,33 @@ const UpdateUser = async (id,newUser ) => {
     console.log(result);
   } catch (error) {
     console.log(error.message);
-    if (error instanceof mongoose.CastError) {
-      next(createError(400, 'Invalid user id'));
-      return;
-    }
-    next(error);
+   throw error
   }
 };
+
+//update useradmin
+const UpdateloginAdmin = async (id,newlogin ) => {
+  if(!newlogin || !id){throw createError(404, 'veuilleur saisir data'); }
+  else{
+
+  const admin ={
+   login:newlogin,
+   isadmin:true,
+  }
+
+  try {
+    const result = await User.findByIdAndUpdate(id, {admin},{ new: true,  });
+    console.log(result);
+    if (!result) {
+      throw createError(404, 'user does not exist.');
+    }
+    console.log(result);
+  } catch (error) {
+    console.log(error.message);
+   throw error
+  }};
+};
+
 //update login
 const archiveUser = async (id ) => {
   
@@ -106,11 +121,8 @@ const archiveUser = async (id ) => {
     console.log(result);
   } catch (error) {
     console.log(error.message);
-    if (error instanceof mongoose.CastError) {
-      next(createError(400, 'Invalid user id'));
-      return;
-    }
-    next(error);
+   
+    throw error;
   }
 };
 //delette User
@@ -122,20 +134,35 @@ const deleteUser  = async (id) => {
     if (!result) {
       throw createError(404, 'user does not exist.');
     }
-    res.send(result);
+    console.log(result);
   } catch (error) {
     console.log(error.message);
-    if (error instanceof mongoose.CastError) {
-      next(createError(400, 'Invalid user id'));
-      return;
-    }
-    next(error);
+    throw error;
   }
 };
 
+const addContact =  async(idUser,idContact)=>{
+  if(!idUser || !idContact){throw createError(404, 'veuilleur saisir data'); };
+  console.log(idUser)
+    console.log(idContact)
+    var contacts = readoneUser(idUser).select('contacts');
+    try {
+ 
+  const found =contacts.find(idContact);
+  if(found){throwcreateError(404, 'deja existant');}else{
+//contacts.push(idContact);
+  var update= await User.findByIdAndUpdate(idUser,{$push:{contacts:idContact}},{new:true})
+
+}
+  } catch (e) {
+    console.log(e.message)
+    
+    throw e
+    
+    }
+  
+  }
+  ;
 
 
-
-
-
-module.exports = {createUser,readoneUser,UpdateLogin,UpdateUser,archiveUser,deleteUser};
+module.exports = {createUser,readoneUser,UpdateLogin,UpdateUser,archiveUser,deleteUser,UpdateloginAdmin,addContact};

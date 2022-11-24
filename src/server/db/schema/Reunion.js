@@ -5,20 +5,21 @@ const Schema = mongoose.Schema;
 
 
 const ReunionSchema = new Schema({
-    Reunion_Name:{
+    reunionName:{
         Type:String,
-       // default:() => '1'
+        //default:'reunion_name',
+        
     },
-    Reunion_Host:{type: mongoose.SchemaTypes.ObjectID,
+    reunion_Host:{type: mongoose.SchemaTypes.ObjectID,
     ref:"User",} //one to one
     ,
-    Reunion_moderateur:{type: mongoose.SchemaTypes.ObjectID,
+    reunion_moderateur:{type: mongoose.SchemaTypes.ObjectID,
     ref:"User",} ,//one to one
 
      Conversation:{type: mongoose.SchemaTypes.ObjectID,
     ref:"Conversation",} ,//one to one
 
-   ParticipantsName:[
+   participantsName:[
     {type: mongoose.SchemaTypes.ObjectID,
         ref:"User",} ],// one  to many (one reunion to many participants)
 

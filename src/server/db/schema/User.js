@@ -2,7 +2,7 @@ const { default: mongoose } = require('mongoose');
 const validator = require('validator');
 const Conversation= require('./Conversation')
 const Reunion= require('./Reunion')
-
+const bcrypt = require('bcrypt');
 const Schema = mongoose.Schema;
 
 
@@ -53,13 +53,30 @@ const userSchema = new Schema({
       isadmin:{type:Boolean,default:false,required: true,},       
     contacts:[  {type: mongoose.SchemaTypes.ObjectID,
         ref:"User",} ],
-        lastseen:{type:Number}
+        lastseen:{type:Number},//dernier connexion
+        archive:{type:Boolean,default:false}
    
 },
 {timestamps: true,}//date of creation and date of update
 
 );
 
+userSchema.methods.matchPassword = async function (enteredPassword) {
+    return await bcrypt.compare(enteredPassword, this.password);
+  };
+  
+  userSchema.pre("save", async function (next) {
+    if (!this.isModified) {
+      next();
+    }
+  
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+  });
+  
+  const User = mongoose.model("User", userSchema);
+  
+  module.exports = User;
 
 
-module.exports = mongoose.model('User',userSchema);
+

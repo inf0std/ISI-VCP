@@ -6,12 +6,9 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
-<<<<<<< HEAD
     "cookie-parser": "^1.4.6",
-=======
     "bcrypt": "^5.1.0",
     "dotenv": "^10.0.0",
->>>>>>> 9c4a261762dc2e6c301fb241f8bd9f8ee3e9f539
     "express": "^4.18.2",
     "express-async-handler": "^1.2.0",
     "http-errors": "^2.0.0",

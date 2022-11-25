@@ -1,6 +1,7 @@
 const validator = require('validator');
 const Conversation = require('./Conversation')
 const Reunion = require('./Reunion')
+const Reunion = require('./Conference')
 const mongoose = require("mongoose") //require mongoose
 const crypto = require("crypto"); // crypto for encrypt the password
 const { v4: uuidv4 } = require('uuid'); // user for identifying information that needs to be unique within a system or network thereof
@@ -34,7 +35,7 @@ const userSchema = new Schema({
                     if (!validator.isEmail(v)) throw new Error('email non valide'); //format email
                 }
             },
-            encry_password: {
+            hashedPwd: {
                 type: String,
                 required: true, //require true pour que le champs soit obligatoire   
 
@@ -57,7 +58,12 @@ const userSchema = new Schema({
             type: mongoose.SchemaTypes.ObjectID,
             ref: "Conferences",
         }, ],
+        organisation: [{
 
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "organisation"
+
+        }],
         isadmin: { type: Boolean, default: false, required: true, },
         contacts: [{
             type: mongoose.SchemaTypes.ObjectID,
@@ -74,7 +80,7 @@ userSchema.virtual("password")
     .set(function(password) {
         this._password = password
         this.salt = uuidv4()
-        this.encry_password = this.securePassword(password)
+        this.hashedPwd = this.securePassword(password)
     })
     .get(function() {
         return this._password
@@ -82,7 +88,7 @@ userSchema.virtual("password")
 
 userSchema.methods = {
     authenticate: function(plainpassword) {
-        return this.securePassword(plainpassword) === this.encry_password
+        return this.securePassword(plainpassword) === this.hashedPwd
     },
 
     securePassword: function(plainpassword) {

@@ -16,8 +16,12 @@ const createUser =  async(newemail,newpassword)=>{
         password: newpassword
     };
     console.log(newlogin)
- 
-    
+    const userExists = await User.findOne({ login:newemail });
+
+    if (userExists) {
+      res.status(400);
+      throw new Error("User already exists");
+    }else{
     try {
     
   const saveLogin = await User.create({
@@ -31,7 +35,7 @@ console.log(saveLogin)
     throw e
     
     }
-  
+    }
   }
   ;
     // read one User

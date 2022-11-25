@@ -1,11 +1,11 @@
 const validator = require('validator');
 const Conversation = require('./Conversation')
 const Reunion = require('./Reunion')
-const Conference = require('./Conference')
+const Confer = require('./Conference')
 const mongoose = require("mongoose") //require mongoose
-const crypto = require("crypto"); // crypto for encrypt the password
-const { v4: uuidv4 } = require('uuid'); // user for identifying information that needs to be unique within a system or network thereof
-const { ObjectID } = require("bson"); //Return the ObjectID id as a 24 byte hex string representation
+//const crypto = require("crypto"); // crypto for encrypt the password
+//const { v4: uuidv4 } = require('uuid'); // user for identifying information that needs to be unique within a system or network thereof
+//const { ObjectID } = require("bson"); //Return the ObjectID id as a 24 byte hex string representation
 const bcrypt = require('bcrypt');
 const Schema = mongoose.Schema;
 
@@ -56,7 +56,7 @@ const userSchema = new Schema({
 
         conferences: [{
             type: mongoose.SchemaTypes.ObjectID,
-            ref: "Conferences",
+            ref: "Confer",
         }, ],
         organisations: [{
 

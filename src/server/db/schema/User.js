@@ -35,7 +35,7 @@ const userSchema = new Schema({
                     if (!validator.isEmail(v)) throw new Error('email non valide'); //format email
                 }
             },
-            hashedPwd: {
+            password: {
                 type: String,
                 required: true, //require true pour que le champs soit obligatoire   
 
@@ -58,7 +58,7 @@ const userSchema = new Schema({
             type: mongoose.SchemaTypes.ObjectID,
             ref: "Conferences",
         }, ],
-        organisation: [{
+        organisations: [{
 
             type: mongoose.Schema.Types.ObjectId,
             ref: "organisation"
@@ -69,6 +69,9 @@ const userSchema = new Schema({
             type: mongoose.SchemaTypes.ObjectID,
             ref: "User",
         }],
+        lastseen:{type:Number},//dernier connexion
+        archive:{type:Boolean,default:false},
+   
         salt: String,
     },
 

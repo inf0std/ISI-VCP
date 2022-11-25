@@ -13,7 +13,7 @@ const createUser =  async(newemail,newpassword)=>{
   if(!newemail || !newpassword){throw createError(404, 'veuilleur saisir data'); };
     const newlogin = {
         email: newemail,
-        password: hashedPwd
+        password: newpassword
     };
     console.log(newlogin)
  

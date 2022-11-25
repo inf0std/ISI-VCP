@@ -5,6 +5,7 @@ const createError = require('http-errors');
 const User = require('../schema/User');
 
 const Conversation = require('../schema/Conversation');
+const { updateMany } = require('../schema/Reunion');
 
 
 
@@ -16,8 +17,8 @@ const createUser =  async(newemail,newpassword)=>{
         password: newpassword
     };
     console.log(newlogin)
-    const userExists = await User.findOne({ login:newemail });
-
+    const userExists = await User.findOne({ login:{newemail }});
+   //const userExists = await User.findOne({ login:newemail});
     if (userExists) {
       res.status(400);
       throw new Error("User already exists");
@@ -156,7 +157,7 @@ const addContact =  async(idUser,idContact)=>{
   if(found){throwcreateError(404, 'deja existant');}else{
 //contacts.push(idContact);
   var update= await User.findByIdAndUpdate(idUser,{$push:{contacts:idContact}},{new:true})
-
+  console.log(update)
 }
   } catch (e) {
     console.log(e.message)

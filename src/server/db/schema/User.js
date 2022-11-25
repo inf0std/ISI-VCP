@@ -19,7 +19,7 @@ const userSchema = new Schema({
         },
         pic: {
             type: "String",
-            required: true,
+            //required: true,
             default: "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
         },
         login: {
@@ -67,7 +67,7 @@ const userSchema = new Schema({
         isadmin: { type: Boolean, default: false, required: true, },
         contacts: [{
             type: mongoose.SchemaTypes.ObjectID,
-            ref: "Reunion",
+            ref: "User",
         }],
         salt: String,
     },

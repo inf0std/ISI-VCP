@@ -9,15 +9,20 @@ const Conversation = require('../schema/Conversation');
 
 
 
+
 const createUser =  async(newemail,newpassword)=>{
   if(!newemail || !newpassword){throw createError(404, 'veuilleur saisir data'); };
     const newlogin = {
         email: newemail,
-        password: hashedPwd
+        password: newpassword
     };
     console.log(newlogin)
- 
-    
+    const userExists = await User.findOne({ login:{newemail }});
+   //const userExists = await User.findOne({ login:newemail});
+    if (userExists) {
+      res.status(400);
+      throw new Error("User already exists");
+    }else{
     try {
     
   const saveLogin = await User.create({
@@ -31,7 +36,7 @@ console.log(saveLogin)
     throw e
     
     }
-  
+    }
   }
   ;
     // read one User
@@ -152,7 +157,7 @@ const addContact =  async(idUser,idContact)=>{
   if(found){throwcreateError(404, 'deja existant');}else{
 //contacts.push(idContact);
   var update= await User.findByIdAndUpdate(idUser,{$push:{contacts:idContact}},{new:true})
-
+  console.log(update)
 }
   } catch (e) {
     console.log(e.message)

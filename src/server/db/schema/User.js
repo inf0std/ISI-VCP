@@ -43,6 +43,9 @@ const userSchema = new Schema({
                     if (!validator.isLength(v, { min: 5, max: 20 })) throw new Error('mot de passe doit etre entre 5 et 20 charactere');
                 }
             },
+            salt:{
+                type: String,
+            }
         },
         conversations: [{
             type: mongoose.SchemaTypes.ObjectID,
@@ -108,7 +111,7 @@ userSchema.methods = {
 */
 
 userSchema.methods.matchPassword = async function (enteredPassword) {
-    return await bcrypt.compare(enteredPassword, this.login.password);
+    return await bcrypt.compare(bcrypt.hash(enteredPassword,this.login.salt), this.login.password);
   };
   
   userSchema.pre("save", async function (next) {
@@ -116,7 +119,7 @@ userSchema.methods.matchPassword = async function (enteredPassword) {
       next();
     }
   
-    const salt = await bcrypt.genSalt(10);
+    this.login.salt = await bcrypt.genSalt(10);
     this.login.password = await bcrypt.hash(this.login.password, salt);
   });
   

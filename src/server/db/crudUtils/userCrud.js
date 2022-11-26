@@ -150,15 +150,15 @@ const addContact =  async(idUser,idContact)=>{
   if(!idUser || !idContact){throw createError(404, 'veuilleur saisir data'); };
   console.log(idUser)
     console.log(idContact)
-    var contacts = readoneUser(idUser).select('contacts');
+    var contacts = User.findById(idUser).select('contacts');
     try {
  
-  const found =contacts.find(idContact);
-  if(found){throwcreateError(404, 'deja existant');}else{
+  //const found =contacts.find(idContact);
+ // if(found){throw createError(404, 'deja existant');}else{
 //contacts.push(idContact);
   var update= await User.findByIdAndUpdate(idUser,{$push:{contacts:idContact}},{new:true})
   console.log(update)
-}
+//}
   } catch (e) {
     console.log(e.message)
     

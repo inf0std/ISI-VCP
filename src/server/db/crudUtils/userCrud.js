@@ -1,6 +1,6 @@
 const { default: mongoose } = require('mongoose');
 const validator = require('validator');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const createError = require('http-errors');
 const {User} = require('../schema/User');
 
@@ -58,23 +58,32 @@ console.log(saveLogin)
     throw new Error("User does not exist");
   }*/
 
-  const login = async (email, password) => {
+  const auth = async (nemail, npassword) => {
+   console.log(nemail)
 
-    const user = await User.findOne({ login:{email }});
-  
-    if (user && (await User.login.matchPassword(password))) {
+   try {
+   const user = await User.findOne({'login.email':nemail});  console.log(user)
+   //const user = await User.find({login:{nemail}});//await User.find({login:{nemail}});
+    
+      console.log(npassword)
+    if (user && (await user.matchPassword(npassword)) ){
       console.log({
         _id: user._id,
         username: user.username,
         email: user.login.email,
-        isAdmin: user.isAdmin,
+        isadmin: user.isAdmin,
         pic: user.pic,
      
       });
     } else {
      
       throw new Error("Invalid Email or Password");
-    }
+    }}catch (e) {
+      console.log(e)
+      
+      throw e
+      
+      }
   }
     // read one User
   const readoneUser= async (id) => {
@@ -99,9 +108,13 @@ console.log(saveLogin)
 
 //update login
  const UpdateLogin  = async (id,newlogin ) => {
-  
+  if(!newlogin || !id){throw createError(404, 'veuilleur saisir data'); }
     try {
-      const result = await User.findByIdAndUpdate(id,{  $set: {login: newlogin }},{ new: true,  });
+     // const result = await User.findByIdAndUpdate(id, {login: newlogin },{ new: true,  });
+     const result = await User.findById(id);
+    var newuser={login:{newlogin}}
+    
+    await result.updateOne(newuser)
       console.log(result);
       if (!result) {
         throw createError(404, 'Product does not exist.');
@@ -109,7 +122,7 @@ console.log(saveLogin)
       console.log(result);
     } catch (error) {
       console.log(error.message);
-      throw e
+      throw error
   }
 ;};
 //update user
@@ -208,4 +221,4 @@ const addContact =  async(idUser,idContact)=>{
   ;
 
 
-module.exports = {login, createUser,readoneUser,UpdateLogin,UpdateUser,archiveUser,deleteUser,UpdateloginAdmin,addContact};
+module.exports = {auth, createUser,readoneUser,UpdateLogin,UpdateUser,archiveUser,deleteUser,UpdateloginAdmin,addContact};

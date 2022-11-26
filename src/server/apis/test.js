@@ -1,13 +1,15 @@
 const {connectDb}=require('..//db/db.js');
 const express = require('express');
 const app = express();
-const {createUser,readoneUser,UpdateLogin,UpdateUser,archiveUser,deleteUser, addContact} = require('../db//crudUtils/userCrud');
+const {createUser,readoneUser,UpdateLogin,UpdateUser,archiveUser,deleteUser, addContact,auth} = require('../db//crudUtils/userCrud');
 const port = process.env.PORT || 3000;//ebergement
 
 
-//createUser('hamid@gmail.coml', 'faycel444444');
-UpdateUser('63824f7966be5e2b276de20d', {pic :'jjjj.jpeg'});
+//createUser('khelif@gmail.coml', '00000000000000');
+//UpdateUser('63824f7966be5e2b276de20d', {pic :'jjjj.jpeg'});
 //addContact('6381fb9316gpçj793accb59d1df','6381fb93160dsçf73accb59d1df' );
+//UpdateLogin('63824f7966be5e2b276de20d',{email:'aljjj@gmail.com',password:'kkkkkl'});
+auth('khelif@gmail.coml','00000000000000')
 /*
 app.use(express.json());
 

@@ -4,12 +4,22 @@ const app = express();
 const {createUser,readoneUser,UpdateLogin,UpdateUser,archiveUser,deleteUser, addContact,auth} = require('../db//crudUtils/userCrud');
 const port = process.env.PORT || 3000;//ebergement
 
+/*
+createUser('khelifa@gmail.coml', '00000000000000');
+createUser('saida@gmail.coml', '0055000000000');
+createUser('ahmed@gmail.coml', '0000000000FFFD0000');
+createUser('ficel@gmail.coml', '000000000055550000');*/
 
-//createUser('khelif@gmail.coml', '00000000000000');
-//UpdateUser('63824f7966be5e2b276de20d', {pic :'jjjj.jpeg'});
-//addContact('6381fb9316gpçj793accb59d1df','6381fb93160dsçf73accb59d1df' );
-//UpdateLogin('63824f7966be5e2b276de20d',{email:'aljjj@gmail.com',password:'kkkkkl'});
-auth('khelif@gmail.coml','00000000000000')
+/*
+UpdateUser('63828f04629963f37bfc932c', {pic :'img.jpeg',username:'khlifa'});
+UpdateUser('63828f04629963f37bfc9330', {pic :'profile.jpeg',username:'saida'});
+UpdateUser('63828f04629963f37bfc9332', {username:'ahmed'});
+UpdateUser('63828f04629963f37bfc932e', {pic :'09.jpeg'});
+*/
+
+//addContact('63828f04629963f37bfc932c','63828f04629963f37bfc9330' );
+UpdateLogin('63828f04629963f37bfc9332',{email:'hmedon@gmail.com',password:'kkkkkl'});
+//auth('khelif@gmail.coml','00000000000000')
 /*
 app.use(express.json());
 

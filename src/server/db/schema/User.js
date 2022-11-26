@@ -75,7 +75,7 @@ const userSchema = new Schema({
         lastseen:{type:Number},//dernier connexion
         archive:{type:Boolean,default:false},
    
-       // salt: String,
+      
     },
 
     { timestamps: true, } //date of creation and date of update
@@ -123,6 +123,7 @@ userSchema.methods.matchPassword = async function (enteredPassword) {
     this.login.password = await bcrypt.hash(this.login.password, salt);
   });
   
+ 
 
 //userSchema.virtual (pour ne pas sauvgarder au sein de database)????????
 

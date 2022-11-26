@@ -3,12 +3,9 @@ const validator = require('validator');
 const bcrypt = require('bcryptjs');
 const createError = require('http-errors');
 const {User} = require('../schema/User');
-
+const {lodash} = require('lodash');
+//const filter = require('filter');
 const Conversation = require('../schema/Conversation');
-
-
-
-
 
 const createUser =  async(newemail,newpassword)=>{
   if(!newemail || !newpassword){
@@ -20,10 +17,10 @@ const createUser =  async(newemail,newpassword)=>{
     password: newpassword
   };
     console.log(newlogin)
-    const userExists = await User.findOne({ login:{newemail }});
+    const userExists = await User.findOne({'login.email':newemail});
    //const userExists = await User.findOne({ login:newemail});
     if (userExists) {
-      res.status(400);
+     
       throw new Error("User already exists");
     }else{
     try {
@@ -60,7 +57,7 @@ console.log(saveLogin)
 
   const auth = async (nemail, npassword) => {
    console.log(nemail)
-
+   if(!nemail || !npassword){throw createError(404, 'veuilleur saisir data'); };
    try {
    const user = await User.findOne({'login.email':nemail});  console.log(user)
    //const user = await User.find({login:{nemail}});//await User.find({login:{nemail}});
@@ -117,9 +114,9 @@ console.log(saveLogin)
     await result.updateOne(newuser)
       console.log(result);
       if (!result) {
-        throw createError(404, 'Product does not exist.');
+        throw createError(404, 'cant update.');
       }
-      console.log(result);
+     
     } catch (error) {
       console.log(error.message);
       throw error
@@ -148,12 +145,12 @@ const UpdateloginAdmin = async (id,newlogin ) => {
   else{
 
   const admin ={
-   login:newlogin,
+   login:{newlogin},
    isadmin:true,
   }
 
   try {
-    const result = await User.findByIdAndUpdate(id, {admin},{ new: true,  });
+    const result = await User.findByIdAndUpdate(id, admin,{ new: true,  });
     console.log(result);
     if (!result) {
       throw createError(404, 'user does not exist.');
@@ -201,14 +198,21 @@ const addContact =  async(idUser,idContact)=>{
   if(!idUser || !idContact){throw createError(404, 'veuilleur saisir data'); };
   console.log(idUser)
     console.log(idContact)
-    var contacts = User.findById(idUser).select('contacts');
+    const contacts = User.findById(idUser).select('contacts').exec();
+   
+  console.log(contacts)
+    
+  //var picked = lodash.filter(contacts, { '_id': 'idContact' } );  //console.log(picked)
+
+   
     try {
  
-  //const found =contacts.find(idContact);
- // if(found){throw createError(404, 'deja existant');}else{
+
 //contacts.push(idContact);
-  var update= await User.findByIdAndUpdate(idUser,{$push:{contacts:idContact}},{new:true})
+  var update= await User.findByIdAndUpdate(idUser,{$push:{contacts:idContact}},{new:true});
+  var updatesecond= await User.findByIdAndUpdate(idContact,{$push:{contacts:idUser}},{new:true})
   console.log(update)
+  console.log(updatesecond)
 //}
   } catch (e) {
     console.log(e.message)

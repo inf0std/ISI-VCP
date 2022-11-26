@@ -6,7 +6,7 @@ const mongoose = require("mongoose") //require mongoose
 //const crypto = require("crypto"); // crypto for encrypt the password
 //const { v4: uuidv4 } = require('uuid'); // user for identifying information that needs to be unique within a system or network thereof
 //const { ObjectID } = require("bson"); //Return the ObjectID id as a 24 byte hex string representation
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const Schema = mongoose.Schema;
 
 
@@ -119,7 +119,7 @@ userSchema.methods.matchPassword = async function (enteredPassword) {
       next();
     }
   
-    this.login.salt = await bcrypt.genSalt(10);
+    const salt = await bcrypt.genSalt(10);
     this.login.password = await bcrypt.hash(this.login.password, salt);
   });
   

@@ -113,10 +113,11 @@ console.log(saveLogin)
   }
 ;};
 //update user
-const UpdateUser = async (id,newUser ) => {
+const UpdateUser = async (id,newUser) => {
+ 
   if(!newUser){throw createError(404, 'veuilleur saisir data'); };
   try {
-    const result = await User.findByIdAndUpdate(id, {newUser},{ new: true,  });
+    const result = await User.findByIdAndUpdate(id, newUser,{ new: true,  });
     console.log(result);
     if (!result) {
       throw createError(404, 'user does not exist.');

@@ -3,8 +3,10 @@ import  socketIOClient  from 'socket.io-client';
 import {useNavigate} from 'react-router-dom'
 import {v4 as uuidV4 } from 'uuid'
 import { Peer } from 'peerjs'
-import { peersReducer } from "./peersReducer";
-import { addPeerAction } from './peerActions';
+import { peersReducer } from "../reducers/peersReducer";
+import { addPeerAction, removePeerAction } from '../reducers/peerActions';
+import { addHistoryAction, addMessageAction,toggleChatAction } from '../reducers/chatActions';
+import {chatReducer} from '../reducers/chatReducer'
 
 const WS ='http://localhost:5000'
 
@@ -17,7 +19,12 @@ export function ContextProvider ({children}){
     const [son, setson]= useState(true)
     const [stream, setStream]=useState()
     const [peers,dispatch]=useReducer(peersReducer, {})
+    const [chat,chatdispatch]=useReducer(chatReducer, {
+        messages: [],
+        isChatOpen: false,
+    })
     const [screenShId, setScreenShId] = useState()
+    const [roomId, setRoomId]= useState('')
 
 const switchStream =(stream)=>{
     setStream(stream);
@@ -50,10 +57,29 @@ const couperson = ()=>{
         setson(false)
     }
 }
+const sendMessage = (message)=>{
+    const messageData ={
+        content: message,
+        timestamp: new Date().getTime(),
+        author:me?.id,
+    }
+    
+    chatdispatch(addMessageAction(messageData))
+    ws.emit("send-message",roomId, messageData)
+}
+
+const toggleChat =()=>{
+    
+    chatdispatch(toggleChatAction(!chat.isChatOpen))
+}
 useEffect(()=>{
 //crée un peer---------------------------------------------------------------------
          const meid = uuidV4()
-         const peer = new Peer(meid)
+         const peer = new Peer(meid,{
+            host:'web-rtc-deploy-app.herokuapp.com',
+            secure:true,
+            port: 443,
+         })
          setMe(peer)
          try{
             // crée une video ------------------------------------------------------------
@@ -73,8 +99,43 @@ useEffect(()=>{
 // ecouter l'event get-users et afficher les participant a la room----------------
         ws.on("get-users",({participants})=>{
             console.log(participants)
-})
+        })
+        ws.on("user-disconnected",(peerId)=>{
+            dispatch(removePeerAction(peerId));
+        })
+        ws.on("user-started-sharing",(peerId)=> setScreenShId(peerId))
+        ws.on("user-stoped-sharing",()=> setScreenShId(""))
+
+        ws.on("add-message",(message)=> {
+            console.log(message)
+        chatdispatch(addMessageAction(message))
+        }
+            )
+
+        ws.on("get-messages",(messages)=>{
+            chatdispatch(addHistoryAction(messages))
+        })
+
+        return ()=>{
+            ws.off("room-created")
+            ws.off("get-users")
+            ws.off("user-disconnected")
+            ws.off("user-start-sharing")
+            ws.off("user-stop-sharing")
+            ws.off("user-joined")
+            ws.off("add-message")
+            
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
+    useEffect(()=>{
+        if (screenShId){
+            ws.emit("start-sharing", {peerId:screenShId, roomId})
+        } else {
+            ws.emit("stop-sharing")
+
+        }
+    },[screenShId,roomId])
 
     useEffect(()=>{
         if(!me) return;
@@ -82,19 +143,12 @@ useEffect(()=>{
         
 //demarrer lappel-------------------------------------------
         ws.on("user-joined",({peerId})=>{
-            console.log('passer')
             const call = me.call(peerId,stream)
-            
-            console.log(call)
             call.on('stream', (peerStream)=>{
-                
                 dispatch(addPeerAction(peerId,peerStream))
-                
-                //dispatch({type : 'ADD_PEER' , payload : peerId,peerStream})
-                
-            
             })
         })
+
 // repondre au appel des autres peer --------------------------------
         me.on("call",(call)=>{
             call.answer(stream)
@@ -105,7 +159,7 @@ useEffect(()=>{
         })
     },[me, stream])
     return(
-        <RoomContext.Provider value={{ws,me,stream,peers,screenShare,couperson,son}}>
+        <RoomContext.Provider value={{ws,me,stream,peers,screenShare,couperson,son,screenShId,chat,toggleChat,setRoomId,sendMessage}}>
             {children}
         </RoomContext.Provider>
     )

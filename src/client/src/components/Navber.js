@@ -4,12 +4,14 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import '../app.css'
 import { TbScreenShare } from 'react-icons/tb';
-import { BsCameraVideoOff,BsCameraVideo, } from 'react-icons/bs';
+import { BsCameraVideoOff,BsCameraVideo, BsChatLeftText } from 'react-icons/bs';
 import { BiMicrophoneOff,BiMicrophone } from 'react-icons/bi';
+
+
 
 export default function Navber(){
   
-  const {screenShare,couperson,son} = useContext(RoomContext)
+  const {screenShare,couperson,son,toggleChat} = useContext(RoomContext)
   return (
       
     <Navbar className='navbar' collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -18,6 +20,7 @@ export default function Navber(){
             <Nav.Link  className='navlink' onClick={screenShare}><TbScreenShare size = '1.5rem' /></Nav.Link>
             <Nav.Link className='navlink'><BsCameraVideo size = '1.5rem'/> </Nav.Link>
             <Nav.Link className='navlink' onClick={couperson}> {son?  <BiMicrophoneOff size = '1.5rem'/>: <BiMicrophone size = '1.5rem'/> }</Nav.Link>
+            <Nav.Link  className='navlink' onClick={toggleChat}><BsChatLeftText size = '1.5rem'/></Nav.Link>
           </Nav>
         </Navbar.Collapse>
       

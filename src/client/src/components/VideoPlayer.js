@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useRef } from 'react'
 import { RoomContext } from '../context/RoomContext'
+import '../app.css'
 export const VideoPlayer=({stream}) =>{
     const VideoRef = useRef()
     const {son} =useContext(RoomContext)

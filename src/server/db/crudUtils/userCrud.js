@@ -2,7 +2,7 @@ const { default: mongoose } = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcrypt');
 const createError = require('http-errors');
-const User = require('../schema/User');
+const {User} = require('../schema/User');
 
 const Conversation = require('../schema/Conversation');
 
@@ -11,11 +11,14 @@ const Conversation = require('../schema/Conversation');
 
 
 const createUser =  async(newemail,newpassword)=>{
-  if(!newemail || !newpassword){throw createError(404, 'veuilleur saisir data'); };
-    const newlogin = {
-        email: newemail,
-        password: newpassword
-    };
+  if(!newemail || !newpassword){
+    throw createError(404, 'veuilleur saisir data'); 
+  };
+
+  const newlogin = {
+    email: newemail,
+    password: newpassword
+  };
     console.log(newlogin)
     const userExists = await User.findOne({ login:{newemail }});
    //const userExists = await User.findOne({ login:newemail});
@@ -39,6 +42,40 @@ console.log(saveLogin)
     }
   }
   ;
+
+  /*const login = async (email, pwd)=>{
+    if(!email || !pwd){throw createError(404, 'veuilleur saisir data'); };
+    const login = {
+        email: email,
+        password: pwd
+    };
+    console.log(login)
+    const user = await User.findOne(login);
+   //const userExists = await User.findOne({ login:newemail});
+    if (user) {
+      return user;
+    }
+    throw new Error("User does not exist");
+  }*/
+
+  const login = async (email, password) => {
+
+    const user = await User.findOne({ login:{email }});
+  
+    if (user && (await user.login.matchPassword(password))) {
+      console.log({
+        _id: user._id,
+        username: user.username,
+        email: user.login.email,
+        isAdmin: user.isAdmin,
+        pic: user.pic,
+     
+      });
+    } else {
+     
+      throw new Error("Invalid Email or Password");
+    }
+  }
     // read one User
   const readoneUser= async (id) => {
     try {
@@ -170,4 +207,4 @@ const addContact =  async(idUser,idContact)=>{
   ;
 
 
-module.exports = {createUser,readoneUser,UpdateLogin,UpdateUser,archiveUser,deleteUser,UpdateloginAdmin,addContact};
+module.exports = {login, createUser,readoneUser,UpdateLogin,UpdateUser,archiveUser,deleteUser,UpdateloginAdmin,addContact};

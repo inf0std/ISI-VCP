@@ -62,7 +62,7 @@ console.log(saveLogin)
 
     const user = await User.findOne({ login:{email }});
   
-    if (user && (await user.login.matchPassword(password))) {
+    if (user && (await User.login.matchPassword(password))) {
       console.log({
         _id: user._id,
         username: user.username,

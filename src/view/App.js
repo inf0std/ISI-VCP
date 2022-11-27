@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { Fragment } from "react";
+import BasicExample from "./component/formulaire/Inscription/Ins";
+
+
 
 const App = () => {
   return (
-    <div>
-      <p>bonjour vandam</p>
-    </div>
+
+
+    <Fragment>
+      <BasicExample />
+
+    </Fragment>
   );
 };
 

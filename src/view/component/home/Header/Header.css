@@ -1,0 +1,69 @@
+header {
+    background-image: url(4.webp);
+    background-size: cover;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    text-align: center;
+    padding: 25px 0px;
+    color: aliceblue;
+    height: 650px;
+
+}
+
+header h2 {
+    color: aliceblue;
+    font-size: 50px;
+    font-weight: bold;
+    margin: 35px 0px;
+    letter-spacing: 1px;
+
+}
+
+header.header-overlay .row {
+    margin: 6px 0px;
+}
+
+header p {
+    color: aliceblue;
+    font-size: 16px;
+    line-height: 30px;
+    margin: 35px 0px;
+}
+
+header form {
+    margin: 25px 0px;
+}
+
+header form input {
+    background-color: aliceblue;
+    width: 300px;
+    border-radius: 30px;
+    text-align: left;
+    color: black;
+    font-size: 16px;
+    padding: 7px;
+    border: 1px solid #fff;
+    height: 45px;
+    outline: none !important;
+
+}
+
+header form button {
+    background-color: transparent;
+    border: 1px solide greenn;
+    width: 250 px;
+    border-radius: 30px;
+    text-align: center;
+    color: #fff;
+    font-size: 16px;
+    text-transform: uppercase;
+    margin-left: 5px;
+    height: 45px;
+    letter-spacing: 1px;
+}
+
+input,
+button {
+    color: black;
+}

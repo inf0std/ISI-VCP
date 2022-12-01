@@ -17,31 +17,50 @@ exports.createConference = (topic, organisedBy, users, createdAt) => {
     }
 
     // Create a Conference
+
+    /****methode 1 */
+    //var urlParams = new URLSearchParams(window.location.search);
+    //let id = params.get("id"); // id from url 
+
+    /****methode 2 */
+    //const id = req.params.id
+
+    let id = ['6381ea6cc4f9b2010165e23b']; // set ur id here just an exemple
     const conference = new Conference({
         topic: topic,
-        organisedBy: organisedBy, // get the user id from authentication not seted yet
-        users: users,
-        //videocall: videocall, // get the user id not seted yet
-        createdAt: createdAt
+        organisedBy: id,
+        users: [id, users],
+        videocall: [id], // get the joined id not seted yet
     });
 
     // Save conference in the database
     conference
         .save(conference)
-    return console.log("success", conference)
 
-    .catch(err => {
-        return console.log({
-            message: err.message || "Some error occurred while creating the conference."
+    .then(conference => {
+            conference
+                .populate({ path: "users" })
+                .then(conference => {
+
+                    console.log({
+                        message: "conference added",
+                        conference
+                    });
+                    return console.log(conference, "success")
+                })
+
+        })
+        .catch(err => {
+            return console.log({
+                message: err.message || "Some error occurred while creating the conference."
+            });
         });
-    });
-};
+}
+
 // Retrieve all conferences from the database.
 exports.readConferenceAll = () => {
-    const topic = query.topic;
-    var condition = topic ? { topic: { $regex: new RegExp(topic), $options: "i" } } : {};
 
-    Confer.find(condition)
+    Confer.find({ archive: false })
         .then(data => {
             console.log(data);
         })
@@ -55,7 +74,10 @@ exports.readConferenceAll = () => {
 // Find a single Conference with an id
 exports.readConference = (id) => {
     //const id = params.id;
-
+    if (Confer.archive = true) {
+        console.log({ message: "Not found conference with id " + id })
+        return
+    }
     Confer.findById(id)
         .then(data => {
             if (!data)
@@ -71,7 +93,7 @@ exports.readConference = (id) => {
 
 // Update a Conference by the id in the request
 exports.updateConference = (id, newConf) => {
-    newConf = typeof conferSchema
+
     if (!newConf || !id) {
         return console.log({
             message: "Data to update can not be empty!"
@@ -99,7 +121,7 @@ exports.updateConference = (id, newConf) => {
 exports.deleteConference = (id) => {
     //const id = req.params.id;
 
-    Confer.findByIdAndRemove(id, { useFindAndModify: false })
+    Confer.findByIdAndUpdate(id, { archive: true })
         .then(data => {
             if (!data) {
                 return console.log({
@@ -120,10 +142,10 @@ exports.deleteConference = (id) => {
 
 // Delete all conferences from the database.
 exports.deleteConferenceAll = () => {
-    Confer.deleteMany({})
+    Confer.updateMany({})
         .then(data => {
             return console.log({
-                message: `${data.deletedCount} conferences were deleted successfully!`
+                message: `${data.modifiedCount} conferences were deleted successfully!`
             });
         })
         .catch(err => {
@@ -135,3 +157,44 @@ exports.deleteConferenceAll = () => {
 
 
 // get the joined users and put them in conference document
+
+
+exports.JoinedToConference = () => {
+    //const id = req.params.id;
+    //let id = /*req.params.id */ ['6388e49a6f3b0b10350b6533']; // set ur id here
+    //let IdU = /*/req.body.IdU */ ['6381ea6cc4f9b2010165e23b']; // set ur id here
+    Confer.findByIdAndUpdate(id, { $push: { users: IdU } })
+
+    .then(data => {
+            if (!data) {
+                return console.log({
+                    message: `Cannot delete conference with id=${id}. Maybe conference was not found!`
+                });
+            } else return console.log({ message: `The user with id=${IdU}. has joined the conference!` });
+        })
+        .catch(err => {
+            return console.log({
+                message: "Error updating Conference with id=" + id
+            });
+        });
+}
+
+// get the joined users and pull them from conference document
+exports.LeaveTheConference = () => {
+    //const id = req.params.id;
+    // let id = /*req.params.id */ ['6388e49a6f3b0b10350b6533']; // set ur id here
+    // let IdU = /*/req.body.IdU */ ['6381ea6cc4f9b2010165e23b']; // set ur id here
+    Confer.findByIdAndUpdate(id, { $pullAll: { users: IdU } })
+        .then(data => {
+            if (!data) {
+                return console.log({
+                    message: `Cannot delete conference with id=${id}. Maybe conference was not found!`
+                });
+            } else return console.log({ message: `The user with id=${IdU}. has left the conference!` });
+        })
+        .catch(err => {
+            return console.log({
+                message: "Error updating Conference with id=" + id
+            });
+        });
+}

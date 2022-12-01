@@ -5,10 +5,14 @@ var MongoClient = require('mongodb').MongoClient;
 
 
 // Create and Save a new conference
-exports.createConversation = (topic, organisedBy, users, createdAt) => {
+exports.createConference = (topic, organisedBy, users, createdAt) => {
     // Validate request
     if (!topic) {
         console.log({ message: "Content can not be empty!" });
+        return;
+    }
+    if (!users) {
+        console.log({ message: "You must select for minimum a user!" });
         return;
     }
 
@@ -128,9 +132,6 @@ exports.deleteConferenceAll = () => {
             });
         });
 };
-
-
-
 
 
 // get the joined users and put them in conference document

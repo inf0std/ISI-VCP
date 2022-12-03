@@ -47,7 +47,7 @@ const addConversation = async (id1, id2) => {
   })
     .populate({ path: "users", select: "_id" })
     .then((result) => {
-      if (result.length) {
+      if (result.length == 0) {
         createConversation({
           ConversationName: "",
           isGroup: false,
@@ -83,13 +83,10 @@ const addMessage = async (idC, content) => {
     };
 
     try {
-      // var currentConversation= await Conversation.findById(idC);
       var currentConversation = await Conversation.findOneAndUpdate(
         { _id: idC },
         { $push: { messages: newMessage } }
       );
-      //currentConversation.messages=newMessage;
-      //await currentConversation.messages.save(newMessage);
 
       console.log(currentConversation);
     } catch (error) {

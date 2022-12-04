@@ -154,7 +154,7 @@ exports.JoinedToConference = () => {
   //const id = req.params.id;
   //let id = /*req.params.id */ ['6388e49a6f3b0b10350b6533']; // set ur id here
   //let IdU = /*/req.body.IdU */ ['6381ea6cc4f9b2010165e23b']; // set ur id here
-  Confer.findByIdAndUpdate(id, { $push: { users: IdU } })
+  Confer.findByIdAndUpdate(id, { $push: { videoCall: IdU } })
 
     .then((data) => {
       if (!data) {
@@ -178,7 +178,7 @@ exports.LeaveTheConference = () => {
   //const id = req.params.id;
   // let id = /*req.params.id */ ['6388e49a6f3b0b10350b6533']; // set ur id here
   // let IdU = /*/req.body.IdU */ ['6381ea6cc4f9b2010165e23b']; // set ur id here
-  Confer.findByIdAndUpdate(id, { $pullAll: { users: IdU } })
+  Confer.findByIdAndUpdate(id, { $pullAll: { videoCall: IdU } })
     .then((data) => {
       if (!data) {
         return console.log({

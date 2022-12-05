@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const conferSchema = new mongoose.Schema({
+const conferenceSchema = new mongoose.Schema({
     topic: {
         type: String,
         required: true
@@ -10,29 +10,25 @@ const conferSchema = new mongoose.Schema({
         ref: 'User',
         required: true,
         trim: true,
-        joined: { type: Boolean, default: false },
     }],
     organisedBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
-        required: true
     },
     videocall: [{
-        users: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'User',
-            trim: true,
-        },
-        joinedAt: {
-            type: Date,
-        },
-
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        trim: true,
     }],
-    createdAt: {
-        type: Date,
-        default: Date.now
+    archive: {
+        type: Boolean,
+        default: false
     },
+    duration: {
+        type: Number
+    }
 }, { timestamps: true })
 
-const Confer = mongoose.model('Confer', conferSchema)
-module.exports = { Confer, conferSchema };
+
+const Conference = mongoose.model('Conference', conferenceSchema)
+module.exports = { Conference, conferenceSchema };

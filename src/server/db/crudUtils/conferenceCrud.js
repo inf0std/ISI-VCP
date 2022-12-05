@@ -26,9 +26,9 @@ exports.createConference = (topic, part, duration) => {
 
         let id = ['6381ed3dfb0c1a1252bcc15c']; // set ur id here just an exemple 
         const conference = new Conference({
-            topic: topic,
+            topic: topic, //mean title 
             organisedBy: id, // get the user id from url .. the video call grp job 
-            users: part,
+            users: part, // mean participants 
             videocall: [id], // get the user id from url .. the video call grp job 
             duration: duration // in minute 
         });

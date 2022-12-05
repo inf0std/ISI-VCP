@@ -1,16 +1,11 @@
-import React, { Fragment } from "react";
-import BasicExample from "./component/formulaire/Inscription/Ins";
-
-
+import React from 'react';
+import Video from './component/Video call/Video';
 
 const App = () => {
   return (
-
-
-    <Fragment>
-      <BasicExample />
-
-    </Fragment>
+    <div>
+      <Video />
+    </div>
   );
 };
 

@@ -71,15 +71,16 @@ const readConversation = async (id1, id2) => {
 };
 //////////////////envoyer un mesage ////////////////////////////
 
-const addMessage = async (idC, content) => {
+const addMessage = async (idC, msg) => {
   console.log(content);
   // verifier si le message est vide ou id de la convesation est vide
   if (!content || !idC) {
     console.log("Invalid data passed into request");
   } else {
     var newMessage = {
-      sender: idU,
-      content: content,
+      type: msg.type,
+      sender: msg.senderId,
+      content: msg.content,
     };
 
     try {
@@ -116,7 +117,19 @@ const readallMessages = async (idC) => {
   }
 };
 
+//read messages from n*10 to (n+1)*10
+const readNthTeenMessages = async (id, n) => {
+  var msgs = null;
+  Conversation.getById(id)
+    .select("messages")
+    .exec()
+    .then((msgs) => {
+      return msgs.slice(msgs.length - n * 10 - 10, msgs.length - n * 10);
+    });
+};
+
 module.exports = {
+  readNthTeenMessages,
   addConversation,
   readConversation,
   addMessage,

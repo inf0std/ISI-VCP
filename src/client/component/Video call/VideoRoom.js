@@ -1,12 +1,12 @@
 import React from 'react';
 import { useState } from "react";
-import './Video.css'
+import './VideoRoom.css'
 import img1 from './img1.jpg'
 import img2 from './img2.jpg'
 import img3 from './img3.jpg'
 import img4 from './img4.jpg'
 import img5 from './img5.jpg'
-const Video = () => {
+const VideoRoom = () => {
     const [microphone, setMicrophone] = useState(true);
     const [phone, setPhone] = useState(true);
     const [screen, setScreen] = useState(false)
@@ -37,7 +37,7 @@ const Video = () => {
     }
     return (
 
-        <section >
+        <section className='conteneur' >
             <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'></link>
             <div className='container'>
                 <div className='top-icons'>
@@ -81,4 +81,4 @@ const Video = () => {
     );
 };
 
-export default Video;
+export default VideoRoom;

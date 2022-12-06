@@ -1,12 +1,13 @@
 import React from 'react';
-import Video from './component/Video call/Video';
+import VideoRoom from './component/Video call/VideoRoom';
+
 
 const App = () => {
   return (
     <div>
-      <Video />
-    </div>
-  );
+      <VideoRoom/>
+          </div>
+  ); 
 };
 
 export default App;

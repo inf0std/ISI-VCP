@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import "./Video.css";
+import "./VideoRoom.css";
 import img1 from "./img1.jpg";
 import img2 from "./img2.jpg";
 import img3 from "./img3.jpg";
@@ -13,14 +13,16 @@ const Video = () => {
 
   const call = () => {};
   const hangup = () => {};
+  const togglePhone = () => {
+    setPhone(!phone);
+  };
   const handlePhoneClick = () => {
     if (phone) {
       call();
-      setPhone(false);
     } else {
       hangup();
-      setPhone(true);
     }
+    togglePhone();
   };
 
   const toggleAudio = () => {
@@ -47,11 +49,11 @@ const Video = () => {
           </a>
         </div>
         <div>
-          <img src={img1} alt="img1" className="bear-picture" />
           <div className="iconss">
             <a href="#">
               <i className="bx bx-chat"></i>
             </a>
+
             <a href="#" onClick={() => toggleAudio()}>
               {microphone ? (
                 <i className="bx bx-microphone"></i>
@@ -59,6 +61,7 @@ const Video = () => {
                 <i className="bx bx-microphone-off"></i>
               )}
             </a>
+
             <a href="#" onClick={() => handlePhoneClick()}>
               {" "}
               {phone ? (
@@ -67,9 +70,11 @@ const Video = () => {
                 <i className="bx bx-phone-off"></i>
               )}
             </a>
+
             <a href="#" onClick={() => handleShareScreenClick()}>
-              {" "}
-              <i className="bx bx-cast"></i>
+              <i
+                className={(screen ? "green-on" : "red-off") + "bx bx-cast"}
+              ></i>
             </a>
           </div>
         </div>

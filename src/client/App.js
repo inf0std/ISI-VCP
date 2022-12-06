@@ -1,11 +1,13 @@
-import React from 'react';
-import Video from './component/Video call/Video';
-
+import ReactDOM from "react-dom/client";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./component/home/Home";
 const App = () => {
   return (
-    <div>
-      <Video />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+      </Routes>
+    </BrowserRouter>
   );
 };
 

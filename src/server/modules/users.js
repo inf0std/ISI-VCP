@@ -7,7 +7,7 @@ const addUser =({id,name,room})=>{
 
  // verifier l'existance de users dans la meme room avec le meme nom
 
- const existingUser = users.find((user)=> user.room === room && user.name === name);
+ const existingUser = users.find((user)=> user.room === room && user.id=== id);
   if (existingUser) {
     return{ error: 'Username is taken'}; 
   }

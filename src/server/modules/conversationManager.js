@@ -13,6 +13,8 @@ const joinConv = (user, convId)=>{
 
 const leaveConv = (user, convId)=>{
     
+
+    
 }
 
 const loadConvFromDb = (convId) =>{

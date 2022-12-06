@@ -1,51 +1,45 @@
-const validator = require('validator');
-const Conversation = require('./Conversation')
-const Reunion = require('./Reunion')
-const Confer = require('./Conference')
-const mongoose = require("mongoose") //require mongoose
+const validator = require("validator");
+const Conversation = require("./Conversation");
+const Reunion = require("./Reunion");
+const Confer = require("./Conference");
+const mongoose = require("mongoose"); //require mongoose
 //const crypto = require("crypto"); // crypto for encrypt the password
 //const { v4: uuidv4 } = require('uuid'); // user for identifying information that needs to be unique within a system or network thereof
 //const { ObjectID } = require("bson"); //Return the ObjectID id as a 24 byte hex string representation
-const bcrypt = require('bcryptjs');
+const bcrypt = require("bcryptjs");
 const Schema = mongoose.Schema;
 
-
-const userSchema = new Schema({
+const userSchema = new mongoose.Schema({
         username: {
-            default: 'user_seen',
+            default: "user_seen",
             type: String,
-            trim: true, //enlever les espace 
-            // required:true,
+            trim: true,
         },
         pic: {
             type: "String",
-            //required: true,
             default: "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
         },
         login: {
-
             email: {
                 type: String,
                 required: true,
-                trim: true, //enlever les espace 
+                trim: true,
                 unique: true,
                 lowercase: true,
                 minLenght: 8,
                 validatore(v) {
-                    if (!validator.isEmail(v)) throw new Error('email non valide'); //format email
-                }
+                    if (!validator.isEmail(v)) throw new Error("email non valide");
+                },
             },
             password: {
                 type: String,
-                required: true, //require true pour que le champs soit obligatoire   
+                required: true, //require true pour que le champs soit obligatoire
 
                 validatore(v) {
-                    if (!validator.isLength(v, { min: 5, max: 20 })) throw new Error('mot de passe doit etre entre 5 et 20 charactere');
-                }
+                    if (!validator.isLength(v, { min: 5, max: 20 }))
+                        throw new Error("mot de passe doit etre entre 5 et 20 charactere");
+                },
             },
-            salt:{
-                type: String,
-            }
         },
         conversations: [{
             type: mongoose.SchemaTypes.ObjectID,
@@ -59,76 +53,34 @@ const userSchema = new Schema({
 
         conferences: [{
             type: mongoose.SchemaTypes.ObjectID,
-            ref: "Confer",
+            ref: "Conference",
         }, ],
         organisations: [{
-
             type: mongoose.Schema.Types.ObjectId,
-            ref: "organisation"
-
-        }],
-        isadmin: { type: Boolean, default: false, required: true, },
+            ref: "organisation",
+        }, ],
+        isadmin: { type: Boolean, default: false, required: true },
         contacts: [{
             type: mongoose.SchemaTypes.ObjectID,
             ref: "User",
-        }],
-        lastseen:{type:Number},//dernier connexion
-        archive:{type:Boolean,default:false},
-   
-      
+        }, ],
+        archive: { type: Boolean, default: false },
     },
 
-    { timestamps: true, } //date of creation and date of update
-
+    { timestamps: true } //date of creation and date of update
 );
-// encry the password function
-/*
-userSchema.virtual("password")
-    .set(function(password) {
-        this._password = password
-        this.salt = uuidv4()
-        this.hashedPwd = this.securePassword(password)
-    })
-    .get(function() {
-        return this._password
-    })
 
-userSchema.methods = {
-    authenticate: function(plainpassword) {
-        return this.securePassword(plainpassword) === this.hashedPwd
-    },
+userSchema.methods.matchPassword = async function(enteredPassword) {
+    return await bcrypt.compare(enteredPassword, this.login.password);
+};
 
-    securePassword: function(plainpassword) {
-        if (!plainpassword) return "";
-
-        try {
-            return crypto.createHmac("sha256", this.salt).update(plainpassword).digest("hex")
-        } catch (err) {
-            return ""
-        }
-    }
-}
-*/
-
-userSchema.methods.matchPassword = async function (enteredPassword) {
-    return await bcrypt.compare(enteredPassword, this.login.password)
-  };
-  
-  userSchema.pre("save", async function (next) {
+userSchema.pre("save", async function(next) {
     if (!this.login.isModified) {
-      next();
+        next();
     }
-  
+
     const salt = await bcrypt.genSalt(10);
     this.login.password = await bcrypt.hash(this.login.password, salt);
-  });
-  
- 
-
-//userSchema.virtual (pour ne pas sauvgarder au sein de database)????????
-
-//const User = mongoose.model('User', );
+});
 const User = mongoose.model("User", userSchema);
-module.exports = { User, userSchema };
-//model(nameof collection,the schema )
-//string is a schematype
+module.exports = { User, userSchema }

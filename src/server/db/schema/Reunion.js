@@ -1,39 +1,52 @@
-const { default: mongoose } = require('mongoose');
-const validator = require('validator');
-const User = require('./User');
-const Schema = mongoose.Schema;
+const mongoose = require('mongoose')
 
+const reunionSchema = new mongoose.Schema({
+        reunion_Name: {
+            type: String,
+            default: 'reunion_name',
 
-const ReunionSchema = new Schema({
-    reunionName:{
-        Type:String,
-        //default:'reunion_name',
-        
-    },
-    reunion_Host:{type: mongoose.SchemaTypes.ObjectID,
-    ref:"User",} //one to one
-    ,
-    reunion_moderateur:{type: mongoose.SchemaTypes.ObjectID,
-    ref:"User",} ,//one to one
+        },
+        reunion_Host: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',
+            trim: true,
+        } //one to one
+        ,
+        reunion_moderateur: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',
+            trim: true,
+        }, //one to one
 
-     Conversation:{type: mongoose.SchemaTypes.ObjectID,
-    ref:"Conversation",} ,//one to one
+        Conversation: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Conversation',
+            trim: true,
+        }, //one to one
 
-   participantsName:[
-    {type: mongoose.SchemaTypes.ObjectID,
-        ref:"User",} ],// one  to many (one reunion to many participants)
+        participantsName: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',
+            trim: true,
+        }], // one  to many (one reunion to many participants)
 
+        Date_begin: {
+            type: Date,
+            default: Date.now
+        },
 
+        Duration: {
+            type: Number,
+            default: 40
+        },
+        archive: {
+            type: Boolean,
+            default: false
+        },
 
-
-   Date_begin:{Type:Date},
-  
-   Duration:{
-    type:Number,default:40}  ,
- 
-},
-{timestamps: true,}//date of creation and date of updat);
+    }, { timestamps: true, } //date of creation and date of updat);
 
 )
 
-module.exports = mongoose.model('Reunion',ReunionSchema);
+const Reunion = mongoose.model('Reunion', reunionSchema)
+module.exports = { Reunion, reunionSchema };

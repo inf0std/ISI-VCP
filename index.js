@@ -1,26 +1,44 @@
+
 const express = require('express');
-const cookieParser = require("cookie-parser");
-const sessions = require('express-session');
+const socket = require('socket.io');
+const http = require('http');
 
-
-
-
-//commentaire
-//comment 2
-const  app = express();
-const oneDay = 1000 * 60 * 60 * 24;
-app.use(sessions({
-    secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
-    saveUninitialized:true,
-    cookie: { maxAge: oneDay },
-    resave: false 
-}));
-
-
-app.get('/',(req, res) =>{
-    console.log("requete de connexion")
+const app = express();
+const server = http.createServer(app);
+const io = socket(server,{
+    cors:{
+        origin :"*",//any user
+        methods :["GET","Post"]
+    }
 })
+app.use(express.static(__dirname+'/client'))
+app.get("/",(req,res)=>{
+    res.status(200);
+    res.send('connected');
+})
+let PORT = 4000;
+server.listen(PORT, () => {
+    console.log("Listening in the port",PORT);
+  })
+  const room =[];
 
+  const nvroom =(nom)=>{
+    io.of(nom);
+    room.push(nvroom);
+  }
+ /*nvroom ('room1');
+ nvroom('room2');*/
 
-
-app.listen(8080,()=> console.log("listening to port 8080"))
+  
+io.on("connection", (socket) => {
+    console.log("connected to", socket.id) 
+    socket.join(["room1","room2"]);   
+    io.to('room1').emit('msg', {
+        room :"room1",
+        msg :"joined room1"
+    })
+    socket.on("msg", (data) => {
+        io.to(data.room).emit("msg", data)
+        console.log("msg send");
+    })
+})

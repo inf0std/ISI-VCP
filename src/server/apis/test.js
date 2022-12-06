@@ -1,13 +1,14 @@
-const { connectDb } = require('./db.js');
+const { connectDb } = require('../db/db');
 const express = require('express');
 const app = express();
-const { createUser, readoneUser, UpdateLogin, UpdateUser, archiveUser, deleteUser, addContact } = require('./crudUtils/userCrud');
+const { createUser, readoneUser, UpdateLogin, UpdateUser, archiveUser, deleteUser, addContact } = require('../db/crudUtils/userCrud');
+const { addConversation } = require('../db/crudUtils/conversationCrud');
 const port = process.env.PORT || 3000; //ebergement
 
 
 //createUser({ email: 'fayce@gmail.coml' }, { password: 'faycel' });
 //UpdateUser('6381fb93160d73accb59d1df', { username: 'faycel' });
-//addContact('6381fb9316gpçj793accb59d1df', '6381fb93160dsçf73accb59d1df');
+addConversation('63833e244a54dc8fa453b3ec', '63828f04629963f37bfc932c');
 
 
 //findOne('6388e49a6f3b0b10350b6533');

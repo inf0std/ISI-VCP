@@ -198,13 +198,13 @@ const addContact =  async(idUser,idContact)=>{
   if(!idUser || !idContact){throw createError(404, 'veuilleur saisir data'); };
   console.log(idUser)
     console.log(idContact)
-    const contacts = User.findById(idUser).select('contacts').exec();
+    User.findById(idUser).select('contacts').exec().then( conta=>{console.log(conta)});
    
-  console.log(contacts)
+
     
   //var picked = lodash.filter(contacts, { '_id': 'idContact' } );  //console.log(picked)
 
-   
+   /*
     try {
  
 
@@ -219,7 +219,7 @@ const addContact =  async(idUser,idContact)=>{
     
     throw e
     
-    }
+    }*/
   
   }
   ;

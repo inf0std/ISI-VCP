@@ -3,7 +3,7 @@ const { default: mongoose } = require('mongoose');
 const bcrypt = require('bcrypt');
 const createError = require('http-errors');
 
-const User = require('../schema/User');
+const {User} = require('../schema/User');
 
 const Conversation = require('../schema/Conversation');
 
@@ -14,23 +14,17 @@ const addConversation = async (ids, idR) => {
    console.log(ids);console.log(idR)
 
     var isConversation = await Conversation.find({
-        isGroup: false,
+        isGroup: false,   archive :false,
         $and: [
           { users: { $elemMatch: { $eq: ids} } }, 
           { users: { $elemMatch: { $eq: idR } } },
         ],
       })
-       .populate({ path: 'users', select: '_id' }).
+       .populate({ path: 'users', select: '_id' })
        console.log(isConversation)
-        const  dest = await User.findById(idR).select('username') ;
+        const  dest = await User.findById(idR).select("username") ;
           console.log(dest)
 
-      if(!dest){console.log('destinataire introuveble')} else{
-
-        isConversation = await User.populate(isConversation, {
-          path: "messages.sender",
-          select: "username pic",
-        });
       if (isConversation.length > 0) {
     console.log(isConversation[0]);//si la convesation length >0 donc il exist deja alors la recuperer directement
       } 
@@ -38,9 +32,10 @@ const addConversation = async (ids, idR) => {
 
       else {
     var ConversationData = {
-        ConversationName: dest.username,
+      
         isGroup: false,
         users: [ids, idR],
+        archive :false,
     }; 
 
 
@@ -49,7 +44,7 @@ const addConversation = async (ids, idR) => {
         const createdConversation = await Conversation.create(ConversationData).then(
           (createdConversation ) => {
            //enregistrer id de la conversation dans user.convesations
-            return User.updateMany({   $or:[{_id:userId},{_id:idU} ]    }, 
+            return User.updateMany({   $or:[{_id:ids},{_id:idR} ]    }, 
               
                 { conversations:createdConversation._id}, function (err) {
                 if (err){
@@ -72,7 +67,7 @@ const addConversation = async (ids, idR) => {
       }
     }   
 
-  }
+  
 
 };
 

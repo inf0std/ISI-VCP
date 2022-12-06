@@ -11,6 +11,7 @@ const {
     addContact,
 } = require("./crudUtils/userCrud");
 const { createConference, readConferenceAll, readConference, updateConference, deleteConference, deleteConferenceAll, JoinedToConference, LeaveTheConference, getUserProgrammedEvents } = require("./crudUtils/conferenceCrud")
+const { createReunion, readReunionAll, readReunion, updateReunion, deleteReunion, deleteReunionAll } = require("./crudUtils/reunionCrud")
 const port = process.env.PORT || 3000; //ebergement
 
 //createUser({ email: 'fayce@gmail.coml' }, { password: 'faycel' });
@@ -34,3 +35,13 @@ app.listen(port,() => {console.log(`server lancer sur le port a:http//localhost:
 });
 
 */
+
+
+
+//findReunion('638f58fe4af69e0715e7dd9d');
+//Mod('638f58fe4af69e0715e7dd9d', '6381f1bbb4004ae1baeded2b');
+//updateReunion('638f5ab253d3669fa913c5b8', { reunion_Name: 'newReunion_Name_Updated', participantsName: ['6381f1bbb4004ae1baeded2b', '6381f17bc098eb1596fcef0c', '6381f5fe4621a0ede3ca7409'], Date_begin: '2022-04-04', Duration: '130' });
+//deleteReunion('638f58fe4af69e0715e7dd9d');
+//deleteReunionAll('');
+//findReunionAll('');
+//createReunion('6381ed3dfb0c1a1252bcc15c', 'newReunion_Name1', ['6381f1bbb4004ae1baeded2b', '6381f17bc098eb1596fcef0c', '6381f5fe4621a0ede3ca7409'], '2022-04-04', '120');

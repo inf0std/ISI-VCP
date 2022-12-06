@@ -1,10 +1,16 @@
 import React from 'react';
-import Video from './component/Video call/Video';
+import PrgmReunion from'./component/Programmer/PrgmReunion'
+import PrgmConference from'./component/Programmer/PrgmConference'
+import PrgmDebat from'./component/Programmer/PrgmDebat'
+
+
 
 const App = () => {
   return (
     <div>
-      <Video />
+      <PrgmReunion />
+      <PrgmConference />
+      <PrgmDebat />
     </div>
   );
 };

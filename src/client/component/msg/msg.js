@@ -1,7 +1,17 @@
-const Msg = (props)=>{
-      return (
-        <div>{props.msg}</div>
-      );
-    }
+import React from "react";
+import { memo } from "react";
+import { MDBCard } from "mdb-react-ui-kit";
+import MSGBule from "./MSGBule";
+import MSGContent from "./MSGContent";
+import "./MSG.css";
+const MSG = (props) => {
+  return (
+    <MDBCard>
+      {!props.msg.isMe && <MSGBule msg={props.msg} />}
+      <MSGContent msg={props.msg} />
+      {props.msg.isMe && <MSGBule msg={props.msg} />}
+    </MDBCard>
+  );
+};
 
-export default Msg;
+export default memo(MSG);

@@ -1,67 +1,67 @@
 const mongoose = require("mongoose");
-const { validationResult } = require("express-validator");
-const { Conference } = require("../schemas/conference");
-var MongoClient = require("mongodb").MongoClient;
+const { Conference } = require("../schema/Conference")
+const { User } = require("../schema/User")
 
 // Create and Save a new conference
-exports.createConference = (topic, part, duration) => {
-        // Validate request
-        if (!topic) {
-            console.log({ message: "Content can not be empty!" });
-            return;
-        }
-        if (!part) {
-            console.log({ message: "You must select for minimum a user!" });
-            return;
-        }
+exports.createConference = (idU, topic, part, duration) => {
+    // Validate request
+    if (!topic) {
+        console.log({ message: "Content can not be empty!" });
+        return;
+    }
+    if (!part) {
+        console.log({ message: "You must select for minimum a user!" });
+        return;
+    }
 
-        // Create a Conference
-        // to video call grp maybe those can help u 
-        /****methode 1 */
-        //var urlParams = new URLSearchParams(window.location.search);
-        //let id = params.get("id"); // id from url 
+    // Create a Conference
+    // to video call grp maybe those can help u 
+    /****methode 1 */
+    //var urlParams = new URLSearchParams(window.location.search);
+    //let id = params.get("id"); // id from url 
 
-        /****methode 2 */
-        //const id = req.params.id
+    /****methode 2 */
+    //const id = req.params.id
 
-        let id = ['6381ed3dfb0c1a1252bcc15c']; // set ur id here just an exemple 
-        const conference = new Conference({
-            topic: topic, //mean title 
-            organisedBy: id, // get the user id from url .. the video call grp job 
-            users: part, // mean participants 
-            videocall: [id], // get the user id from url .. the video call grp job 
-            duration: duration // in minute 
-        });
+    const conference = new Conference({
+        topic: topic, //mean title 
+        organisedBy: idU, // get the user id from url .. the video call grp job 
+        users: part, // mean participants 
+        videocall: [idU], // get the user id from url .. the video call grp job 
+        duration: duration // in minute 
+    });
 
 
-        // Save conference in the database
-        conference
-            .save(conference)
-            .then(data => {
-                /** add the id of the organiser in user feild */
-                var newConferenceId = conference._id
-                Conference.updateOne({ _id: newConferenceId }, { $push: { users: id }, }).then(user => {
-                        return console.log({
-                            message: `${user.modifiedCount} updated successfully!`,
-
-                        });
-                    })
-                    /** add the id of the Conference in user document */
-                User.updateMany({ _id: { $in: part } }, { $push: { Conference: newConferenceId }, }).then(user => {
+    // Save conference in the database
+    conference
+        .save(conference)
+        .then(data => {
+            /** add the id of the organiser in user feild */
+            var newConferenceId = conference._id
+            Conference.updateOne({ _id: newConferenceId }, { $push: { users: idU }, }).then(user => {
                     return console.log({
                         message: `${user.modifiedCount} updated successfully!`,
 
                     });
                 })
-
-            })
-            .catch(err => {
+                /** add the id of the Conference in user document */
+            User.updateMany({ _id: { $in: part } }, { $push: { Conference: newConferenceId }, }).then(user => {
                 return console.log({
-                    message: err.message || "Some error occurred while creating the conference."
+                    message: `${user.modifiedCount} updated successfully!`,
+
                 });
+            })
+
+        })
+        .catch(err => {
+            return console.log({
+                message: err.message || "Some error occurred while creating the conference."
             });
-    }
-    // Retrieve all conferences from the database.
+        });
+}
+
+
+// Retrieve all conferences from the database.
 exports.readConferenceAll = () => {
     Conference.find({ archive: false })
         .then((data) => {
@@ -87,7 +87,7 @@ exports.readConference = (id) => {
             else console.log(data);
         })
         .catch((err) => {
-            console.log({ message: "Error retrieving conference with id=" + id });
+            console.log({ message: "Error retrieving conference with id = " + id });
         });
 };
 
@@ -105,13 +105,13 @@ exports.updateConference = (id, newConf) => {
         .then((data) => {
             if (!data) {
                 return console.log({
-                    message: `Cannot update Conference with id=${id}. Maybe Conference was not found!`,
+                    message: `Cannot update Conference with id=${id}. Maybe Conference does not exist!`,
                 });
             } else console.log({ message: "Conference was updated successfully." });
         })
         .catch((err) => {
             return console.log({
-                message: "Error updating Conference with id=" + id,
+                message: "Error updating Conference with id = " + id,
             });
         });
 };
@@ -124,7 +124,7 @@ exports.deleteConference = (id) => {
         .then((data) => {
             if (!data) {
                 return console.log({
-                    message: `Cannot delete conference with id=${id}. Maybe conference was not found!`,
+                    message: `Cannot delete conference with id=${id}. Maybe conference does not exist!`,
                 });
             } else {
                 return console.log({
@@ -134,7 +134,7 @@ exports.deleteConference = (id) => {
         })
         .catch((err) => {
             return console.log({
-                message: "Could not delete conference with id=" + id,
+                message: "Could not delete conference with id = " + id,
             });
         });
 };
@@ -156,48 +156,45 @@ exports.deleteConferenceAll = () => {
 
 // get the joined users and put them in conference document
 
-exports.JoinedToConference = () => {
+exports.JoinedToConference = (idC, idU) => {
     //const id = req.params.id;
-    //let id = /*req.params.id */ ['6388e49a6f3b0b10350b6533']; // set ur id here
-    //let IdU = /*/req.body.IdU */ ['6381ea6cc4f9b2010165e23b']; // set ur id here
-    Conference.findByIdAndUpdate(id, { $push: { videoCall: IdU } })
+    Conference.findByIdAndUpdate(idC, { $push: { videoCall: idU } })
 
     .then((data) => {
             if (!data) {
                 return console.log({
-                    message: `Cannot delete conference with id=${id}. Maybe conference was not found!`,
+                    message: `Cannot find conference with id = ${idC}. Maybe conference does not exist!`,
                 });
             } else
                 return console.log({
-                    message: `The user with id=${IdU}. has joined the conference!`,
+                    message: `The user with id = ${idU}. has joined the conference!`,
                 });
         })
         .catch((err) => {
             return console.log({
-                message: "Error updating Conference with id=" + id,
+                message: "Error during joining the conference with id = " + idC,
             });
         });
 };
 
 // get the joined users and pull them from conference document
-exports.LeaveTheConference = () => {
+exports.LeaveTheConference = (idC, idU) => {
     //const id = req.params.id;
-    // let id = /*req.params.id */ ['6388e49a6f3b0b10350b6533']; // set ur id here
-    // let IdU = /*/req.body.IdU */ ['6381ea6cc4f9b2010165e23b']; // set ur id here
-    Conference.findByIdAndUpdate(id, { $pullAll: { videoCall: IdU } })
+
+    Conference.findByIdAndUpdate(idC, { $pull: { videoCall: idU } })
         .then((data) => {
             if (!data) {
                 return console.log({
-                    message: `Cannot delete conference with id=${id}. Maybe conference was not found!`,
+                    message: `Cannot find conference with id = ${idC}. Maybe conference does not exist!`,
                 });
             } else
                 return console.log({
-                    message: `The user with id=${IdU}. has left the conference!`,
+                    message: `The user with id = ${idU}. has left the conference!`,
                 });
         })
         .catch((err) => {
             return console.log({
-                message: "Error updating Conference with id=" + id,
+                message: "Error during leaving the conference with id = " + idC,
             });
         });
 };

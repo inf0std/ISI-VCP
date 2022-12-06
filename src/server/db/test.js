@@ -11,7 +11,7 @@ const {
     addContact,
 } = require("./crudUtils/userCrud");
 const { createConference, readConferenceAll, readConference, updateConference, deleteConference, deleteConferenceAll, JoinedToConference, LeaveTheConference, getUserProgrammedEvents } = require("./crudUtils/conferenceCrud")
-const { createReunion, readReunionAll, readReunion, updateReunion, deleteReunion, deleteReunionAll } = require("./crudUtils/reunionCrud")
+const { Mod, createReunion, readReunionAll, readReunion, updateReunion, deleteReunion, deleteReunionAll } = require("./crudUtils/reunionCrud")
 const port = process.env.PORT || 3000; //ebergement
 
 //createUser({ email: 'fayce@gmail.coml' }, { password: 'faycel' });

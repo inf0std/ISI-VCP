@@ -1,0 +1,9 @@
+body {
+    background-color: whitesmoke;
+  }
+ 
+
+  .react-datepicker-wrapper,
+  .react-datepicker__input-container {
+    width: 100%;
+  }

@@ -1,127 +1,158 @@
-const { default: mongoose } = require("mongoose");
-const validator = require("validator");
-const bcrypt = require("bcrypt");
-const createError = require("http-errors");
+const mongoose = require("mongoose");
+const { User } = require("../schema/User")
+const { Reunion } = require("../schema/Reunion")
 
-const User = require("../schema/User");
-
-const Reunion = require("../schema/Conversation");
 
 /////methode post
-const createReunion = async (id, newreunion) => {
-  const newreunion = new Reunion({
-    Reunion_Name: newReunion_Name,
-    ParticipantsName: newParticipantsName,
-    Date_begin: newDate_begin,
-    Duration: newDuration,
-  });
-  console.log(newReunion_Name);
+//create reunion
+exports.createReunion = (idU, newReunion_Name, newParticipantsName, newDate_begin, newDuration) => { // idU = id of user
 
-  try {
-    //attendre reunion soit sauvgarder then update user
-    const savereunion = await reunion.save().then((reunionsaved) => {
-      console.log("reunionsaved: ", reunionsaved);
-      const reunionsId = reunionsaved._id;
-      return User.findByIdAndUpdate(idU, { reunions_id: reunionsId });
-      User.updateMany(
-        { age: { $gte: 5 } },
-        { name: "ABCD" },
-        function (err, docs) {
-          if (err) {
-            console.log(err);
-          } else {
-            console.log("Updated Docs : ", docs);
-          }
-        }
-      );
-    });
-    console.log(savereunion);
-  } catch (e) {
-    console.log(e);
-  }
-};
-// read all users
-const readReunion = async (req, res, next) => {
-  try {
-    const ListReunions = await Reunion.find({}).populate(User); //trouver tout les users les {} bien vide
-    res.send(ListReunions);
-  } catch (e) {
-    res.status(500).send(e); //aficher erreur 500 objet non trouver
-  }
-};
+        const newreunion = new Reunion({
+            reunion_Name: newReunion_Name,
+            participantsName: newParticipantsName,
+            Date_begin: newDate_begin,
+            Duration: newDuration,
+            reunion_Host: idU,
+            reunion_moderateur: idU
+        });
 
-const readoneReunion = async (req, res, next) => {
-  try {
-    const id = req.params.idR;
-    console.log(id);
+        //attendre reunion soit sauvgarder then update user
+        newreunion
+            .save(newreunion)
+            .then(data => {
+                /** add the id of the organiser in user feild */
+                var newreunionId = newreunion._id
+                Reunion.updateOne({ _id: newreunionId }, { $push: { ParticipantsName: idU }, }).then(user => {
+                        return console.log({
+                            message: `${user.modifiedCount} updated successfully!`,
 
-    const login = await Login.findById(id);
-    console.log(login);
+                        });
+                    })
+                    /** add the id of the Reunion in user document */
+                User.updateMany({ _id: { $in: newParticipantsName } }, { $push: { reunion: newreunionId }, }).then(user => {
+                    return console.log({
+                        message: `${user.modifiedCount} updated successfully!`,
 
-    if (!login) {
-      throw createError(404, "login does not exist.");
+                    });
+                })
+                return console.log(data, {
+                    message: "ceated successfully!"
+                });
+            })
+            .catch(err => {
+                return console.log({
+                    message: err.message || "Some error occurred while creating the reunion."
+                });
+            });
     }
-    res.send(login);
-  } catch (error) {
-    console.log(error.message);
-    if (error instanceof mongoose.CastError) {
-      next(createError(400, "Invalid login id"));
-      return;
-    }
-    next(error);
-  }
+    // désigner le modirateur 
+exports.Mod = (idR, IdM) => { //idR = id of reunion     // idM =  id of the new moderateur 
+    //const id = req.params.id;
+
+    Reunion.updateOne({ _id: idR }, { reunion_moderateur: IdM }).then(user => {
+        return console.log({
+            message: `${user.modifiedCount} Moderateur updated successfully!`,
+
+        });
+    })
+
 };
 
-//update login
-const updateReunion = async (req, res, next) => {
-  try {
-    const id = req.params.id;
-    console.log(id);
-    const updates = req.body;
-    console.log(updates);
-    const options = { new: true };
-    console.log(options);
 
-    const result = await Login.findByIdAndUpdate(id, updates, options);
-    console.log(result);
-    if (!result) {
-      throw createError(404, "login does not exist");
-    }
-    res.send(result);
-  } catch (error) {
-    console.log(error.message);
-    if (error instanceof mongoose.CastError) {
-      return next(createError(400, "Invalid login Id"));
-    }
+// read all reunions
+exports.readReunionAll = () => {
 
-    next(error);
-  }
+    Reunion.find({ archive: false })
+        .then(data => {
+            console.log(data);
+        })
+        .catch(err => {
+            console.log({
+                message: err.message || "Some error occurred while retrieving reunion."
+            });
+        });
 };
 
-//delette login
-const deleteReunion = async (req, res, next) => {
-  const id = req.params.id;
-  try {
-    const result = await Login.findByIdAndDelete(id);
-    console.log(result);
-    if (!result) {
-      throw createError(404, "Product does not exist.");
+//read all reunions with id
+exports.readReunion = (id) => {
+    //const id = params.id;
+    if ((Reunion.archive == true)) {
+        console.log({ message: "Not found reunion with id " + id })
+        return
     }
-    res.send(result);
-  } catch (error) {
-    console.log(error.message);
-    if (error instanceof mongoose.CastError) {
-      next(createError(400, "Invalid Product id"));
-      return;
-    }
-    next(error);
-  }
+    Reunion.findById(id)
+        .then(data => {
+            if (!data)
+                console.log({ message: "Not found Reunion with id " + id });
+            else console.log(data);
+        })
+        .catch(err => {
+            console.log
+
+                ({ message: "Error retrieving Reunion with id = " + id });
+        });
 };
 
-module.exports = {
-  createReunion,
-  readReunion,
-  readoneReunion,
-  updateReunion,
-  deleteReunion,
+
+//update reunion
+exports.updateReunion = (id, newReun) => {
+
+    if (!newReun || !id) {
+        return console.log({
+            message: "Data to update can not be empty!"
+        });
+    }
+
+    //const id = req.params.id;
+
+    Reunion.findByIdAndUpdate(id, newReun, { useFindAndModify: false })
+        .then(data => {
+            if (!data) {
+                return console.log({
+                    message: `Cannot update Reunion with id = ${id}. Maybe Reunion was not found!`
+                });
+            } else console.log({ message: "Reunion was updated successfully." });
+        })
+        .catch(err => {
+            return console.log({
+                message: "Error updating Reunion with id = " + id
+            });
+        });
+};
+
+// Delete a Reunion with the specified id in the request
+exports.deleteReunion = (id) => {
+    //const id = req.params.id;
+
+    Reunion.findByIdAndUpdate(id, { archive: true })
+        .then(data => {
+            if (!data) {
+                return console.log({
+                    message: `Cannot delete Reunion with id = ${id}. Maybe Reunion was not found!`
+                });
+            } else {
+                return console.log({
+                    message: "Reunion was deleted successfully!"
+                });
+            }
+        })
+        .catch(err => {
+            return console.log({
+                message: "Could not delete Reunion with id = " + id
+            });
+        });
+};
+// Delete all Reunions from the database.
+exports.deleteReunionAll = () => {
+    Reunion.updateMany({ archive: true })
+        .then(data => {
+            return console.log({
+                message: `${data.modifiedCount} Reunions were deleted successfully!`
+            });
+        })
+        .catch(err => {
+            return console.log({
+                message: err.message || "Some error occurred while removing all Reunions."
+            });
+        });
 };

@@ -99,10 +99,10 @@ const addConversation = async (id1, id2) => {
 };
 
 //read convesation
-const readConversation = async (id1, id2) => {
+const readConversation = async (id2) => {
   try {
     const FullConversation = await Conversation.findOne({
-      _id: createdConversation._id,
+      _id: id2,
     });
     console.log(FullConversation);
   } catch (error) {
@@ -137,6 +137,53 @@ const addMessage = async (idC, msg) => {
   }
 };
 
+const addcall = async (idC, call) => {
+  console.log(call);
+  // verifier si le message est vide ou id de la convesation est vide
+  if (!call || !idC) {
+    console.log("Invalid data passed into request");
+  } else {
+    var newcall = {
+      
+      sender_call: call.senderId,
+      participants:call.participants,
+      datebegin:call.datebegin,
+      duration:call.duration
+      
+    };
+
+    try {
+      var currentConversation = await Conversation.findOneAndUpdate(
+        { _id: idC },
+        { $push: { videocalls: newcall} }
+      );
+
+      console.log(currentConversation);
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
+};
+const readallcalls = async (idC) => {
+  try {
+    console.log(idC);
+
+    const videocalls = await Conversation.findById(idC).select("videocalls");
+    console.log(videocalls);
+
+    if (!videocalls) {
+      throw createError(404, " does not exist.");
+    }
+    return videocalls;
+  } catch (error) {
+    console.log(error.message);
+    if (error instanceof mongoose.CastError) {
+      next(createError(400, "Invalid id"));
+      return;
+    }
+    next(error);
+  }
+};
 const readallMessages = async (idC) => {
   try {
     console.log(idC);
@@ -208,7 +255,7 @@ const createGrpConversation = async (IdU, users) => {
 
 const updateconversation = async (IdC, updates) => {
   console.log(updates);
-  if (!updates) {
+  if (!updates||!Idc) {
     throw createError(404, "veuilleur saisir data");
   }
   const updatedConversation = await Conversation.findByIdAndUpdate(
@@ -223,7 +270,9 @@ const updateconversation = async (IdC, updates) => {
 
 const removeFromGroup = async (IdC, IdU) => {
   // check if the requester is admin
-
+  if (!IdU||!Idc) {
+    throw createError(404, "veuilleur saisir data");
+  }
   const removed = await Conversation.findByIdAndUpdate(
     IdC,
     {
@@ -240,11 +289,14 @@ const removeFromGroup = async (IdC, IdU) => {
     console.log("not removed");
     throw new Error("conversation Not Found");
   } else {
-    console.log(removed);
+    return removed;
   }
 };
 
 const addToGroup = async (IdC, IdU) => {
+  if (!IdU||!Idc) {
+    throw createError(404, "veuilleur saisir data");
+  }
   const added = await Conversation.findByIdAndUpdate(
     IdC,
     {
@@ -259,7 +311,8 @@ const addToGroup = async (IdC, IdU) => {
     console.log("not added");
     throw new Error("conversation Not Found");
   } else {
-    console.log(" added");
+   
+    return added;
   }
 };
 module.exports = {
@@ -269,8 +322,9 @@ module.exports = {
   readConversation,
   addMessage,
   readallMessages,
-    
   updateconversation,
   removeFromGroup,
   addToGroup,
+  addcall,
+  readallcalls,
 }

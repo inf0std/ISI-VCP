@@ -31,7 +31,7 @@ const ConversationSchema = new Schema(
     videocalls: [
       {
         sender_call: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-        participant: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+        participants: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
         datebegin: {
           type: Date,
 
@@ -39,9 +39,10 @@ const ConversationSchema = new Schema(
         }, //cant change the value of creationdate
 
         duration: {
-          type: Number,
+          type: Number,default:0
         }, //cant change the value of creationdate}
       },
+     
     ],
     archive: { type: Boolean, default: false },
   },

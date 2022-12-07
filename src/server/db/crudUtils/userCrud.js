@@ -160,7 +160,6 @@ const deleteUser = async (id) => {
   }
 };
 
-<<<<<<< HEAD
 const addContact =  async(idUser,idContact)=>{
   if(!idUser || !idContact){throw createError(404, 'veuilleur saisir data'); };
   console.log(idUser)
@@ -188,11 +187,6 @@ const addContact =  async(idUser,idContact)=>{
     
     }*/
   
-=======
-const addContact = async (id1, id2) => {
-  if (!id1 || !id2) {
-    throw createError(404, "veuilleur saisir data");
->>>>>>> fb248c5acbf2751f4d738288cd7b9d4c68288702
   }
   User.findById(id1)
     .select("contacts")
@@ -217,21 +211,7 @@ const addContact = async (id1, id2) => {
         }
       }
     });
-};
+;
 
-<<<<<<< HEAD
 
 module.exports = {auth, createUser,readoneUser,UpdateLogin,UpdateUser,archiveUser,deleteUser,UpdateloginAdmin,addContact};
-=======
-module.exports = {
-  auth,
-  createUser,
-  readoneUser,
-  UpdateLogin,
-  UpdateUser,
-  archiveUser,
-  deleteUser,
-  UpdateloginAdmin,
-  addContact,
-};
->>>>>>> fb248c5acbf2751f4d738288cd7b9d4c68288702

@@ -4,9 +4,6 @@ const bcrypt = require("bcrypt");
 const User = require("../schema/User");
 const Conversation = require("../schema/Conversation");
 
-<<<<<<< HEAD
-const {User} = require('../schema/User');
-=======
 //ajouter l'id de la conversation a la liste des converstions des utilisateurs
 const addConversationToUsers = (convId, usersId) => {
   return User.updateMany(
@@ -20,7 +17,6 @@ const addConversationToUsers = (convId, usersId) => {
     throw err;
   });
 };
->>>>>>> fb248c5acbf2751f4d738288cd7b9d4c68288702
 
 const createConversation = (convData) => {
   Conversation.create(convData)
@@ -41,7 +37,6 @@ const addConversation = async (id1, id2) => {
     throw err;
   });
 
-<<<<<<< HEAD
 const addConversation = async (ids, idR) => {
 
     
@@ -103,26 +98,6 @@ const addConversation = async (ids, idR) => {
 
   
 
-=======
-  Conversation.find({
-    isGroup: false,
-    archive: false,
-    $and: [
-      { users: { $elemMatch: { $eq: id1 } } },
-      { users: { $elemMatch: { $eq: id2 } } },
-    ],
-  })
-    .populate({ path: "users", select: "_id" })
-    .then((result) => {
-      if (result.length == 0) {
-        createConversation({
-          ConversationName: "",
-          isGroup: false,
-          users: [id1, id2],
-        });
-      }
-    });
->>>>>>> fb248c5acbf2751f4d738288cd7b9d4c68288702
 };
 
 //read convesation

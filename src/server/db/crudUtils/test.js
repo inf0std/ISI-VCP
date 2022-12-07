@@ -1,6 +1,6 @@
 const { connectDb } = require("../db.js");
 
-const {
+/*const {
   createUser,
   readoneUser,
   UpdateLogin,
@@ -9,14 +9,22 @@ const {
   deleteUser,
   addContact,
   auth,
-} = require("./userCrud");
+} = require("./userCrud");*/
+const {
+  createGrpConversation,
+  updateconversation,
+  removeFromGroup,
+  addToGroup,
+}= require("./grpconversationCrud");
 
+
+/*
 const {
   addConversation,
   readConversation,
   addMessage,
   readallMessages,
-} = require("./conversationCrud");
+} = require("./conversationCrud");*/
 var user1;
 var user2;
 /*
@@ -36,11 +44,14 @@ auth("g@g.com", "12345678").then((user) => {
   console.log("this is user 2", user);
 }); //*/
 //*
-var id1 = "638b5661aa58fce157c6b6bb";
-var id2 = "638b5662aa58fce157c6b6bd";
+//var id1 = "63828f04629963f37bfc9332";
+//var id2 = "63828f04629963f37bfc932c";
 //addContact(id1, id2);
 
 //addContact(id2, id1);
 
-addConversation(id1, id2);
+//addConversation(id1, id2);
+createGrpConversation('63828f04629963f37bfc9332',['63828f04629963f37bfc932c','63833e244a54dc8fa453b3ec'
+,'6383bfde288e67fe0aa744a0'
+])
 //*/

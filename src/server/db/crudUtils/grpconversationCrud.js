@@ -7,6 +7,20 @@ const { User } = require("../schema/User");
 
 const Conversation = require("../schema/Conversation");
 
+
+const addConversationToUsers = (convId, usersId) => {
+  return User.updateMany(
+    {
+      $or: usersId.map((id) => {
+        return { _id: id };
+      }),
+    },
+    { conversations: convId }
+  ).catch((err) => {
+    throw err;
+  });
+};
+
 const createGrpConversation = async (IdU, users) => {
   console.log(IdU);
 
@@ -25,10 +39,11 @@ const createGrpConversation = async (IdU, users) => {
   console.log(users);
   try {
     const grpConversation = await Conversation.create({
-      ConversationName: grpname, //nom du grope from body
+     // ConversationName: grpname, //nom du grope from body
       users: users, // liste of users deja creer
       isGroup: true, // boolean to true
       groupAdmin: IdU, //req.user,// user actuel sera admin du grop
+      archive:false,
     });
 
     const fullGrpConversation = await Conversation.findOne({

@@ -3,13 +3,9 @@ import {
   MDBContainer,
   MDBRow,
   MDBCol,
-  MDBCard,
-  MDBCardBody,
-  MDBIcon,
   MDBBtn,
   MDBTypography,
   MDBTextArea,
-  MDBCardHeader,
 } from "mdb-react-ui-kit";
 
 export default function Messagerie() {

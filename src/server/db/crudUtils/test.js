@@ -10,21 +10,19 @@ const { connectDb } = require("../db.js");
   addContact,
   auth,
 } = require("./userCrud");*/
-const {
- 
-  updateconversation,
-  removeFromGroup,
-  addToGroup,
-}= require("./grpconversationCrud");
-
 
 
 const {
   createGrpConversation,
+  readNthTeenMessages,
   addConversation,
   readConversation,
   addMessage,
   readallMessages,
+    
+  updateconversation,
+  removeFromGroup,
+  addToGroup,
 } = require("./conversationCrud");
 var user1;
 var user2;
@@ -52,7 +50,7 @@ auth("g@g.com", "12345678").then((user) => {
 //addContact(id2, id1);
 
 //addConversation(id1, id2);
-createGrpConversation('63828f04629963f37bfc9332',['63828f04629963f37bfc932c','63833e244a54dc8fa453b3ec'
-,'6383bfde288e67fe0aa744a0'
-])
+
+updateconversation('638b6465d154f6f38ad37c0f',{ conversationName:'name'})
+
 //*/

@@ -205,6 +205,63 @@ const createGrpConversation = async (IdU, users) => {
   }
 };
 
+
+const updateconversation = async (IdC, updates) => {
+  console.log(updates);
+  if (!updates) {
+    throw createError(404, "veuilleur saisir data");
+  }
+  const updatedConversation = await Conversation.findByIdAndUpdate(
+  IdC ,  updates , { new: true } );
+
+  if (!updatedConversation) {
+    throw new Error("Convesation Not Found");
+  } else {
+    return updatedConversation
+  }
+};
+
+const removeFromGroup = async (IdC, IdU) => {
+  // check if the requester is admin
+
+  const removed = await Conversation.findByIdAndUpdate(
+    IdC,
+    {
+      $pull: { users: IdU },
+    },
+    {
+      new: true,
+    }
+  )
+    .populate("users", "-login")
+    .populate("groupAdmin");
+
+  if (!removed) {
+    console.log("not removed");
+    throw new Error("conversation Not Found");
+  } else {
+    console.log(removed);
+  }
+};
+
+const addToGroup = async (IdC, IdU) => {
+  const added = await Conversation.findByIdAndUpdate(
+    IdC,
+    {
+      $push: { users: IdU },
+    },
+    {
+      new: true,
+    }
+  );
+
+  if (!added) {
+    console.log("not added");
+    throw new Error("conversation Not Found");
+  } else {
+    console.log(" added");
+  }
+};
 module.exports = {
   createGrpConversation,
   readNthTeenMessages,
@@ -212,4 +269,8 @@ module.exports = {
   readConversation,
   addMessage,
   readallMessages,
+    
+  updateconversation,
+  removeFromGroup,
+  addToGroup,
 }

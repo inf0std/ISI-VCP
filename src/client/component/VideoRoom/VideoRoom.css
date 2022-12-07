@@ -25,6 +25,13 @@ nav div {
     transition: 0.5 ease;
 }
 
+.icons a:hover {
+    color: aqua;
+}
+
+.icons a:focus {
+    color: #2c479f;
+}
 
 .top-icons {
     display: flex;
@@ -44,6 +51,14 @@ nav div {
 
 }
 
+.top-icons a :hover {
+    color: aqua;
+}
+
+.top-icons a:focus {
+    color: #2c479f;
+}
+
 img {
 
 
@@ -53,10 +68,12 @@ img {
 
 
 
-section {
+.conteneur {
 
     background-color: rgb(7, 5, 37);
     overflow-wrap: normal;
+    height: 100vh;
+    width: 100%;
 }
 
 div.iconss {
@@ -73,6 +90,13 @@ div.iconss {
     text-decoration: none;
 }
 
+.iconss a:hover {
+    color: aqua;
+}
+
+.iconss a:focus {
+    color: #2c479f;
+}
 
 
 
@@ -82,13 +106,18 @@ div.iconss {
     position: absolute;
     right: 7px;
     top: 40px;
-    background: #182842;
+    background: linear-gradient(195deg, #3661a7, #182842);
     border-radius: 15px;
     padding: 20px 15px;
     color-scheme: #fff;
     width: 100px;
     height: 534px;
-    margin-top: 20px;
+    margin-top: 6px;
+
+    border: 1px solid linear-gradient(195deg, #3661a7, #182842);
+    backdrop-filter: blur(5px);
+    box-shadow: 0 0 6px 0 rgba(29, 29, 29, 0.203);
+
 }
 
 .people img {

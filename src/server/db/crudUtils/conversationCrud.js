@@ -1,7 +1,7 @@
 const { default: mongoose } = require("mongoose");
 const bcrypt = require("bcrypt");
 
-const User = require("../schema/User");
+const {User} = require("../schema/User");
 const Conversation = require("../schema/Conversation");
 
 //ajouter l'id de la conversation a la liste des converstions des utilisateurs
@@ -28,30 +28,28 @@ const createConversation = (convData) => {
     });
 };
 
+
 const addConversation = async (id1, id2) => {
-  //if the userExist
+
+      //if the userExist
   User.findById(id1).catch((err) => {
     throw err;
   });
   User.findById(id2).catch((err) => {
     throw err;
   });
-
-const addConversation = async (ids, idR) => {
-
-    
-   console.log(ids);console.log(idR)
+   console.log(id1);console.log(id2)
 
     var isConversation = await Conversation.find({
         isGroup: false,   archive :false,
         $and: [
-          { users: { $elemMatch: { $eq: ids} } }, 
-          { users: { $elemMatch: { $eq: idR } } },
+          { users: { $elemMatch: { $eq: id1} } }, 
+          { users: { $elemMatch: { $eq: id2 } } },
         ],
       })
        .populate({ path: 'users', select: '_id' })
        console.log(isConversation)
-        const  dest = await User.findById(idR).select("username") ;
+        const  dest = await User.findById(id2).select("username") ;
           console.log(dest)
 
       if (isConversation.length > 0) {
@@ -63,7 +61,7 @@ const addConversation = async (ids, idR) => {
     var ConversationData = {
       
         isGroup: false,
-        users: [ids, idR],
+        users: [id1, id2],
         archive :false,
     }; 
 
@@ -73,7 +71,7 @@ const addConversation = async (ids, idR) => {
         const createdConversation = await Conversation.create(ConversationData).then(
           (createdConversation ) => {
            //enregistrer id de la conversation dans user.convesations
-            return User.updateMany({   $or:[{_id:ids},{_id:idR} ]    }, 
+            return User.updateMany({   $or:[{_id:id1},{_id:id2} ]    }, 
               
                 { conversations:createdConversation._id}, function (err) {
                 if (err){
@@ -171,10 +169,47 @@ const readNthTeenMessages = async (id, n) => {
     });
 };
 
+
+
+const createGrpConversation = async (IdU, users) => {
+  console.log(IdU);
+
+  if (!users || !IdU) {
+    return res.status(400).send({ message: "Please Fill all the feilds" });
+  }
+
+  if (users.length < 2) {
+    return console.log(
+      "More than 2 users are required to form a group Conversation"
+    );
+  }
+
+  // users.push(req.user);//ajouter user actuelle a la liste des usersgrp
+  users.push(IdU);
+  console.log(users);
+  try {
+    const grpConversation = await Conversation.create({
+     // ConversationName: grpname, //nom du grope from body
+      users: users, // liste of users deja creer
+      isGroup: true, // boolean to true
+      groupAdmin: IdU, //req.user,// user actuel sera admin du grop
+      archive:false,
+    }).then((createdConversation) => {
+     addConversationToUsers(createdConversation.id, createdConversation.users);
+    });
+
+  
+  } catch (error) {
+    console.log("error");
+    throw new Error(error.message);
+  }
+};
+
 module.exports = {
+  createGrpConversation,
   readNthTeenMessages,
   addConversation,
   readConversation,
   addMessage,
   readallMessages,
-};
+}

@@ -8,56 +8,6 @@ const { User } = require("../schema/User");
 const Conversation = require("../schema/Conversation");
 
 
-const addConversationToUsers = (convId, usersId) => {
-  return User.updateMany(
-    {
-      $or: usersId.map((id) => {
-        return { _id: id };
-      }),
-    },
-    { conversations: convId }
-  ).catch((err) => {
-    throw err;
-  });
-};
-
-const createGrpConversation = async (IdU, users) => {
-  console.log(IdU);
-
-  if (!users || !IdU) {
-    return res.status(400).send({ message: "Please Fill all the feilds" });
-  }
-
-  if (users.length < 2) {
-    return console.log(
-      "More than 2 users are required to form a group Conversation"
-    );
-  }
-
-  // users.push(req.user);//ajouter user actuelle a la liste des usersgrp
-  users.push(IdU);
-  console.log(users);
-  try {
-    const grpConversation = await Conversation.create({
-     // ConversationName: grpname, //nom du grope from body
-      users: users, // liste of users deja creer
-      isGroup: true, // boolean to true
-      groupAdmin: IdU, //req.user,// user actuel sera admin du grop
-      archive:false,
-    });
-
-    const fullGrpConversation = await Conversation.findOne({
-      _id: grpConversation._id,
-    })
-      .populate("users") //.populate("users", "-password")
-      .populate("groupAdmin");
-
-    console.log(fullGrpConversation);
-  } catch (error) {
-    console.log("error");
-    throw new Error(error.message);
-  }
-};
 
 const updateconversation = async (IdC, updates) => {
   console.log(updates);
@@ -118,7 +68,7 @@ const addToGroup = async (IdC, IdU) => {
 };
 
 module.exports = {
-  createGrpConversation,
+  
   updateconversation,
   removeFromGroup,
   addToGroup,

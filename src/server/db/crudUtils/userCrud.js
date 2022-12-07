@@ -2,7 +2,7 @@ const { default: mongoose } = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcryptjs");
 const createError = require("http-errors");
-const User = require("../schema/User");
+const {User} = require("../schema/User");
 const Conversation = require("../schema/Conversation");
 
 const createUser = async (newemail, newpassword) => {

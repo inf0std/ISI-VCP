@@ -3,7 +3,7 @@ const { Conference } = require("../schema/Conference")
 const { User } = require("../schema/User")
 
 // Create and Save a new conference
-exports.createConference = (idU, topic, part, duration) => {
+exports.createConference = (idU, topic, part, duration, Date_begin) => {
     // Validate request
     if (!topic) {
         console.log({ message: "Content can not be empty!" });
@@ -28,7 +28,8 @@ exports.createConference = (idU, topic, part, duration) => {
         organisedBy: idU, // get the user id from url .. the video call grp job 
         users: part, // mean participants 
         videocall: [idU], // get the user id from url .. the video call grp job 
-        duration: duration // in minute 
+        duration: duration, // in minute 
+        Date_begin: Date_begin // in 'yyyy-mm-dd'
     });
 
 

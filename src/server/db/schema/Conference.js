@@ -24,6 +24,9 @@ const conferenceSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    Date_begin: {
+        type: Date
+    },
     duration: {
         type: Number
     }

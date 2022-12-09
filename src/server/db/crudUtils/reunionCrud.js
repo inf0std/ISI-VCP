@@ -10,6 +10,7 @@ exports.createReunion = (idU, newReunion_Name, newParticipantsName, newDate_begi
         const newreunion = new Reunion({
             reunion_Name: newReunion_Name,
             participantsName: newParticipantsName,
+            videocall: [idU],
             Date_begin: newDate_begin,
             Duration: newDuration,
             reunion_Host: idU,
@@ -22,14 +23,14 @@ exports.createReunion = (idU, newReunion_Name, newParticipantsName, newDate_begi
             .then(data => {
                 /** add the id of the organiser in user feild */
                 var newreunionId = newreunion._id
-                Reunion.updateOne({ _id: newreunionId }, { $push: { ParticipantsName: idU }, }).then(user => {
+                Reunion.updateOne({ _id: newreunionId }, { $push: { participantsName: idU }, }).then(user => {
                         return console.log({
                             message: `${user.modifiedCount} updated successfully!`,
 
                         });
                     })
                     /** add the id of the Reunion in user document */
-                User.updateMany({ _id: { $in: newParticipantsName } }, { $push: { reunion: newreunionId }, }).then(user => {
+                User.updateMany({ $or: [{ _id: { $in: data.participantsName } }, { _id: idU }] }, { $push: { reunions: newreunionId }, }).then(user => {
                     return console.log({
                         message: `${user.modifiedCount} updated successfully!`,
 
@@ -156,3 +157,42 @@ exports.deleteReunionAll = () => {
             });
         });
 };
+//joined to reunion
+exports.JoinedToReunion = (idR, idU) => {
+    //const id = req.params.id;
+
+
+    Reunion.findByIdAndUpdate(idR, { $push: { videocall: idU } })
+
+    .then(data => {
+            if (!data) {
+                return console.log({
+                    message: `Cannot find reunion with id=${idR}. Maybe reunion does not exist!`
+                });
+
+            } else return console.log({ message: `The user with id=${idU}. has joined the reunion!` });
+        })
+        .catch(err => {
+            return console.log({
+                message: "Error during joining the reunion with id=" + idR
+            });
+        });
+}
+
+//leave the reunion
+exports.LeaveTheReunion = (idR, idU) => {
+    //const id = req.params.id;
+    Reunion.findByIdAndUpdate(idR, { $pull: { videocall: idU } })
+        .then(data => {
+            if (!data) {
+                return console.log({
+                    message: `Cannot find reunion with id=${idR}. Maybe reunion does not exist!`
+                });
+            } else return console.log({ message: `The user with id=${idU}. has left the reunion!` });
+        })
+        .catch(err => {
+            return console.log({
+                message: "Error during leaving the reunion with id=" + idR
+            });
+        });
+}

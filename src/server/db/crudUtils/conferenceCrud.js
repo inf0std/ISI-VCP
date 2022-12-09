@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 const { Conference } = require("../schema/Conference")
 const { User } = require("../schema/User")
-
-// Create and Save a new conference
+const { Reunion } = require("../schema/Reunion")
+    // Create and Save a new conference
 exports.createConference = (idU, topic, part, duration, Date_begin) => {
     // Validate request
     if (!topic) {
@@ -39,14 +39,14 @@ exports.createConference = (idU, topic, part, duration, Date_begin) => {
         .then(data => {
             /** add the id of the organiser in user feild */
             var newConferenceId = conference._id
-            Conference.updateOne({ _id: newConferenceId }, { $push: { users: idU }, }).then(user => {
+            Conference.updateOne({ _id: newConferenceId }, { $push: { users: idU }, }, { missed: false }).then(user => {
                     return console.log({
                         message: `${user.modifiedCount} updated successfully!`,
 
                     });
                 })
                 /** add the id of the Conference in user document */
-            User.updateMany({ _id: { $in: part } }, { $push: { Conference: newConferenceId }, }).then(user => {
+            User.updateMany({ $or: [{ _id: { $in: data.users } }, { _id: idU }] }, { $push: { conferences: newConferenceId }, }).then(user => {
                 return console.log({
                     message: `${user.modifiedCount} updated successfully!`,
 
@@ -199,3 +199,116 @@ exports.LeaveTheConference = (idC, idU) => {
             });
         });
 };
+
+
+// the function to set if the Conference is missed or not compared with date now
+// u have to run this function every time u wanna get the events 
+exports.SetEvent = () => {
+    var query = Conference.find({}).select('_id');
+    query.exec(function(err, ids) {
+        if (err) return console.log(err)
+        else {
+            const set1 = [...new Set(ids)];
+            console.log(set1)
+            const set2 = set1.map(mongoose.Types.ObjectId); //string to objectId
+            console.log(set2)
+            set1.forEach((item) => {
+                var query = Conference.findOne({ _id: item }, { 'Date_begin': 1, 'duration': 1 }, function(err, data) {
+                    const dt0 = new Date(data.Date_begin); //date of the conference 
+                    console.log(dt0) // show date of confer
+                    let dt1 = new Date(); // date now
+                    let dur = data.duration // duration of the conference
+                    const dt2 = new Date(dt0.getTime() + dur * 60 * 1000) // date of the conference + duration
+                    console.log(dt2) // show the date after adding the duration
+                    const result = dt2 - dt1 //  date now - date result after add operation 
+                    console.log(result); // show the resul to check if it's negative or not 
+
+                    if (result > 0) { // if the result greater than 0 then missed = false mean it is programmed
+                        return console.log(` programmed!`),
+                            Conference.updateOne(item, { $set: { missed: false } }, function(err, data) {
+                                if (err) console.log(err)
+                                else console.log(`${data.modifiedCount}`)
+                            })
+
+
+                    } else if (result <= 0) { // if the result less than 0 then missed = true mean it is missed
+                        Conference.updateOne(item, { $set: { missed: true } }, function(err, data) {
+                            if (err) console.log(err)
+                            else console.log(`${data.modifiedCount}`)
+                        })
+                    }
+                })
+            });
+        }
+
+    })
+}
+
+
+//getUserProgrammedEvents 
+exports.getUserProgrammedEvents = (idU) => {
+    User.findById({ _id: idU }, { 'conferences': 1 }, function(err, ids) {
+        if (err) console.log(err)
+        else {
+            const set1 = ids.conferences.map(x => x.toString()); // objectId to string
+            let vd = Conference.videocall
+            const query1 = Conference.find({ $and: [{ _id: { $in: set1 } }, { idU: { $in: vd } }, { 'missed': false }] }, { 'topic': 1, 'Date_begin': 1, 'duration': 1 }, function(err, res) {
+                if (err) console.log(err)
+                else
+                    console.log(`Your programmed Conferences are :  ${res}
+                    ////////////////////////////////
+                    `)
+            })
+        }
+    })
+    User.findById({ _id: idU }, { 'reunions': 1 }, function(err, ids) {
+        if (err) console.log(err)
+        else {
+            const set1 = ids.reunions.map(x => x.toString()); // objectId to string
+            let vdr = Reunion.videocall;
+
+            const query2 = Reunion.find({ $and: [{ _id: { $in: set1 } }, { idU: { $in: vdr } }, { 'missed': false }] }, { 'reunion_Name': 1, 'Date_begin': 1, 'Duration': 1 }, function(err, res) {
+                if (err) console.log(err)
+                else
+                    console.log(`Your programmed Reunions are :  ${res}
+                    ////////////////////////////////
+                    `)
+            })
+        }
+    })
+
+}
+
+//getUserMissedEvents 
+exports.getUserMissedEvents = (idU) => {
+    User.findById({ _id: idU }, { 'conferences': 1 }, function(err, ids) {
+        if (err) console.log(err)
+        else {
+            const set1 = ids.conferences.map(x => x.toString()); // objectId to string
+            let vd = Conference.videocall
+            const query3 = Conference.find({ $and: [{ _id: { $in: set1 } }, { idU: { $in: vd } }, { 'missed': true }] }, { 'topic': 1, 'Date_begin': 1, 'duration': 1 }, function(err, res) {
+                if (err) console.log(err)
+                else
+                    console.log(`Your missed Conferences are :  ${res}
+                    ////////////////////////////////
+                    `)
+            })
+        }
+    })
+    User.findById({ _id: idU }, { 'reunion': 1 }, function(err, ids) {
+        if (err) console.log(err)
+        else {
+            const set1 = ids.reunions.map(x => x.toString()); // objectId to string
+            let vdr = Reunion.videocall;
+            const query4 = Reunion.find({ $and: [{ _id: { $in: set1 } }, { idU: { $in: vdr } }, { 'missed': true }] }, { 'reunion_Name': 1, 'Date_begin': 1, 'Duration': 1 }, function(err, res) {
+                if (err) console.log(err)
+                else
+                    console.log(`Your missed Reunions are :  ${res}
+                                 ////////////////////////////////
+                                 `)
+            })
+
+        }
+    })
+
+}

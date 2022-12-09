@@ -1,7 +1,7 @@
 const validator = require("validator");
 const Conversation = require("./Conversation");
 const Reunion = require("./Reunion");
-const Confer = require("./Conference");
+const Conference = require("./Conference");
 const mongoose = require("mongoose"); //require mongoose
 //const crypto = require("crypto"); // crypto for encrypt the password
 //const { v4: uuidv4 } = require('uuid'); // user for identifying information that needs to be unique within a system or network thereof
@@ -42,19 +42,20 @@ const userSchema = new mongoose.Schema({
             },
         },
         conversations: [{
-            type: mongoose.SchemaTypes.ObjectID,
+            type: mongoose.Schema.Types.ObjectId,
             ref: "Conversation",
         }, ],
 
         reunions: [{
-            type: mongoose.SchemaTypes.ObjectID,
+            type: mongoose.Schema.Types.ObjectId,
             ref: "Reunion",
-        }, ],
+        }],
 
         conferences: [{
-            type: mongoose.SchemaTypes.ObjectID,
+            type: mongoose.Schema.Types.ObjectId,
             ref: "Conference",
-        }, ],
+        }],
+
         organisations: [{
             type: mongoose.Schema.Types.ObjectId,
             ref: "organisation",

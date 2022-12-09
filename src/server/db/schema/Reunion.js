@@ -29,7 +29,11 @@ const reunionSchema = new mongoose.Schema({
             ref: 'User',
             trim: true,
         }], // one  to many (one reunion to many participants)
-
+        videocall: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',
+            trim: true,
+        }],
         Date_begin: {
             type: Date,
             default: Date.now
@@ -43,6 +47,10 @@ const reunionSchema = new mongoose.Schema({
             type: Boolean,
             default: false
         },
+        missed: {
+            type: Boolean,
+            default: false
+        }
 
     }, { timestamps: true, } //date of creation and date of updat);
 

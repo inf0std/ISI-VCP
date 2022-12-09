@@ -29,6 +29,10 @@ const conferenceSchema = new mongoose.Schema({
     },
     duration: {
         type: Number
+    },
+    missed: {
+        type: Boolean,
+        default: false
     }
 }, { timestamps: true })
 

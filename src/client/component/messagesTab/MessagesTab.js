@@ -1,12 +1,12 @@
 import React from "react";
 import { memo } from "react";
-import Msg from "../msg/Msg.js";
+import MSG from "../msg/MSG.js";
 import { MDBTypography } from "mdb-react-ui-kit";
 const MessagesTab = (props) => {
   return (
     <MDBTypography listUnStyled>
       {props.msgList.map((m) => (
-        <Msg msg={m} />
+        <MSG msg={m} />
       ))}
     </MDBTypography>
   );

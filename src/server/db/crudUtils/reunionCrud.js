@@ -159,40 +159,41 @@ exports.deleteReunionAll = () => {
 };
 //joined to reunion
 exports.JoinedToReunion = (idR, idU) => {
-    //const id = req.params.id;
+        //const id = req.params.id;
 
 
-    Reunion.findByIdAndUpdate(idR, { $push: { videocall: idU } })
+        Reunion.findByIdAndUpdate(idR, { $push: { videocall: idU } })
 
-    .then(data => {
-            if (!data) {
-                return console.log({
-                    message: `Cannot find reunion with id=${idR}. Maybe reunion does not exist!`
-                });
-
-            } else return console.log({ message: `The user with id=${idU}. has joined the reunion!` });
-        })
-        .catch(err => {
-            return console.log({
-                message: "Error during joining the reunion with id=" + idR
-            });
-        });
-}
-
-//leave the reunion
-exports.LeaveTheReunion = (idR, idU) => {
-    //const id = req.params.id;
-    Reunion.findByIdAndUpdate(idR, { $pull: { videocall: idU } })
         .then(data => {
-            if (!data) {
+                if (!data) {
+                    return console.log({
+                        message: `Cannot find reunion with id=${idR}. Maybe reunion does not exist!`
+                    });
+
+                } else return console.log({ message: `The user with id=${idU}. has joined the reunion!` });
+            })
+            .catch(err => {
                 return console.log({
-                    message: `Cannot find reunion with id=${idR}. Maybe reunion does not exist!`
+                    message: "Error during joining the reunion with id=" + idR
                 });
-            } else return console.log({ message: `The user with id=${idU}. has left the reunion!` });
-        })
-        .catch(err => {
-            return console.log({
-                message: "Error during leaving the reunion with id=" + idR
             });
-        });
-}
+    }
+    /*
+    //leave the reunion
+    // i think it's nor necessairy to use this 
+    exports.LeaveTheReunion = (idR, idU) => {
+        //const id = req.params.id;
+        Reunion.findByIdAndUpdate(idR, { $pull: { videocall: idU } })
+            .then(data => {
+                if (!data) {
+                    return console.log({
+                        message: `Cannot find reunion with id=${idR}. Maybe reunion does not exist!`
+                    });
+                } else return console.log({ message: `The user with id=${idU}. has left the reunion!` });
+            })
+            .catch(err => {
+                return console.log({
+                    message: "Error during leaving the reunion with id=" + idR
+                });
+            });
+    }*/

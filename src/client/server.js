@@ -34,15 +34,22 @@ io.on("connection",(socket)=>{
         if (!rooms[roomId]) rooms[roomId]=[]
         if (!chats[roomId]) chats[roomId] = [];
         socket.emit("get-messages", chats[roomId]);
-            console.log('user joind a room',roomId + peerId)
+            let i = 0
+            rooms[roomId].forEach(element => {
+                if (element === peerId) {
+                    i= i + 1}
+            });
+            if (i === 0){
+                console.log('user joind a room',roomId + peerId)
             rooms[roomId].push(peerId)
+            
             socket.join(roomId)
             socket.to(roomId).emit("user-joined",{peerId})
             socket.emit("get-users",{
                 roomId,
                 participants: rooms[roomId]
             })
-           
+            }
         
         socket.on("disconnect",()=>{
             console.log("user left the room",peerId);

@@ -5,6 +5,12 @@
     height: 100%;
     border-radius: 15px;
 }
+.stream{
+    display: inline-block;
+    border-radius: 5px;
+    width: 100%;
+    height: 100%;
+}
 .btn{
     position: fixed;
     bottom: 0px;

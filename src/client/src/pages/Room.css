@@ -1,0 +1,35 @@
+.container1{
+    background-color: rgb(43, 42, 42);
+    width:100%;
+    height: auto;
+    position: fixed;
+
+}
+
+.chat{
+    position: fixed;
+    right: 0px;
+    height: 100%;
+    background-color: rgb(79, 82, 82);
+}
+.video{
+    margin: auto;
+    width:800px;
+}
+.video2{
+    width: 350px;
+    z-index: 10;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.partage{
+    position: fixed;
+    top: 55px;
+    height: auto;
+    width: 87%;
+}
+.apres_partage{
+    height: auto;
+    width: 13%;
+}

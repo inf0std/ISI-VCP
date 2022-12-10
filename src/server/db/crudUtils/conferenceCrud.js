@@ -177,8 +177,9 @@ exports.JoinedToConference = (idC, idU) => {
             });
         });
 };
-
+/*
 // get the joined users and pull them from conference document
+// i think it's nor necessairy to use this 
 exports.LeaveTheConference = (idC, idU) => {
     //const id = req.params.id;
 
@@ -200,7 +201,7 @@ exports.LeaveTheConference = (idC, idU) => {
         });
 };
 
-
+*/
 // the function to set if the Conference is missed or not compared with date now
 // u have to run this function every time u wanna get the events 
 exports.SetEvent = () => {
@@ -251,7 +252,8 @@ exports.getUserProgrammedEvents = (idU) => {
         if (err) console.log(err)
         else {
             const set1 = ids.conferences.map(x => x.toString()); // objectId to string
-            let vd = Conference.videocall
+            let vd = Conference.users // get the users of this conference
+                //check if the user is in the users conference and missed = false 
             const query1 = Conference.find({ $and: [{ _id: { $in: set1 } }, { idU: { $in: vd } }, { 'missed': false }] }, { 'topic': 1, 'Date_begin': 1, 'duration': 1 }, function(err, res) {
                 if (err) console.log(err)
                 else
@@ -265,7 +267,7 @@ exports.getUserProgrammedEvents = (idU) => {
         if (err) console.log(err)
         else {
             const set1 = ids.reunions.map(x => x.toString()); // objectId to string
-            let vdr = Reunion.videocall;
+            let vdr = Reunion.participantsName;
 
             const query2 = Reunion.find({ $and: [{ _id: { $in: set1 } }, { idU: { $in: vdr } }, { 'missed': false }] }, { 'reunion_Name': 1, 'Date_begin': 1, 'Duration': 1 }, function(err, res) {
                 if (err) console.log(err)
@@ -285,7 +287,8 @@ exports.getUserMissedEvents = (idU) => {
         if (err) console.log(err)
         else {
             const set1 = ids.conferences.map(x => x.toString()); // objectId to string
-            let vd = Conference.videocall
+            let vd = Conference.videocall //get the users who actually particpate in the conference 
+                //check if the user is in the users who participate the conference and missed = true
             const query3 = Conference.find({ $and: [{ _id: { $in: set1 } }, { idU: { $in: vd } }, { 'missed': true }] }, { 'topic': 1, 'Date_begin': 1, 'duration': 1 }, function(err, res) {
                 if (err) console.log(err)
                 else

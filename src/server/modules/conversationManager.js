@@ -1,6 +1,6 @@
-const conversation = require("./conversation");
+const { Conversation } = require("./conversation");
 
-const currentConvs = [];
+let currentConvs = [];
 
 const joinConv = (user, convId) => {
   var conv = findConv(convId);
@@ -17,26 +17,32 @@ const loadConvFromDb = (convId) => {
   //empty for now
 };
 
-const findConv = (id) => {
+const findConv = async (id) => {
   return currentConvs[id] ? currentConvs[id] : null;
 };
 
 const saveConvIntoDB = (conv) => {
   //empty for now
 };
+
 const createConv = (config) => {
   const { nameConv, creatorId, usersId, idConv, moderator } = config;
-  var conv = new conversation(config);
+  var conv = new Conversation(config);
   try {
-    saveConvIntoDB(conv);
+    //DB is not ready yet
+    //saveConvIntoDB(conv);
   } catch (err) {
     console.log(err);
   }
   currentConvs[idConv] = conv;
 };
+//test de createConv
+createConv({ nameConv: "isi", idConv: 1, usersId: [1, 2, 3] });
 
-const conversationManager = (io) => {
-  this.io = io;
+const getConversationUsers = (id) => {};
+
+module.exports = {
+  createConv,
+  getConversationUsers,
+  findConv,
 };
-
-module.exports = conversationManager;

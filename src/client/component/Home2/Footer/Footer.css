@@ -1,0 +1,85 @@
+.conteners {
+    width: 100%;
+}
+
+.footer {
+    background-color: #24262b;
+    width: 100%;
+    padding-top: 70px;
+    height: 87vh;
+
+
+}
+
+div .row223 {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -10px;
+    margin-right: -120px;
+    padding-bottom: 10px;
+}
+
+ul {
+    list-style: none;
+}
+
+.footer-col {
+    width: 25%;
+}
+
+.ligne {
+    width: 65px;
+    height: 2px;
+    background-color: rgba(0, 255, 255, 0.63);
+    margin-top: -23px;
+    margin-left: 22px;
+    margin-bottom: 16px;
+}
+
+.footer-col h4 {
+    font-size: 18px;
+    color: #ffffff;
+    text-transform: capitalize;
+    margin-bottom: 30px;
+    margin-left: 20px;
+
+}
+
+.footer-col ul li:not(:last-child) {
+    margin-bottom: 10px;
+}
+
+.footer-col ul li a {
+    font-size: 16px;
+    text-transform: capitalize;
+    text-decoration: none;
+    font-weight: 300;
+    color: #bbbbbb;
+    display: block;
+    transition: all 0.3s ease;
+}
+
+.footer-col ul li a:hover {
+    color: aqua;
+    padding-left: 10px;
+}
+
+
+
+.fotter-col1 {
+    padding-left: 80px;
+}
+
+.fotter-col2 {
+    padding-left: 30px;
+}
+
+.footer-col3 {
+    margin-right: 5px;
+    margin-top: 55px;
+}
+
+.listes ul li a {
+    font-size: 9px;
+
+}

@@ -1,14 +1,12 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
-import Tabs from 'react-bootstrap/Tabs';
-import Tab from 'react-bootstrap/Tab';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import './Inscription.css';
 
 function Inscription() {
     return (
-        <div className='container'>
+        <div className='formular'>
 
             <Form>
                 <Form.Group className="mb-3" controlId="formBasicName">
@@ -38,7 +36,7 @@ function Inscription() {
                 <Form.Group className="mb-3" controlId="formBasicCheckbox">
                     <Form.Check type="checkbox" label=" accept Terms of legacy " />
                 </Form.Group>
-                <Button id="validerbtn" variant="primary" type="submit" className='vandam'>
+                <Button id="validerbtn" variant="info" type="submit" className='vandam'>
                     Valid
                 </Button>
             </Form>

@@ -1,24 +1,19 @@
 form {
     width: 300px;
-    margin: 32px;
-    margin: auto;
-
+    margin-top: 40px;
+    margin-left: 20px;
 }
 
-.container {
-
+.Pannier {
+    background-color: rgba(232, 227, 227, 0.826);
     border-radius: 5%;
-    height: 250px;
-    width: 700px;
+    width: 340px;
+    height: 240px;
+    padding-top: 0px;
 }
 
 .nacer {
-    margin-left: 115px;
-    margin-top: 20px;
+    margin-left: 90px;
+    margin-top: 10px;
     width: 100px;
-}
-
-form {
-    margin-top: 30px;
-    margin-left: -10px;
 }

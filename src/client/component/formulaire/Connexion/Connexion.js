@@ -7,7 +7,7 @@ function Connexion() {
   return (
 
 
-    <div className='container'>
+    <div className='Pannier'>
 
 
       <Form>
@@ -24,7 +24,7 @@ function Connexion() {
         </Form.Group>
 
 
-        <Button variant="primary" type="submit" className='nacer'>
+        <Button variant="info" type="submit" className='nacer'>
           Login
         </Button>
       </Form>

@@ -1,21 +1,18 @@
 import React from "react";
-import Messagerie from "./component/messagerie/Messagerie";
-import MSG from "./component/msg/MSG";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./views/Home";
+import Contact from "./views/Contact";
+import Chat from "./views/Chat";
 const App = (props) => {
-  const msg = () => {
-    return (
-      <MSG
-        msg={{
-          isMe: false,
-          image: "https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-8.webp",
-          content: "hello",
-          username: "Brad",
-          date: "21/12/2022",
-        }}
-      />
-    );
-  };
-  return <Messagerie />;
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/Contact" element={<Contact />} />
+        <Route path="/Chat" element={<Chat />} />
+      </Routes>
+    </BrowserRouter>
+  );
 };
 
 export default App;

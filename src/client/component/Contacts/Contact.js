@@ -17,7 +17,7 @@ function Contact(props) {
                         <Form.Label></Form.Label>
                         <Form.Control type="email" placeholder="Object" />
                     </Form.Group>
-                    <Form.Group className="mb-31" controlId="exampleForm.ControlTextarea1">
+                    <Form.Group className="mb-32" controlId="exampleForm.ControlTextarea1">
                         <Form.Label></Form.Label>
                         <Form.Control as="textarea" rows={3} placeholder="Message" />
                     </Form.Group>

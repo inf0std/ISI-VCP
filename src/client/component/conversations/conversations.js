@@ -16,12 +16,12 @@ const COnversations = (props) => {
         }
         {props.convs.map((conv, index) => {
           return (
-            <ConvElement>
+            <ConvElement
               index={index}
               conv={conv}
               activate={props.activate}
               msg={conv.msgs[conv.msgs.length - 1]}
-            </ConvElement>
+            />
           );
         })}
       </div>

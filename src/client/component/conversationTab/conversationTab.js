@@ -8,11 +8,11 @@ const ConversationTab = (props) => {
   return (
     <div className="col-md-9">
       <MessagesTab myId={props.myId} msgs={props.msgs} />
-      <form>
+      <form
         className=""
         style={{
           width: "auto",
-        }}
+        }}>
       
         <input type="text"></input>
         <button onClick={sendMessage}>send</button>

@@ -1,0 +1,8 @@
+.conv-element {
+  display: block;
+  width: auto;
+  padding: 10px;
+}
+.conv-cover {
+  display: inline-block;
+}

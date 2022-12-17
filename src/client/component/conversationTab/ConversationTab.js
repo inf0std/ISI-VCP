@@ -1,6 +1,7 @@
 import React from 'react'
-import io from 'socket.io-client'
+// import io from 'socket.io-client'
 import MessagesTab from '../messagesTab/MessagesTab'
+
 class ConversationTab extends React.Component {
     constructor(props){
       super(props)
@@ -18,7 +19,7 @@ class ConversationTab extends React.Component {
       event.preventDefault()
       console.log('sending msg', this.state.value);
       this.state.msg.push(this.state.value)
-      this.state.msginput.value = '';
+      // this.state.msginput.value = '';
       this.setState({value: ''})
       console.log('messages', this.state.msg)
 

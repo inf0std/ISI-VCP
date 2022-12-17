@@ -1,5 +1,5 @@
 import './App.css';
-import ConversationTab from './component/conversationTab/ConversationTab'
+import ConversationTab from './component/conversationTab/ConversationTab';
 
 function App() {
   return (

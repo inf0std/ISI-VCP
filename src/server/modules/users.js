@@ -4,7 +4,7 @@ const addUser = ({ id, name, room }) => {
   name = name.tirm().toLowerCase();
   room = room.tirm().toLowerCase();
 
-  // verifier l'existance de users dans la meme room avec le meme nom
+  // verifier l'existance de users dans la meme room avec le meme nom 
 
   //si non cree un nv user
   const user = { id, name, room };

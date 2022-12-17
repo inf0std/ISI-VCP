@@ -1,9 +1,9 @@
 const Msg = (props) => {
   return (
-    <div
+    <div>
       className={"d-flex" + (props.isme ? " flex-row-reverse" : " flex-row")}
-    >
-      <div
+    
+      <div>
         className="sender-profile"
         style={{
           width: "30px",
@@ -12,11 +12,11 @@ const Msg = (props) => {
           borderRadius: "50%",
           border: "solid black 1px",
         }}
-      >
+      
         {props.msg.senderId}
       </div>
       <div className="p-2" style={{}}>
-        <p
+        <p>
           style={{
             margin: "auto",
             display: "inline-block",
@@ -24,7 +24,7 @@ const Msg = (props) => {
             backgroundColor: "cyan",
             border: "solid black 1px",
           }}
-        >
+        
           {props.msg.content}
         </p>
       </div>

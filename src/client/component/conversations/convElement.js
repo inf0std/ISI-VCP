@@ -4,8 +4,8 @@ const ConvElement = (props) => {
       className="conv-element"
       onClick={() => {
         props.activate(props.index);
-      }}
-    >
+      }}>
+    
       <div className="conv-cover">
         <img
           style={{
@@ -14,8 +14,8 @@ const ConvElement = (props) => {
             borderRadius: " 50%",
             display: "inline-block",
           }}
-          src="#"
-        ></img>
+          src="#">
+        </img>
       </div>
       <div className={"last-msg" + (!props.msg.seen && "unseen")}>
         <h3>{props.conv.name}</h3>

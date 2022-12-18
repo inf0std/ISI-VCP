@@ -12,8 +12,8 @@ const Msg = (props) => {
           marginTop: "5px",
           borderRadius: "50%",
           border: "solid black 1px",
-        }}
-      >
+        }}>
+      
         {props.msg.senderId}
       </div>
       <div className="p-2" style={{}}>
@@ -24,8 +24,8 @@ const Msg = (props) => {
             borderRadius: "3px",
             backgroundColor: "cyan",
             border: "solid black 1px",
-          }}
-        >
+          }}>
+        
           {props.msg.content}
         </p>
       </div>

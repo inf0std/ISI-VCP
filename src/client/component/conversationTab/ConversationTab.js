@@ -7,13 +7,13 @@ const ConversationTab = (props) => {
   };
 
   return (
-    <div className="col-md-9">
+    <div className="col-md-9 -bg-light container-lg h-100 d-inline-block">
       <MessagesTab myId={props.myId} msgs={props.msgs} />
       <form
         className=""
         style={{
           width: "auto",
-          display: 'flex'
+          display: 'flex',
         }}
       >
         <input className="form-control" type="text" style={{marginRight:'5px'}}></input>

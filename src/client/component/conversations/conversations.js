@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import ConvElement from "./convElement";
+import logo from '../../logo.png'
 const COnversations = (props) => {
   const searchInput = useRef();
   return (
@@ -7,7 +8,10 @@ const COnversations = (props) => {
       {
         //formulaire de recherche dans les conversations
       }
-      <h5 class="font-weight-bold mb-3 text-center text-lg-start">Conversations</h5>
+      <div style={{display:''}}>
+      <img src={logo} alt="logo" style={{width:'60px', marginRight:'10px'}} />
+      <h5 class="font-weight-bold mb-3 text-center text-lg-start">Conversations</h5>  
+      </div>
       <form>
         <input className="form-control" ref={searchInput} type="text"></input>
       </form>

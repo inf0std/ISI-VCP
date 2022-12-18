@@ -14,7 +14,7 @@ const ConvElement = (props) => {
             borderRadius: " 50%",
             display: "inline-block",
           }}>
-      
+    
         </img>
       </div>
       <div className={"last-msg" + (!props.msg.seen && "unseen")}>

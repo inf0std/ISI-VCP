@@ -13,17 +13,17 @@ const { connectDb } = require("../db.js");
 
 
 const {
-  createGrpConversation,
-  readNthTeenMessages,
-  addConversation,
-  readConversation,
-  addMessage,
-  readallMessages,
+    createGrpConversation,
+    readNthTeenMessages,
+    addConversation,
+    readConversation,
+    addMessage,
+    readallMessages,
     readallcalls,
-  updateconversation,
-  removeFromGroup,
-  addToGroup,
-  addcall,
+    updateconversation,
+    removeFromGroup,
+    addToGroup,
+    addcall,
 } = require("./conversationCrud");
 var user1;
 var user2;
@@ -64,5 +64,5 @@ var call={
   duration:1,
 }
 addcall(idC,call)*/
-readallcalls('639102161922627d9a860e0c')
+//readallcalls('639102161922627d9a860e0c')
 //*/

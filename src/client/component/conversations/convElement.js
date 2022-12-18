@@ -18,7 +18,7 @@ const ConvElement = (props) => {
         </img>
       </div>
       <div className={"last-msg" + (!props.msg.seen && "unseen")}>
-        <h3>{props.conv.name}</h3>
+        <h5>{props.conv.name}</h5>
         <p>{props.msg.content}</p>
       </div>
     </div>

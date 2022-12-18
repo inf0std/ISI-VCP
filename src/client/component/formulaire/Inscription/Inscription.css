@@ -1,23 +1,20 @@
-form {
-    width: 400px;
-    margin: 50px;
-    margin: auto;
+.formular {
+    background-color: rgba(232, 227, 227, 0.826);
+    border-radius: 10px;
+    height: 530px;
+
+
 }
 
-.conteneur {
-    margin-top: -1%;
-    margin-left: 35%;
+form {
+    width: 400px;
+    padding-right: 10px;
+    margin-left: 0px;
 
 }
 
 .vandam {
-    margin-left: 115px;
+    margin-left: 80px;
     margin-top: 0px;
     width: 100px;
-}
-
-.para {
-    color: rgb(85, 85, 202);
-
-
 }

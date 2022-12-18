@@ -1,11 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import "./VideoRoom.css";
-import img1 from "./img1.jpg";
-import img2 from "./img2.jpg";
-import img3 from "./img3.jpg";
-import img4 from "./img4.jpg";
-import img5 from "./img5.jpg";
+
 const Video = () => {
   const [microphone, setMicrophone] = useState(true);
   const [phone, setPhone] = useState(true);
@@ -80,10 +76,7 @@ const Video = () => {
         </div>
 
         <div className="people">
-          <img src={img2} alt="img2" />
-          <img src={img3} alt="img3" />
-          <img src={img4} alt="img4" />
-          <img src={img5} alt="img5" />
+         
         </div>
       </div>
       <div className="header">

@@ -7,7 +7,7 @@ const ConversationTab = (props) => {
   };
 
   return (
-    <div className="col-md-9 -bg-light container-lg h-100 d-inline-block">
+    <div className="col-md-9 -bg-light container-lg h-100 d-inline-block" style={{border:'1px black solid'}}>
       <MessagesTab myId={props.myId} msgs={props.msgs} />
       <form
         className=""

@@ -1,0 +1,32 @@
+h1{
+    color:turquoise;
+    padding-top: 2%;
+    padding-right: 20%;
+    padding-left: 25%;
+}
+
+form{
+    align-content: center;
+    padding-top: 5%;
+    padding-left: 25%;
+    padding-right: 25%;
+
+}
+
+    
+button{
+    padding-right: 10px;
+    margin-right: 10px;
+
+  
+}
+
+input{
+    border-radius: 10%;
+    border-color: gray;
+}
+   
+
+label{
+    display: flex;
+}

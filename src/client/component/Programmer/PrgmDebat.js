@@ -14,6 +14,7 @@ from 'mdb-react-ui-kit';
 import TimePicker from 'react-bootstrap-time-picker';
 import DatePicker from "react-datepicker";
 
+import { FaSearch } from "react-icons/fa";
 
 
 import Form from 'react-bootstrap/Form';
@@ -112,13 +113,24 @@ function PrgmDebat() {
 
               <MDBRow className='align-items-center pt-4 pb-3'>
 
-                <MDBCol md='3' className='ps-5'>
-                  <h6 className="mb-0">Débattre avec </h6>
-                </MDBCol>
+              <MDBCol md='3' className='ps-5'>
+  <h6 className="mb-0">Débattre avec </h6>
+              </MDBCol>
 
-                
+                   <MDBCol md='9' className='pe-5'>
+                     <Form.Group className="mb-3" controlId="formBasictext">
+       
+        
+                        <Form.Control type="text" placeholder="Chercher une personne" /> 
+                        <FaSearch />
+        
+       
+                    </Form.Group>
 
-              </MDBRow>
+
+                    </MDBCol>
+
+                </MDBRow>
                
 
               <hr className="mx-n3" />
@@ -128,22 +140,40 @@ function PrgmDebat() {
               
              
 
-           <MDBRow className='align-items-center pt-4 pb-3'>
+           
+              
+             
 
-            <MDBCol md='3' className='ps-5'>
-              <h6 className="mb-0">Audience</h6>
-            </MDBCol>
+              
 
-            <MDBCol md='9' className='pe-5'>
-              <Searchbar />
+                    <MDBRow className='align-items-center pt-4 pb-3'>
 
+                <MDBCol md='3' className='ps-5'>
+                  <h6 className="mb-0">Audiance</h6>
+                </MDBCol>
 
-            </MDBCol>
+                <MDBCol md='9' className='pe-5'>
+                  <Form.Select aria-label="Default select example">
+                    <option>Tout le monde</option>
+                    <option value="1">Choisir une organisation</option>
+                    
+                  </Form.Select>
+              
 
-            </MDBRow>
+                </MDBCol>
 
+              </MDBRow>
+
+                    
+
+                
+               
 
               <hr className="mx-n3" />
+
+
+
+            
 
               
 

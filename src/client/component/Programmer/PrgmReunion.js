@@ -16,8 +16,10 @@ from 'mdb-react-ui-kit';
 import TimePicker from 'react-bootstrap-time-picker';
 import DatePicker from "react-datepicker";
 
-
 import Form from 'react-bootstrap/Form';
+
+import { FaSearch } from "react-icons/fa";
+
 import "react-datepicker/dist/react-datepicker.css";
 
 import './PrgmReunion.css';
@@ -61,13 +63,9 @@ function PrgmReunion() {
                    
                  className="form-control"
                  minDate={today}
-                 customInput={
-                  <input
-                type="text"
-                id="validationCustom01"
-                placeholder="First name"
+                 
+                // 
                  />
-                 }/>
 
                 </MDBCol>
 
@@ -96,12 +94,10 @@ function PrgmReunion() {
 
                 <MDBCol md='3' className='ps-5'>
                   <h6 className="mb-0">Durée</h6>
+
                 </MDBCol>
 
                 <MDBCol md='9' className='pe-5'>
-                <d2l-labs-input-duration 
-                label="Duration"
-                units="hours:minutes" label-hidden="true"> </d2l-labs-input-duration>              
                 </MDBCol>
 
               </MDBRow>
@@ -110,7 +106,7 @@ function PrgmReunion() {
           
              
 
-              <MDBRow className='align-items-center pt-4 pb-3'>
+             {/* <MDBRow className='align-items-center pt-4 pb-3'>
 
                 <MDBCol md='3' className='ps-5'>
                   <h6 className="mb-0">Participants</h6>
@@ -127,10 +123,32 @@ function PrgmReunion() {
 
                 </MDBCol>
 
-              </MDBRow>
+              </MDBRow>*/}
 
 
-              <hr className="mx-n3" />
+
+
+              
+              <MDBRow className='align-items-center pt-4 pb-3'>
+
+              <MDBCol md='3' className='ps-5'>
+  <h6 className="mb-0">Ajouter des participants</h6>
+              </MDBCol>
+
+                   <MDBCol md='9' className='pe-5'>
+                     <Form.Group className="mb-3" controlId="formBasictext">
+       
+        
+                        <Form.Control type="text" placeholder="Chercher des personnes" /> 
+                        <FaSearch />
+        
+       
+                    </Form.Group>
+
+
+                    </MDBCol>
+
+                </MDBRow>
 
               
 

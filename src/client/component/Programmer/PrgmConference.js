@@ -106,21 +106,7 @@ function PrgmConference() {
 
               </MDBRow>
 
-              <hr className="mx-n3" />
-
-              <MDBRow className='align-items-center pt-4 pb-3'>
-
-                <MDBCol md='3' className='ps-5'>
-                  <h6 className="mb-0">Mots clés</h6>
-                </MDBCol>
-
-                <MDBCol md='9' className='pe-5'>
-                <ReactTags/>
-                
-
-                </MDBCol>
-
-              </MDBRow>
+              
 
               <hr className="mx-n3" />
 

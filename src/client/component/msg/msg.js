@@ -7,7 +7,7 @@ import "./MSG.css";
 const MSG = (props) => {
   return (
     <MDBCard>
-      {!props.msg.isMe && <MSGBule msg={props.msg} />}
+      {!props.msg.isMe && <MSGBule profileImage={props.msg.image} />}
       <MSGContent msg={props.msg} />
       {props.msg.isMe && <MSGBule msg={props.msg} />}
     </MDBCard>

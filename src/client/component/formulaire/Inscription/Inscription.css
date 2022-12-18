@@ -1,0 +1,20 @@
+.formular {
+    background-color: rgba(232, 227, 227, 0.826);
+    border-radius: 10px;
+    height: 530px;
+
+
+}
+
+form {
+    width: 400px;
+    padding-right: 10px;
+    margin-left: 0px;
+
+}
+
+.vandam {
+    margin-left: 80px;
+    margin-top: 0px;
+    width: 100px;
+}

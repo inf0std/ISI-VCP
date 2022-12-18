@@ -1,0 +1,67 @@
+nav {
+    height: 12vh;
+    background: black;
+    width: 100%;
+    position: sticky;
+}
+
+.hdr {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 50px;
+    margin-left: 120px;
+    color: aqua;
+}
+
+.liste {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+    margin-top: 0px;
+    margin-left: 600px;
+    list-style: none;
+}
+
+.nav_item1 {
+    text-decoration: none;
+    color: white;
+    font-size: 25px;
+
+}
+
+.nav_item2 {
+    text-decoration: none;
+    color: white;
+    font-size: 25px;
+}
+
+.activ {
+    text-decoration: none;
+    color: aqua;
+    font-size: 25px;
+}
+
+.activ:hover {
+    color: aqua;
+
+}
+
+.nav_item1:hover {
+    color: aqua;
+
+}
+
+.nav_item2:hover {
+    color: aqua;
+}
+
+.button {
+    margin: 20px 55px 30px;
+}
+
+.nav img {
+    width: 110px;
+    margin-top: -105px;
+    margin-left: 6px;
+
+}

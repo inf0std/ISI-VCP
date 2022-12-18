@@ -1,0 +1,9 @@
+:root {
+  --profile-dimension: 60px;
+}
+
+img {
+  border-radius: 50%;
+  width: var(--profile-dimension);
+  height: var(--profile-dimension);
+}

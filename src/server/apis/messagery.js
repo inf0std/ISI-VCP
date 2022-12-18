@@ -3,33 +3,33 @@ const { useImperativeHandle } = require('react');
 const socketIo = require('socketio')
 
 
-module.exports = (server, config) =>{
+module.exports = (server, config) => {
 
     var io = socketIo.listen(server);
 
-    io.on('connection', (socket)=>{
+    io.on('connection', (socket) => {
 
-        socket.on('', ()=>{
+        socket.on('', () => {
 
-        })
-        //user userId joines conversation convId
-        socket.on('joinConv', data=>{
-            var { useId, convId } = data; 
+            })
+            //user userId joines conversation convId
+        socket.on('joinConv', data => {
+            var { useId, convId } = data;
             //traitment
         })
 
-        socket.on('joinConf', data=>{
-            var { userId, confId} = data;
+        socket.on('joinConf', data => {
+            var { userId, confId } = data;
         })
 
         //rejoindre une reunion, conversation, conf, debat
-        socket.on('join', data =>{
+        socket.on('join', data => {
 
         })
 
         //quitter une reunion, conversation, conf, debat
-        socket.on('leave', data =>{
-            
+        socket.on('leave', data => {
+
         })
     });
 }

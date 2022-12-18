@@ -1,0 +1,50 @@
+.header{
+    display: flex;
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-bottom:0.5px solid rgb(5, 5, 5);
+    justify-content: space-evenly;
+    position: sticky;
+    top: 0;
+    height: 2cm;
+    z-index: 500;
+    background-color: rgb(38, 43, 49) ;
+    
+}
+.text{
+    
+    color: aliceblue;
+}
+
+.head_left{
+    display: flex;
+}
+.head_left > img {
+    object-fit: contain;
+    height: 40px;
+    margin-right: 10px;
+}
+.head_search{
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+    height: 18px;
+    color: rgb(31, 26, 26);
+    background-color: rgb(218, 208, 208);
+
+}
+
+.bi{
+    padding: 20px;
+    cursor: pointer;
+    color: rgb(250, 253, 255);
+    
+
+}
+.head_search > input{
+    outline: none;
+    border: none;
+    background: none;
+}

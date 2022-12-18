@@ -1,4 +1,5 @@
 class UserProfile extends React.Component {
+<<<<<<< HEAD
     constructor(props){
       super(props)
     }
@@ -8,3 +9,16 @@ class UserProfile extends React.Component {
       );
     }
   }
+=======
+  constructor(props) {
+    super(props)
+  }
+  render() {
+    return (
+      <div>
+
+      </div>
+    );
+  }
+}
+>>>>>>> origin/ui

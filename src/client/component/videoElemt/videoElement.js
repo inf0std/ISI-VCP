@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 class VideoElemt extends React.Component {
     constructor(props){
       super(props)
@@ -8,3 +9,16 @@ class VideoElemt extends React.Component {
       );
     }
   }
+=======
+import { memo } from "react";
+import VideoControls from "./videoControls/VideoControls";
+const VideoElemt = (props) => {
+  return (
+    <>
+      <video></video>
+      <VideoControls />
+    </>
+  );
+};
+export default memo(VideoElemt);
+>>>>>>> origin/ui

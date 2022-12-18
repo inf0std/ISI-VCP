@@ -3,7 +3,7 @@ import { useState } from "react";
 import { memo } from "react";
 import "./MSGContent.css";
 const calculDuree = (time) => {
-  return "";
+  return time;
 };
 
 const MSGContent = (props) => {

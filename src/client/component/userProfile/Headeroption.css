@@ -1,0 +1,10 @@
+.headeroption{
+    cursor: pointer;
+    font-size: 0.6cm;
+    color: rgb(14, 17, 16);
+
+}
+.bi:hover{
+    color: rgba(71, 112, 79, 0.589) ;
+}
+

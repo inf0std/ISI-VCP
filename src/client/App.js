@@ -1,13 +1,12 @@
 
 import React from 'react';
-/*import PrgmReunion from'./component/Programmer/PrgmReunion'*/
-/*import PrgmConference from'./component/Programmer/PrgmConference'*/
-import PrgmConference from'./component/Programmation/PrgmConference'
+
+/*import PrgmConference from'./component/Programmation/PrgmConference'
 import PrgmDebat from'./component/Programmation/PrgmDebat'
 import NewOrganization from './component/Create/NewOrganization';
 import NewGroupe from './component/Create/NewGroupe';
 import PrgmReunion from './component/Programmation/PrgmReunion';
-/*import Organisation from './component/Create/organisation';*/
+
 
 
 
@@ -22,7 +21,7 @@ const App = () => {
     
 
       
-    </div>
+    </div>*/
 
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -45,14 +44,14 @@ const App = (props) => {
 };
 
 export default App;
-=======
-import React from 'react';
+
+/*import React from 'react';
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import Contacts from './component/Contacts/Contacts';
 import Home2 from './component/Home2/Home2';
 import ConnexionetInscription from './component/formulaire/ConnexionetInscription';
 
-function App() {
+/*function App() {
     return (
         <BrowserRouter>
             <Routes>
@@ -63,7 +62,7 @@ function App() {
             </Routes>
         </BrowserRouter>
     );
-}
 
-export default App;
-
+  )}
+export default App;*/
+  

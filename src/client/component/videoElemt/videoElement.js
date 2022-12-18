@@ -1,8 +1,11 @@
-
+import { memo } from "react";
+import VideoControls from "./videoControls/VideoControls";
 const VideoElemt = (props) => {
   return (
-    <div className="videoContainer">
+    <>
       <video></video>
-    </div>
+      <VideoControls />
+    </>
   );
-}
+};
+export default memo(VideoElemt);

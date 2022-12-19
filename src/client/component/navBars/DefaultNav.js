@@ -31,6 +31,9 @@ const DefaultNav = (props) => {
       }); //*/
   };
 
+  const showLoginModal = () => {
+    document.getElementById("loginModalBtn").click();
+  };
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light justefy-content-end">
       <div className="container-fluid">
@@ -73,8 +76,8 @@ const DefaultNav = (props) => {
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">
-                {!props.userName ? "Se deconnecter" : "Se connecter"}
+              <a className="nav-link" href="#" onClick={showLoginModal}>
+                {!props.username ? "Se connecter" : "Se deconnecter"}
               </a>
             </li>
             <li className="nav-item dropdown">

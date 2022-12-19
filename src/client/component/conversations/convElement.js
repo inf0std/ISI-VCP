@@ -5,8 +5,9 @@ const ConvElement = (props) => {
       onClick={() => {
         props.activate(props.index);
       }}
+      style={{backgroundColor:'#dcf2e2', borderRadius:'12px'}}
     >
-      <div className="conv-cover">
+      <div className="conv-cover py-1">
         <img
           style={{
             width: "50px",

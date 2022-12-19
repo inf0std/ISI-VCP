@@ -12,6 +12,7 @@ const Msg = (props) => {
           marginTop: "5px",
           borderRadius: "50%",
           border: "solid black 1px",
+          
         }}>
       
         {props.msg.senderId}
@@ -20,10 +21,11 @@ const Msg = (props) => {
         <p
           style={{
             margin: "auto",
+            padding:'1px 13px',
             display: "inline-block",
-            borderRadius: "3px",
-            backgroundColor: "cyan",
-            border: "solid black 1px",
+            borderRadius: "15px",
+            backgroundColor: (props.isme)? "#e6ebe7" : "#cacccb",
+            border: "solid black 1px"
           }}>
         
           {props.msg.content}

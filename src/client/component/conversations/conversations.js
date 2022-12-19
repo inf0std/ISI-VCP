@@ -13,7 +13,7 @@ const COnversations = (props) => {
       <h3 class="font-weight-bold mb-3 text-center text-lg-start">Conversations</h3>  
       </div>
       <form>
-        <input style={{width:'80%'}} className="form-control" ref={searchInput} type="text"></input>
+        <input style={{width:'95%'}} className="form-control mb-4" ref={searchInput} type="text"></input>
       </form>
       <div className="">
         {

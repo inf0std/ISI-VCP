@@ -2,7 +2,7 @@
 
 function NavBar() {
     return ( 
-        <nav className="navbar navbar-expand-lg border" style={{margin:0, padding:'1px'}}>
+        <nav className="navbar navbar-expand-lg border mb-5" style={{margin:0, padding:'1px'}}>
             {/* <div>
                 <img 
                     style={{

@@ -1,5 +1,6 @@
 import React from "react";
 import MessagesTab from "../messagesTab/MessagesTab";
+import NavBar from "../navbar/NavBar";
 
 const ConversationTab = (props) => {
   const sendMessage = (event) => {
@@ -7,18 +8,22 @@ const ConversationTab = (props) => {
   };
 
   return (
-    <div className="col-md-9 -bg-light container-lg h-100 d-inline-block" style={{border:'1px black solid'}}>
+    <div className="col-md-9 -bg-light cd-inline-block">
+      <NavBar />
       <MessagesTab myId={props.myId} msgs={props.msgs} />
-      <form
-        className=""
-        style={{
-          width: "auto",
-          display: 'flex',
-        }}
-      >
-        <input className="form-control" type="text" style={{marginRight:'5px'}}></input>
-        <button className="btn btn-success btn-rounded float-end" onClick={sendMessage}style={{marginLeft:'2px'}}>send</button>
-      </form>
+        <div>
+          <form
+          className="d-flex py-3"
+          style={{
+            position: "absolute",
+            bottom: 0,
+            width: "72vw"
+          }}
+          >
+            <input className="form-control" type="text" style={{marginRight:'5px'}}></input>
+            <button className="btn btn-success btn-rounded" onClick={sendMessage}style={{marginLeft:'2px'}}>send</button>
+        </form>
+      </div>
     </div>
   );
 };

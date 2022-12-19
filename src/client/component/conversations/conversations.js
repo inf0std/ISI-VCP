@@ -4,18 +4,18 @@ import logo from '../../logo.png'
 const COnversations = (props) => {
   const searchInput = useRef();
   return (
-    <div className="col-md-3 float-start" style={{border:'1px black solid'}}>
+    <div className="col-md-3 border bg-light" style={{}}>
       {
         //formulaire de recherche dans les conversations
       }
-      <div style={{display:''}}>
+      <div className="" style={{display:''}}>
       <img src={logo} alt="logo" style={{width:'60px', marginRight:'10px'}} />
       <h3 class="font-weight-bold mb-3 text-center text-lg-start">Conversations</h3>  
       </div>
       <form>
         <input style={{width:'80%'}} className="form-control" ref={searchInput} type="text"></input>
       </form>
-      <div>
+      <div className="">
         {
           //affichage de la liste des conversation
         }

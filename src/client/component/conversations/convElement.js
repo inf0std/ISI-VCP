@@ -12,10 +12,9 @@ const ConvElement = (props) => {
             width: "50px",
             height: "5opx",
             borderRadius: " 50%",
-            display: "inline-block",
+            display: "inline-block"
           }}
-          src="#">
-        </img>
+          src="#" />
       </div>
       <div className={"last-msg" + (!props.msg.seen && "unseen")}>
         <h5>{props.conv.name}</h5>

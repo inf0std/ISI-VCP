@@ -1,10 +1,10 @@
 const ConvElement = (props) => {
   return (
-    <div
+    <div>
       className="conv-element"
       onClick={() => {
         props.activate(props.index);
-      }}>
+      }}
     
       <div className="conv-cover">
         <img

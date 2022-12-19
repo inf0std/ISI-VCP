@@ -1,18 +1,19 @@
-import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Programerreunio from "./component/Programmer/ProgramerLaReunion";
+
+import React from 'react';
+import { Route, Routes, BrowserRouter } from 'react-router-dom';
+import ProgrammerReunio from './component/Programmer/ProgramerLaReunion';
 
 
 
-const App = (props) => {
+function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Programerreunio />} />
+        <Route path="/" element={<ProgrammerReunio />} />
 
       </Routes>
     </BrowserRouter>
   );
-};
+}
 
 export default App;

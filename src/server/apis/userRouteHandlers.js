@@ -141,6 +141,17 @@ const handleuserconference = function (req, res) {
       });
     });
 };
+const handlevalidateemail = function (req, res) {
+  const token = req.query.token;
+  User.updateOne(
+    { emailtoken: token },
+    { emailtoken: null, isverified: true }
+  ).then((user) => {
+    return console.log({
+      message: `${user.modifiedCount} updated successfully!`,
+    });
+  });
+};
 module.exports = {
   handleLogin,
   handleSignUp,
@@ -151,4 +162,5 @@ module.exports = {
   handleuserorganisations,
   handleuserreunion,
   handleuserconference,
+  handlevalidateemail,
 };

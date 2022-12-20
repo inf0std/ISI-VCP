@@ -21,6 +21,7 @@ const {
   handleuserreunion,
   handleuserconference,
   handleuserorganisations,
+  handlevalidateemail,
 } = require("./userRouteHandlers");
 
 // middleware that is specific to this router
@@ -39,17 +40,7 @@ router.post("/signin", verifiedemail, handleLogin);
 //signUp
 router.post("/signup", handleSignUp);
 
-router.get("/ver", function (req, res) {
-  const token = req.query.token;
-  User.updateOne(
-    { emailtoken: token },
-    { emailtoken: null, isverified: true }
-  ).then((user) => {
-    return console.log({
-      message: `${user.modifiedCount} updated successfully!`,
-    });
-  });
-});
+router.get("/ver", handlevalidateemail);
 
 router.get("/users/:id/contacts", handleUserContacts);
 //////////////////////////

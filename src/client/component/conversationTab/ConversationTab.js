@@ -15,7 +15,7 @@ const ConversationTab = (props) => {
           <form
           className="d-flex py-3"
           style={{
-            position: "absolute",
+            position: "fixed",
             bottom: 0,
             width: "72vw"
           }}

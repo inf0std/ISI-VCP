@@ -1,6 +1,13 @@
 var express = require('express');
-var router = express.Router();
+const { User } = require("../db/schema/User");
 const { createUser, readoneUser, auth } = require('../db/crudUtils/userCrud');
+const mongoose = require('mongoose');
+const { useReducer } = require('react');
+const router = express.Router();
+const { loginrequired } = require("../db/crudUtils/config/JWT")
+const { verifiedemail } = require("../db/crudUtils/config/JWT")
+
+
 // middleware that is specific to this router
 router.use(function timeLog(req, res, next) {
     console.log('Time: ', Date.now());
@@ -12,14 +19,39 @@ router.get('/', function(req, res) {
     res.send('');
 });
 //////
-router.post('/auth', function(req, res) {
-    //profile
-    res.send('');
-}, auth);
-router.post('/createUser', function(req, res) {
-    //profile
-    res.send('');
-}, createUser);
+//authenticate
+router.post('/signin', verifiedemail, function(req, res) {
+    const { email, password } = req.body;
+    auth(email, password)
+        .then(user => {
+            res.status(200).json(user.login)
+        }).catch(err => {
+            res.json({
+                message: "ERROR",
+            })
+        })
+});
+router.post('/signup', function(req, res) {
+    const { email, password } = req.body;
+    createUser(email, password)
+        .then(user => {
+            res.json.status(200).json(user)
+        }).catch(err => {
+            res.json({
+                message: "ERROR",
+            })
+        })
+});
+
+router.get('/ver', function(req, res) {
+    const token = req.query.token
+    User.updateOne({ emailtoken: token }, { emailtoken: null, isverified: true, }).then(user => {
+        return console.log({
+            message: `${user.modifiedCount} updated successfully!`,
+        });
+
+    })
+});
 router.post('/readoneUser', function(req, res) {
     //profile
     res.send('');
@@ -51,6 +83,10 @@ router.get('/conversation', function(req, res) {
 router.get('/user/suggestion', function(req, res) {
 
 });
+
+
+
+
 router.post('/user/program')
 router.get
 

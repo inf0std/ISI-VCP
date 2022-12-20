@@ -12,7 +12,7 @@ export default function () {
           e.preventDefault();
           sendMessage(message);
           setMessage("")
-        }} className='btn ' >
+        }} className='btnn ' >
             <div>
             <div  className='flex'>
            < textarea 

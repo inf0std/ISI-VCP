@@ -1,3 +1,6 @@
-#nav{
+#nev{
     background-color: #dfe1f0 !important;
   }
+#it:hover{
+  cursor: pointer;
+}

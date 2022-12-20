@@ -37,10 +37,10 @@ const Navbarprofile = (props) => {
   };
 
   return (
-    <nav id='nav' className="navbar navbar-expand-lg navbar-light bg-light justefy-content-end">
+    <nav id='nev' className="navbar navbar-expand-lg navbar-light bg-light justefy-content-end">
     <div className="container-fluid">
-      <a className="navbar-brand" href="#">
-        SEEN
+      <a style={{width:'120px',height:'45px',marginLeft:'40px'}}  className="navbar-brand" href="#">
+      <img style={{width:'100%' ,height:'80px',marginTop:'-26px'}} src="logo.png"/>
       </a>
       <button
         className="navbar-toggler"
@@ -68,37 +68,38 @@ const Navbarprofile = (props) => {
             Rechercher
           </button>
         </form>
-        <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+        <ul style={{marginRight:"30px"}} className="navbar-nav ms-auto mb-2 mb-lg-0">
             
-            <li style={{marginleft:"10px"}} className="nav-item">
+            <li style={{margin:"0px 30px 0px 30px"}} className="nav-item">
 
             
-              <FaHome style={{width:'25px', height:"25px",margin:"5px"}}/>
+              <FaHome id="it" style={{width:'25px', height:"25px",margin:"5px"}}/>
+                <br/>
                 
               
             </li>
 
 
-            <li style={{marginleft:"10px"}} className="nav-item">
+            <li style={{margin:"0px 30px 0px 30px"}}  className="nav-item">
            
              
-             <FaUsers style={{width:'25px', height:"25px",margin:"5px"}}/>
+             <FaUsers id="it" style={{width:'25px', height:"25px",margin:"5px"}}/>
              
                
             </li>
 
             
-            <li className="nav-item">
+            <li style={{margin:"0px 30px 0px 30px"}} className="nav-item">
              
-                <FaRegComments style={{width:'25px', height:"25px",margin:"5px"}}/>
+                <FaRegComments id="it" style={{width:'25px', height:"25px",margin:"5px"}}/>
               
               
 
             </li>
 
-            <li  className="nav-item">
+            <li style={{margin:"0px 30px 0px 30px"}}  className="nav-item">
             
-              <GoSignOut style={{width:'25px', height:"25px",margin:"5px"}}/>
+              <GoSignOut id="it" style={{width:'25px', height:"25px",margin:"5px"}}/>
              
               
             </li>

@@ -24,10 +24,11 @@ router.post('/signin', verifiedemail, function(req, res) {
     const { email, password } = req.body;
     auth(email, password)
         .then(user => {
+            console.log(user.login);
             res.status(200).json(user.login)
         }).catch(err => {
             res.json({
-                message: "ERROR",
+                message: "ERROR"
             })
         })
 });
@@ -35,7 +36,8 @@ router.post('/signup', function(req, res) {
     const { email, password } = req.body;
     createUser(email, password)
         .then(user => {
-            res.json.status(200).json(user)
+            console.log(user);
+            res.status(200).json(user)
         }).catch(err => {
             res.json({
                 message: "ERROR",
@@ -47,9 +49,8 @@ router.get('/ver', function(req, res) {
     const token = req.query.token
     User.updateOne({ emailtoken: token }, { emailtoken: null, isverified: true, }).then(user => {
         return console.log({
-            message: `${user.modifiedCount} updated successfully!`,
+            message: `updated successfully!`,
         });
-
     })
 });
 router.post('/readoneUser', function(req, res) {

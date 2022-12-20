@@ -25,53 +25,56 @@ var transporter = nodemailer.createTransport({
 
 //register
 const createUser = async(email, password) => {
-    User.countDocuments({ 'login.email': email }).then(count => {
-        if (count > 0) {
-            console.log(count)
-            console.log("user aleardy existed")
-        } else {
-            const user = new User({
-                login: {
-                    email: email,
-                    password: password,
-                },
-                isadmin: false,
-                isverified: false,
-                emailtoken: crypto.randomBytes(64).toString('hex')
-            })
-            user
-                .save(user)
-                .then(async(user) => {
-                    console.log(user);
-                    return user
+    if (!email || !password) {
+        return console.log(404, "veuilleur saisir data");
+    } else {
+        User.countDocuments({ 'login.email': email }).then(count => {
+            if (count > 0) {
+                console.log("user aleardy existed")
+            } else {
+                const user = new User({
+                    login: {
+                        email: email,
+                        password: password,
+                    },
+                    isadmin: false,
+                    isverified: false,
+                    emailtoken: crypto.randomBytes(64).toString('hex')
                 })
-                .catch(err => {
-                    console.log({
-                        message: err.message || "Some error occurred while saving the user."
+                user
+                    .save(user)
+                    .then(async(user) => {
+                        console.log('user registred successfuly')
+                        return user
+                    })
+                    .catch(err => {
+                        console.log({
+                            message: err.message || "Some error occurred while saving the user."
+                        });
                     });
-                });
 
-            //send email verification
-            var mailOptions = {
-                    from: '"Verify your email"<mira98315@gmail.com>',
-                    to: user.login.email,
-                    subject: 'mira98314 verify your email',
-                    html: `<h2> ${user.username}! Thanks for registring on our site </h2>
+                //send email verification
+                var mailOptions = {
+                        from: '"Verify your email"<mira98315@gmail.com>',
+                        to: user.login.email,
+                        subject: `${user.username} verify your email`,
+                        html: `<h2> ${user.username}! Thanks for registring on our site </h2>
         <h4>Please verify your email to continue... </h4>
         <a href = "http://127.0.0.1:8080/api/ver?token=${user.emailtoken}">verify your email</a>`
-                }
-                //send email
-            transporter.sendMail(mailOptions, function(error, info) {
-                if (error) {
-                    console.log(error)
+                    }
+                    //send email
+                transporter.sendMail(mailOptions, function(error, info) {
+                    if (error) {
+                        console.log(error)
 
-                } else {
-                    console.log("verification email is sent to your gmail account")
-                }
-            })
+                    } else {
+                        console.log("verification email is sent to your gmail account")
+                    }
+                })
 
-        }
-    })
+            }
+        })
+    }
 
 }
 
@@ -95,17 +98,14 @@ const createToken = (id) => {
 
 //authenticate
 const auth = async(email, password) => {
-    console.log('email', email);
     if (!email || !password) {
         return console.log(404, "veuilleur saisir data");
     } else {
         return User.findOne({ 'login.email': email }).then(async(user) => {
             if (user && (await user.matchPassword(password))) {
                 const token = createToken(user._id)
-                console.log(token)
                 cookie('access-token', token)
                 return user
-
             } else {
                 return console.log("Invalid Email or Password");
             }

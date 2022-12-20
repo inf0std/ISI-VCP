@@ -8,6 +8,7 @@ import SignInSignUp from "./component/formulaire/modalForms/SignINSignUp";
 import VideoRoom from './views/VideoRoom'
 import Navbarprofile from "./component/Profile/Navbarprofile";
 import DefaultNav from "./component/navBars/DefaultNav";
+import Profile from "./component/Profile/Profile";
 
 
 const App = (props) => {
@@ -20,6 +21,7 @@ const App = (props) => {
         <Route path="/Chat" element={<Chat />} />
         <Route path="/login" element={<SignInSignUp />} />
         <Route path="/VideoRoomUI" element={< VideoRoom/>} />
+        <Route path="/profile" element={< Profile/>} />
       </Routes>
     </BrowserRouter>
     

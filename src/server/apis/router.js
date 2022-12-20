@@ -52,6 +52,22 @@ router.get('/ver', function(req, res) {
 
     })
 });
+
+router.get('/user/:id/contacts', function(req, res) {
+const{id}=req.params.id;
+readoneUser(id).select('contacts')
+        .then(contacts => {
+            res.json.status(200).json(contacts)
+        }).catch(err => {
+            res.json({
+                message: "ERROR",
+            })
+        })
+});
+router.get('/user/:id/conversations',function(req, res){
+const{id}=req.params;
+res.send('');})
+
 router.post('/readoneUser', function(req, res) {
     //profile
     res.send('');

@@ -12,7 +12,7 @@ const Chat = () => {
         >
           {" "}
           <p>
-            tydrfugyuhujkgkuhnlijmkrewtsyrdtfygukhijkqawretsrydtfgyukhlijrwteydrutgyuhijokqrwtsedyrftugyuhijokwetrydtfuyguhij
+            Chat interface
           </p>
         </div>
       </div>

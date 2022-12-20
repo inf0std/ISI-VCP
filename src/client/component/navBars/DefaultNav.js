@@ -74,7 +74,6 @@ const DefaultNav = (props) => {
             </li>
             <li className="nav-item">
               <a className="nav-link" href="#">
-                {!props.userName ? "Se deconnecter" : "Se connecter"}
               </a>
             </li>
             <li className="nav-item dropdown">

@@ -70,35 +70,58 @@ const Navbarprofile = (props) => {
         </form>
         <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
             
-            <li style={{marginleft:"10px"}} className="nav-item">
+            <li className="nav-item">
+            <a className="nav-link active" aria-current="page" href="#">
+            <FaHome style={{width:'25px', height:"25px",margin:"5px"}}/>
+              </a>
 
             
-              <FaHome style={{width:'25px', height:"25px",margin:"5px"}}/>
+             
                 
               
             </li>
 
 
-            <li style={{marginleft:"10px"}} className="nav-item">
+            <li  className="nav-item">
+            <Link
+                to="/Contact"
+                className="nav-link"
+                href="#"
+                tabindex="-1"
+                aria-disabled="true"
+              >
+                
+             <FaUsers style={{width:'25px', height:"25px",margin:"5px"}}/>
+              </Link>
            
              
-             <FaUsers style={{width:'25px', height:"25px",margin:"5px"}}/>
              
                
             </li>
 
             
             <li className="nav-item">
+            <Link
+                to="./views/Chat"
+                className="nav-link"
+                href="#"
+                tabindex="-1"
+                aria-disabled="true"
+              >
              
                 <FaRegComments style={{width:'25px', height:"25px",margin:"5px"}}/>
               
-              
+              </Link>
 
             </li>
 
             <li  className="nav-item">
+            <a className="nav-link" href="#">
+                
+                <GoSignOut style={{width:'25px', height:"25px",margin:"5px"}}/>
+                {/*{!props.userName ? "Se deconnecter" : "Se connecter"}*/}
+              </a>
             
-              <GoSignOut style={{width:'25px', height:"25px",margin:"5px"}}/>
              
               
             </li>

@@ -1,0 +1,99 @@
+.titre_ {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.date_ {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin-top: 10px;
+
+}
+
+.heure_ {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin-top: 10px;
+
+}
+
+.Heur_ {
+    display: flex;
+    flex-direction: row;
+
+}
+
+.Heur_ input {
+    width: 60%;
+}
+
+
+.Durée_ {
+
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin-top: 10px;
+
+
+
+}
+
+.description_ {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin-top: 10px;
+}
+
+#floatingTextarea2 {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin-top: 10px;
+    height: 100px;
+
+}
+
+.bouton_ {
+    display: flex;
+    justify-content: center;
+    margin-top: 25px;
+    gap: 7rem;
+}
+
+.participant_ {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.ajout_ {
+    height: 200px;
+    width: 350px;
+    border: 2px solid black;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    border-radius: 10px;
+
+
+}
+
+
+
+.butn_ {
+    margin-top: 25px;
+    gap: 7rem;
+    display: flex;
+    justify-content: center;
+}
+
+.spane_ {
+    display: flex;
+    justify-content: center;
+    display: block;
+}

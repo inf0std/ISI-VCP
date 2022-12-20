@@ -1,4 +1,5 @@
 
+<<<<<<< HEAD
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./views/Home";
@@ -9,11 +10,19 @@ import VideoRoom from './views/VideoRoom'
 import Navbarprofile from "./component/Profile/Navbarprofile";
 import DefaultNav from "./component/navBars/DefaultNav";
 import Profile from "./component/Profile/Profile";
+=======
+import React from 'react';
+import { Route, Routes, BrowserRouter } from 'react-router-dom';
+
+import Programmerdébat from './component/Programmer/Programmerdébat';
+>>>>>>> 5063e215bcb030193c0c22aa5eabed86c25e44d9
 
 
-const App = (props) => {
+
+function App() {
   return (
     <div>
+<<<<<<< HEAD
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Navbarprofile />} />
@@ -26,10 +35,20 @@ const App = (props) => {
     </BrowserRouter>
     
    
+=======
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={< Programmerdébat />} />
+
+        </Routes>
+      </BrowserRouter>
+
+
+>>>>>>> 5063e215bcb030193c0c22aa5eabed86c25e44d9
 
     </div>
 
   );
-};
+}
 
 export default App;

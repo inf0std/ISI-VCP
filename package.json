@@ -17,7 +17,11 @@
     "react-bootstrap-time-picker": "^2.0.1",
     "react-dom": "^18.2.0",
     "react-icons": "^4.7.1",
+<<<<<<< HEAD
+    "react-router-dom": "^6.4.5",
+=======
     "react-router-dom": "^6.5.0",
+>>>>>>> 73f65a6f478a25245f9d695fbd55f66edd56d9ec
     "react-scripts": "^5.0.1",
     "react-tag-input": "^6.8.1",
     "socket.io-client": "^4.5.4",

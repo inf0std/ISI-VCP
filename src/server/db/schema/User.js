@@ -61,6 +61,8 @@ const userSchema = new mongoose.Schema({
             ref: "organisation",
         }, ],
         isadmin: { type: Boolean, default: false, required: true },
+        isverified: { type: Boolean, default: false, required: true },
+        emailtoken: { type: String, trim: true },
         contacts: [{
             type: mongoose.SchemaTypes.ObjectID,
             ref: "User",

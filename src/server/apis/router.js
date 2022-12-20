@@ -16,6 +16,11 @@ const {
   handleSignUp,
   handleUserConversations,
   handleUserContacts,
+  handleconvesationmsg,
+  handleconversation,
+  handleuserreunion,
+  handleuserconference,
+  handleuserorganisations,
 } = require("./userRouteHandlers");
 
 // middleware that is specific to this router
@@ -51,107 +56,19 @@ router.get("/users/:id/contacts", handleUserContacts);
 router.get("/users/:id/conversations", handleUserConversations);
 
 /////////////////
-router.get("/users/:id/conferences", function (req, res) {
-  const id = req.params.id;
-  console.log(id);
-  User.findById(id)
-    .select("conferences")
-    .then((conferences) => {
-      console.log(conferences);
-      res.status(200).json(conferences);
-    })
-    .catch((err) => {
-      console.log(err);
-      res.json({
-        message: "ERROR",
-      });
-    });
-});
+router.get("/users/:id/conferences", handleuserconference);
 ///////////
 /////////////////
-router.get("/users/:id/reunions", function (req, res) {
-  const id = req.params.id;
-  console.log(id);
-  User.findById(id)
-    .select("reunions")
-    .then((reunions) => {
-      console.log(reunions);
-      res.status(200).json(reunions);
-    })
-    .catch((err) => {
-      console.log(err);
-      res.json({
-        message: "ERROR",
-      });
-    });
-});
+router.get("/users/:id/reunions", handleuserreunion);
 ///////////organisations
 /////////////////
-router.get("/users/:id/organisations", function (req, res) {
-  const id = req.params.id;
-  console.log(id);
-  User.findById(id)
-    .select("organisations")
-    .then((organisations) => {
-      console.log(organisations);
-      res.status(200).json(organisations);
-    })
-    .catch((err) => {
-      console.log(err);
-      res.json({
-        message: "ERROR",
-      });
-    });
-});
+router.get("/users/:id/organisations", handleuserorganisations);
 
 /////////////////
-router.get("/conversation/:id/", function (req, res) {
-  const id = req.params.id;
-  console.log(id);
-  readConversation(id)
-    .then((Conversation) => {
-      console.log(Conversation);
-      res.status(200).json(Conversation);
-    })
-    .catch((err) => {
-      console.log(err);
-      res.json({
-        message: "ERROR",
-      });
-    });
-});
+router.get("/conversation/:id/", handleconversation);
 /////////////////
-router.get("/conversation/:id/messages", function (req, res) {
-  const id = req.params.id;
-  console.log(id);
-  readallMessages(id)
-    .then((Messages) => {
-      console.log(Messages);
-      res.status(200).json(Messages);
-    })
-    .catch((err) => {
-      console.log(err);
-      res.json({
-        message: "ERROR",
-      });
-    });
-});
+router.get("/conversation/:id/messages", handleconvesationmsg);
 /////////////////
-router.get("/conversation/:id/messages", function (req, res) {
-  const id = req.params.id;
-  console.log(id);
-  readallMessages(id)
-    .then((Messages) => {
-      console.log(Messages);
-      res.status(200).json(Messages);
-    })
-    .catch((err) => {
-      console.log(err);
-      res.json({
-        message: "ERROR",
-      });
-    });
-});
 
 router.post(
   "/readoneUser",

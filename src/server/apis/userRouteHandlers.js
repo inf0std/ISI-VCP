@@ -60,10 +60,95 @@ const handleUserContacts = (res, req, next) => {
         message: "ERROR",
       });
     });
+  next();
+};
+
+const handleconvesationmsg = function (req, res) {
+  const id = req.params.id;
+  console.log(id);
+  readallMessages(id)
+    .then((Messages) => {
+      console.log(Messages);
+      res.status(200).json(Messages);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.json({
+        message: "ERROR",
+      });
+    });
+};
+const handleconversation = function (req, res) {
+  const id = req.params.id;
+  console.log(id);
+  readConversation(id)
+    .then((Conversation) => {
+      console.log(Conversation);
+      res.status(200).json(Conversation);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.json({
+        message: "ERROR",
+      });
+    });
+};
+const handleuserorganisations = function (req, res) {
+  const id = req.params.id;
+  console.log(id);
+  User.findById(id)
+    .select("organisations")
+    .then((organisations) => {
+      console.log(organisations);
+      res.status(200).json(organisations);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.json({
+        message: "ERROR",
+      });
+    });
+};
+const handleuserreunion = function (req, res) {
+  const id = req.params.id;
+  console.log(id);
+  User.findById(id)
+    .select("reunions")
+    .then((reunions) => {
+      console.log(reunions);
+      res.status(200).json(reunions);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.json({
+        message: "ERROR",
+      });
+    });
+};
+const handleuserconference = function (req, res) {
+  const id = req.params.id;
+  console.log(id);
+  User.findById(id)
+    .select("conferences")
+    .then((conferences) => {
+      console.log(conferences);
+      res.status(200).json(conferences);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.json({
+        message: "ERROR",
+      });
+    });
 };
 module.exports = {
   handleLogin,
   handleSignUp,
   handleUserConversations,
   handleUserContacts,
+  handleconvesationmsg,
+  handleconversation,
+  handleuserorganisations,
+  handleuserreunion,
+  handleuserconference,
 };

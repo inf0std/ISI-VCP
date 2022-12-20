@@ -1,0 +1,41 @@
+h1{
+    color:turquoise;
+    padding-top: 2%;
+    padding-right: 20%;
+    padding-left: 25%;
+}
+
+form{
+    align-content: center;
+    padding-top: 5%;
+    padding-left: 25%;
+    padding-right: 25%;
+
+}
+
+    
+
+
+input{
+    border-radius: 10%;
+    border-color: gray;
+   display: flex;}
+
+label{
+    display: flex;
+}
+.Btns{
+    display: inline;
+    padding-top: 20%;
+
+    padding-left: 40%;
+}
+.btn1{
+    background-color: white;
+    height: 50px;
+    width: 100px;
+    margin: 5px;
+    border:2px solid;
+    border-color: turquoise;
+    border-radius: 10px;
+}

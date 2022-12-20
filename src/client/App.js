@@ -8,12 +8,18 @@ import Programmerdébat from './component/Programmer/Programmerdébat';
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={< Programmerdébat />} />
+    <div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={< Programmerdébat />} />
 
-      </Routes>
-    </BrowserRouter>
+        </Routes>
+      </BrowserRouter>
+
+
+
+    </div>
+
   );
 }
 

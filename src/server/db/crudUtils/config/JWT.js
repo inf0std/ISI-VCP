@@ -15,15 +15,20 @@ const loginrequired = async(req, res, next) => {
             console.log('token expires')
         }
     } else {
-        console.log('token not found')
+        console.log('User not found')
+        return
     }
 }
 const verifiedemail = async(req, res, next) => {
     User.findOne({ 'login.email': req.body.email }).then(user => {
-        if (user.isverified == true) {
-            next();
+        if (!user) {
+            console.log('user not exist')
         } else {
-            console.log('please check your email to verify your account')
+            if (user.isverified) {
+                next();
+            } else {
+                console.log('please check your email to verify your account')
+            }
         }
     })
 

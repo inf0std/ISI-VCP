@@ -1,7 +1,8 @@
 
 import React from 'react';
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
-import ProgrammerReunio from './component/Programmer/ProgramerLaReunion';
+
+import Programmerdébat from './component/Programmer/Programmerdébat';
 
 
 
@@ -9,7 +10,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<ProgrammerReunio />} />
+        <Route path="/" element={< Programmerdébat />} />
 
       </Routes>
     </BrowserRouter>

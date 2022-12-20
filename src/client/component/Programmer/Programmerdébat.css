@@ -1,18 +1,10 @@
-.titre {
+.titre_ {
     display: flex;
     gap: 1rem;
     align-items: center;
 }
 
-.date {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-    margin-top: 10px;
-
-}
-
-.heure {
+.date_ {
     display: flex;
     gap: 1rem;
     align-items: center;
@@ -20,18 +12,26 @@
 
 }
 
-.Heur {
+.heure_ {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin-top: 10px;
+
+}
+
+.Heur_ {
     display: flex;
     flex-direction: row;
 
 }
 
-.Heur input {
+.Heur_ input {
     width: 60%;
 }
 
 
-.Durée {
+.Durée_ {
 
     display: flex;
     gap: 1rem;
@@ -42,7 +42,7 @@
 
 }
 
-.description {
+.description_ {
     display: flex;
     gap: 1rem;
     align-items: center;
@@ -58,21 +58,21 @@
 
 }
 
-.bouton {
+.bouton_ {
     display: flex;
     justify-content: center;
     margin-top: 25px;
     gap: 7rem;
 }
 
-.participant {
+.participant_ {
     display: flex;
     gap: 1rem;
     align-items: center;
 }
 
-.ajout1 {
-    height: 100px;
+.ajout_ {
+    height: 200px;
     width: 350px;
     border: 2px solid black;
     margin-top: 10px;
@@ -83,26 +83,16 @@
 
 }
 
-.ajout2 {
-    height: 100px;
-    width: 350px;
-    border: 2px solid black;
-    margin-top: 10px;
-    display: flex;
-    justify-content: center;
-    border-radius: 10px;
 
 
-}
-
-.butn {
+.butn_ {
     margin-top: 25px;
     gap: 7rem;
     display: flex;
     justify-content: center;
 }
 
-.spane {
+.spane_ {
     display: flex;
     justify-content: center;
     display: block;

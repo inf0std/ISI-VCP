@@ -64,13 +64,16 @@ const Navbarprofile = (props) => {
             aria-label="Search"
           />
           
-          <ImSearch style={{width:'25px', height:"25px",margin:"5px"}}/>
+          
           <button
             className="btn btn-outline-success"
             type="submit"
           >
+            
             Rechercher
           </button>
+          {/*<ImSearch style={{width:'25px', height:"25px",margin:"5px"}}/>    Icone de recherche 
+          pour la serachbar*/}
         </form>
         <ul style={{marginRight:"30px"}} className="navbar-nav ms-auto mb-2 mb-lg-0">
             

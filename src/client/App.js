@@ -9,6 +9,10 @@ import VideoRoom from './views/VideoRoom'
 import Profile from "./component/Profile/Profile";
 
 
+import Programmerdébat from './component/Programmer/Programmerdébat';
+
+
+
 
 function App() {
   return (
@@ -22,6 +26,7 @@ function App() {
         <Route path="/login" element={<SignInSignUp />} />
         <Route path="/VideoRoomUI" element={< VideoRoom/>} />
         <Route path="/profile" element={< Profile/>} />
+        <Route path="/programmerdebat" element={< Programmerdébat />} />
       </Routes>
     </BrowserRouter>
     

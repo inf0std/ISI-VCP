@@ -21,33 +21,33 @@ import img3 from "../imgs/img3.png";
 export const SidebarData = [
   {
     icon: UilEstate,
-    heading: "Dashboard",
+    heading: "Dashbord",
   },
   {
     icon: UilClipboardAlt,
-    heading: "Orders",
+    heading: "statistics",
   },
   {
     icon: UilUsersAlt,
-    heading: "Customers",
+    heading: "utilisateurs",
   },
   {
     icon: UilPackage,
-    heading: 'Products'
+    heading: "Products",
   },
   {
     icon: UilChart,
-    heading: 'Analytics'
+    heading: "Analytics",
   },
 ];
 
 // Analytics Cards Data
 export const cardsData = [
   {
-    title: "Sales",
+    title: "Utilisateurs",
     color: {
-      backGround: "linear-gradient(180deg, #bb67ff 0%, #c484f3 100%)",
-      boxShadow: "0px 10px 20px 0px #e0c6f5",
+      backGround: "Lavender",
+      boxShadow: "Lavender",
     },
     barValue: 70,
     value: "25,970",
@@ -60,10 +60,10 @@ export const cardsData = [
     ],
   },
   {
-    title: "Revenue",
+    title: "Reunions",
     color: {
-      backGround: "linear-gradient(180deg, #FF919D 0%, #FC929D 100%)",
-      boxShadow: "0px 10px 20px 0px #FDC0C7",
+      backGround: "PowderBlue",
+      boxShadow: "PowderBlue",
     },
     barValue: 80,
     value: "14,270",
@@ -76,11 +76,10 @@ export const cardsData = [
     ],
   },
   {
-    title: "Expenses",
+    title: "conferences",
     color: {
-      backGround:
-        "linear-gradient(rgb(248, 212, 154) -146.42%, rgb(255 202 113) -46.42%)",
-      boxShadow: "0px 10px 20px 0px #F9D59B",
+      backGround: "Silver",
+      boxShadow: "Silver",
     },
     barValue: 60,
     value: "4,270",

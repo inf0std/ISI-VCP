@@ -9,6 +9,7 @@ function Dashbord() {
       <div className="AppGlass">
         <Sidebar />
         <MainDash />
+
         <RightSide />
       </div>
     </div>

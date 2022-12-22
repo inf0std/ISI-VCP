@@ -14,12 +14,7 @@
 .App {
   /* padding: 0.5rem 3.5rem; */
   color: var(--black);
-  background: linear-gradient(
-    106.37deg,
-    #ffe1bc 29.63%,
-    #ffcfd1 51.55%,
-    #f3c6f1 90.85%
-  );
+  background: WhiteSmoke;
   height: 100vh;
   display: flex;
   align-items: center;
@@ -36,6 +31,7 @@
   gap: 16px;
   grid-template-columns: 11rem auto 20rem;
   overflow: hidden;
+  overflow-y: scroll;
 }
 
 @media screen and (max-width: 1200px) {
@@ -48,5 +44,6 @@
 @media screen and (max-width: 768px) {
   .AppGlass {
     grid-template-columns: 1fr;
+    overflow-y: scroll;
   }
 }

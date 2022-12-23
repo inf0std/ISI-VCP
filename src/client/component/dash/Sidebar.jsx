@@ -4,11 +4,18 @@ import "./Sidebar.css";
 import Logo from "../../imgs/logo.png";
 import { UilSignOutAlt } from "@iconscout/react-unicons";
 //import { SidebarData } from "../Data/Data";
-import { SidebarData } from "../../utils/Data";
+//import { SidebarData } from "../../utils/Data";
 import { UilBars } from "@iconscout/react-unicons";
 import { motion } from "framer-motion";
+import {
+  UilEstate,
+  UilClipboardAlt,
+  UilUsersAlt,
+  UilPackage,
+  UilChart,
+} from "@iconscout/react-unicons";
 
-const Sidebar = () => {
+const Sidebar = (props) => {
   const [selected, setSelected] = useState(0);
 
   const [expanded, setExpaned] = useState(true);
@@ -22,6 +29,7 @@ const Sidebar = () => {
     },
   };
   console.log(window.innerWidth);
+
   return (
     <>
       <div
@@ -43,18 +51,29 @@ const Sidebar = () => {
         </div>
 
         <div className="menu">
-          {SidebarData.map((item, index) => {
-            return (
-              <div
-                className={selected === index ? "menuItem active" : "menuItem"}
-                key={index}
-                onClick={() => setSelected(index)}
-              >
-                <item.icon />
-                <span>{item.heading}</span>
-              </div>
-            );
-          })}
+          <div
+            className={selected === 0 ? "menuItem active" : "menuItem"}
+            key={0}
+            onClick={() => {
+              setSelected(0);
+              props.affichage(0);
+            }}
+          >
+            <UilEstate />
+            <span>statistics</span>
+          </div>
+          <div
+            className={selected === 1 ? "menuItem active" : "menuItem"}
+            key={1}
+            onClick={() => {
+              setSelected(1);
+              props.affichage(1);
+            }}
+          >
+            <UilClipboardAlt />
+            <span>users</span>
+          </div>
+
           {/* signoutIcon */}
           <div className="menuItem">
             <UilSignOutAlt />

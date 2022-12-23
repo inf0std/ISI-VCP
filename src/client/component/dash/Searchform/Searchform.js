@@ -2,10 +2,25 @@ import react from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import "./form.css";
+import {
+  UilSearch,
+  UilEstate,
+  UilClipboardAlt,
+  UilUsersAlt,
+  UilPackage,
+  UilChart,
+} from "@iconscout/react-unicons";
 const Formsearch = (props) => {
   return (
     <>
-      <div class="form-container">
+      <div
+        class="form-container"
+        style={{
+          boxShadow: "0px 13px 20px 0px #80808029",
+          background: "white",
+          padding: 30,
+        }}
+      >
         <form class="row g-3 needs-validation" novalidate>
           <div class="col-md-4 position-relative">
             <label for="validationTooltip01" class="form-label">
@@ -20,19 +35,7 @@ const Formsearch = (props) => {
             />
             <div class="valid-tooltip">Looks good!</div>
           </div>
-          <div class="col-md-4 position-relative">
-            <label for="validationTooltip02" class="form-label">
-              Last name
-            </label>
-            <input
-              type="text"
-              class="form-control"
-              id="validationTooltip02"
-              value="Otto"
-              required
-            />
-            <div class="valid-tooltip">Looks good!</div>
-          </div>
+
           <div class="col-md-4 position-relative">
             <label for="validationTooltipUsername" class="form-label">
               Username
@@ -80,21 +83,11 @@ const Formsearch = (props) => {
             </select>
             <div class="invalid-tooltip">Please select a valid state.</div>
           </div>
-          <div class="col-md-3 position-relative">
-            <label for="validationTooltip05" class="form-label">
-              Zip
-            </label>
-            <input
-              type="text"
-              class="form-control"
-              id="validationTooltip05"
-              required
-            />
-            <div class="invalid-tooltip">Please provide a valid zip.</div>
-          </div>
+
           <div class="col-12">
-            <button class="btn btn-primary" type="submit">
-              Submit form
+            <button id="search-button" type="button" class="btn btn-primary">
+              rechercher
+              <UilSearch />
             </button>
           </div>
         </form>

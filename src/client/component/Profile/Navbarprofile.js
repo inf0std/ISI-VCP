@@ -3,7 +3,9 @@ import {FaUsers} from "react-icons/fa";
 import {FaRegComments} from"react-icons/fa";
 import {FaHome} from "react-icons/fa";
 import {GoSignOut}  from "react-icons/go";
+import {ImSearch} from "react-icons/im";
 import { Link } from "react-router-dom";
+
 import './navbar.css';
 const Navbarprofile = (props) => {
   const searchBtn = useRef();
@@ -37,10 +39,10 @@ const Navbarprofile = (props) => {
   };
 
   return (
-    <nav id='nav' className="navbar navbar-expand-lg navbar-light bg-light justefy-content-end">
+    <nav id='nev' className="navbar navbar-expand-lg navbar-light bg-light justefy-content-end">
     <div className="container-fluid">
-      <a className="navbar-brand" href="#">
-        SEEN
+      <a style={{width:'120px',height:'45px',marginLeft:'40px'}}  className="navbar-brand" href="#">
+      <img style={{width:'100%' ,height:'80px',marginTop:'-26px'}} src="logo.png"/>
       </a>
       <button
         className="navbar-toggler"
@@ -58,49 +60,84 @@ const Navbarprofile = (props) => {
           <input
             className="form-control me-2 vw-25"
             type="search"
-            placeholder="Search"
+            placeholder="Rechercher"
             aria-label="Search"
           />
+          
+          
           <button
             className="btn btn-outline-success"
             type="submit"
           >
+            
             Rechercher
           </button>
+          {/*<ImSearch style={{width:'25px', height:"25px",margin:"5px"}}/>    Icone de recherche 
+          pour la serachbar*/}
         </form>
-        <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+        <ul style={{marginRight:"30px"}} className="navbar-nav ms-auto mb-2 mb-lg-0">
             
-            <li style={{marginleft:"10px"}} className="nav-item">
+            <li style={{margin:"0px 30px 0px 30px"}} className="nav-item">
 
-            
-              <FaHome style={{width:'25px', height:"25px",margin:"5px"}}/>
+            <li className="nav-item">
+              <a className="nav-link active" aria-current="page" href="#">
+              <FaHome id="it" style={{width:'25px', height:"25px",margin:"5px"}}/>
+                
+              </a>
+            </li>
+              
                 
               
             </li>
 
 
-            <li style={{marginleft:"10px"}} className="nav-item">
+            <li style={{margin:"0px 30px 0px 30px"}}  className="nav-item">
            
+            <Link
+                to="/Contact"
+                className="nav-link"
+                href="#"
+                tabindex="-1"
+                aria-disabled="true"
+              >
+                <FaUsers id="it" style={{width:'25px', height:"25px",margin:"5px"}}/>
+              </Link>
              
-             <FaUsers style={{width:'25px', height:"25px",margin:"5px"}}/>
              
                
             </li>
 
             
-            <li className="nav-item">
+            <li style={{margin:"0px 30px 0px 30px"}} className="nav-item">
+            <Link
+                to="/Chat"
+                className="nav-link"
+                href="#"
+                tabindex="-1"
+                aria-disabled="true"
+              >
+                <FaRegComments id="it" style={{width:'25px', height:"25px",margin:"5px"}}/>
+              </Link>
              
-                <FaRegComments style={{width:'25px', height:"25px",margin:"5px"}}/>
+                
               
               
 
             </li>
 
-            <li  className="nav-item">
+            <li style={{margin:"0px 30px 0px 30px"}}  className="nav-item">
+            <Link
+                to="/"
+                className="nav-link"
+                href="#"
+                tabindex="-1"
+                aria-disabled="true"
+              >
+              <GoSignOut id="it" style={{width:'25px', height:"25px",margin:"5px"}}/>
+              </Link>
+             {/* {!props.userName ? "Se deconnecter" : "Se connecter"}*/}
+
             
-              <GoSignOut style={{width:'25px', height:"25px",margin:"5px"}}/>
-             
-              
             </li>
           </ul>
       </div>
@@ -112,5 +149,3 @@ const Navbarprofile = (props) => {
 };
 
 export default Navbarprofile;
-
-

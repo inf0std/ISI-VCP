@@ -17,21 +17,21 @@ const userSchema = new mongoose.Schema(
       trim: true,
     },
     pic: {
-      type: "String",
+      type: String,
       default:
         "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
     },
     login: {
       email: {
         type: String,
-        //required: true,
-        //trim: true,
-        //unique: true,
-        //lowercase: true,
-        // minLenght: 8,
-        /* validatore(v) {
+        required: true,
+        trim: true,
+        unique: true,
+        lowercase: true,
+        minLenght: 8,
+        validatore(v) {
           if (!validator.isEmail(v)) throw new Error("email non valide");
-        },*/
+        },
       },
       password: {
         type: String,

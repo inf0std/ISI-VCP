@@ -261,6 +261,28 @@ const handlevalidateemail = function (req, res, next) {
   next();
 };
 
+const handleUpdateUser = async function (req, res, next) {
+  const newUser = req.body;
+  const id = req.params.id;
+  if (!newUser || !id) {
+    return createError(404, "veuilleur saisir data");
+  }
+  const newuser = newUser;
+  try {
+    const result = await User.findByIdAndUpdate(id, newuser, { new: true });
+    console.log(result);
+    if (!result) {
+      res.json("user not update");
+    }
+    res.status(200).json("updated");
+    console.log(result);
+  } catch (error) {
+    console.log(error.message);
+    throw error;
+  }
+  next();
+};
+
 module.exports = {
   handleLogin,
   handleSignUp,
@@ -274,4 +296,5 @@ module.exports = {
   handlevalidateemail,
   handleupdatepasse,
   handleupdatemail,
+  handleUpdateUser,
 };

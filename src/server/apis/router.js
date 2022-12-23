@@ -10,7 +10,7 @@ const mongoose = require("mongoose");
 const router = express.Router();
 const { loginrequired } = require("../db/crudUtils/config/JWT");
 const { verifiedemail } = require("../db/crudUtils/config/JWT");
-
+const { deletecontact, addContact } = require("./routeUtils");
 const {
   handleupdatemail,
   handleupdatepasse,
@@ -24,6 +24,7 @@ const {
   handleuserconference,
   handleuserorganisations,
   handlevalidateemail,
+  handleUpdateUser,
 } = require("./userRouteHandlers");
 
 // middleware that is specific to this router
@@ -63,32 +64,20 @@ router.get("/conversation/:id/", handleconversation);
 router.get("/conversation/:id/messages", handleconvesationmsg);
 /////////////////
 
-router.post(
-  "/readoneUser",
-  function (req, res) {
-    //profile
-    res.send("");
-  },
-  readoneUser
-);
+router.post("/user/:id/update", handleUpdateUser);
 router.post("/user/:id/updatepasse", handleupdatepasse);
 router.post("/user/:id/updateemail", handleupdatemail);
 router.post("/subscribe", function (req, res) {
   //profile
   res.send("");
 });
-router.get("/user/conversation", function (req, res) {
-  //profile
-  res.send("");
-});
+router.post("/user/:id1/deletecontact/:id2", deletecontact);
+
 router.get("/user/notification", function (req, res) {
   //profile
   res.send("");
 });
-router.get("/user/contact", function (req, res) {
-  //profile
-  res.send("");
-});
+router.get("/user/:id1/contact/:id2", addContact);
 router.get("/conversation", function (req, res) {
   //profile
   res.send("");

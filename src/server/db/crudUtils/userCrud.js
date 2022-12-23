@@ -146,8 +146,9 @@ const UpdateUser = async (id, newUser) => {
   if (!newUser) {
     throw createError(404, "veuilleur saisir data");
   }
+  const neuser = { newUser };
   try {
-    const result = await User.findByIdAndUpdate(id, newUser, { new: true });
+    const result = await User.findByIdAndUpdate(id, newuser, { new: true });
     console.log(result);
     if (!result) {
       throw createError(404, "user does not exist.");
@@ -269,42 +270,7 @@ const deleteUser = async (id) => {
     throw error;
   }
 };
-const readcontacts = async (id) => {
-  return User.findById(id).select("contacts");
-};
 
-const addContact = async (idUser, idContact) => {
-  if (!idUser || !idContact) {
-    throw createError(404, "veuilleur saisir data");
-  }
-  console.log(idUser);
-  console.log(idContact);
-  User.findById(idUser)
-    .select("contacts")
-    .exec()
-    .then((conta) => {
-      console.log(conta);
-    });
-
-  //var picked = lodash.filter(contacts, { '_id': 'idContact' } );  //console.log(picked)
-
-  /*
-    try {
- 
-
-//contacts.push(idContact);
-  var update= await User.findByIdAndUpdate(idUser,{$push:{contacts:idContact}},{new:true});
-  var updatesecond= await User.findByIdAndUpdate(idContact,{$push:{contacts:idUser}},{new:true})
-  console.log(update)
-  console.log(updatesecond)
-//}
-  } catch (e) {
-    console.log(e.message)
-    
-    throw e
-    
-    }*/
-};
 /*
   User.findById(id1)
     .select("contacts")
@@ -342,8 +308,7 @@ module.exports = {
   archiveUser,
   deleteUser,
   UpdateloginAdmin,
-  addContact,
-  readcontacts,
+
   updatepasse,
   updateemail,
 };

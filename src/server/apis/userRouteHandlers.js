@@ -1,3 +1,13 @@
+const { default: mongoose } = require("mongoose");
+var express = require("express");
+const validator = require("validator");
+
+const createError = require("http-errors");
+const { User } = require("../db/schema/User");
+const Conversation = require("../db/schema/Conversation");
+
+const { updatepasse, updateemail } = require("../db/crudUtils/userCrud");
+
 const handleLogin = (req, res, next) => {
   console.log("Login attempt");
   const { email, password } = req.body;
@@ -63,7 +73,7 @@ const handleUserContacts = (res, req, next) => {
   next();
 };
 
-const handleconvesationmsg = function (req, res) {
+const handleconvesationmsg = function (req, res, next) {
   const id = req.params.id;
   console.log(id);
   readallMessages(id)
@@ -77,8 +87,9 @@ const handleconvesationmsg = function (req, res) {
         message: "ERROR",
       });
     });
+  next();
 };
-const handleconversation = function (req, res) {
+const handleconversation = function (req, res, next) {
   const id = req.params.id;
   console.log(id);
   readConversation(id)
@@ -93,7 +104,7 @@ const handleconversation = function (req, res) {
       });
     });
 };
-const handleuserorganisations = function (req, res) {
+const handleuserorganisations = function (req, res, next) {
   const id = req.params.id;
   console.log(id);
   User.findById(id)
@@ -109,7 +120,7 @@ const handleuserorganisations = function (req, res) {
       });
     });
 };
-const handleuserreunion = function (req, res) {
+const handleuserreunion = function (req, res, next) {
   const id = req.params.id;
   console.log(id);
   User.findById(id)
@@ -124,8 +135,9 @@ const handleuserreunion = function (req, res) {
         message: "ERROR",
       });
     });
+  next();
 };
-const handleuserconference = function (req, res) {
+const handleuserconference = function (req, res, next) {
   const id = req.params.id;
   console.log(id);
   User.findById(id)
@@ -140,8 +152,103 @@ const handleuserconference = function (req, res) {
         message: "ERROR",
       });
     });
+  next();
 };
-const handlevalidateemail = function (req, res) {
+
+const handleupdatepasse = async function (req, res, next) {
+  const newpasse = req.body.newpasse;
+  const id = req.params.id;
+  console.log(newpasse);
+  if (!newpasse || !id) {
+    return console.log({
+      message: "Data to update can not be empty!",
+    });
+  }
+  try {
+    const data = await User.findById(id);
+
+    if (!data) {
+      console.log({
+        message: `Cannot update Conference with id=${id}. Maybe Conference does not exist!`,
+      });
+    } else {
+      data.login.passe = newpasse;
+      data.save();
+      res.json("updated");
+      console.log({ message: "passeword was updated successfully." });
+    }
+  } catch (err) {
+    res.json("not updated");
+    console.log({
+      message: "Error updating passeword with id = " + id,
+    });
+  }
+
+  next();
+};
+
+/*
+
+const handleupdatepasse = function (req, res, next) {
+  const newpasse = req.body;
+  const id = req.params.id;
+  try {
+    const resultat = updatepasse(id, newpasse);
+    console.log(resultat);
+    if (!resultat) {
+      res.json("not updated");
+    } else {
+      res.status(200).json("updated");
+    }
+  } catch (err) {}
+  next();
+};*/
+/*
+const handleupdatemail = function (req, res, next) {
+  const newemail = req.body.newemail;
+  const id = req.params.id;
+  try {
+    updateemail(id, newemail);
+
+    res.status(200).json("updated");
+  } catch (err) {
+    res.json("not updated");
+  }
+  next();
+};*/
+
+const handleupdatemail = async function (req, res, next) {
+  const newemail = req.body;
+  const id = req.params.id;
+
+  console.log(newemail);
+  if (!newemail || !id) {
+    return console.log({
+      message: "Data to update can not be empty!",
+    });
+  }
+
+  try {
+    const resultat = User.findByIdAndUpdate(
+      id,
+      { "login.email": newemail },
+      { new: true }
+    );
+
+    if (!resultat) {
+      res.json("not updated");
+    }
+
+    res.status(200).json("updated");
+  } catch (error) {
+    res.json("not updated");
+    console.log(error.message);
+    throw error;
+  }
+  next();
+};
+
+const handlevalidateemail = function (req, res, next) {
   const token = req.query.token;
   User.updateOne(
     { emailtoken: token },
@@ -151,7 +258,9 @@ const handlevalidateemail = function (req, res) {
       message: `${user.modifiedCount} updated successfully!`,
     });
   });
+  next();
 };
+
 module.exports = {
   handleLogin,
   handleSignUp,
@@ -163,4 +272,6 @@ module.exports = {
   handleuserreunion,
   handleuserconference,
   handlevalidateemail,
+  handleupdatepasse,
+  handleupdatemail,
 };

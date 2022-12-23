@@ -183,6 +183,59 @@ const UpdateloginAdmin = async (id, newlogin) => {
   }
 };
 
+const updateemail = (id, newemail) => {
+  console.log(newemail);
+  if (!newemail || !id) {
+    return console.log({
+      message: "Data to update can not be empty!",
+    });
+  }
+
+  //const id = req.params.id;
+
+  User.findByIdAndUpdate(
+    id,
+    { "login.email": newemail },
+    { new: true },
+    function (err, result) {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log(result);
+        console.log("le resultat " + result);
+        return result;
+      }
+    }
+  );
+};
+
+const updatepasse = (id, newpasse) => {
+  if (!newpasse || !id) {
+    return console.log({
+      message: "Data to update can not be empty!",
+    });
+  }
+
+  //const id = req.params.id;
+
+  User.findById(id)
+    .then((data) => {
+      if (!data) {
+        return console.log({
+          message: `Cannot update Conference with id=${id}. Maybe Conference does not exist!`,
+        });
+      } else {
+        data.login.passe = newpasse;
+        data.save();
+        console.log({ message: "passeword was updated successfully." });
+      }
+    })
+    .catch((err) => {
+      return console.log({
+        message: "Error updating passeword with id = " + id,
+      });
+    });
+};
 //update login
 const archiveUser = async (id) => {
   try {
@@ -291,4 +344,6 @@ module.exports = {
   UpdateloginAdmin,
   addContact,
   readcontacts,
+  updatepasse,
+  updateemail,
 };

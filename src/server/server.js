@@ -1,4 +1,5 @@
-const mongoose = require("mongoose");
+const { default: mongoose, connect } = require("mongoose");
+
 const express = require("express");
 const app = express();
 const router = express.Router();

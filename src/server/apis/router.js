@@ -12,6 +12,8 @@ const { loginrequired } = require("../db/crudUtils/config/JWT");
 const { verifiedemail } = require("../db/crudUtils/config/JWT");
 
 const {
+  handleupdatemail,
+  handleupdatepasse,
   handleLogin,
   handleSignUp,
   handleUserConversations,
@@ -69,10 +71,8 @@ router.post(
   },
   readoneUser
 );
-router.post("/connection", function (req, res) {
-  //profile
-  res.send("");
-});
+router.post("/user/:id/updatepasse", handleupdatepasse);
+router.post("/user/:id/updateemail", handleupdatemail);
 router.post("/subscribe", function (req, res) {
   //profile
   res.send("");

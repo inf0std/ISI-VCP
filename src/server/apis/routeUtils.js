@@ -23,8 +23,14 @@ const deletecontact = async function (req, res, next) {
 
       { new: true }
     );
+    const result2 = await User.updateOne(
+      { _id: id2 },
+      { $pullAll: { contacts: [{ _id: id1 }] } },
 
-    if (!result) {
+      { new: true }
+    );
+
+    if (!result || !result2) {
       res.json("not");
     }
     res.status(200).json("ok");

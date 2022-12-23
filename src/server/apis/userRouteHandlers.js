@@ -34,7 +34,6 @@ const handleSignUp = (req, res, next) => {
   createUser(email, password)
     .then((user) => {
       // res.json.status(200).json(user);
-      console.log(user);
     })
     .catch((err) => {
       res.json({

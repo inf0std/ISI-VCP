@@ -6,6 +6,12 @@ const createError = require("http-errors");
 const { User } = require("../db/schema/User");
 const Conversation = require("../db/schema/Conversation");
 
+const {
+  createUser,
+  readoneUser,
+  auth,
+  readcontacts,
+} = require("../db/crudUtils/userCrud");
 const { updatepasse, updateemail } = require("../db/crudUtils/userCrud");
 
 const handleLogin = (req, res, next) => {
@@ -27,7 +33,8 @@ const handleSignUp = (req, res, next) => {
   const { email, password } = req.body;
   createUser(email, password)
     .then((user) => {
-      res.json.status(200).json(user);
+      // res.json.status(200).json(user);
+      console.log(user);
     })
     .catch((err) => {
       res.json({

@@ -77,12 +77,11 @@ router.get("/user/notification", function (req, res) {
   //profile
   res.send("");
 });
-router.get("/user/:id1/contact/:id2", addContact);
+router.post("/user/:id1/contact/:id2", addContact);
 router.get("/conversation", function (req, res) {
   //profile
   res.send("");
 });
-router.get("/user/suggestion", function (req, res) {});
 
 router.post("/user/program");
 router.get;

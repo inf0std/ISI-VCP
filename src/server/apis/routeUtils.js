@@ -36,23 +36,48 @@ const deletecontact = async function (req, res, next) {
   next();
 };
 
-const readcontacts = async (id) => {
-  return User.findById(id).select("contacts");
-};
-
 const addContact = async function (req, res, next) {
   (id1 = req.params.id1), (id2 = req.params.id2);
+
   if (!id1 || !id2) {
     throw createError(404, "veuilleur saisir data");
   }
-  console.log(id1);
-  console.log(id2);
+  console.log("user" + id1);
+  console.log("newcontact" + id2);
   try {
-    const find = await User.findOne(
-      { _id: id1 },
-      { contacts: [{ _id: id2 }] }
-    ).exec();
-    console.log(find);
+    const find = await await User.find({
+      $and: [{ _id: id1 }, { contacts: { $elemMatch: { $eq: id2 } } }],
+
+      /*  {
+      _id: id1,
+    }).select({ contacts: { $elemMatch: { _id: id2 } } }
+        
+       */
+    }).select("contacts");
+    var x = find.length;
+    console.log(x);
+    if (find.length > 0) {
+      console.log("user exist deja" + find[0]);
+      res.json("not");
+    } else {
+      try {
+        var update = await User.findByIdAndUpdate(
+          id1,
+          { $push: { contacts: id2 } },
+          { new: true }
+        );
+        var updatesecond = await User.findByIdAndUpdate(
+          id2,
+          { $push: { contacts: id1 } },
+          { new: true }
+        );
+        console.log(update);
+        console.log(updatesecond);
+        res.json("ajouter au contacts avc succes");
+      } catch (err) {
+        console.log(err);
+      }
+    }
   } catch (e) {
     console.log(e.message);
 

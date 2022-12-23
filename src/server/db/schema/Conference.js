@@ -19,6 +19,8 @@ const conferenceSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         trim: true,
+        leaveAt: { type: Date },
+        joinedAt: { type: Date }
     }],
     archive: {
         type: Boolean,

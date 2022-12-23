@@ -20,12 +20,12 @@ const port = process.env.PORT || 3000; //ebergement
 
 //findOne('6388e49a6f3b0b10350b6533');
 //update('6388e49a6f3b0b10350b6533', { topic: 'updated', users: '6381e972cd98f245e2c7123c' });
-//JoinedToConference();
+//JoinedToConference('63a1ee4e7e5d9fe024c59901', );
 //LeaveTheConference();
 //deleteId('6388e49a6f3b0b10350b6533');
 //deleteAll('');
 //findAll('');
-//create('topic5', ['6381f1bbb4004ae1baeded2b', '6381f17bc098eb1596fcef0c', '6381f5fe4621a0ede3ca7409'], 120);
+//createConference('63a5849aa6196bd5dc87db16', 'topic5', ['6381f1bbb4004ae1baeded2b', '6381f17bc098eb1596fcef0c', '6381f5fe4621a0ede3ca7409'], 120);
 /*
 app.use(express.json());
 // lancer aplication sur notre port

@@ -5,40 +5,56 @@ const { Reunion } = require("../schema/Reunion")
 
 /////methode post
 //create reunion
-exports.createReunion = (idU, newReunion_Name, newParticipantsName, newDate_begin, newDuration) => { // idU = id of user
-
-        const newreunion = new Reunion({
-            reunion_Name: newReunion_Name,
-            participantsName: newParticipantsName,
+const createReunion = async(idU, reunion_Name, participantsName, Date_begin, Duration) => { // idU = id of user
+        if (!reunion_Name) {
+            console.log({ message: "Content can not be empty!" });
+            return;
+        }
+        if (!participantsName) {
+            console.log({ message: "You must select for minimum a user!" });
+            return;
+        }
+        if (!Duration) {
+            console.log({ message: "You must set the duration!" });
+            return;
+        }
+        if (!Date_begin) {
+            console.log({ message: "You must set the Date_begin!" });
+            return;
+        }
+        const reunion = new Reunion({
+            reunion_Name: reunion_Name,
+            participantsName: participantsName,
             videocall: [idU],
-            Date_begin: newDate_begin,
-            Duration: newDuration,
+            Date_begin: Date_begin,
+            Duration: Duration,
             reunion_Host: idU,
-            reunion_moderateur: idU
+            reunion_moderateur: idU,
         });
 
         //attendre reunion soit sauvgarder then update user
-        newreunion
-            .save(newreunion)
-            .then(data => {
+        reunion
+            .save(reunion)
+            .then(async(Reunions) => {
                 /** add the id of the organiser in user feild */
-                var newreunionId = newreunion._id
+                var newreunionId = reunion._id
                 Reunion.updateOne({ _id: newreunionId }, { $push: { participantsName: idU }, }).then(user => {
-                        return console.log({
+                        console.log({
                             message: `${user.modifiedCount} updated successfully!`,
 
                         });
                     })
                     /** add the id of the Reunion in user document */
-                User.updateMany({ $or: [{ _id: { $in: data.participantsName } }, { _id: idU }] }, { $push: { reunions: newreunionId }, }).then(user => {
-                    return console.log({
+                User.updateMany({ $or: [{ _id: { $in: Reunions.participantsName } }, { _id: idU }] }, { $push: { reunions: newreunionId }, }).then(user => {
+                    console.log({
                         message: `${user.modifiedCount} updated successfully!`,
 
                     });
                 })
-                return console.log(data, {
+                console.log(Reunions, {
                     message: "ceated successfully!"
                 });
+                return
             })
             .catch(err => {
                 return console.log({
@@ -47,7 +63,7 @@ exports.createReunion = (idU, newReunion_Name, newParticipantsName, newDate_begi
             });
     }
     // désigner le modirateur 
-exports.Mod = (idR, IdM) => { //idR = id of reunion     // idM =  id of the new moderateur 
+const Moderateur = async(idR, IdM) => { //idR = id of reunion     // idM =  id of the new moderateur 
     //const id = req.params.id;
 
     Reunion.updateOne({ _id: idR }, { reunion_moderateur: IdM }).then(user => {
@@ -61,11 +77,11 @@ exports.Mod = (idR, IdM) => { //idR = id of reunion     // idM =  id of the new 
 
 
 // read all reunions
-exports.readReunionAll = () => {
+const readReunionAll = async() => {
 
     Reunion.find({ archive: false })
-        .then(data => {
-            console.log(data);
+        .then(async(Reunions) => {
+            return Reunions
         })
         .catch(err => {
             console.log({
@@ -75,17 +91,18 @@ exports.readReunionAll = () => {
 };
 
 //read all reunions with id
-exports.readReunion = (id) => {
+const readReunion = async(id) => {
     //const id = params.id;
     if ((Reunion.archive == true)) {
         console.log({ message: "Not found reunion with id " + id })
         return
     }
     Reunion.findById(id)
-        .then(data => {
-            if (!data)
+        .then(async(Reunion) => {
+            if (!Reunion)
                 console.log({ message: "Not found Reunion with id " + id });
-            else console.log(data);
+            else console.log(Reunion);
+            return Reunion
         })
         .catch(err => {
             console.log
@@ -96,7 +113,7 @@ exports.readReunion = (id) => {
 
 
 //update reunion
-exports.updateReunion = (id, newReun) => {
+const updateReunion = async(id, newReun) => {
 
     if (!newReun || !id) {
         return console.log({
@@ -107,12 +124,13 @@ exports.updateReunion = (id, newReun) => {
     //const id = req.params.id;
 
     Reunion.findByIdAndUpdate(id, newReun, { useFindAndModify: false })
-        .then(data => {
-            if (!data) {
+        .then(async(Reunion) => {
+            if (!Reunion) {
                 return console.log({
                     message: `Cannot update Reunion with id = ${id}. Maybe Reunion was not found!`
                 });
             } else console.log({ message: "Reunion was updated successfully." });
+            return Reunion
         })
         .catch(err => {
             return console.log({
@@ -122,12 +140,12 @@ exports.updateReunion = (id, newReun) => {
 };
 
 // Delete a Reunion with the specified id in the request
-exports.deleteReunion = (id) => {
+const deleteReunion = async(id) => {
     //const id = req.params.id;
 
     Reunion.findByIdAndUpdate(id, { archive: true })
-        .then(data => {
-            if (!data) {
+        .then(async(Reunion) => {
+            if (!Reunion) {
                 return console.log({
                     message: `Cannot delete Reunion with id = ${id}. Maybe Reunion was not found!`
                 });
@@ -136,6 +154,7 @@ exports.deleteReunion = (id) => {
                     message: "Reunion was deleted successfully!"
                 });
             }
+            return Reunion
         })
         .catch(err => {
             return console.log({
@@ -144,12 +163,13 @@ exports.deleteReunion = (id) => {
         });
 };
 // Delete all Reunions from the database.
-exports.deleteReunionAll = () => {
+const deleteReunionAll = () => {
     Reunion.updateMany({ archive: true })
-        .then(data => {
+        .then(async(Reunion) => {
             return console.log({
-                message: `${data.modifiedCount} Reunions were deleted successfully!`
+                message: `${Reunion.modifiedCount} Reunions were deleted successfully!`
             });
+            return Reunion
         })
         .catch(err => {
             return console.log({
@@ -197,3 +217,11 @@ exports.JoinedToReunion = (idR, idU) => {
                 });
             });
     }*/
+
+module.exports = {
+    createReunion,
+    readReunionAll,
+    updateReunion,
+    deleteReunion,
+    deleteReunionAll
+}

@@ -7,20 +7,19 @@ const { Reunion } = require("../schema/Reunion")
 //create reunion
 const createReunion = async(idU, reunion_Name, participantsName, Date_begin, Duration) => { // idU = id of user
         if (!reunion_Name) {
-            console.log({ message: "Content can not be empty!" });
-            return;
+            return ({ message: "Content can not be empty!" });
         }
         if (!participantsName) {
-            console.log({ message: "You must select for minimum a user!" });
-            return;
+
+            return ({ message: "You must select for minimum a user!" });
         }
         if (!Duration) {
-            console.log({ message: "You must set the duration!" });
-            return;
+
+            return ({ message: "You must set the duration!" });
         }
         if (!Date_begin) {
-            console.log({ message: "You must set the Date_begin!" });
-            return;
+
+            return ({ message: "You must set the Date_begin!" });
         }
         const reunion = new Reunion({
             reunion_Name: reunion_Name,
@@ -33,7 +32,7 @@ const createReunion = async(idU, reunion_Name, participantsName, Date_begin, Dur
         });
 
         //attendre reunion soit sauvgarder then update user
-        reunion
+        return reunion
             .save(reunion)
             .then(async(Reunions) => {
                 /** add the id of the organiser in user feild */
@@ -54,7 +53,7 @@ const createReunion = async(idU, reunion_Name, participantsName, Date_begin, Dur
                 console.log(Reunions, {
                     message: "ceated successfully!"
                 });
-                return
+                return reunion;
             })
             .catch(err => {
                 return console.log({
@@ -63,11 +62,11 @@ const createReunion = async(idU, reunion_Name, participantsName, Date_begin, Dur
             });
     }
     // désigner le modirateur 
-const Moderateur = async(idR, IdM) => { //idR = id of reunion     // idM =  id of the new moderateur 
+const Moderateur = async(idR, idM) => { //idR = id of reunion     // idM =  id of the new moderateur 
     //const id = req.params.id;
 
-    Reunion.updateOne({ _id: idR }, { reunion_moderateur: IdM }).then(user => {
-        return console.log({
+    return Reunion.updateOne({ _id: idR }, { reunion_moderateur: idM }).then(user => {
+        return ({
             message: `${user.modifiedCount} Moderateur updated successfully!`,
 
         });
@@ -79,7 +78,7 @@ const Moderateur = async(idR, IdM) => { //idR = id of reunion     // idM =  id o
 // read all reunions
 const readReunionAll = async() => {
 
-    Reunion.find({ archive: false })
+    return Reunion.find({ archive: false })
         .then(async(Reunions) => {
             return Reunions
         })
@@ -102,7 +101,7 @@ const readReunion = async(id) => {
             if (!Reunion)
                 console.log({ message: "Not found Reunion with id " + id });
             else console.log(Reunion);
-            return Reunion
+            return Reunion;
         })
         .catch(err => {
             console.log
@@ -116,24 +115,25 @@ const readReunion = async(id) => {
 const updateReunion = async(id, newReun) => {
 
     if (!newReun || !id) {
-        return console.log({
+        return ({
             message: "Data to update can not be empty!"
         });
     }
 
     //const id = req.params.id;
 
-    Reunion.findByIdAndUpdate(id, newReun, { useFindAndModify: false })
+    return Reunion.findByIdAndUpdate(id, newReun, { useFindAndModify: false })
         .then(async(Reunion) => {
             if (!Reunion) {
-                return console.log({
+                console.log({
                     message: `Cannot update Reunion with id = ${id}. Maybe Reunion was not found!`
                 });
-            } else console.log({ message: "Reunion was updated successfully." });
-            return Reunion
+
+            } else return ({ message: "Reunion was updated successfully." });
+            return Reunion;
         })
         .catch(err => {
-            return console.log({
+            return ({
                 message: "Error updating Reunion with id = " + id
             });
         });
@@ -141,87 +141,99 @@ const updateReunion = async(id, newReun) => {
 
 // Delete a Reunion with the specified id in the request
 const deleteReunion = async(id) => {
-    //const id = req.params.id;
-
-    Reunion.findByIdAndUpdate(id, { archive: true })
-        .then(async(Reunion) => {
-            if (!Reunion) {
-                return console.log({
-                    message: `Cannot delete Reunion with id = ${id}. Maybe Reunion was not found!`
-                });
+        //const id = req.params.id;
+        return Reunion.findOne({ _id: id }).then(reunion => {
+            if (reunion.archive == true) {
+                console.log({
+                    message: `Cannot delete reunion with id=${id}. because the reunion has already deleted!`,
+                })
             } else {
-                return console.log({
-                    message: "Reunion was deleted successfully!"
-                });
+                Reunion.findByIdAndUpdate(id, { archive: true })
+                    .then(async(Reunion) => {
+                        if (!Reunion) {
+                            return console.log({
+                                message: `Cannot delete Reunion with id = ${id}. Maybe Reunion was not found!`
+                            });
+                        } else {
+                            return console.log({
+                                message: "Reunion was deleted successfully!"
+                            });
+                        }
+                    })
+                    .catch(err => {
+                        console.log({
+                            message: "Could not delete Reunion with id = " + id
+                        });
+                    });
             }
-            return Reunion
+            return 'reunion was deleted successfully!';
         })
-        .catch(err => {
-            return console.log({
-                message: "Could not delete Reunion with id = " + id
-            });
-        });
-};
-// Delete all Reunions from the database.
-const deleteReunionAll = () => {
-    Reunion.updateMany({ archive: true })
-        .then(async(Reunion) => {
-            return console.log({
-                message: `${Reunion.modifiedCount} Reunions were deleted successfully!`
-            });
-            return Reunion
-        })
-        .catch(err => {
-            return console.log({
-                message: err.message || "Some error occurred while removing all Reunions."
-            });
-        });
+    }
+    // Delete all Reunions from the database.
+const deleteReunionAll = async() => {
+    return Reunion.countDocuments({ archive: false }).then(reunion => {
+        if (reunion > 0)
+            Reunion.updateMany({ archive: true })
+            .then(async(data) => {
+                console.log({
+                    message: `${data.modifiedCount} reynions were deleted successfully!`,
+                });
+
+            })
+        else {
+            return (`you have 0 reunion to delete`)
+        }
+        return `${reunion} reunions were deleted successfully!`
+    });
 };
 //joined to reunion
-exports.JoinedToReunion = (idR, idU) => {
-        //const id = req.params.id;
+const JoinedToReunion = async(idR, idU) => {
+    //const id = req.params.id;
 
 
-        Reunion.findByIdAndUpdate(idR, { $push: { videocall: idU } })
+    return Reunion.findByIdAndUpdate(idR, { $push: { videocall: idU } })
 
+    .then(data => {
+            if (!data) {
+                return ({
+                    message: `Cannot find reunion with id=${idR}. Maybe reunion does not exist!`
+                });
+
+            } else return ({ message: `You have joined the reunion!` });
+        })
+        .catch(err => {
+            return console.log({
+                message: "Error during joining the reunion with id=" + idR
+            });
+        });
+}
+
+//leave the reunion
+// i think it's nor necessairy to use this 
+const LeaveTheReunion = (idR, idU) => {
+    //const id = req.params.id;
+    return Reunion.findByIdAndUpdate(idR, { $pull: { videocall: idU } })
         .then(data => {
-                if (!data) {
-                    return console.log({
-                        message: `Cannot find reunion with id=${idR}. Maybe reunion does not exist!`
-                    });
-
-                } else return console.log({ message: `The user with id=${idU}. has joined the reunion!` });
-            })
-            .catch(err => {
-                return console.log({
-                    message: "Error during joining the reunion with id=" + idR
+            if (!data) {
+                return ({
+                    message: `Cannot find reunion with id=${idR}. Maybe reunion does not exist!`
                 });
+            } else return ({ message: `You have left the reunion!` });
+        })
+        .catch(err => {
+            return ({
+                message: "Error during leaving the reunion with id=" + idR
             });
-    }
-    /*
-    //leave the reunion
-    // i think it's nor necessairy to use this 
-    exports.LeaveTheReunion = (idR, idU) => {
-        //const id = req.params.id;
-        Reunion.findByIdAndUpdate(idR, { $pull: { videocall: idU } })
-            .then(data => {
-                if (!data) {
-                    return console.log({
-                        message: `Cannot find reunion with id=${idR}. Maybe reunion does not exist!`
-                    });
-                } else return console.log({ message: `The user with id=${idU}. has left the reunion!` });
-            })
-            .catch(err => {
-                return console.log({
-                    message: "Error during leaving the reunion with id=" + idR
-                });
-            });
-    }*/
+        });
+}
 
 module.exports = {
+    Moderateur,
     createReunion,
     readReunionAll,
     updateReunion,
     deleteReunion,
-    deleteReunionAll
+    deleteReunionAll,
+    JoinedToReunion,
+    LeaveTheReunion
 }

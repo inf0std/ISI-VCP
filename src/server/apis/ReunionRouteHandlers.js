@@ -4,15 +4,14 @@ const createError = require("http-errors");
 const { User } = require("../db/schema/User");
 const { Reunion } = require("../db/schema/Reunion");
 
-const { createReunion, readReunionAll, updateReunion, deleteReunion, deleteReunionAll } = require("../db/crudUtils/reunionCrud");
+const { createReunion, readReunionAll, updateReunion, deleteReunion, deleteReunionAll, Moderateur, JoinedToReunion, LeaveTheReunion } = require("../db/crudUtils/reunionCrud");
 
-const handleCreateReunion = (req, res, next) => {
+const handleCreateReunion = (req, res) => {
     const { reunion_Name, participantsName, Date_begin, Duration } = req.body;
     const idU = req.params.idU;
     console.log(idU)
     createReunion(idU, reunion_Name, participantsName, Date_begin, Duration)
         .then((Reunions) => {
-            console.log(Reunions)
             res.status(200).json(Reunions);
         })
         .catch((err) => {
@@ -20,13 +19,11 @@ const handleCreateReunion = (req, res, next) => {
                 message: "ERROR",
             });
         });
-    next();
 };
 
-const handleReunion = function(req, res, next) {
+const handleReunion = function(req, res) {
     readReunionAll()
         .then((Reunions) => {
-            console.log(Reunions);
             res.status(200).json(Reunions);
         })
         .catch((err) => {
@@ -35,14 +32,12 @@ const handleReunion = function(req, res, next) {
                 message: "ERROR",
             });
         });
-    next();
 };
-const handleUpdateReunion = function(req, res, next) {
+const handleUpdateReunion = function(req, res) {
     const newConf = req.body;
     const id = req.params.id;
     updateReunion(id, newConf)
         .then((Reunions) => {
-            console.log(Reunions);
             res.status(200).json(Reunions);
         })
         .catch((err) => {
@@ -51,13 +46,11 @@ const handleUpdateReunion = function(req, res, next) {
                 message: "ERROR",
             });
         });
-    next();
 };
-const handleDeleteReunion = function(req, res, next) {
+const handleDeleteReunion = function(req, res) {
     const id = req.params.id;
     deleteReunion(id)
         .then((Reunions) => {
-            console.log(Reunions);
             res.status(200).json(Reunions);
         })
         .catch((err) => {
@@ -66,12 +59,10 @@ const handleDeleteReunion = function(req, res, next) {
                 message: "ERROR",
             });
         });
-    next();
 };
-const handleDeleteReunionAll = function(req, res, next) {
+const handleDeleteReunionAll = function(req, res) {
     deleteReunionAll()
         .then((data) => {
-            console.log(data);
             res.status(200).json(data);
         })
         .catch((err) => {
@@ -80,13 +71,53 @@ const handleDeleteReunionAll = function(req, res, next) {
                 message: "ERROR",
             });
         });
-    next();
 };
-
+const handleModerateur = function(req, res) {
+    const { idR, idM } = req.params;
+    Moderateur(idR, idM)
+        .then((data) => {
+            res.status(200).json(data);
+        })
+        .catch((err) => {
+            console.log(err);
+            res.json({
+                message: "ERROR",
+            });
+        });
+};
+const handleJoinedToReunion = function(req, res) {
+    const { idR, idU } = req.params;
+    JoinedToReunion(idR, idU)
+        .then((user) => {
+            res.status(200).json(user);
+        })
+        .catch((err) => {
+            console.log(err);
+            res.json({
+                message: "ERROR",
+            });
+        });
+};
+const handleLeaveTheReunion = function(req, res) {
+    const { idR, idU } = req.params;
+    LeaveTheReunion(idR, idU)
+        .then((user) => {
+            res.status(200).json(user);
+        })
+        .catch((err) => {
+            console.log(err);
+            res.json({
+                message: "ERROR",
+            });
+        });
+};
 module.exports = {
     handleCreateReunion,
     handleReunion,
     handleUpdateReunion,
     handleDeleteReunion,
-    handleDeleteReunionAll
+    handleDeleteReunionAll,
+    handleModerateur,
+    handleLeaveTheReunion,
+    handleJoinedToReunion
 };

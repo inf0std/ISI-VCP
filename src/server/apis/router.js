@@ -7,46 +7,51 @@ const { loginrequired } = require("../db/crudUtils/config/JWT");
 const { verifiedemail } = require("../db/crudUtils/config/JWT");
 const { deletecontact, addContact } = require("./routeUtils");
 const {
-  handleCreateConference,
-  handleConference,
-  handleUpdateConference,
-  handleDeleteConference,
-  handleDeleteConferenceAll,
+    handleCreateConference,
+    handleConference,
+    handleUpdateConference,
+    handleDeleteConference,
+    handleDeleteConferenceAll,
+    handleJoinedToConference,
+    handleLeaveTheConference,
 } = require("./ConferenceRouteHandlers");
 const {
-  handleupdatemail,
-  handleupdatepasse,
-  handleLogin,
+    handleupdatemail,
+    handleupdatepasse,
+    handleLogin,
 
-  handleUserConversations,
-  handleUserContacts,
-  handleconvesationmsg,
-  handleconversation,
-  handleuserreunion,
-  handleuserconference,
-  handleuserorganisations,
-  handlevalidateemail,
-  handleUpdateUser,
+    handleUserConversations,
+    handleUserContacts,
+    handleconvesationmsg,
+    handleconversation,
+    handleuserreunion,
+    handleuserconference,
+    handleuserorganisations,
+    handlevalidateemail,
+    handleUpdateUser,
 } = require("./userRouteHandlers");
 
 const { registerUser, allUsers } = require("./signinsignup");
 const {
-  handleCreateReunion,
-  handleReunion,
-  handleUpdateReunion,
-  handleDeleteReunion,
-  handleDeleteReunionAll,
+    handleCreateReunion,
+    handleReunion,
+    handleUpdateReunion,
+    handleDeleteReunion,
+    handleDeleteReunionAll,
+    handleModerateur,
+    handleJoinedToReunion,
+    handleLeaveTheReunion
 } = require("./ReunionRouteHandlers");
 
 // middleware that is specific to this router
 router.use(function timeLog(req, res, next) {
-  console.log("Time: ", Date.now());
-  next();
+    console.log("Time: ", Date.now());
+    next();
 });
 // define the home page route
-router.get("/", function (req, res) {
-  //profile
-  res.send("");
+router.get("/", function(req, res) {
+    //profile
+    res.send("");
 });
 //////
 //signIn
@@ -74,6 +79,8 @@ router.post("/conferences/readConferenceAll", handleConference);
 router.post("/conferences/:id/updateConference", handleUpdateConference);
 router.post("/conferences/:id/deleteConference", handleDeleteConference);
 router.post("/conferences/deleteConferenceAll", handleDeleteConferenceAll);
+router.post("/conferences/:idC/users/:idU/JoinedToConference", handleJoinedToConference);
+router.post("/conferences/:idC/users/:idU/LeaveTheConference", handleLeaveTheConference);
 
 //Reunions
 router.post("/users/:idU/createReunion", handleCreateReunion);
@@ -81,15 +88,18 @@ router.post("/reunions/readReunionAll", handleReunion);
 router.post("/reunions/:id/updateReunion", handleUpdateReunion);
 router.post("/reunions/:id/deleteReunion", handleDeleteReunion);
 router.post("/reunions/deleteReunionAll", handleDeleteReunionAll);
+router.post("/reunions/:idR/users/:idM/Moderateur", handleModerateur);
+router.post("/reunions/:idR/users/:idU/JoinedToReunion", handleJoinedToReunion);
+router.post("/reunions/:idR/users/:idU/LeaveTheReunion", handleLeaveTheReunion);
 
-router.get("/user/notification", function (req, res) {
-  //profile
-  res.send("");
+router.get("/user/notification", function(req, res) {
+    //profile
+    res.send("");
 });
 
-router.get("/conversation", function (req, res) {
-  //profile
-  res.send("");
+router.get("/conversation", function(req, res) {
+    //profile
+    res.send("");
 });
 
 router.post("/user/program");

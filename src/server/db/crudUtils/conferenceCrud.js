@@ -2,69 +2,62 @@ const mongoose = require("mongoose");
 const { Conference } = require("../schema/Conference")
 const { User } = require("../schema/User")
 const { Reunion } = require("../schema/Reunion")
-    // Create and Save a new conference
+
+// Create and Save a new conference
 const createConference = async(idU, topic, users, duration, Date_begin) => {
-    // Validate request
-    if (!topic) {
-        console.log({ message: "Content can not be empty!" });
-        return;
-    }
-    if (!users) {
-        console.log({ message: "You must select for minimum a user!" });
-        return;
-    }
-    if (!duration) {
-        console.log({ message: "You must set the duration!" });
-        return;
-    }
-    if (!Date_begin) {
-        console.log({ message: "You must set the Date_begin!" });
-        return;
-    }
-    const conference = new Conference({
-        topic: topic, //mean title 
-        organisedBy: idU, // get the user id from url .. the video call grp job 
-        users: users, // mean participants 
-        videocall: [idU], // get the user id from url .. the video call grp job 
-        duration: duration, // in minute 
-        Date_begin: Date_begin // in 'yyyy-mm-dd'
-    });
-
-
-    // Save conference in the database
-    conference
-        .save(conference)
-        .then((async(data) => {
-            /** add the id of the organiser in user feild */
-            var newConferenceId = conference._id
-            Conference.updateOne({ _id: newConferenceId }, { $push: { users: idU }, }, { missed: false }).then(user => {
-                    return console.log({
+    console.log("idU", idU);
+    if (!topic || !users || !duration || !Date_begin) {
+        return ("All feilds must be full!");
+    } else {
+        const conference = new Conference({
+            topic: topic, //mean title 
+            organisedBy: idU, // get the user id from url .. the video call grp job 
+            users: users, // mean participants 
+            videocall: {
+                joiners: {
+                    users: [idU],
+                    joinedAt: Date_begin
+                }
+            }, // get the user id from url .. the video call grp job 
+            duration: duration, // in minute 
+            Date_begin: Date_begin // in 'yyyy-mm-dd'
+        });
+        return conference
+            .save(conference)
+            .then(async(conference) => {
+                var newConferenceId = conference._id
+                Conference.updateOne({ _id: newConferenceId }, { $push: { users: idU }, }, { missed: false }).then(user => {
+                        console.log({
+                            message: `${user.modifiedCount} updated successfully!`,
+                        });
+                    })
+                    // add the id of the Conference in user document 
+                User.updateMany({ $or: [{ _id: { $in: conference.users } }, { _id: idU }] }, { $push: { conferences: newConferenceId }, }).then(user => {
+                    console.log({
                         message: `${user.modifiedCount} updated successfully!`,
-
                     });
-                })
-                /** add the id of the Conference in user document */
-            User.updateMany({ $or: [{ _id: { $in: data.users } }, { _id: idU }] }, { $push: { conferences: newConferenceId }, }).then(user => {
-                return console.log({
-                    message: `${user.modifiedCount} updated successfully!`,
-
+                });
+                return conference;
+            })
+            .catch((err) => {
+                console.log({
+                    message: err.message || "Some error occurred while saving the user.",
                 });
             });
-            return data
-        }))
-        .catch(err => {
-            return console.log({
-                message: err.message || "Some error occurred while creating the conference."
-            });
-        });
+        /** add the id of the organiser in user feild */
+
+
+
+    }
 }
+
 
 
 // Retrieve all conferences from the database.
 const readConferenceAll = () => {
-    Conference.find({ archive: false })
+    return Conference.find({ archive: false })
         .then((Conferences) => {
-            console.log(Conferences);
+            return Conferences;
         })
         .catch((err) => {
             console.log({
@@ -80,7 +73,7 @@ const readConference = (id) => {
         console.log({ message: "Not found conference with id " + id });
         return;
     }
-    Conference.findById(id)
+    return Conference.findById(id)
         .then((data) => {
             if (!data) console.log({ message: "Not found conference with id " + id });
             else console.log(data);
@@ -98,14 +91,14 @@ const updateConference = async(id, newConf) => {
         });
     }
     //const id = req.params.id;
-    Conference.findByIdAndUpdate(id, newConf)
+    return Conference.findByIdAndUpdate(id, newConf)
         .then(async(Conferences) => {
             if (!Conferences) {
                 return console.log({
                     message: `Cannot update Conference with id=${id}. Maybe Conference does not exist!`,
                 });
             } else console.log({ message: "Conference was updated successfully." });
-            return Conferences
+            return Conferences;
         })
         .catch((err) => {
             return console.log({
@@ -117,61 +110,79 @@ const updateConference = async(id, newConf) => {
 // Delete a Conference with the specified id in the request
 const deleteConference = async(id) => {
     //const id = req.params.id;
+    return Conference.findOne({ _id: id }).then(conference => {
 
-    Conference.findByIdAndUpdate(id, { archive: true })
-        .then(async(Conferences) => {
-            if (!Conferences) {
-                return console.log({
-                    message: `Cannot delete conference with id=${id}. Maybe conference does not exist!`,
+        if (conference.archive == true) {
+            console.log({
+                message: `Cannot delete conference with id=${id}. because the conference has already deleted!`,
+            })
+        } else {
+            Conference.findByIdAndUpdate(id, { archive: true })
+                .then(async(Conferences) => {
+                    if (!Conferences) {
+                        console.log({
+                            message: `Cannot delete conference with id=${id}. Maybe conference does not exist!`,
+                        });
+                    } else {
+                        console.log({
+                            message: "conference was deleted successfully!",
+                        });
+                    }
+
+                })
+                .catch((err) => {
+                    return console.log({
+                        message: "Could not delete conference with id = " + id,
+                    });
                 });
-            } else {
-                return console.log({
-                    message: "conference was deleted successfully!",
-                });
-            }
-            return Conferences
-        })
-        .catch((err) => {
-            return console.log({
-                message: "Could not delete conference with id = " + id,
-            });
-        });
+        }
+        return 'conference was deleted successfully!';
+    })
+
 };
 
 // Delete all conferences from the database.
 const deleteConferenceAll = async() => {
-    Conference.updateMany({ archive: true })
-        .then(async(data) => {
-            return console.log({
-                message: `${data.modifiedCount} conferences were deleted successfully!`,
-            });
-            return data
-        })
-        .catch((err) => {
-            return console.log({
-                message: err.message || "Some error occurred while removing all conferences.",
-            });
-        });
+    return Conference.countDocuments({ archive: false }).then(conference => {
+        if (conference > 0)
+            Conference.updateMany({ archive: true })
+            .then(async(data) => {
+                console.log({
+                    message: `${data.modifiedCount} conferences were deleted successfully!`,
+                });
+
+            })
+        else {
+            return (`you have 0 conference to delete`)
+        }
+        return `${conference} conferences were deleted successfully!`
+    });
 };
 
 // get the joined users and put them in conference document
 
-exports.JoinedToConference = (idC, idU) => {
+const JoinedToConference = (idC, idU) => {
     //const id = req.params.id;
-    Conference.findByIdAndUpdate(idC, { $push: { videoCall: idU } }, { 'videoCall.joinedAt': Date.now })
+    return Conference.findByIdAndUpdate(idC, {
+        'videoCall.joiners': {
+            $pullAll: { users: idU }
+        }
+
+    }, { 'videoCall.joiners.joinedAt': Date.now })
 
     .then((data) => {
             if (!data) {
-                return console.log({
+                console.log({
                     message: `Cannot find conference with id = ${idC}. Maybe conference does not exist!`,
                 });
-            } else
-                return console.log({
-                    message: `The user with id = ${idU}. has joined the conference!`,
-                });
+            } else {
+                return ({
+                    message: `You have joined the conference!`,
+                })
+            };
         })
         .catch((err) => {
-            return console.log({
+            console.log({
                 message: "Error during joining the conference with id = " + idC,
             });
         });
@@ -179,18 +190,18 @@ exports.JoinedToConference = (idC, idU) => {
 
 // get the joined users and pull them from conference document
 // i think it's nor necessairy to use this 
-exports.LeaveTheConference = (idC, idU) => {
+const LeaveTheConference = async(idC, idU) => {
     //const id = req.params.id;
 
-    Conference.findByIdAndUpdate(idC, { 'videoCall.leaveAt': Date.now })
+    return Conference.findByIdAndUpdate(idC, { 'videoCall.leave.leaveAt': Date.now })
         .then((data) => {
             if (!data) {
-                return console.log({
+                console.log({
                     message: `Cannot find conference with id = ${idC}. Maybe conference does not exist!`,
                 });
             } else
-                return console.log({
-                    message: `The user with id = ${idU}. has left the conference!`,
+                return ({
+                    message: `You have left the conference!`,
                 });
         })
         .catch((err) => {
@@ -204,7 +215,7 @@ exports.LeaveTheConference = (idC, idU) => {
 // u have to run this function every time u wanna get the events 
 exports.SetEvent = () => {
     var query = Conference.find({}).select('_id');
-    query.exec(function(err, ids) {
+    return query.exec(function(err, ids) {
         if (err) return console.log(err)
         else {
             const set1 = [...new Set(ids)];
@@ -239,7 +250,7 @@ exports.SetEvent = () => {
                 })
             });
         }
-
+        return query;
     })
 }
 
@@ -258,9 +269,11 @@ exports.getUserProgrammedEvents = (idU) => {
                     console.log(`Your programmed Conferences are :  ${res}
                     ////////////////////////////////
                     `)
+                return query1;
             })
         }
-    })
+
+    });
     User.findById({ _id: idU }, { 'reunions': 1 }, function(err, ids) {
         if (err) console.log(err)
         else {
@@ -274,7 +287,9 @@ exports.getUserProgrammedEvents = (idU) => {
                     ////////////////////////////////
                     `)
             })
+            return query2;
         }
+
     })
 
 }
@@ -320,5 +335,7 @@ module.exports = {
     readConferenceAll,
     updateConference,
     deleteConference,
-    deleteConferenceAll
+    deleteConferenceAll,
+    JoinedToConference,
+    LeaveTheConference
 }

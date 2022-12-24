@@ -3,26 +3,30 @@ var express = require("express");
 const createError = require("http-errors");
 const { User } = require("../db/schema/User");
 const { Conference } = require("../db/schema/Conference");
+const { createConference, JoinedToConference, LeaveTheConference, readConferenceAll, updateConference, deleteConference, deleteConferenceAll } = require("../db/crudUtils/conferenceCrud");
 
-const { createConference, readConferenceAll, updateConference, deleteConference, deleteConferenceAll } = require("../db/crudUtils/conferenceCrud");
 
-const handleCreateConference = (req, res, next) => {
+
+
+
+const handleCreateConference = (req, res) => {
+
     const { topic, users, duration, Date_begin } = req.body;
     const idU = req.params.idU;
-    console.log(idU)
     createConference(idU, topic, users, duration, Date_begin)
-        .then((data) => {
-            res.status(200).json(data);
+        .then((conference) => {
+            res.status(200).json(conference);
+            console.log(conference);
         })
         .catch((err) => {
-            res.json({
+            res.json(err, {
                 message: "ERROR",
             });
         });
-    next();
+
 };
 
-const handleConference = function(req, res, next) {
+const handleConference = function(req, res) {
     readConferenceAll()
         .then((Conferences) => {
             console.log(Conferences);
@@ -34,9 +38,8 @@ const handleConference = function(req, res, next) {
                 message: "ERROR",
             });
         });
-    next();
 };
-const handleUpdateConference = function(req, res, next) {
+const handleUpdateConference = function(req, res) {
     const newConf = req.body;
     const id = req.params.id;
     updateConference(id, newConf)
@@ -50,9 +53,9 @@ const handleUpdateConference = function(req, res, next) {
                 message: "ERROR",
             });
         });
-    next();
+
 };
-const handleDeleteConference = function(req, res, next) {
+const handleDeleteConference = function(req, res) {
     const id = req.params.id;
     deleteConference(id)
         .then((Conferences) => {
@@ -65,9 +68,8 @@ const handleDeleteConference = function(req, res, next) {
                 message: "ERROR",
             });
         });
-    next();
 };
-const handleDeleteConferenceAll = function(req, res, next) {
+const handleDeleteConferenceAll = function(req, res) {
     deleteConferenceAll()
         .then((data) => {
             console.log(data);
@@ -79,13 +81,39 @@ const handleDeleteConferenceAll = function(req, res, next) {
                 message: "ERROR",
             });
         });
-    next();
 };
-
+const handleJoinedToConference = function(req, res) {
+    const { idC, idU } = req.params;
+    JoinedToConference(idC, idU)
+        .then((user) => {
+            res.status(200).json(user);
+        })
+        .catch((err) => {
+            console.log(err);
+            res.json({
+                message: "ERROR",
+            });
+        });
+};
+const handleLeaveTheConference = function(req, res) {
+    const { idC, idU } = req.params;
+    LeaveTheConference(idC, idU)
+        .then((user) => {
+            res.status(200).json(user);
+        })
+        .catch((err) => {
+            console.log(err);
+            res.json({
+                message: "ERROR",
+            });
+        });
+};
 module.exports = {
     handleCreateConference,
     handleConference,
     handleUpdateConference,
     handleDeleteConference,
-    handleDeleteConferenceAll
+    handleDeleteConferenceAll,
+    handleLeaveTheConference,
+    handleJoinedToConference
 };

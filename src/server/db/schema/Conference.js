@@ -14,23 +14,41 @@ const conferenceSchema = new mongoose.Schema({
     organisedBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
-    },
-    videocall: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
         trim: true,
-        leaveAt: { type: Date },
-        joinedAt: { type: Date }
-    }],
+        required: true
+    },
+    videocall: {
+        joiners: {
+            users: [{
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User',
+                trim: true,
+            }],
+            joinedAt: {
+                type: Date,
+                default: Date.now
+            }
+        },
+        leavers: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',
+            trim: true,
+            leaveAt: {
+                type: Date
+            }
+        }],
+    },
     archive: {
         type: Boolean,
         default: false
     },
     Date_begin: {
-        type: Date
+        type: Date,
+        default: Date.now
     },
     duration: {
-        type: Number
+        type: Number,
+        default: 40
     },
     missed: {
         type: Boolean,

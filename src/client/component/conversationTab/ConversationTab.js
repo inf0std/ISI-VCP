@@ -8,16 +8,16 @@ const ConversationTab = (props) => {
   };
 
   return (
-    <div className="col-md-9 -bg-light cd-inline-block">
+    <div className="col-md-8 -bg-light cd-inline-block">
       <NavBar />
       <MessagesTab myId={props.myId} msgs={props.msgs} />
         <div>
           <form
-          className="d-flex py-3"
+          className="d-flex py-3 bg-light"
           style={{
             position: "fixed",
             bottom: 0,
-            width: "72vw"
+            width: "65vw"
           }}
           >
             <input className="form-control" type="text" style={{marginRight:'5px'}}></input>

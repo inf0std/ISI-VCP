@@ -2,7 +2,7 @@
 
 function NavBar() {
     return ( 
-        <nav className="navbar navbar-expand-lg border mb-5" style={{margin:0, padding:'1px'}}>
+        <nav className="navbar navbar-expand-lg d-flex justify-content-end border mb-5 py-1" style={{margin:0, padding:'1px'}}>
             {/* <div>
                 <img 
                     style={{
@@ -14,10 +14,10 @@ function NavBar() {
                       }}
                     src="#" alt="" />
             </div> */}
-            <div className="d-flex flex-row-reverse" style={{width:'100%',margin:'3px',padding:'10px 0px'}}>
-                <button className='btn btn-outline float-right' style={{padding:'0px 20px', fontSize:'20px'}} type=""><i style={{color:'#1dde94'}} class="bi bi-three-dots-vertical"></i></button>
-                <button className='btn btn-outline float-right' style={{padding:'0px 20px', fontSize:'20px'}} type=""><i style={{color:'#1dde94'}} class="bi bi-camera-video-fill"></i></button>
-                <button className='btn btn-outline float-right' style={{padding:'0px 20px', fontSize:'20px'}} type=""><i style={{color:'#1dde94'}} class="bi bi-telephone-fill"></i></button>
+            <div className="" style={{}}>
+                <button className='btn btn-outline float-right my-0' style={{padding:'0px 20px', fontSize:'20px'}} type=""><i style={{color:'#1dde94'}} class="bi bi-telephone-fill"></i></button>
+                <button className='btn btn-outline float-right my-0' style={{padding:'0px 20px', fontSize:'20px'}} type=""><i style={{color:'#1dde94'}} class="bi bi-camera-video-fill"></i></button>
+                <button className='btn btn-outline float-right my-0' style={{padding:'0px 20px', fontSize:'20px'}} type=""><i style={{color:'#1dde94'}} class="bi bi-three-dots-vertical"></i></button>
             </div>
         </nav>
      );

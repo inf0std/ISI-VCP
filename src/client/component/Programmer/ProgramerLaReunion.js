@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "./ProgramerLareunion.css"
 const ProgrammerReunio = (props) => {
     return (
@@ -81,7 +82,7 @@ const ProgrammerReunio = (props) => {
                                                     Annuler
                                                 </button>
 
-                                                <button type="submit" class="btn btn-primary btn-block">Suivant  </button>
+                                                <Link to='/profile-tab' ><button type="submit" class="btn btn-primary btn-block">Suivant  </button>{' '}</Link>
                                             </div>
 
                                         </form>
@@ -92,16 +93,14 @@ const ProgrammerReunio = (props) => {
 
 
                                             <div class="d-flex" className="participant" >
-                                                <label class="form-label" for="form6Example5">Participant</label>
+                                                <label class="form-label" for="form6Example5">Participants</label>
                                                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                                                <button class="btn btn-outline-success" type="submit">Search</button>
+                                                <button class="btn btn-outline-info" type="submit">Search</button>
                                             </div>
                                             <div className="ajout1">
 
                                             </div>
-                                            <div className="ajout2" >
 
-                                            </div>
 
                                             <div class="d-flex justify-content-center" className="butn">
                                                 <button
@@ -121,16 +120,17 @@ const ProgrammerReunio = (props) => {
                                         <form>
 
 
-                                            <div class="d-flex" className="participant" >
-                                                <label class="form-label" for="form6Example5">Participant</label>
-                                                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                                                <button class="btn btn-outline-info" type="submit">Search</button>
-                                            </div>
+
                                             <div className="spane">
                                                 <div><span>Titre :</span></div>
                                                 <div><span>Date :</span></div>
                                                 <div><span>Description :</span></div>
                                                 <div><span>Durée :</span></div>
+                                                <div><span>Participants :</span></div>
+
+                                            </div>
+
+                                            <div className="ajout1">
 
                                             </div>
 

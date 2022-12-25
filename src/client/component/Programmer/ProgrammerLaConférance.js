@@ -1,5 +1,5 @@
-import "./Programmerdébat.css"
-const Programmerdébat = (props) => {
+import "./ProgrammerLaConférance.css"
+const ProgrammerLaConférance = (props) => {
     return (
         <>
             <button
@@ -8,7 +8,7 @@ const Programmerdébat = (props) => {
                 data-bs-toggle="modal"
                 data-bs-target="#signup-signin"
             >
-                Programmer Le Débat
+                Programmer La Conférance
             </button>
 
             <div className="modal fade" id="signup-signin">
@@ -24,9 +24,6 @@ const Programmerdébat = (props) => {
                                 </li>
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link" id="reunio-tab" data-bs-toggle="tab" data-bs-target="#reunio-tab-pane" type="button" role="tab" aria-controls="reunio-tab-pane" aria-selected="false">étape03</button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="débat-tab" data-bs-toggle="tab" data-bs-target="#débat-tab-pane" type="button" role="tab" aria-controls="débat-tab-pane" aria-selected="false">étape04</button>
                                 </li>
 
                             </ul>
@@ -45,37 +42,37 @@ const Programmerdébat = (props) => {
                                     <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
                                         <form>
 
-                                            <div class="form-outline mb-4" className="titre_">
+                                            <div class="form-outline mb-4" className="titre-">
                                                 <label class="form-label" for="form1Example1">Titre</label>
                                                 <input type="Text" id="form1Example1" class="form-control" />
 
                                             </div>
 
 
-                                            <div class="form-outline mb-4" className="date_">
+                                            <div class="form-outline mb-4" className="date-">
                                                 <label class="form-label" for="form1Example2">Date</label>
                                                 <input type="date" id="form1Example2" class="form-control" />
 
                                             </div>
-                                            <div className="Heur_">
-                                                <div class="form-outline mb-2 " className="heure_">
+                                            <div className="Heur-">
+                                                <div class="form-outline mb-2 " className="heure-">
                                                     <label class="form-label" for="form1Example2">heure</label>
                                                     <input type="time" id="form1Example2" class="form-control" />
 
                                                 </div>
-                                                <div class="form-outline mb-4" className="Durée_" >
+                                                <div class="form-outline mb-4" className="Durée-" >
                                                     <label class="form-label" for="form1Example2">Durée</label>
                                                     <input type="time" id="form1Example2" class="form-control" />
 
                                                 </div>
                                             </div>
-                                            <div class="form-floating" className="description_"  >
+                                            <div class="form-floating" className="description-"  >
                                                 <label for="floatingTextarea2">Description</label>
-                                                <textarea class="form-control" placeholder="ajouter une description à votre Débat" id="floatingTextarea2" ></textarea>
+                                                <textarea class="form-control" placeholder="ajouter une description à votre Conférance" id="floatingTextarea2" ></textarea>
                                             </div>
 
 
-                                            <div class="d-flex justify-content-center" className="bouton_">
+                                            <div class="d-flex justify-content-center" className="bouton-">
                                                 <button
                                                     type="button"
                                                     className="btn btn-secondary btn-floating mx-1"
@@ -94,17 +91,17 @@ const Programmerdébat = (props) => {
                                         <form>
 
 
-                                            <div class="d-flex" className="participant_" >
-                                                <label class="form-label" for="form6Example5">Participants </label>
+                                            <div class="d-flex" className="participant-" >
+                                                <label class="form-label" for="form6Example5">Participants</label>
                                                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
                                                 <button class="btn btn-outline-info" type="submit">Search</button>
                                             </div>
-                                            <div className="ajout_">
+                                            <div className="ajout-">
 
                                             </div>
 
 
-                                            <div class="d-flex justify-content-center" className="butn_">
+                                            <div class="d-flex justify-content-center" className="butn-">
                                                 <button
                                                     type="button"
                                                     className="btn btn-secondary btn-floating mx-1"
@@ -123,59 +120,20 @@ const Programmerdébat = (props) => {
 
 
 
-                                            <div class="d-flex" className="participant_" >
-                                                <label class="form-label" for="form6Example5">Audiance</label>
-
-                                                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                                                <button class="btn btn-outline-info" type="submit">Search</button>
-
-                                            </div>
-                                            <div className="chek">
-                                                <label class="form-check-label" for="invalidCheck">
-                                                    Tout Le Monde
-                                                </label>
-                                                <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required />
-
-                                            </div>
-
-                                            <div className="ajout_">
-
-                                            </div>
-
-
-                                            <div class="d-flex justify-content-center" className="butn_">
-                                                <button
-                                                    type="button"
-                                                    className="btn btn-secondary btn-floating mx-1"
-                                                    data-bs-dismiss="modal"
-                                                >
-                                                    Précedent
-                                                </button>
-
-                                                <button type="submit" class="btn btn-primary btn-block">Suivant</button>
-                                            </div>
-
-                                        </form>
-                                    </div>
-                                    <div class="tab-pane fade" id="débat-tab-pane" role="tabpanel" aria-labelledby="débat-tab" tabindex="0">
-                                        <form>
-
-
-
-                                            <div className="spane_">
+                                            <div className="spane-">
                                                 <div><span>Titre :</span></div>
                                                 <div><span>Date :</span></div>
                                                 <div><span>Description :</span></div>
                                                 <div><span>Durée :</span></div>
                                                 <div><span>Participants :</span></div>
+                                            </div>
+
+                                            <div className="ajout-">
 
                                             </div>
 
-                                            <div className="ajout_1">
 
-                                            </div>
-
-                                            <div class="d-flex justify-content-center" className="butn_">
+                                            <div class="d-flex justify-content-center" className="butn-">
                                                 <button
                                                     type="button"
                                                     className="btn btn-secondary btn-floating mx-1"
@@ -202,4 +160,4 @@ const Programmerdébat = (props) => {
     );
 };
 
-export default Programmerdébat;
+export default ProgrammerLaConférance;

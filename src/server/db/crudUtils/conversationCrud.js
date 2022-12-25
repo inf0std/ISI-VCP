@@ -1,7 +1,7 @@
 const { default: mongoose } = require("mongoose");
 const bcrypt = require("bcrypt");
 
-const {User} = require("../schema/User");
+const { User } = require("../schema/User");
 const Conversation = require("../schema/Conversation");
 
 //ajouter l'id de la conversation a la liste des converstions des utilisateurs
@@ -28,88 +28,96 @@ const createConversation = (convData) => {
     });
 };
 
-
 const addConversation = async (id1, id2) => {
-
-      //if the userExist
+  //if the userExist
   User.findById(id1).catch((err) => {
     throw err;
   });
   User.findById(id2).catch((err) => {
     throw err;
   });
-   console.log(id1);console.log(id2)
+  console.log(id1);
+  console.log(id2);
 
-    var isConversation = await Conversation.find({
-        isGroup: false,   archive :false,
-        $and: [
-          { users: { $elemMatch: { $eq: id1} } }, 
-          { users: { $elemMatch: { $eq: id2 } } },
-        ],
-      })
-       .populate({ path: 'users', select: '_id' })
-       console.log(isConversation)
-        const  dest = await User.findById(id2).select("username") ;
-          console.log(dest)
+  var isConversation = await Conversation.find({
+    isGroup: false,
+    archive: false,
+    $and: [
+      { users: { $elemMatch: { $eq: id1 } } },
+      { users: { $elemMatch: { $eq: id2 } } },
+    ],
+  }).populate({ path: "users", select: "_id" });
+  console.log(isConversation);
+  const dest = await User.findById(id2).select("username");
+  console.log(dest);
 
-      if (isConversation.length > 0) {
-    console.log(isConversation[0]);//si la convesation length >0 donc il exist deja alors la recuperer directement
-      } 
-
-
-      else {
+  if (isConversation.length > 0) {
+    console.log(isConversation[0]); //si la convesation length >0 donc il exist deja alors la recuperer directement
+  } else {
     var ConversationData = {
-      
-        isGroup: false,
-        users: [id1, id2],
-        archive :false,
-    }; 
-
-
+      isGroup: false,
+      users: [id1, id2],
+      archive: false,
+    };
 
     try {
-        const createdConversation = await Conversation.create(ConversationData).then(
-          (createdConversation ) => {
-           //enregistrer id de la conversation dans user.convesations
-            return User.updateMany({   $or:[{_id:id1},{_id:id2} ]    }, 
-              
-                { conversations:createdConversation._id}, function (err) {
-                if (err){
-                    console.log(err)
-                }
-                else{
-                  throw new Error(error.message);
-                    console.log("Updated User");
-                }
-            });
-          });
+      const createdConversation = await Conversation.create(
+        ConversationData
+      ).then((createdConversation) => {
+        //enregistrer id de la conversation dans user.convesations
+        return User.updateMany(
+          { $or: [{ _id: id1 }, { _id: id2 }] },
 
-          //afichage de la convesation creer avc users asoosier
-        const FullConversation  = await Conversation.findOne({ _id: createdConversation._id })
-        console.log(FullConversation );
-      } 
-      catch (error) {
-      
-        throw new Error(error.message);
-      }
-    }   
+          { conversations: createdConversation._id },
+          function (err) {
+            if (err) {
+              console.log(err);
+            } else {
+              throw new Error(error.message);
+              console.log("Updated User");
+            }
+          }
+        );
+      });
 
-  
-
+      //afichage de la convesation creer avc users asoosier
+      const FullConversation = await Conversation.findOne({
+        _id: createdConversation._id,
+      });
+      console.log(FullConversation);
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
 };
 
 //read convesation
+
 const readConversation = async (id2) => {
-  try {
-    const FullConversation = await Conversation.findOne({
-      _id: id2,
-    });
-    console.log(FullConversation);
-  } catch (error) {
-    console.log("convesation not exist");
-    throw new Error(error.message);
+  const FullConversation = await Conversation.findOne({
+    _id: id2,
+  });
+  if (FullConversation) {
+    return FullConversation;
   }
 };
+
+/*
+const readConversation = async (id) => {
+  return Conversation.findById(id)
+    .then(async (conversation) => {
+      if (!conversation)
+        console.log({ message: "Not found conversation with id " + id });
+      else console.log(conversation);
+      return conversation;
+    })
+    .catch((err) => {
+      console.log({
+        message: "Error retrieving conversation with id = " + id,
+      });
+    });
+};*/
+
 //////////////////envoyer un mesage ////////////////////////////
 
 const addMessage = async (idC, msg) => {
@@ -144,18 +152,16 @@ const addcall = async (idC, call) => {
     console.log("Invalid data passed into request");
   } else {
     var newcall = {
-      
       sender_call: call.senderId,
-      participants:call.participants,
-      datebegin:call.datebegin,
-      duration:call.duration
-      
+      participants: call.participants,
+      datebegin: call.datebegin,
+      duration: call.duration,
     };
 
     try {
       var currentConversation = await Conversation.findOneAndUpdate(
         { _id: idC },
-        { $push: { videocalls: newcall} }
+        { $push: { videocalls: newcall } }
       );
 
       console.log(currentConversation);
@@ -216,8 +222,6 @@ const readNthTeenMessages = async (id, n) => {
     });
 };
 
-
-
 const createGrpConversation = async (IdU, users) => {
   console.log(IdU);
 
@@ -236,41 +240,41 @@ const createGrpConversation = async (IdU, users) => {
   console.log(users);
   try {
     const grpConversation = await Conversation.create({
-     // ConversationName: grpname, //nom du grope from body
+      // ConversationName: grpname, //nom du grope from body
       users: users, // liste of users deja creer
       isGroup: true, // boolean to true
       groupAdmin: IdU, //req.user,// user actuel sera admin du grop
-      archive:false,
+      archive: false,
     }).then((createdConversation) => {
-     addConversationToUsers(createdConversation.id, createdConversation.users);
+      addConversationToUsers(createdConversation.id, createdConversation.users);
     });
-
-  
   } catch (error) {
     console.log("error");
     throw new Error(error.message);
   }
 };
 
-
 const updateconversation = async (IdC, updates) => {
   console.log(updates);
-  if (!updates||!Idc) {
+  if (!updates || !Idc) {
     throw createError(404, "veuilleur saisir data");
   }
   const updatedConversation = await Conversation.findByIdAndUpdate(
-  IdC ,  updates , { new: true } );
+    IdC,
+    updates,
+    { new: true }
+  );
 
   if (!updatedConversation) {
     throw new Error("Convesation Not Found");
   } else {
-    return updatedConversation
+    return updatedConversation;
   }
 };
 
 const removeFromGroup = async (IdC, IdU) => {
   // check if the requester is admin
-  if (!IdU||!Idc) {
+  if (!IdU || !Idc) {
     throw createError(404, "veuilleur saisir data");
   }
   const removed = await Conversation.findByIdAndUpdate(
@@ -294,7 +298,7 @@ const removeFromGroup = async (IdC, IdU) => {
 };
 
 const addToGroup = async (IdC, IdU) => {
-  if (!IdU||!Idc) {
+  if (!IdU || !Idc) {
     throw createError(404, "veuilleur saisir data");
   }
   const added = await Conversation.findByIdAndUpdate(
@@ -311,7 +315,6 @@ const addToGroup = async (IdC, IdU) => {
     console.log("not added");
     throw new Error("conversation Not Found");
   } else {
-   
     return added;
   }
 };
@@ -327,4 +330,4 @@ module.exports = {
   addToGroup,
   addcall,
   readallcalls,
-}
+};

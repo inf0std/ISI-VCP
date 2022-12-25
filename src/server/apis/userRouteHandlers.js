@@ -7,9 +7,12 @@ const { User } = require("../db/schema/User");
 const Conversation = require("../db/schema/Conversation");
 const { createUser } = require("./signinsignup");
 
-const { readoneUser, auth, readcontacts } = require("../db/crudUtils/userCrud");
+const { readoneUser, auth } = require("../db/crudUtils/userCrud");
 const { updatepasse, updateemail } = require("../db/crudUtils/userCrud");
-
+const {
+  readConversation,
+  readallMessages,
+} = require("../db/crudUtils/conversationCrud");
 const handleLogin = (req, res, next) => {
   console.log("Login attempt");
   const { email, password } = req.body;
@@ -47,73 +50,64 @@ const handleSignUp = (req, res, next) => {
   next();
 };
 
-const handleUserConversations = (req, res, next) => {
+const handleUserConversations = async (req, res, next) => {
   const id = req.params.id;
   console.log(id);
-  User.findById(id)
-    .select("conversations")
-    .then((conversations) => {
-      console.log(contacts);
-      res.status(200).json(conversations);
-    })
-    .catch((err) => {
-      console.log(err);
-      res.json({
-        message: "ERROR",
-      });
+  const conv = await User.findById(id).select("conversations");
+  if (conv) {
+    console.log(conv);
+    res.status(200).json(conv);
+  } else {
+    console.log(err);
+    res.json({
+      message: "ERROR",
     });
-  next();
+  }
+};
+const handleUserContacts = async (req, res, next) => {
+  const id = req.params.id;
+  console.log(id);
+  const con = await User.findById(id).select("contacts");
+  if (con) {
+    console.log(con);
+    res.status(200).json(con);
+  } else {
+    console.log(err);
+    res.json({
+      message: "ERROR",
+    });
+  }
 };
 
-const handleUserContacts = (res, req, next) => {
+const handleuserorganisations = async (req, res, next) => {
   const id = req.params.id;
   console.log(id);
-  User.findById(id)
-    .select("contacts")
-    .then((contacts) => {
-      console.log(contacts);
-      res.status(200).json(contacts);
-    })
-    .catch((err) => {
-      console.log(err);
-      res.json({
-        message: "ERROR",
-      });
+  const con = await User.findById(id).select("organisations");
+  if (con) {
+    console.log(con);
+    res.status(200).json(con);
+  } else {
+    console.log(err);
+    res.json({
+      message: "ERROR",
     });
-  next();
+  }
 };
-
-const handleconvesationmsg = function (req, res, next) {
+const handleuserreunion = async (req, res, next) => {
   const id = req.params.id;
   console.log(id);
-  readallMessages(id)
-    .then((Messages) => {
-      console.log(Messages);
-      res.status(200).json(Messages);
-    })
-    .catch((err) => {
-      console.log(err);
-      res.json({
-        message: "ERROR",
-      });
+  const con = await User.findById(id).select("reunions");
+  if (con) {
+    console.log(con);
+    res.status(200).json(con);
+  } else {
+    console.log(err);
+    res.json({
+      message: "ERROR",
     });
-  next();
+  }
 };
-const handleconversation = function (req, res, next) {
-  const id = req.params.id;
-  console.log(id);
-  readConversation(id)
-    .then((Conversation) => {
-      console.log(Conversation);
-      res.status(200).json(Conversation);
-    })
-    .catch((err) => {
-      console.log(err);
-      res.json({
-        message: "ERROR",
-      });
-    });
-};
+/*
 const handleuserorganisations = function (req, res, next) {
   const id = req.params.id;
   console.log(id);
@@ -129,7 +123,8 @@ const handleuserorganisations = function (req, res, next) {
         message: "ERROR",
       });
     });
-};
+};*/
+/*
 const handleuserreunion = function (req, res, next) {
   const id = req.params.id;
   console.log(id);
@@ -146,7 +141,7 @@ const handleuserreunion = function (req, res, next) {
       });
     });
   next();
-};
+};*/
 const handleuserconference = function (req, res, next) {
   const id = req.params.id;
   console.log(id);
@@ -163,6 +158,65 @@ const handleuserconference = function (req, res, next) {
       });
     });
   next();
+};
+
+/*
+const handleconvesationmsg = function (req, res, next) {
+  const id = req.params.id;
+  console.log(id);
+  readallMessages(id)
+    .then((Messages) => {
+      console.log(Messages);
+      res.status(200).json(Messages);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.json({
+        message: "ERROR",
+      });
+    });
+  next();
+};*/
+
+const handleconvesationmsg = async (req, res, next) => {
+  const id = req.params.id;
+  console.log(id);
+  const messages = await Conversation.findById(id).select("messages");
+  console.log(messages);
+
+  if (!messages) {
+    res.json({
+      message: "ERROR",
+    });
+  } else {
+    res.status(200).json(messages);
+  }
+};
+
+/*
+const handleconversation = function (req, res, next) {
+  const id = req.params.id;
+  console.log(id);
+  readConversation(id)
+    .then((Conversation) => {
+      console.log(Conversation);
+      res.status(200).json(Conversation);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.json({
+        message: "ERROR",
+      });
+    });
+};*/
+const handleconversation = async (req, res, next) => {
+  const id = req.params.id;
+  const FullConversation = await Conversation.findOne({
+    _id: id,
+  });
+  if (FullConversation) {
+    res.send(FullConversation);
+  }
 };
 
 const handleupdatepasse = async function (req, res, next) {

@@ -8,7 +8,7 @@ const ConversationTab = (props) => {
   };
 
   return (
-    <div className="col-md-8 -bg-light cd-inline-block">
+    <div className="col-sm-8 -bg-light cd-inline-block">
       <NavBar />
       <MessagesTab myId={props.myId} msgs={props.msgs} />
         <div>

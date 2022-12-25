@@ -4,7 +4,7 @@ import logo from '../../logo.png'
 const COnversations = (props) => {
   const searchInput = useRef();
   return (
-    <div className="col-md-4 border bg-light" style={{}}>
+    <div className="col-sm-4 border bg-light" style={{}}>
       {
         //formulaire de recherche dans les conversations
       }

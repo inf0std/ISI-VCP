@@ -4,13 +4,13 @@ import logo from '../../logo.png'
 const COnversations = (props) => {
   const searchInput = useRef();
   return (
-    <div className="col-md-3 border bg-light" style={{}}>
+    <div className="col-sm-4 border bg-light" style={{}}>
       {
         //formulaire de recherche dans les conversations
       }
       <div className="" style={{display:''}}>
-      <img src={logo} alt="logo" style={{width:'60px', marginRight:'10px'}} />
-      <h3 class="font-weight-bold mb-3 text-center text-lg-start">Conversations</h3>  
+        <img src={logo} alt="logo" style={{width:'60px', marginRight:'10px'}} />
+        <h3 class="font-weight-bold mb-3 text-center text-lg-start">Conversations</h3>  
       </div>
       <form>
         <input style={{width:'95%'}} className="form-control mb-4" ref={searchInput} type="text"></input>

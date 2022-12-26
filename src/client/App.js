@@ -3,7 +3,8 @@ import { useEffect, useState, useRef } from "react";
 import io from "socket.io-client";
 import "./App.css";
 import Chat from "./views/Chat";
-
+  
+//const socket =io("http://localhost:4000");
 const convs = [
   {
     name: "conv-1",
@@ -112,7 +113,7 @@ function App() {
   })
   return (
     <>
-      <Chat convs={convList} />
+      <Chat  socket={socket} convs={convList} />
     </>
   );
 }

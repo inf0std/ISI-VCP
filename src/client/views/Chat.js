@@ -9,7 +9,7 @@ const Chat = (props) => {
       <div className="row">
         {/* <NavBar /> */}
         <Conversations convs={props.convs} activate={setActiveConv} />
-        <ConversationTab myId={1} msgs={props.convs[activeConv].msgs} />
+        <ConversationTab myId={1} id={activeConv} msgs={props.convs[activeConv].msgs} socket={props.socket}/>
       </div>
     </div>
   );

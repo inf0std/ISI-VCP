@@ -1,10 +1,18 @@
 import React from "react";
 import MessagesTab from "../messagesTab/MessagesTab";
 import NavBar from "../navbar/NavBar";
+import {useRef} from "react";
 
 const ConversationTab = (props) => {
-  const sendMessage = (event) => {
-    event.preventDefault();
+  const msgInput =useRef()
+  const sendMessage = (e) => {
+    e.preventDefault();
+    props.socket.emit("msg",{
+      conetent: msgInput.value
+
+      
+
+    })
   };
 
   return (
@@ -20,7 +28,7 @@ const ConversationTab = (props) => {
             width: "72vw"
           }}
           >
-            <input className="form-control" type="text" style={{marginRight:'5px'}}></input>
+            <input  ref={msgInput} className="form-control" type="text" style={{marginRight:'5px'}}></input>
             <button className="btn btn-success btn-rounded" onClick={sendMessage}style={{marginLeft:'2px'}}>send</button>
         </form>
       </div>

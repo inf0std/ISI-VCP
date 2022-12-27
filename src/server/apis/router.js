@@ -46,6 +46,11 @@ const {
   handleJoinedToReunion,
   handleLeaveTheReunion,
 } = require("./ReunionRouteHandlers");
+const {
+  handleSetEvents,
+  handleGetProgrammedEvents,
+  handleGetMissedEvents,
+} = require("./EventsRouteHandle");
 
 // middleware that is specific to this router
 router.use(function timeLog(req, res, next) {
@@ -102,6 +107,11 @@ router.post("/reunions/deleteReunionAll", handleDeleteReunionAll);
 router.post("/reunions/:idR/users/:idM/Moderateur", handleModerateur);
 router.post("/reunions/:idR/users/:idU/JoinedToReunion", handleJoinedToReunion);
 router.post("/reunions/:idR/users/:idU/LeaveTheReunion", handleLeaveTheReunion);
+
+//Events
+router.post("/user/SetEvent", handleSetEvents);
+router.post("/user/:idU/getUserProgrammedEvents", handleGetProgrammedEvents);
+router.post("/user/:idU/getUserMissedEvents", handleGetMissedEvents);
 
 router.get("/user/notification", function (req, res) {
   //profile

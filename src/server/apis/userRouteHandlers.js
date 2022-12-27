@@ -9,10 +9,7 @@ const { createUser } = require("./signinsignup");
 
 const { readoneUser, auth } = require("../db/crudUtils/userCrud");
 const { updatepasse, updateemail } = require("../db/crudUtils/userCrud");
-const {
-  readConversation,
-  readallMessages,
-} = require("../db/crudUtils/conversationCrud");
+
 const handleLogin = (req, res, next) => {
   console.log("Login attempt");
   const { email, password } = req.body;
@@ -41,14 +38,6 @@ const handleLogin = (req, res, next) => {
     });
   next();
 };*/
-
-const handleSignUp = (req, res, next) => {
-  const { email, password } = req.body;
-
-  const user = createUser(email, password);
-  console.log("user created" + user);
-  next();
-};
 
 const handleUserConversations = async (req, res, next) => {
   const id = req.params.id;
@@ -209,15 +198,6 @@ const handleconversation = function (req, res, next) {
       });
     });
 };*/
-const handleconversation = async (req, res, next) => {
-  const id = req.params.id;
-  const FullConversation = await Conversation.findOne({
-    _id: id,
-  });
-  if (FullConversation) {
-    res.send(FullConversation);
-  }
-};
 
 const handleupdatepasse = async function (req, res, next) {
   const newpasse = req.body.newpasse;
@@ -349,11 +329,11 @@ const handleUpdateUser = async function (req, res, next) {
 
 module.exports = {
   handleLogin,
-  handleSignUp,
+
   handleUserConversations,
   handleUserContacts,
   handleconvesationmsg,
-  handleconversation,
+
   handleuserorganisations,
   handleuserreunion,
   handleuserconference,

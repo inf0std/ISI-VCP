@@ -23,14 +23,18 @@ const {
   handleUserConversations,
   handleUserContacts,
   handleconvesationmsg,
-  handleconversation,
+
   handleuserreunion,
   handleuserconference,
   handleuserorganisations,
   handlevalidateemail,
   handleUpdateUser,
 } = require("./userRouteHandlers");
-
+const {
+  handleconversation,
+  handlecreateconversation,
+  accessConversation,
+} = require("./handleconversation");
 const { registerUser, allUsers } = require("./signinsignup");
 const {
   handleCreateReunion,
@@ -61,6 +65,7 @@ router.post("/signup", registerUser);
 router.get("/ver", handlevalidateemail);
 router.get("/user/:id/contacts", handleUserContacts);
 router.get("/user/:id/conversations", handleUserConversations);
+router.post("/user/:id/accessConversation", accessConversation);
 router.get("/user/:id/conferences", handleuserconference);
 router.get("/user/:id/reunions", handleuserreunion);
 router.get("/user/:id/organisations", handleuserorganisations);

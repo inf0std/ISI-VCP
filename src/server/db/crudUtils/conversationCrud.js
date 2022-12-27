@@ -65,7 +65,7 @@ const addConversation = async (id1, id2) => {
         ConversationData
       ).then((createdConversation) => {
         //enregistrer id de la conversation dans user.convesations
-        return User.updateMany(
+        User.updateMany(
           { $or: [{ _id: id1 }, { _id: id2 }] },
 
           { conversations: createdConversation._id },
@@ -92,7 +92,7 @@ const addConversation = async (id1, id2) => {
 };
 
 //read convesation
-
+/*
 const readConversation = async (id2) => {
   const FullConversation = await Conversation.findOne({
     _id: id2,
@@ -100,9 +100,8 @@ const readConversation = async (id2) => {
   if (FullConversation) {
     return FullConversation;
   }
-};
+};*/
 
-/*
 const readConversation = async (id) => {
   return Conversation.findById(id)
     .then(async (conversation) => {
@@ -116,7 +115,7 @@ const readConversation = async (id) => {
         message: "Error retrieving conversation with id = " + id,
       });
     });
-};*/
+};
 
 //////////////////envoyer un mesage ////////////////////////////
 

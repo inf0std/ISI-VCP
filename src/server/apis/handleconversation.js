@@ -116,11 +116,10 @@ const addMessage = async (req, res) => {
       );
 
       if (currentConversation) {
-        return currentConversation;
+        res.send(currentConversation);
       }
     } catch (error) {
       throw new Error(error.message);
-      res.status(400);
     }
   }
 };
@@ -163,7 +162,7 @@ const readallcalls = async (req, res) => {
     if (!videocalls) {
       throw createError(404, " does not exist.");
     }
-    return videocalls;
+    res.send(videocalls);
   } catch (error) {
     console.log(error.message);
     res.status(400);
@@ -236,6 +235,7 @@ const createGrpConversation = async (IdU, users) => {
       groupAdmin: IdU, //req.user,// user actuel sera admin du grop
       archive: false,
     }).then((createdConversation) => {
+      res.send(createdConversation);
       addConversationToUsers(createdConversation.id, createdConversation.users);
     });
   } catch (error) {

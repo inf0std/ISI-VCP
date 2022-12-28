@@ -37,6 +37,9 @@ const {
   addToGroup,
   readNthTeenMessages,
   readallMessages,
+  removeFromGroup,
+  updateconversation,
+  addcall,
 } = require("./handleconversation");
 const { registerUser, allUsers } = require("./signinsignup");
 const {
@@ -72,8 +75,7 @@ router.post("/signin", verifiedemail, handleLogin);
 router.post("/signup", registerUser);
 router.get("/ver", handlevalidateemail);
 router.get("/user/:id/contacts", handleUserContacts);
-router.get("/user/:id/conversations", handleUserConversations);
-router.post("/user/:id/accessConversation", accessConversation);
+
 router.get("/user/:id/conferences", handleuserconference);
 router.get("/user/:id/reunions", handleuserreunion);
 router.get("/user/:id/organisations", handleuserorganisations);
@@ -121,11 +123,16 @@ router.get("/user/notification", function (req, res) {
   res.send("");
 });
 
-router.get("/conversation", function (req, res) {
-  //profile
-  res.send("");
-});
+router.get("/conversation/id:", handlecreateconversation);
+router.get("/conversation/id:", addToGroup);
 
-router.post("/user/program");
+router.get("/conversation/id:", readNthTeenMessages);
+router.get("/conversation/id:", readallMessages);
+router.get("/user/:id/conversations", handleUserConversations);
+router.post("/user/:id/accessConversation", accessConversation);
+
+router.post("/conversation/id:", removeFromGroup);
+router.post("/conversation/id:", updateconversation);
+router.post("/conversation/id:", addcall);
 
 module.exports = router;

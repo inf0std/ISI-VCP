@@ -123,8 +123,8 @@ router.get("/user/notification", function (req, res) {
   res.send("");
 });
 
-router.get("/conversation/id:", handlecreateconversation);
-router.get("/conversation/id:", addToGroup);
+router.post("/conversation/id:", handlecreateconversation);
+router.post("/conversation/id:", addToGroup);
 
 router.get("/conversation/id:", readNthTeenMessages);
 router.get("/conversation/id:", readallMessages);

@@ -7,13 +7,13 @@ const { User } = require("../db/schema/User");
 const Conversation = require("../db/schema/Conversation");
 const asyncHandler = require("express-async-handler");
 
-const {
+/*const {
   createGrpConversation,
   readNthTeenMessages,
   addConversation,
   readConversation,
   addConversationToUsers,
-} = require("../db/crudUtils/conversationCrud");
+} = require("../db/crudUtils/conversationCrud");*/
 
 const handleconversation = async (req, res, next) => {
   const id = req.params.id;
@@ -40,6 +40,7 @@ const accessConversation = asyncHandler(async (req, res) => {
   const name = req.body.conversationName;
   console.log(id1);
   console.log(id2);
+  console.log(name);
   if (!id1 || !id2) {
     console.log("UserId param not sent with request");
     return res.sendStatus(400);
@@ -56,6 +57,7 @@ const accessConversation = asyncHandler(async (req, res) => {
 
   if (isConversation.length > 0) {
     res.send(isConversation[0]);
+    console.log("exist deja");
   } else {
     var ConversationData = {
       conversationName: name,
@@ -65,25 +67,26 @@ const accessConversation = asyncHandler(async (req, res) => {
     };
 
     try {
-      await Conversation.create(ConversationData).then(
-        (createdConversation) => {
-          //enregistrer id de la conversation dans user.convesations
-          User.updateMany(
-            { $or: [{ _id: id1 }, { _id: id2 }] },
+      const result = await Conversation.create(ConversationData);
 
-            { conversations: createdConversation._id },
-            function (err) {
-              if (err) {
-                throw new Error(error.message);
-              } else {
-                console.log("user updated");
-              }
+      //enregistrer id de la conversation dans user.convesations
+      if (result) {
+        User.updateMany(
+          { $or: [{ _id: id1 }, { _id: id2 }] },
+
+          { conversations: result._id },
+          function (err) {
+            if (err) {
+              throw new Error(error.message);
+            } else {
+              console.log("user updated");
             }
-          );
-        }
-      );
+          }
+        );
+      }
+
       const FullConversation = await Conversation.findOne({
-        _id: createdConversation._id,
+        _id: result._id,
       }).populate("users", "-login.password");
       res.status(200).json(FullConversation);
     } catch (error) {
@@ -209,7 +212,7 @@ const readNthTeenMessages = async (req, res) => {
     });
 };
 
-const createGrpConversation = async (IdU, users) => {
+const createGrpConversation = async (req, res) => {
   const id = req.params.IdU;
   const users = req.body.users;
   console.log(IdU);

@@ -137,7 +137,9 @@ const addMessage = async (idC, msg) => {
         { $push: { messages: newMessage } }
       );
 
-      console.log(currentConversation);
+      if (currentConversation) {
+        return currentConversation;
+      }
     } catch (error) {
       throw new Error(error.message);
     }
@@ -329,4 +331,5 @@ module.exports = {
   addToGroup,
   addcall,
   readallcalls,
+  addConversationToUsers,
 };

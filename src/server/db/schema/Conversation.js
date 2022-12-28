@@ -34,15 +34,16 @@ const ConversationSchema = new Schema(
         participants: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
         datebegin: {
           type: Date,
+          default: Date.now,
 
           immutable: true,
         }, //cant change the value of creationdate
 
         duration: {
-          type: Number,default:0
+          type: Number,
+          default: 0,
         }, //cant change the value of creationdate}
       },
-     
     ],
     archive: { type: Boolean, default: false },
   },

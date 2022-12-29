@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./views/Home";
 import Contact from "./views/Contact";
 import Dashbord from "./views/dash";
+import Dash from "./dash/Dash";
 import Chat from "./views/Chat";
 import SignInSignUp from "./component/formulaire/modalForms/SignINSignUp";
 import Profile from "./views/profile";
@@ -14,6 +15,7 @@ const App = (props) => {
         <Route path="/Contact" element={<Contact />} />
         <Route path="/Chat" element={<Chat />} />
         <Route path="/Dashbord" element={<Dashbord />} />
+        <Route path="/Dash" element={<Dash />} />
         <Route path="/login" element={<SignInSignUp />} />
         <Route path="/profile" element={<Profile />} />
       </Routes>

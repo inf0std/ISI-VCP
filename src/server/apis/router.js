@@ -122,15 +122,12 @@ router.get("/user/notification", function (req, res) {
   //profile
   res.send("");
 });
-
 router.post("/conversation/id:", handlecreateconversation);
 router.post("/conversation/id:", addToGroup);
-
 router.get("/conversation/id:", readNthTeenMessages);
 router.get("/conversation/id:", readallMessages);
 router.get("/user/:id/conversations", handleUserConversations);
 router.post("/user/:id/accessConversation", accessConversation);
-
 router.post("/conversation/id:", removeFromGroup);
 router.post("/conversation/id:", updateconversation);
 router.post("/conversation/id:", addcall);

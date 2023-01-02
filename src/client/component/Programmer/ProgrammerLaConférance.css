@@ -1,18 +1,10 @@
-.titre {
+.titre- {
     display: flex;
     gap: 1rem;
     align-items: center;
 }
 
-.date {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-    margin-top: 10px;
-
-}
-
-.heure {
+.date- {
     display: flex;
     gap: 1rem;
     align-items: center;
@@ -20,18 +12,26 @@
 
 }
 
-.Heur {
+.heure- {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin-top: 10px;
+
+}
+
+.Heur- {
     display: flex;
     flex-direction: row;
 
 }
 
-.Heur input {
+.Heur- input {
     width: 60%;
 }
 
 
-.Durée {
+.Durée- {
 
     display: flex;
     gap: 1rem;
@@ -42,7 +42,7 @@
 
 }
 
-.description {
+.description- {
     display: flex;
     gap: 1rem;
     align-items: center;
@@ -58,20 +58,20 @@
 
 }
 
-.bouton {
+.bouton- {
     display: flex;
     justify-content: center;
     margin-top: 25px;
     gap: 7rem;
 }
 
-.participant {
+.participant- {
     display: flex;
     gap: 1rem;
     align-items: center;
 }
 
-.ajout1 {
+.ajout- {
     height: 150px;
     width: 350px;
     border: 2px solid black;
@@ -85,14 +85,14 @@
 
 
 
-.butn {
+.butn- {
     margin-top: 25px;
     gap: 7rem;
     display: flex;
     justify-content: center;
 }
 
-.spane {
+.spane- {
     display: flex;
     justify-content: center;
     display: block;

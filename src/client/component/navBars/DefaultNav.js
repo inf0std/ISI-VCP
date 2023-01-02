@@ -59,7 +59,7 @@ const DefaultNav = (props) => {
             />
             <button
               ref={searchBtn}
-              className="btn btn-outline-success"
+              className="btn btn-outline-info"
               type="submit"
               onClick={handleSearch}
             >

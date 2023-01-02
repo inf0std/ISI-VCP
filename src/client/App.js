@@ -12,7 +12,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Navbarprofile />} />
+        <Route path="/" element={<Home />} />
         <Route path="/Contact" element={<Contact />} />
         <Route path="/Chat" element={<Chat />} />
         <Route path="/login" element={<SignInSignUp />} />

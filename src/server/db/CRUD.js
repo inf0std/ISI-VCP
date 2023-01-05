@@ -1,8 +1,11 @@
+
+
+
 //veillez definir les parametres necessaire pour vous requete
 // file containing the CRUD API
 
 //create operation
-createUser = ()=>{ }
+createUser = ()=>{}
 createConversation = ()=>{ }
 createOrganization = ()=>{ }
 createReunion = ()=>{ }

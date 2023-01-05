@@ -1,3 +1,15 @@
+<<<<<<< HEAD
+class ConversationTab extends React.Component {
+    constructor(props){
+      super(props)
+    }
+    render() {
+      return (
+        <div>ECRIRE VOTRE CODE ICI</div>
+      );
+    }
+  }
+=======
 import React from 'react'
 import io from 'socket.io-client'
 import MessagesTab from '../messagesTab/MessagesTab'
@@ -44,3 +56,4 @@ class ConversationTab extends React.Component {
   }
 
 export default ConversationTab;
+>>>>>>> origin/ui

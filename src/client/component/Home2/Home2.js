@@ -1,12 +1,15 @@
 import React from 'react';
+import DefaultNav from '../navBars/DefaultNav';
 import Footer1 from './Footer/Footer1';
 import Header from './Header/Header';
-import Nav from './Nav/Nav';
+import "./Home2.css";
+
+
 
 function Home2(props) {
     return (
-        <div>
-            <Nav />
+        <div className='hom'>
+            <DefaultNav />
             <Header />
             <Footer1 />
         </div>

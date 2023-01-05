@@ -35,11 +35,11 @@ const DefaultNav = (props) => {
     document.getElementById("loginModalBtn").click();
   };
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light justefy-content-end">
+    <nav id="nev" className="navbar navbar-expand-lg navbar-light bg-light justefy-content-end">
       <div className="container-fluid">
-        <a className="navbar-brand" href="#">
-          SEEN
-        </a>
+      <a style={{width:'120px',height:'45px',marginLeft:'40px'}}  className="navbar-brand" href="#">
+      <img style={{width:'100%' ,height:'80px',marginTop:'-26px'}} src="logo.png"/>
+      </a>
         <button
           className="navbar-toggler"
           type="button"
@@ -62,7 +62,7 @@ const DefaultNav = (props) => {
             />
             <button
               ref={searchBtn}
-              className="btn btn-outline-success"
+              className="btn btn-outline-info"
               type="submit"
               onClick={handleSearch}
             >
@@ -76,8 +76,12 @@ const DefaultNav = (props) => {
               </a>
             </li>
             <li className="nav-item">
+<<<<<<< HEAD
               <a className="nav-link" href="#" onClick={showLoginModal}>
                 {!props.username ? "Se connecter" : "Se deconnecter"}
+=======
+              <a className="nav-link" href="#">
+>>>>>>> ui
               </a>
             </li>
             <li className="nav-item dropdown">

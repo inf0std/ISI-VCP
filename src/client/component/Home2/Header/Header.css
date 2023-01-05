@@ -1,28 +1,22 @@
-.header01 {
-    background-color: rgb(235, 229, 229);
-    width: 100%;
-    height: 100%;
+.headertop {
+    background-color: rgba(221, 216, 216, 0.514);
 }
 
-.div1 {
-
-    padding-left: 150px;
-    padding-top: 10px;
-    padding-bottom: 15px;
-
+.head0 {
+    margin-top: 25px;
+    margin-bottom: 25px;
 }
 
-.div2 {
-
-    height: 210px;
-    padding-top: 0px;
-    padding-left: 700px;
+.head1 {
+    margin-top: 25px;
 
 }
 
-.div3 {
+.head2 {
+    margin-top: 40px;
+}
 
-    padding-top: 10px;
-    height: 182px;
-    padding-left: 50px;
+.head3 {
+    margin-top: 40px;
+    margin-bottom: 25px;
 }

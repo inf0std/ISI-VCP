@@ -1,10 +1,5 @@
 // this file contains the busniss process queries
 
-<<<<<<< HEAD
-getUserConversation = (userId) => {
-    
-=======
-
 getUserConversation = async(userId) => {
     try {
         const data = await User.findById(userId).select("conversations");
@@ -41,14 +36,13 @@ getUserMissedEvents = (userId) => {};
 
 getUserConversation = (userId) => {
 
->>>>>>> db
+
 }
 
 getUserUnseenMessages = (userId) => {
 
 }
 
-<<<<<<< HEAD
 getUserProgrammedEvents = (userId) => { 
 
 }
@@ -59,7 +53,7 @@ getUserContacts = (userId) => {
 
 getUserNotifications = (userId) => { 
     
-=======
+
 getUserProgrammedEvents = (userId) => {
 
 }
@@ -70,7 +64,6 @@ getUserContacts = (userId) => {
 
 getUserNotifications = (userId) => {
 
->>>>>>> db
 }
 
 getUserOrganizations = (userId) => {
@@ -78,9 +71,4 @@ getUserOrganizations = (userId) => {
 }
 
 getUserMissedEvents = (userId) => {
-<<<<<<< HEAD
-    
-=======
-
->>>>>>> db
 }

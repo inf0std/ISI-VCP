@@ -1,3 +1,4 @@
+
 const { default: mongoose } = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcryptjs");
@@ -256,7 +257,6 @@ const archiveUser = async (id) => {
     console.log(result);
   } catch (error) {
     console.log(error.message);
-
     throw error;
   }
 };

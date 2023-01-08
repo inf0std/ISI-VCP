@@ -1,4 +1,3 @@
-
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./views/Home";
@@ -10,7 +9,6 @@ import SignInSignUp from "./component/formulaire/modalForms/SignINSignUp";
 import VideoRoom from "./views/VideoRoom";
 import Profile from "./component/Profile/Profile";
 import Programmerdébat from "./component/Programmer/Programmerdébat";
-
 
 const convs = [
   {
@@ -61,7 +59,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/Contact" element={<Contact />} />
-        <Route path="/Chat" element={<Chat convs={convList} />} />
+        <Route path="/Chat" element={<Chat convs={convs} />} />
         {
           //<Route path="/Dashbord" element={<Dashbord />} />
           //<Route path="/Dash" element={<Dash />} />
@@ -71,7 +69,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/programmer" element={<Programmerdébat />} />
       </Routes>
-    </BrowserRouter>  
+    </BrowserRouter>
   );
 }
 

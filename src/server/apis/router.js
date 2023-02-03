@@ -1,4 +1,3 @@
-
 var express = require("express");
 const { User } = require("../db/schema/User");
 
@@ -24,7 +23,6 @@ const {
   handleUserConversations,
   handleUserContacts,
   handleconvesationmsg,
-
   handleuserreunion,
   handleuserconference,
   handleuserorganisations,
@@ -42,6 +40,16 @@ const {
   updateconversation,
   addcall,
 } = require("./handleconversation");
+const {
+  handleCreateTag,
+  handleTag,
+  handleUpdateTag,
+  handleDeleteTag,
+  handleGetConfWithTag,
+  handleGetReunWithTag,
+  handleAddTagToConf,
+  handleAddTagToReun,
+} = require("./TagRouteHandlers");
 const { registerUser, allUsers } = require("./signinsignup");
 const {
   handleCreateReunion,
@@ -114,6 +122,16 @@ router.post("/reunions/:idR/users/:idM/Moderateur", handleModerateur);
 router.post("/reunions/:idR/users/:idU/JoinedToReunion", handleJoinedToReunion);
 router.post("/reunions/:idR/users/:idU/LeaveTheReunion", handleLeaveTheReunion);
 
+//Tags
+router.post("/tags/createTag", handleCreateTag);
+router.post("/tags/readAllTags", handleTag);
+router.post("/tags/:id/updateTag", handleUpdateTag);
+router.post("/tags/:id/deleteTag", handleDeleteTag);
+router.post("/conferences/tags/:idT/getConfWithTag", handleGetConfWithTag);
+router.post("/reunions/tags/:idT/getReunWithTag", handleGetReunWithTag);
+router.post("/tags/:idT/conferences/:idC/addTagToConf", handleAddTagToConf);
+router.post("/tags/:idT/reunions/:idR/addTagToReun", handleAddTagToReun);
+
 //Events
 router.post("/user/SetEvent", handleSetEvents);
 router.post("/user/:idU/getUserProgrammedEvents", handleGetProgrammedEvents);
@@ -132,5 +150,12 @@ router.post("/user/:id/accessConversation", accessConversation);
 router.post("/conversation/id:", removeFromGroup);
 router.post("/conversation/id:", updateconversation);
 router.post("/conversation/id:", addcall);
+
+router.get("/conversation", function (req, res) {
+  //profile
+  res.send("");
+});
+
+router.post("/user/program");
 
 module.exports = router;

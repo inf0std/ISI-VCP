@@ -1,47 +1,59 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 
-const conferenceSchema = new mongoose.Schema({
+const conferenceSchema = new mongoose.Schema(
+  {
     topic: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
-    users: [{
+    users: [
+      {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+        ref: "User",
         required: true,
         trim: true,
-    }],
+      },
+    ],
     organisedBy: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        trim: true,
-        required: true
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      trim: true,
+      required: true,
     },
-    videocall: [{
+    videocall: [
+      {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+        ref: "User",
         trim: true,
         leaveAt: { type: Date },
-        joinedAt: { type: Date }
-    }],
+        joinedAt: { type: Date },
+      },
+    ],
     archive: {
-        type: Boolean,
-        default: false
+      type: Boolean,
+      default: false,
     },
     Date_begin: {
-        type: Date,
-        default: Date.now
+      type: Date,
+      default: Date.now,
     },
     duration: {
-        type: Number,
-        default: 40
+      type: Number,
+      default: 40,
     },
     missed: {
-        type: Boolean,
-        default: false
-    }
-}, { timestamps: true })
+      type: Boolean,
+      default: false,
+    },
+    tags: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Tag",
+      },
+    ],
+  },
+  { timestamps: true }
+);
 
-
-const Conference = mongoose.model('Conference', conferenceSchema)
+const Conference = mongoose.model("Conference", conferenceSchema);
 module.exports = { Conference, conferenceSchema };

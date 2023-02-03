@@ -22,7 +22,7 @@ const handleLogin = (req, res, next) => {
         message: "ERROR",
       });
     });
-  next();
+  // next();
 };
 
 /*const handleSignUp = (req, res, next) => {

@@ -17,13 +17,27 @@ const conferenceSchema = new mongoose.Schema({
         trim: true,
         required: true
     },
-    videocall: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        trim: true,
-        leaveAt: { type: Date },
-        joinedAt: { type: Date }
-    }],
+    videocall: {
+        joiners: {
+            users: [{
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User',
+                trim: true,
+            }],
+            joinedAt: {
+                type: Date,
+                default: Date.now
+            }
+        },
+        leavers: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',
+            trim: true,
+            leaveAt: {
+                type: Date
+            }
+        }],
+    },
     archive: {
         type: Boolean,
         default: false

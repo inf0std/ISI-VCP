@@ -23,7 +23,11 @@ const {
   handleUserConversations,
   handleUserContacts,
   handleconvesationmsg,
+<<<<<<< HEAD
 
+=======
+  handleconversation,
+>>>>>>> parent of d9f89bd (UserEvents)
   handleuserreunion,
   handleuserconference,
   handleuserorganisations,
@@ -52,11 +56,14 @@ const {
   handleJoinedToReunion,
   handleLeaveTheReunion,
 } = require("./ReunionRouteHandlers");
+<<<<<<< HEAD
 const {
   handleSetEvents,
   handleGetProgrammedEvents,
   handleGetMissedEvents,
 } = require("./EventsRouteHandle");
+=======
+>>>>>>> parent of d9f89bd (UserEvents)
 
 // middleware that is specific to this router
 router.use(function timeLog(req, res, next) {
@@ -113,11 +120,14 @@ router.post("/reunions/:idR/users/:idM/Moderateur", handleModerateur);
 router.post("/reunions/:idR/users/:idU/JoinedToReunion", handleJoinedToReunion);
 router.post("/reunions/:idR/users/:idU/LeaveTheReunion", handleLeaveTheReunion);
 
+<<<<<<< HEAD
 //Events
 router.post("/user/SetEvent", handleSetEvents);
 router.post("/user/:idU/getUserProgrammedEvents", handleGetProgrammedEvents);
 router.post("/user/:idU/getUserMissedEvents", handleGetMissedEvents);
 
+=======
+>>>>>>> parent of d9f89bd (UserEvents)
 router.get("/user/notification", function (req, res) {
   //profile
   res.send("");
@@ -132,4 +142,14 @@ router.post("/conversation/id:", removeFromGroup);
 router.post("/conversation/id:", updateconversation);
 router.post("/conversation/id:", addcall);
 
+<<<<<<< HEAD
+=======
+router.get("/conversation", function (req, res) {
+  //profile
+  res.send("");
+});
+
+router.post("/user/program");
+
+>>>>>>> parent of d9f89bd (UserEvents)
 module.exports = router;

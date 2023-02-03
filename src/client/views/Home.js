@@ -3,8 +3,10 @@ import DefaultNav from "../component/navBars/DefaultNav";
 const Home = (props) => {
   return (
     <div className="Container">
-      <DefaultNav username={null} />
-      <SignInSignUp />
+      <DefaultNav user={props.state._user} />
+      {!props.state._user.name && (
+        <SignInSignUp handlers={{ user: props.handlers.handleChangeUser }} />
+      )}
     </div>
   );
 };

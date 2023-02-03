@@ -1,9 +1,11 @@
 const { default: mongoose, connect } = require("mongoose");
 
 const express = require("express");
-const app = express();
-const router = express.Router();
 const cookieparser = require("cookie-parser");
+const cors = require("cors");
+const session = require("express-session");
+
+const app = express();
 
 // DB Connection
 require("dotenv").config();
@@ -22,6 +24,30 @@ module.exports = {
 };
 
 // Use parsing middleware
+app.use(
+  cors({
+    origin: "*",
+  })
+);
+
+app.use(
+  session({
+    secret: "f1i40chouh//e209u",
+    resave: false,
+    saveUninitialized: true,
+  })
+);
+
+app.get("/", (req, res) => {
+  let count = req.session.count || 0;
+  req.session.count = count + 1;
+  res.send(`You have visited this page ${count} times.`);
+});
+
+app.listen(3000, () => {
+  console.log("Listening on port 3000");
+});
+
 app.use(cookieparser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

@@ -9,14 +9,8 @@ const SignInSignUp = (props) => {
   const signupPassword = useRef();
   const signupPassword2 = useRef();
 
-  const handleConnection = (e) => {
-    e.preventDefault();
-    let data = {
-      email: signinEmail.current.value,
-      password: signinPassword.current.value,
-    };
-    console.log("signing in", data);
-    fetch("127.0.0.1:3000/login", {
+  const sendSignInData = async (data) => {
+    return fetch("127.0.0.1:3000/login", {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
       cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
@@ -28,7 +22,17 @@ const SignInSignUp = (props) => {
       redirect: "follow", // manual, *follow, error
       referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
       body: JSON.stringify(data), // body data type must match "Content-Type" header
-    })
+    });
+  };
+
+  const handleConnection = (e) => {
+    e.preventDefault();
+    let data = {
+      email: signinEmail.current.value,
+      password: signinPassword.current.value,
+    };
+    console.log("signing in", data);
+    sendSignInData(data)
       .then((response) => response.json())
       .then((data) => {
         //display data in the search results
@@ -36,6 +40,23 @@ const SignInSignUp = (props) => {
       .catch((err) => {
         //handeling search Errors
       }); //*/
+  };
+
+  const sendSignupData = async (data) => {
+    console.log("signing up", data);
+    return fetch("127.0.0.1:8080/api/router/signup", {
+      method: "POST", // *GET, POST, PUT, DELETE, etc.
+      mode: "cors", // no-cors, *cors, same-origin
+      cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+      credentials: "same-origin", // include, *same-origin, omit
+      headers: {
+        "Content-Type": "application/json",
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      redirect: "follow", // manual, *follow, error
+      referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+      body: JSON.stringify(data), // body data type must match "Content-Type" header
+    });
   };
 
   const handleSignup = (e) => {
@@ -46,33 +67,18 @@ const SignInSignUp = (props) => {
       password: signupPassword.current.value,
       password2: signupPassword2.current.value,
     };
-    console.log("signing up", data);
-    fetch("127.0.0.1:3000/signup", {
-      method: "POST", // *GET, POST, PUT, DELETE, etc.
-      mode: "cors", // no-cors, *cors, same-origin
-      cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-      credentials: "same-origin", // include, *same-origin, omit
-      headers: {
-        "Content-Type": "application/json",
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      redirect: "follow", // manual, *follow, error
-      referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-      body: JSON.stringify(data), // body data type must match "Content-Type" header
-    })
+    console.log(data);
+    sendSignupData(data)
       .then((response) => response.json())
       .then((data) => {
+        console.log(data);
         //display data in the search results
       })
       .catch((err) => {
+        console.log(err);
         //handeling search Errors
       }); //*/
   };
-
-  const handleForgetPWD = (e) => {
-    e.preventDefault();
-  };
-  const l = useRef();
 
   return (
     <>
@@ -183,9 +189,7 @@ const SignInSignUp = (props) => {
                         </div>
 
                         <div className="col">
-                          <a href="#!" onClick={handleForgetPWD}>
-                            Forgot password?
-                          </a>
+                          <a href="#!">Forgot password?</a>
                         </div>
                       </div>
 

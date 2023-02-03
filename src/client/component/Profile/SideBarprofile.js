@@ -1,18 +1,23 @@
-import React from 'react'
-import './Sidebar.css';
+import React from "react";
+import Programmerdebat from "../formulaire/modalForms/Programmerdebat";
+import "./Sidebar.css";
 
-export default function SideBarProfil() {
+export default function SideBarProfile() {
+  const handleProgDebat = (e) => {
+    e.preventDefault();
+    document.getElementById("prg-deb-btn").click();
+  };
   return (
-  
-    <nav  className="">
-      <div className="side-menu">
-        <center>
-          <img src="kaka.jpg"/>
-          <h2>kaka</h2>
-        </center>
-       
+    <>
+      <Programmerdebat />
+      <nav className="">
+        <div className="side-menu">
+          <center>
+            <img src="kaka.jpg" />
+            <h2>kaka</h2>
+          </center>
+
           <ul className="">
-            
             <li className="">
               <a
                 className=" nav-link dropdown-toggle"
@@ -35,8 +40,6 @@ export default function SideBarProfil() {
                     Consulter
                   </a>
                 </li>
-                
-                
               </ul>
             </li>
 
@@ -49,24 +52,19 @@ export default function SideBarProfil() {
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                Conférence 
+                Conférence
               </a>
               <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li>
-                  <a className="dropdown-item" href="#">
-                    Programmer
-                  </a>
+                  <button className="dropdown-item">Programmer</button>
                 </li>
                 <li>
                   <a className="dropdown-item" href="#">
                     Consulter
                   </a>
                 </li>
-                
-                
               </ul>
             </li>
-
 
             <li className="">
               <a
@@ -81,7 +79,11 @@ export default function SideBarProfil() {
               </a>
               <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li>
-                  <a className="dropdown-item" href="#">
+                  <a
+                    className="dropdown-item"
+                    href="#"
+                    onClick={handleProgDebat}
+                  >
                     Programmer
                   </a>
                 </li>
@@ -90,14 +92,15 @@ export default function SideBarProfil() {
                     Consulter
                   </a>
                 </li>
-               
               </ul>
             </li>
 
-            <li><a>Enregistrement</a></li>
-            
+            <li>
+              <a>Enregistrement</a>
+            </li>
           </ul>
         </div>
-    </nav>
-  )
+      </nav>
+    </>
+  );
 }

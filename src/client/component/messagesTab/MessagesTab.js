@@ -1,7 +1,5 @@
-
-
 import React from "react";
-import Msg from "../msg/Msg.js";
+import Msg from "../msg/msg.js";
 
 const MessagesTab = (props) => {
   return (

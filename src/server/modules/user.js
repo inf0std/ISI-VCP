@@ -1,8 +1,34 @@
-const User = (data)=>{
-    const {id,name,contacts,login,picture} = data;
+const User = (data) => {
+  const { id, name, convs } = data;
 
-    this.userId = id;
-    this.userName = name;
-    this.soket = null
+  let userId = id;
+  let userName = name;
+  let socketIds = [];
 
-}
+  this.getSocketIds = () => {
+    return socketIds;
+  };
+
+  this.getUserId = () => {
+    return userId;
+  };
+
+  this.getUserName = () => {
+    return userName;
+  };
+
+  this.addSocket = (socketid) => {
+    socketIds.append(socket);
+  };
+
+  this.removeSocket = (socketid) => {
+    if (socketIds.indexof(socketid) == -1) return;
+    if (socketIds.indexOf(socketid) == socketIds.length - 1) {
+      socketIds.pop();
+      return;
+    }
+    socketIds[socketIds.indexOf(socketid)] = socketIds.pop();
+  };
+};
+
+module.exports = User;

@@ -1,13 +1,12 @@
-import React from 'react'
-import SideBarProfil from './SideBarprofile'
-import Navbarprofile  from './Navbarprofile';
-import './Sidebar.css';
-
+import React from "react";
+import SideBarProfile from "./SideBarprofile";
+import Navbarprofile from "./Navbarprofile";
+import "./Sidebar.css";
 export default function Profile() {
   return (
     <div>
-        <Navbarprofile/>
-        <SideBarProfil/>
+      <Navbarprofile />
+      <SideBarProfile />
     </div>
-  )
+  );
 }

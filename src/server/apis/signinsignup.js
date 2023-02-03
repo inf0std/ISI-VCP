@@ -29,14 +29,15 @@ const allUsers = asyncHandler(async (req, res) => {
 var transporter = nodemailer.createTransport({
   service: "Gmail",
   auth: {
-    user: "seen.project.cpi@gmail.com",
-    pass: "dehbaarxnwdujndl",
+    user: "ff_ahcene@esi.dz",
+    pass: "f1i3e12a8c5n5251996",
   },
   tls: {
     rejectUnauthorized: false,
   },
 });
 
+//const sendEmail = (targetEmail, header, body);
 const registerUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
@@ -78,8 +79,10 @@ const registerUser = asyncHandler(async (req, res) => {
       to: user.login.email,
       subject: `${user.username}  verify your email`,
       html: `<h2> ${user.username}! Thanks for registring on our site </h2>
-  <h4>Please verify your email to continue... </h4>
-  <a href = "http://127.0.0.1:8080/api/ver?token=${user.emailtoken}">verify your email</a>`,
+        <h4>Please verify your email to continue... </h4>
+        <a href = "http://127.0.0.1:8080/api/router/ver?email =${user.login.email}&token=${user.emailtoken}">
+        verify your email
+        </a>`,
     };
     //send email
     transporter.sendMail(mailOptions, function (error, info) {

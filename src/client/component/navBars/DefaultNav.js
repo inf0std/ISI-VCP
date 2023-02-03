@@ -87,7 +87,7 @@ const DefaultNav = (props) => {
             </li>
             <li className="nav-item">
               <a className="nav-link" href="#" onClick={showLoginModal}>
-                {!props.username ? "Se connecter" : "Se deconnecter"}
+                {!props.user.name ? "Se connecter" : "Se deconnecter"}
               </a>
             </li>
             <li className="nav-item dropdown">

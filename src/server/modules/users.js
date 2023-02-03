@@ -1,21 +1,14 @@
-const users = [];
+const User = require("./user");
+let users = [];
 
-const addUser = ({ id, name, room }) => {
-  name = name.tirm().toLowerCase();
-  room = room.tirm().toLowerCase();
-
-  // verifier l'existance de users dans la meme room avec le meme nom 
-
-  //si non cree un nv user
-  const user = { id, name, room };
-  users.push(user);
-  return { user };
+const addUser = (id, username) => {
+  users.push(new User(id, username));
 };
+
 const removeUser = (id) => {
-  const index = users.findIndex((user) => user.id === id);
-  if (index !== -1) {
-    return users.splice(index, 1)[0];
-  }
+  users = users.filter((u) => {
+    return u.getUserId() != id;
+  });
 };
 
 const getUser = (id) => users.find((user) => user.id === id);

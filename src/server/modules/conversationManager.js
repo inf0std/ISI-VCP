@@ -1,3 +1,4 @@
+const users = require("./users");
 const { Conversation } = require("./conversation");
 
 let currentConvs = [];

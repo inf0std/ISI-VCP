@@ -37,10 +37,9 @@ app.use(
     saveUninitialized: true,
   })
 );
-
+//exemple de session
 app.get("/", (req, res) => {
-  let count = req.session.count || 0;
-  req.session.count = count + 1;
+  req.session.id = userid;
   res.send(`You have visited this page ${count} times.`);
 });
 

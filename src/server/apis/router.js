@@ -92,8 +92,9 @@ router.get("/user/:id/contacts", handleUserContacts);
 router.get("/user/:id/conferences", handleuserconference);
 router.get("/user/:id/reunions", handleuserreunion);
 router.get("/user/:id/organisations", handleuserorganisations);
-router.get("/conversation/:id/", handleconversation);
-router.get("/conversation/:id/messages", handleconvesationmsg);
+
+router.get("/user/:id/conversations", handleUserConversations);
+router.post("/user/:id/accessConversation", accessConversation);
 /////////////////
 router.post("/user/:id/update", handleUpdateUser);
 router.post("/user/:id/updatepasse", handleupdatepasse);
@@ -149,8 +150,8 @@ router.post("/conversation/id:", handlecreateconversation);
 router.post("/conversation/id:", addToGroup);
 router.get("/conversation/id:", readNthTeenMessages);
 router.get("/conversation/id:", readallMessages);
-router.get("/user/:id/conversations", handleUserConversations);
-router.post("/user/:id/accessConversation", accessConversation);
+router.get("/conversation/:id/", handleconversation);
+router.get("/conversation/:id/messages", handleconvesationmsg);
 router.post("/conversation/id:", removeFromGroup);
 router.post("/conversation/id:", updateconversation);
 router.post("/conversation/id:", addcall);

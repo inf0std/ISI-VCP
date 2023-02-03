@@ -7,73 +7,66 @@ const { loginrequired } = require("../db/crudUtils/config/JWT");
 const { verifiedemail } = require("../db/crudUtils/config/JWT");
 const { deletecontact, addContact } = require("./routeUtils");
 const {
-  handleCreateConference,
-  handleConference,
-  handleUpdateConference,
-  handleDeleteConference,
-  handleDeleteConferenceAll,
-  handleJoinedToConference,
-  handleLeaveTheConference,
+    handleCreateConference,
+    handleConference,
+    handleUpdateConference,
+    handleDeleteConference,
+    handleDeleteConferenceAll,
+    handleJoinedToConference,
+    handleLeaveTheConference,
 } = require("./ConferenceRouteHandlers");
 const {
-  handleupdatemail,
-  handleupdatepasse,
-  handleLogin,
+    handleupdatemail,
+    handleupdatepasse,
+    handleLogin,
 
-  handleUserConversations,
-  handleUserContacts,
-  handleconvesationmsg,
-<<<<<<< HEAD
-
-=======
-  handleconversation,
->>>>>>> parent of d9f89bd (UserEvents)
-  handleuserreunion,
-  handleuserconference,
-  handleuserorganisations,
-  handlevalidateemail,
-  handleUpdateUser,
+    handleUserConversations,
+    handleUserContacts,
+    handleconvesationmsg,
+    handleconversation,
+    handleuserreunion,
+    handleuserconference,
+    handleuserorganisations,
+    handlevalidateemail,
+    handleUpdateUser,
 } = require("./userRouteHandlers");
 const {
-  handleconversation,
-  handlecreateconversation,
-  accessConversation,
-  addToGroup,
-  readNthTeenMessages,
-  readallMessages,
-  removeFromGroup,
-  updateconversation,
-  addcall,
+    handleconversation,
+    handlecreateconversation,
+    accessConversation,
+    addToGroup,
+    readNthTeenMessages,
+    readallMessages,
+    removeFromGroup,
+    updateconversation,
+    addcall,
 } = require("./handleconversation");
 const { registerUser, allUsers } = require("./signinsignup");
 const {
-  handleCreateReunion,
-  handleReunion,
-  handleUpdateReunion,
-  handleDeleteReunion,
-  handleDeleteReunionAll,
-  handleModerateur,
-  handleJoinedToReunion,
-  handleLeaveTheReunion,
+    handleCreateReunion,
+    handleReunion,
+    handleUpdateReunion,
+    handleDeleteReunion,
+    handleDeleteReunionAll,
+    handleModerateur,
+    handleJoinedToReunion,
+    handleLeaveTheReunion,
 } = require("./ReunionRouteHandlers");
-<<<<<<< HEAD
 const {
-  handleSetEvents,
-  handleGetProgrammedEvents,
-  handleGetMissedEvents,
+    handleSetEvents,
+    handleGetProgrammedEvents,
+    handleGetMissedEvents,
 } = require("./EventsRouteHandle");
-=======
->>>>>>> parent of d9f89bd (UserEvents)
 
 // middleware that is specific to this router
 router.use(function timeLog(req, res, next) {
-  console.log("Time: ", Date.now());
-  next();
+    console.log("Time: ", Date.now());
+    next();
 });
 // define the home page route
-router.get("/", function (req, res) {
-  //profile
-  res.send("");
+router.get("/", function(req, res) {
+    //profile
+    res.send("");
 });
 //////
 //signIn
@@ -102,12 +95,12 @@ router.post("/conferences/:id/updateConference", handleUpdateConference);
 router.post("/conferences/:id/deleteConference", handleDeleteConference);
 router.post("/conferences/deleteConferenceAll", handleDeleteConferenceAll);
 router.post(
-  "/conferences/:idC/user/:idU/JoinedToConference",
-  handleJoinedToConference
+    "/conferences/:idC/user/:idU/JoinedToConference",
+    handleJoinedToConference
 );
 router.post(
-  "/conferences/:idC/user/:idU/LeaveTheConference",
-  handleLeaveTheConference
+    "/conferences/:idC/user/:idU/LeaveTheConference",
+    handleLeaveTheConference
 );
 
 //Reunions
@@ -120,17 +113,14 @@ router.post("/reunions/:idR/users/:idM/Moderateur", handleModerateur);
 router.post("/reunions/:idR/users/:idU/JoinedToReunion", handleJoinedToReunion);
 router.post("/reunions/:idR/users/:idU/LeaveTheReunion", handleLeaveTheReunion);
 
-<<<<<<< HEAD
 //Events
 router.post("/user/SetEvent", handleSetEvents);
 router.post("/user/:idU/getUserProgrammedEvents", handleGetProgrammedEvents);
 router.post("/user/:idU/getUserMissedEvents", handleGetMissedEvents);
 
-=======
->>>>>>> parent of d9f89bd (UserEvents)
-router.get("/user/notification", function (req, res) {
-  //profile
-  res.send("");
+router.get("/user/notification", function(req, res) {
+    //profile
+    res.send("");
 });
 router.post("/conversation/id:", handlecreateconversation);
 router.post("/conversation/id:", addToGroup);
@@ -142,14 +132,10 @@ router.post("/conversation/id:", removeFromGroup);
 router.post("/conversation/id:", updateconversation);
 router.post("/conversation/id:", addcall);
 
-<<<<<<< HEAD
-=======
-router.get("/conversation", function (req, res) {
-  //profile
-  res.send("");
+router.get("/conversation", function(req, res) {
+    //profile
+    res.send("");
 });
 
 router.post("/user/program");
-
->>>>>>> parent of d9f89bd (UserEvents)
 module.exports = router;

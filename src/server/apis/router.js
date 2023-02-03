@@ -19,7 +19,8 @@ const {
   handleupdatemail,
   handleupdatepasse,
   handleLogin,
-
+  handlesession,
+  destroysession,
   handleUserConversations,
   handleUserContacts,
   handleconvesationmsg,
@@ -80,6 +81,9 @@ router.get("/", function (req, res) {
 //////
 //signIn
 router.post("/signin", verifiedemail, handleLogin);
+router.get("/profile", handlesession);
+router.get("/logout", destroysession);
+
 //signUp
 router.post("/signup", registerUser);
 router.get("/ver", handlevalidateemail);

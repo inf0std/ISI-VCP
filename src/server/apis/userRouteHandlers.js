@@ -16,6 +16,7 @@ const handleLogin = (req, res, next) => {
   auth(email, password)
     .then((user) => {
       res.status(200).json(user.login);
+      req.session.user = user;
     })
     .catch((err) => {
       res.json({
@@ -23,6 +24,18 @@ const handleLogin = (req, res, next) => {
       });
     });
   // next();
+};
+const handlesession = (req, res) => {
+  if (!req.session.user) {
+    return res.status(401).send();
+  }
+  return res.status(200).json("welcome");
+};
+
+const destroysession = (req, res) => {
+  req.session.destroy();
+
+  return res.status(200).json("disconnected");
 };
 
 /*const handleSignUp = (req, res, next) => {
@@ -329,7 +342,8 @@ const handleUpdateUser = async function (req, res, next) {
 
 module.exports = {
   handleLogin,
-
+  handlesession,
+  destroysession,
   handleUserConversations,
   handleUserContacts,
   handleconvesationmsg,

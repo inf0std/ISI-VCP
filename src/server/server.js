@@ -51,6 +51,14 @@ app.use(cookieparser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use(
+  session({
+    secret: "khlifa",
+    saveUninitialized: true,
+    resave: true,
+  })
+);
+
 // Import the routes
 const userRoutes = require("./apis/router");
 

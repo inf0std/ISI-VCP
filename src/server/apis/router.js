@@ -80,7 +80,7 @@ router.get("/", function (req, res) {
 });
 //////
 //signIn
-router.post("/signin", verifiedemail, handleLogin);
+router.post("/signin", handleLogin);
 router.get("/profile", handlesession);
 router.get("/logout", destroysession);
 

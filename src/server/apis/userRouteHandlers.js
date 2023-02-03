@@ -15,8 +15,8 @@ const handleLogin = (req, res, next) => {
   const { email, password } = req.body;
   auth(email, password)
     .then((user) => {
-      res.status(200).json(user.login);
       req.session.user = user;
+      res.status(200).json(user.login);
     })
     .catch((err) => {
       res.json({
@@ -27,7 +27,7 @@ const handleLogin = (req, res, next) => {
 };
 const handlesession = (req, res) => {
   if (!req.session.user) {
-    return res.status(401).send();
+    return res.status(401).send("vous n ete pas connecter");
   }
   return res.status(200).json("welcome");
 };

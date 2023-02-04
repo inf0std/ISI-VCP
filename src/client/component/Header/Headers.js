@@ -1,6 +1,6 @@
 import React from 'react';
 
-function ProfileHeaders() {
+function Headers() {
     return (
 <div>
 
@@ -96,4 +96,4 @@ function ProfileHeaders() {
     );
 }
 
-export default ProfileHeaders;
+export default Headers;

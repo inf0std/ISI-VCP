@@ -1,60 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./views/Home";
 import Contact from "./views/Contact";
 //import Dashbord from "./views/dash";
 //import Dash from "./dash/Dash";
 import Chat from "./views/Chat";
-import SignInSignUp from "./component/formulaire/modalForms/SignINSignUp";
 import VideoRoom from "./views/VideoRoom";
 import Profile from "./component/Profile/Profile";
 import ProgrammerReunion from "./component/formulaire/modalForms/ProgramerLaReunion";
-
-const convs = [
-  {
-    name: "conv-1",
-    msgs: [
-      {
-        senderId: 1,
-        content: "hello",
-      },
-      {
-        senderId: 2,
-        content: "hello there",
-      },
-      {
-        senderId: 1,
-        content: "how are you doing",
-        seen: true,
-      },
-    ],
-  },
-  {
-    name: "conv-2",
-    msgs: [
-      {
-        senderId: 1,
-        content: "hello",
-      },
-      {
-        senderId: 2,
-        content: "hello there",
-      },
-      {
-        senderId: 1,
-        content: "how are you doing",
-      },
-      {
-        senderId: 1,
-        content: "fine, how about you",
-        seen: false,
-      },
-    ],
-  },
-];
+import socketIOClient from "socket.io-client";
 
 function App() {
+  //state declaration
+  const [convs, setConvs] = useState([]);
   const [user, setUser] = useState({ id: null, name: null });
+
+  /////
+  useEffect(() => {
+    fetch("http://127.0.0.1:8080/api/conversations", {
+      method: "GET",
+      headers: { Accept: "Application/json" },
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        setConvs(result);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   const state = {
     _user: user,
@@ -71,7 +43,7 @@ function App() {
             <Home handlers={{ handleChangeUser: changeUser }} state={state} />
           }
         />
-        <Route path="/Contact" element={<Contact />} />
+        <Route path="/Contact" element={<Contact user={user} />} />
         <Route path="/Chat" element={<Chat convs={convs} />} />
         {
           //<Route path="/Dashbord" element={<Dashbord />} />

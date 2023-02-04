@@ -40,11 +40,10 @@ app.use(
 //exemple de session
 app.get("/", (req, res) => {
   req.session.id = userid;
-  res.send(`You have visited this page ${count} times.`);
 });
-
-app.listen(3000, () => {
-  console.log("Listening on port 3000");
+let port = 8080;
+app.listen(port, () => {
+  console.log(`Listening on port ${port}`);
 });
 
 app.use(cookieparser());

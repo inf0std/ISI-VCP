@@ -39,7 +39,8 @@ app.use(
 );
 //exemple de session
 app.get("/", (req, res) => {
-  req.session.id = userid;
+  req.session.id = 1;
+  res.send("hello");
 });
 let port = 8080;
 app.listen(port, () => {

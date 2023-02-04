@@ -16,8 +16,9 @@ function App() {
   const [user, setUser] = useState({ id: null, name: null });
 
   /////
+  /*
   useEffect(() => {
-    fetch("http://127.0.0.1:8080/api/conversations", {
+    fetch(`http://127.0.0.1:8080/api/user/${user.id}/conversations`, {
       method: "GET",
       headers: { Accept: "Application/json" },
     })
@@ -26,7 +27,7 @@ function App() {
         setConvs(result);
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, []);*/
 
   const state = {
     _user: user,

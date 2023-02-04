@@ -1,16 +1,16 @@
 import React from 'react';
-import DefaultNav from '../navBars/DefaultNav';
+import Navbar from './Navbar';
 import Footer1 from './Footer/Footer1';
-import Header from './Header/Header';
+import Headers from './Header/Headers';
 import "./Home2.css";
 
 
 
-function Home2(props) {
+function Home2() {
     return (
-        <div className='hom'>
-            <DefaultNav />
-            <Header />
+        <div style={{backgroundColor:'#a0969665'}}>
+            <Navbar />
+            <Headers />
             <Footer1 />
         </div>
     );

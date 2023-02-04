@@ -8,7 +8,7 @@ import img4 from "./romm.jpg"
 import img5 from "./roms.jpg"
 import img6 from "./cof.jpg"
 
-function Header(props) {
+function Header() {
     return (
         <div className='headertop'>
             <div className='head0'>

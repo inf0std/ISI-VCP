@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./views/Home";
+import Home2 from "./component/Home2/Home2"
 import Contact from "./views/Contact";
 //import Dashbord from "./views/dash";
 //import Dash from "./dash/Dash";
@@ -9,6 +10,7 @@ import SignInSignUp from "./component/formulaire/modalForms/SignINSignUp";
 import VideoRoom from "./views/VideoRoom";
 import Profile from "./component/Profile/Profile";
 import ProgrammerReunion from "./component/formulaire/modalForms/ProgramerLaReunion";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const convs = [
   {
@@ -68,7 +70,7 @@ function App() {
         <Route
           path="/"
           element={
-            <Home handlers={{ handleChangeUser: changeUser }} state={state} />
+            <Home2 handlers={{ handleChangeUser: changeUser }} state={state} />
           }
         />
         <Route path="/Contact" element={<Contact />} />

@@ -347,7 +347,6 @@ module.exports = {
   handleUserConversations,
   handleUserContacts,
   handleconvesationmsg,
-
   handleuserorganisations,
   handleuserreunion,
   handleuserconference,

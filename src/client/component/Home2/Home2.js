@@ -1,8 +1,7 @@
 import React from 'react';
 import Navbar from './Navbar';
-import Footer1 from './Footer/Footer1';
-import Headers from './Header/Headers';
-import "./Home2.css";
+import Footer1 from '../footers/homefooter';
+import Headers from '../headers/ProfileHeader';
 
 
 

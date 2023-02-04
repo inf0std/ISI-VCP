@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 // import NavBar from '../component/navbar/NavBar'
 import Conversations from "../component/conversations/conversations";
 import ConversationTab from "../component/conversationTab/conversationTab";
 const Chat = (props) => {
   const [activeConv, setActiveConv] = useState(0);
+
   return (
     <div
       className="container-fluid py-5 my-0"

@@ -1,7 +1,7 @@
 import React from 'react';
 import Navbar from './Navbar';
 import Footer1 from '../footers/homefooter';
-import Headers from '../headers/ProfileHeader';
+import Header from '../headers/ProfileHeader';
 
 
 
@@ -9,7 +9,7 @@ function Home2() {
     return (
         <div style={{backgroundColor:'#a0969665'}}>
             <Navbar />
-            <Headers />
+            <Header />
             <Footer1 />
         </div>
     );

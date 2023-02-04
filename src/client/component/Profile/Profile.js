@@ -8,6 +8,7 @@ export default function Profile() {
     <div>
         <Navbarprofile/>
         <SideBarProfil/>
+        
     </div>
   )
 }

@@ -1,7 +1,5 @@
-<<<<<<< HEAD
+
 import React from 'react'
-=======
->>>>>>> 4cad2219062e5916d32471d254b6ab619e527c5c
 const Msg = (props) => {
   return (
     <div

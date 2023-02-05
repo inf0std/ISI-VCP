@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import socketIOClient from "socket.io-client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./views/Home";
-import Home2 from "./component/Home2/Home2"
+//import Home from "./views/Home";
+import Home from "./component/Home2/Home2";
 import Contact from "./views/Contact";
 //import Dashbord from "./views/dash";
 //import Dash from "./dash/Dash";
@@ -10,7 +10,7 @@ import Chat from "./views/Chat";
 import VideoRoom from "./views/VideoRoom";
 import Profile from "./component/Profile/Profile";
 import ProgrammerReunion from "./component/formulaire/modalForms/ProgramerLaReunion";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const convs = [
   {
@@ -86,7 +86,7 @@ function App() {
         <Route
           path="/"
           element={
-            <Home2 handlers={{ handleChangeUser: changeUser }} state={state} />
+            <Home handlers={{ handleChangeUser: changeUser }} state={state} />
           }
         />
         <Route path="/Contact" element={<Contact user={user} />} />

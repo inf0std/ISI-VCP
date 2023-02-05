@@ -80,23 +80,38 @@ function App() {
   const changeUser = (userId, userName) => {
     setUser({ id: userId, name: userName });
   };
+
+  const generalHandler = {
+    changerUser: changeUser,
+  };
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path="/"
-          element={
-            <Home handlers={{ handleChangeUser: changeUser }} state={state} />
-          }
+          element={<Home generalHandler={generalHandler} state={state} />}
         />
-        <Route path="/Contact" element={<Contact user={user} />} />
-        <Route path="/Chat" element={<Chat convs={convs} />} />
+        <Route
+          path="/Contact"
+          element={<Contact generalHandler={generalHandler} user={user} />}
+        />
+        <Route
+          path="/Chat"
+          element={<Chat generalHandler={generalHandler} convs={convs} />}
+        />
         {
           //<Route path="/Dashbord" element={<Dashbord />} />
           //<Route path="/Dash" element={<Dash />} />
         }
-        <Route path="/VideoRoomUI" element={<VideoRoom state={state} />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route
+          path="/VideoRoomUI"
+          element={<VideoRoom generalHandler={generalHandler} state={state} />}
+        />
+        <Route
+          path="/profile"
+          generalHandler={generalHandler}
+          element={<Profile />}
+        />
         <Route path="/programmer" element={<ProgrammerReunion />} />
       </Routes>
     </BrowserRouter>

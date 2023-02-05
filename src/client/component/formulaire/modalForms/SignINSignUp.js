@@ -35,7 +35,7 @@ const SignInSignUp = (props) => {
     sendSignInData(data)
       .then((response) => response.json())
       .then((data) => {
-        //display data in the search results
+        props.generalHandler.changeUser(data._id, data.username);
       })
       .catch((err) => {
         //handeling search Errors

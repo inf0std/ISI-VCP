@@ -20,7 +20,7 @@ function Headers() {
     <div class="container">
 
       <div class="row row-cols-1 row-cols-sm-2 g-3">
-      <div class="col rounded-5">
+      <div class="col">
           <div class="card shadow-sm rounded-4">
             <img src='/media/img/cof.jpg' className="img-fluid rounded-4" alt="..." />
             <div class="card-body">

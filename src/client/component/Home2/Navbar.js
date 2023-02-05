@@ -74,18 +74,20 @@ const Navbar = () => {
           pour la serachbar*/}
         </form>
         <ul style={{marginRight:"30px"}} className="navbar-nav ms-auto mb-2 mb-lg-0">
-            
-            <li style={{margin:"0px 30px 0px 30px"}} className="nav-item">
-
-            <li className="nav-item">
-              <a className="nav-link active" aria-current="page" href="#">
-              <FaHome id="it" style={{width:'25px', height:"25px",margin:"5px"}}/>
-                
-              </a>
-            </li>
-              
-                
-              
+            <li style={{margin:"0px 30px 0px 30px"}}  className="nav-item">
+           
+            <Link
+                to="/"
+                className="nav-link"
+                href="#"
+                tabindex="-1"
+                aria-disabled="true"
+              >
+                <FaHome id="it" style={{width:'25px', height:"25px",margin:"5px"}}/>
+              </Link>
+             
+             
+               
             </li>
 
 

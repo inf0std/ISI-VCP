@@ -38,9 +38,12 @@ app.use(
   })
 );
 //exemple de session
-
-app.listen(8080, () => {
-  console.log("Listening on port 3000");
+app.get("/", (req, res) => {
+  req.session.id = userid;
+});
+let port = 8080;
+app.listen(port, () => {
+  console.log(`Listening on port ${port}`);
 });
 
 app.use(cookieparser());

@@ -1,9 +1,6 @@
+import { useState, useRef, useEffect } from "react";
 import ConvElement from "./convElement";
 import logo from "../../logo.png";
-import React, { useState, useEffect, useRef } from "react";
-import { post } from "../../../server/apis/router";
-import { application } from "express";
-
 const COnversations = (props) => {
   this.state = {
     data: [],
@@ -11,6 +8,18 @@ const COnversations = (props) => {
 
   const searchInput = useRef();
 
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    fetch("127.0.0.1:8080/api/conversations", {
+      method: "GET",
+      headers: { Accept: "Application/json" },
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        setData(result);
+      })
+      .catch((err) => console.log(err));
+  }, []);
   return (
     <div className="col-sm-4 border bg-light" style={{}}>
       {
@@ -38,10 +47,6 @@ const COnversations = (props) => {
         {
           //affichage de la liste des conversation
         }
-
-        {data.map((conv) => (
-          <div>{conv.conversationName}</div>
-        ))}
         {props.convs.map((conv, index) => {
           return (
             <ConvElement

@@ -1,9 +1,5 @@
 const app = require("./src/server/server");
 
-app.get("/", (req, res) => {
-  console.log("requete de connexion");
-});
-
 /*
 const nodemailer = require("nodemailer");
 var transporter = nodemailer.createTransport({

@@ -15,8 +15,8 @@ const handleLogin = (req, res, next) => {
   const { email, password } = req.body;
   auth(email, password)
     .then((user) => {
-      req.session.user = user;
-      res.status(200).json(user.login);
+      req.session.id = user._id;
+      res.status(200).json({ _id: user._id, username: user.username });
     })
     .catch((err) => {
       res.json({

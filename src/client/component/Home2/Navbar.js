@@ -6,7 +6,7 @@ import { GoSignOut } from "react-icons/go";
 import { Link } from "react-router-dom";
 import SignInSignUp from "../formulaire/modalForms/SignINSignUp";
 
-const Navbar = () => {
+const Navbar = (props) => {
   const searchBtn = useRef();
   const searchResults = useRef();
   const searchInput = useRef();
@@ -45,7 +45,7 @@ const Navbar = () => {
       id="nev"
       className="navbar navbar-expand-lg navbar-light bg-light justefy-content-end"
     >
-      <SignInSignUp />
+      <SignInSignUp generalHandler={props.generalHandler} />
       <div className="container-fluid">
         <a
           style={{ width: "120px", height: "45px", marginLeft: "40px" }}

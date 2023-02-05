@@ -9,8 +9,9 @@ const SignInSignUp = (props) => {
   const signupPassword = useRef();
   const signupPassword2 = useRef();
 
+  console.log("props", props);
   const sendSignInData = async (data) => {
-    return fetch("http://127.0.0.1:8080/api/router/login", {
+    return fetch("http://127.0.0.1:8080/api/signin", {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
       cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
@@ -35,7 +36,8 @@ const SignInSignUp = (props) => {
     sendSignInData(data)
       .then((response) => response.json())
       .then((data) => {
-        props.generalHandler.changeUser(data._id, data.username);
+        console.log("login attempt", data);
+        props.generalHandler.setUser({ id: data._id, name: data.username });
       })
       .catch((err) => {
         //handeling search Errors

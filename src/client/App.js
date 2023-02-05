@@ -73,31 +73,40 @@ function App() {
       })
       .catch((err) => console.log(err));
   }, []);*/
-
-  const state = {
+  console.log(user);
+  const localVar = {
     _user: user,
+    _convs: convs,
   };
   const changeUser = (userId, userName) => {
+    console.log(userId, userName);
     setUser({ id: userId, name: userName });
   };
 
   const generalHandler = {
-    changerUser: changeUser,
+    setUser: setUser,
   };
   return (
     <BrowserRouter>
+      {console.log("APP", user)}
       <Routes>
         <Route
           path="/"
-          element={<Home generalHandler={generalHandler} state={state} />}
+          element={
+            <Home generalHandler={generalHandler} localVars={localVars} />
+          }
         />
         <Route
           path="/Contact"
-          element={<Contact generalHandler={generalHandler} user={user} />}
+          element={
+            <Contact generalHandler={generalHandler} localVars={localVars} />
+          }
         />
         <Route
           path="/Chat"
-          element={<Chat generalHandler={generalHandler} convs={convs} />}
+          element={
+            <Chat generalHandler={generalHandler} localVars={localVars} />
+          }
         />
         {
           //<Route path="/Dashbord" element={<Dashbord />} />
@@ -105,12 +114,16 @@ function App() {
         }
         <Route
           path="/VideoRoomUI"
-          element={<VideoRoom generalHandler={generalHandler} state={state} />}
+          element={
+            <VideoRoom generalHandler={generalHandler} localVars={localVars} />
+          }
         />
         <Route
-          path="/profile"
+          path="/profile/:id"
           generalHandler={generalHandler}
-          element={<Profile />}
+          element={
+            <Profile generalHandler={generalHandler} localVars={localVars} />
+          }
         />
         <Route path="/programmer" element={<ProgrammerReunion />} />
       </Routes>

@@ -27,10 +27,10 @@ const allUsers = asyncHandler(async (req, res) => {
 
 //email
 var transporter = nodemailer.createTransport({
-  service: "Gmail",
+  service: "gmail",
   auth: {
-    user: "ff_ahcene@esi.dz",
-    pass: "f1i3e12a8c5n5251996",
+    user: "seen.project.cpi@gmail.com",
+    pass: "imycppaougenucwm",
   },
   tls: {
     rejectUnauthorized: false,
@@ -41,6 +41,7 @@ var transporter = nodemailer.createTransport({
 const registerUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
+  console.log(req.body);
   if (!email || !password) {
     res.status(400);
     throw new Error("Please Enter all the Feilds");
@@ -75,7 +76,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
     //send email verification
     var mailOptions = {
-      from: `Verify your email<${user.login.email}>`,
+      from: "ff_ahcene@esi.dz",
       to: user.login.email,
       subject: `${user.username}  verify your email`,
       html: `<h2> ${user.username}! Thanks for registring on our site </h2>

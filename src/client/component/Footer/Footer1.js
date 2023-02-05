@@ -15,119 +15,120 @@ function Footer1() {
                 <ul>
                   <li>
                     <a href="#">
-                      <i class="bx bxl-linkedin-square"></i>{" "}
-                      <i class="bx bxl-github"></i> Ahcene Faical (chef
+                      <i className="bx bxl-linkedin-square"></i>{" "}
+                      <i className="bx bxl-github"></i> Ahcene Faical (chef
                       d'équipe)
                     </a>
                   </li>
                   <li>
                     <a href="#">
-                      <i class="bx bxl-linkedin-square"></i>{" "}
-                      <i class="bx bxl-github"></i> Ait-Ikene Nadjib
+                      <i className="bx bxl-linkedin-square"></i>{" "}
+                      <i className="bx bxl-github"></i> Ait-Ikene Nadjib
                       (cordinateur){" "}
                     </a>
                   </li>
                   <li>
                     <a href="#">
-                      <i class="bx bxl-linkedin-square"></i>{" "}
-                      <i class="bx bxl-github"></i> Hamnache Krim Belkacem (Base
-                      De Donnée){" "}
+                      <i className="bx bxl-linkedin-square"></i>{" "}
+                      <i className="bx bxl-github"></i> Hamnache Krim Belkacem
+                      (Base De Donnée){" "}
                     </a>
                   </li>
                   <li>
                     <a href="#">
-                      <i class="bx bxl-linkedin-square"></i>{" "}
-                      <i class="bx bxl-github"></i> Sellah Amira (Base De
+                      <i className="bx bxl-linkedin-square"></i>{" "}
+                      <i className="bx bxl-github"></i> Sellah Amira (Base De
                       Donnée){" "}
                     </a>
                   </li>
                   <li>
                     <a href="#">
-                      <i class="bx bxl-linkedin-square"></i>{" "}
-                      <i class="bx bxl-github"></i> Ghiles Amrane (Base De
+                      <i className="bx bxl-linkedin-square"></i>{" "}
+                      <i className="bx bxl-github"></i> Ghiles Amrane (Base De
                       Donnée){" "}
                     </a>
                   </li>
                   <li>
                     <a href="#">
-                      <i class="bx bxl-linkedin-square"></i>{" "}
-                      <i class="bx bxl-github"></i> Rahmani Ania (Interface
+                      <i className="bx bxl-linkedin-square"></i>{" "}
+                      <i className="bx bxl-github"></i> Rahmani Ania (Interface
                       Utilisateur){" "}
                     </a>
                   </li>
                   <li>
                     <a href="#">
-                      <i class="bx bxl-linkedin-square"></i>{" "}
-                      <i class="bx bxl-github"></i> Haidou Nacer (Interface
+                      <i className="bx bxl-linkedin-square"></i>{" "}
+                      <i className="bx bxl-github"></i> Haidou Nacer (Interface
                       Utilisateur){" "}
                     </a>
                   </li>
                   <li>
                     <a href="#">
-                      <i class="bx bxl-linkedin-square"></i>{" "}
-                      <i class="bx bxl-github"></i> Boukaouma Djouher(Appel
+                      <i className="bx bxl-linkedin-square"></i>{" "}
+                      <i className="bx bxl-github"></i> Boukaouma Djouher(Appel
                       vidéo){" "}
                     </a>
                   </li>
                   <li>
                     <a href="#">
-                      <i class="bx bxl-linkedin-square"></i>{" "}
-                      <i class="bx bxl-github"></i> Boucherk Salim (Appel vidéo)
+                      <i className="bx bxl-linkedin-square"></i>{" "}
+                      <i className="bx bxl-github"></i> Boucherk Salim (Appel
+                      vidéo)
                     </a>
                   </li>
                   <li>
                     <a href="#">
-                      <i class="bx bxl-linkedin-square"></i>{" "}
-                      <i class="bx bxl-github"></i> Hadj Hamou Zaina (Compte
+                      <i className="bx bxl-linkedin-square"></i>{" "}
+                      <i className="bx bxl-github"></i> Hadj Hamou Zaina (Compte
                       Utilisateur et Publicité)
                     </a>
                   </li>
                   <li>
                     <a href="#">
-                      <i class="bx bxl-linkedin-square"></i>{" "}
-                      <i class="bx bxl-github"></i> Berkan Sarah (Compte
+                      <i className="bx bxl-linkedin-square"></i>{" "}
+                      <i className="bx bxl-github"></i> Berkan Sarah (Compte
                       Utilisateur et Publicité)
                     </a>
                   </li>
                   <li>
                     <a href="#">
-                      <i class="bx bxl-linkedin-square"></i>{" "}
-                      <i class="bx bxl-github"></i> Hamadi Salim (Partage
+                      <i className="bx bxl-linkedin-square"></i>{" "}
+                      <i className="bx bxl-github"></i> Hamadi Salim (Partage
                       D'écran)
                     </a>
                   </li>
                   <li>
                     <a href="#">
-                      <i class="bx bxl-linkedin-square"></i>{" "}
-                      <i class="bx bxl-github"></i> Lakef Massyl (Partage
+                      <i className="bx bxl-linkedin-square"></i>{" "}
+                      <i className="bx bxl-github"></i> Lakef Massyl (Partage
                       D'écran)
                     </a>
                   </li>
                   <li>
                     <a href="#">
-                      <i class="bx bxl-linkedin-square"></i>{" "}
-                      <i class="bx bxl-github"></i> Khelf Ferhat (Partage
+                      <i className="bx bxl-linkedin-square"></i>{" "}
+                      <i className="bx bxl-github"></i> Khelf Ferhat (Partage
                       D'écran)
                     </a>
                   </li>
                   <li>
                     <a href="#">
-                      <i class="bx bxl-linkedin-square"></i>{" "}
-                      <i class="bx bxl-github"></i> Bennabi Iman (Messagerie
+                      <i className="bx bxl-linkedin-square"></i>{" "}
+                      <i className="bx bxl-github"></i> Bennabi Iman (Messagerie
                       Instantané)
                     </a>
                   </li>
                   <li>
                     <a href="#">
-                      <i class="bx bxl-linkedin-square"></i>{" "}
-                      <i class="bx bxl-github"></i> Chaban Chaouche Murad
+                      <i className="bx bxl-linkedin-square"></i>{" "}
+                      <i className="bx bxl-github"></i> Chaban Chaouche Murad
                       (Messagerie Instantané)
                     </a>
                   </li>
                   <li>
                     <a href="#">
-                      <i class="bx bxl-linkedin-square"></i>{" "}
-                      <i class="bx bxl-github"></i> Belharet Mohand-Ali
+                      <i className="bx bxl-linkedin-square"></i>{" "}
+                      <i className="bx bxl-github"></i> Belharet Mohand-Ali
                       (Messagerie Instantané)
                     </a>
                   </li>
@@ -142,27 +143,27 @@ function Footer1() {
                   <li>
                     <a href="#">
                       {" "}
-                      <i class="bx bxl-github"></i> Git Hub
+                      <i className="bx bxl-github"></i> Git Hub
                     </a>
                   </li>
                   <li>
                     <a href="#">
-                      <i class="bx bxl-facebook-square"></i> Facebook
+                      <i className="bx bxl-facebook-square"></i> Facebook
                     </a>
                   </li>
                   <li>
                     <a href="#">
-                      <i class="bx bxl-instagram-alt"></i> Instagram
+                      <i className="bx bxl-instagram-alt"></i> Instagram
                     </a>
                   </li>
                   <li>
                     <a href="#">
-                      <i class="bx bxl-twitter"></i> Twiter
+                      <i className="bx bxl-twitter"></i> Twiter
                     </a>
                   </li>
                   <li>
                     <a href="#">
-                      <i class="bx bxs-school"></i> UMMTO
+                      <i className="bx bxs-school"></i> UMMTO
                     </a>
                   </li>
                 </ul>
@@ -176,7 +177,7 @@ function Footer1() {
                   <ul>
                     <li>
                       <a href="#">
-                        <i class="bx bxl-react"></i> React.js
+                        <i className="bx bxl-react"></i> React.js
                       </a>
                     </li>
                     <li>
@@ -192,13 +193,13 @@ function Footer1() {
                     <li>
                       <a href="#">
                         {" "}
-                        <i class="bx bxl-nodejs"></i> Node.js
+                        <i className="bx bxl-nodejs"></i> Node.js
                       </a>
                     </li>
                     <li>
                       <a href="#">
                         {" "}
-                        <i class="bx bxl-mongodb"></i> Mongo Db
+                        <i className="bx bxl-mongodb"></i> Mongo Db
                       </a>
                     </li>
                     <li>
@@ -214,12 +215,12 @@ function Footer1() {
               <ul className="footer-col3">
                 <li>
                   <a href="#">
-                    <i class="bx bxs-copyright"></i> CopyRight
+                    <i className="bx bxs-copyright"></i> CopyRight
                   </a>
                 </li>
                 <li>
                   <a href="#">
-                    <i class="bx bxs-school"></i> UMMTO 2023
+                    <i className="bx bxs-school"></i> UMMTO 2023
                   </a>
                 </li>
               </ul>

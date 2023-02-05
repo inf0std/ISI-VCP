@@ -7,7 +7,10 @@ function Home(props) {
   console.log("home props", props);
   return (
     <div style={{ backgroundColor: "#a0969665" }}>
-      <Navbar generalHandler={props.generalHandler} />
+      <Navbar
+        generalHandler={props.generalHandler}
+        localVars={props.localVars}
+      />
       <Header />
       <Footer1 />
     </div>

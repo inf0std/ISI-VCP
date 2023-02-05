@@ -15,7 +15,7 @@ const Navbar = (props) => {
     e.preventDefault();
     let data = searchInput.current.value;
     //*
-    fetch("127.0.0.1:3000/search", {
+    fetch(`http://127.0.0.1:3000/api/user/${props.localVars.user.id}/search`, {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
       cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
@@ -36,8 +36,22 @@ const Navbar = (props) => {
         //handeling search Errors
       }); //*/
   };
+
   const showLoginModal = () => {
     document.getElementById("loginModalBtn").click();
+  };
+
+  const logout = () => {
+    fetch(`http://127.0.0.1:8080/api/user/${props.localVars.user.id}/logout`)
+      .then((res) => res.json(res))
+      .then((data) => {
+        if (data.loggedOut) {
+          props.generalHandler.changeUser(null, null);
+        }
+      })
+      .catch((err) => {
+        console.log("logout", err);
+      });
   };
 
   return (
@@ -92,7 +106,7 @@ const Navbar = (props) => {
                 to="/"
                 className="nav-link"
                 href="#"
-                tabindex="-1"
+                tabIndex="-1"
                 aria-disabled="true"
               >
                 <FaHome
@@ -107,7 +121,7 @@ const Navbar = (props) => {
                 to="/Contact"
                 className="nav-link"
                 href="#"
-                tabindex="-1"
+                tabIndex="-1"
                 aria-disabled="true"
               >
                 <FaUsers
@@ -118,13 +132,14 @@ const Navbar = (props) => {
             </li>
 
             <li style={{ margin: "0px 30px 0px 30px" }} className="nav-item">
-              <Link
+              {/*<Link
                 to="/"
                 className="nav-link"
                 href="#"
                 tabIndex="-1"
                 aria-disabled="true"
-              >
+              >*/}
+              {!props.localVars.user.id && (
                 <button
                   className="btn btn-outline-success"
                   onClick={showLoginModal}
@@ -132,7 +147,17 @@ const Navbar = (props) => {
                 >
                   Se connecter
                 </button>
-              </Link>
+              )}
+              {props.localVars.user.id && (
+                <button
+                  className="btn btn-outline-success"
+                  onClick={logout}
+                  id="login-btn"
+                >
+                  Se deconecter
+                </button>
+              )}
+              {/*</Link>
               {/* {!props.userName ? "Se deconnecter" : "Se connecter"}*/}
             </li>
           </ul>

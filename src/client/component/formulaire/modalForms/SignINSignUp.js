@@ -1,5 +1,11 @@
 import { useState, useRef } from "react";
-
+import {
+  validateEmail,
+  validatePassword,
+  validatePhoneNumber,
+  isAlphanumeric,
+} from "../../../utils/formUtils";
+import alert from "../../../utils/alertUtils";
 const SignInSignUp = (props) => {
   const signinEmail = useRef();
   const signinPassword = useRef();
@@ -36,11 +42,11 @@ const SignInSignUp = (props) => {
     sendSignInData(data)
       .then((response) => response.json())
       .then((data) => {
-        console.log("login attempt", data);
-        props.generalHandler.setUser({ id: data._id, name: data.username });
+        if (data._id) props.generalHandler.changeUser(data._id, data.username);
+        else alert("EMAIL OU MOT DE PASSE FAUX", "danger");
       })
       .catch((err) => {
-        //handeling search Errors
+        console.log("connexion", err);
       }); //*/
   };
 
@@ -61,6 +67,14 @@ const SignInSignUp = (props) => {
     });
   };
 
+  const validateFormData = (email, username, pwd1, pwd2, phone) => {
+    return (
+      validateEmail(email) &&
+      validatePassword(pwd1, pwd2) &&
+      validatePhoneNumber(phone) &&
+      isAlphanumeric(username)
+    );
+  };
   const handleSignup = (e) => {
     e.preventDefault();
     let data = {
@@ -69,17 +83,36 @@ const SignInSignUp = (props) => {
       password: signupPassword.current.value,
       password2: signupPassword2.current.value,
     };
-    console.log(data);
-    sendSignupData(data)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        //display data in the search results
-      })
-      .catch((err) => {
-        console.log(err);
-        //handeling search Errors
-      }); //*/
+    if (
+      validateFormData(
+        data.email,
+        data.username,
+        data.password,
+        data.password2,
+        data.phone
+      )
+    ) {
+      console.log(data);
+      sendSignupData(data)
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          if (data._id)
+            alert(
+              "SUCCES!! VEUILLEZ VERIFIER VOTRE BOITE EMAIL POUR VALIDER VOTRE COMPTE",
+              "success"
+            );
+        })
+        .catch((err) => {
+          console.log(err);
+          //handeling search Errors
+        }); //*/
+    } else {
+      alert(
+        "MAUVAIS FORMAT POUR L'EMAIL, LE MOT DE PASSE, LE TELEPHONE OU LE NOM D'UTILISATEUR",
+        "danger"
+      );
+    }
   };
 
   return (

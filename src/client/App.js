@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import socketIOClient from "socket.io-client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./views/Home";
-import Home2 from "./component/Home2/Home2";
+//import Home from "./views/Home";
+import Home from "./component/Home2/Home2";
 import Contact from "./views/Contact";
 //import Dashbord from "./views/dash";
 //import Dash from "./dash/Dash";
@@ -61,8 +61,9 @@ function App() {
   const [user, setUser] = useState({ id: null, name: null });
 
   /////
+  /*
   useEffect(() => {
-    fetch("http://127.0.0.1:8080/api/user", {
+    fetch(`http://127.0.0.1:8080/api/user/${user.id}/conversations`, {
       method: "GET",
       headers: { Accept: "Application/json" },
     })
@@ -71,7 +72,7 @@ function App() {
         setConvs(result);
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, []);*/
 
   const state = {
     _user: user,
@@ -85,7 +86,7 @@ function App() {
         <Route
           path="/"
           element={
-            <Home2 handlers={{ handleChangeUser: changeUser }} state={state} />
+            <Home handlers={{ handleChangeUser: changeUser }} state={state} />
           }
         />
         <Route path="/Contact" element={<Contact user={user} />} />

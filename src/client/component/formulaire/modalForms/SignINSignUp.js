@@ -10,7 +10,7 @@ const SignInSignUp = (props) => {
   const signupPassword2 = useRef();
 
   const sendSignInData = async (data) => {
-    return fetch("127.0.0.1:3000/login", {
+    return fetch("http://127.0.0.1:8080/api/router/login", {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
       cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
@@ -44,7 +44,7 @@ const SignInSignUp = (props) => {
 
   const sendSignupData = async (data) => {
     console.log("signing up", data);
-    return fetch("127.0.0.1:8080/api/router/signup", {
+    return fetch("http://127.0.0.1:8080/api/router/signup", {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
       cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached

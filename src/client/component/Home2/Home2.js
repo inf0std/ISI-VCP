@@ -3,10 +3,10 @@ import Navbar from "./Navbar";
 import Footer1 from "../Footer/Footer1";
 import Header from "../headers/ProfileHeader";
 
-function Home() {
+function Home(props) {
   return (
     <div style={{ backgroundColor: "#a0969665" }}>
-      <Navbar />
+      <Navbar generalHandler={props.generalHandler} />
       <Header />
       <Footer1 />
     </div>

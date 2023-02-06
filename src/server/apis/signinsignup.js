@@ -10,6 +10,12 @@ const nodemailer = require("nodemailer");
 const crypto = require("crypto");
 const { count } = require("console");
 const asyncHandler = require("express-async-handler");
+const {
+  validateEmail,
+  validatePassword,
+  validatePhoneNumber,
+  isAlphanumeric,
+} = require("./formUtils");
 
 const allUsers = asyncHandler(async (req, res) => {
   const keyword = req.query.search
@@ -39,10 +45,28 @@ var transporter = nodemailer.createTransport({
 
 //const sendEmail = (targetEmail, header, body);
 const registerUser = asyncHandler(async (req, res) => {
-  const { email, password } = req.body;
-
+  const { email, password, password2, username, phone } = req.body;
+  /* 
   console.log(req.body);
-  if (!email || !password) {
+  console.log(
+    "email",
+    email,
+    "password",
+    password,
+    "password1",
+    password2,
+    "username",
+    username,
+    "phone",
+    phone
+  ); */
+  if (
+    !validateEmail(email) ||
+    !validatePassword(password, password2) ||
+    !validatePhoneNumber(phone) ||
+    !isAlphanumeric(username)
+  ) {
+    console.log("validation failed");
     res.status(400);
     throw new Error("Please Enter all the Feilds");
   }
@@ -59,6 +83,8 @@ const registerUser = asyncHandler(async (req, res) => {
       email,
       password,
     },
+    username: username,
+
     isadmin: false,
     isverified: false,
     emailtoken: crypto.randomBytes(64).toString("hex"),
@@ -79,11 +105,11 @@ const registerUser = asyncHandler(async (req, res) => {
       from: "ff_ahcene@esi.dz",
       to: user.login.email,
       subject: `${user.username}  verify your email`,
-      html: `<h2> ${user.username}! Thanks for registring on our site </h2>
-        <h4>Please verify your email to continue... </h4>
+      html: `<h2> ${user.username}! WELCOME TO THE SEEN FAMILY </h2>
+        <h4>Please verify your email by clicking on the link bellow to continue... </h4><p><br/>
         <a href = "http://127.0.0.1:8080/api/router/ver?email =${user.login.email}&token=${user.emailtoken}">
         verify your email
-        </a>`,
+        </a> <br>this link will only remain available for the next 24 hours</p>`,
     };
     //send email
     transporter.sendMail(mailOptions, function (error, info) {

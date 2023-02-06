@@ -4,7 +4,7 @@ import {
   validatePassword,
   validatePhoneNumber,
   isAlphanumeric,
-} from "../../../utils/formUtils";
+} from "../../../../server/apis/formUtils";
 import alert from "../../../utils/alertUtils";
 const SignInSignUp = (props) => {
   const signinEmail = useRef();
@@ -14,6 +14,7 @@ const SignInSignUp = (props) => {
   const signupEmail = useRef();
   const signupPassword = useRef();
   const signupPassword2 = useRef();
+  const signupPhone = useRef();
 
   console.log("props", props);
   const sendSignInData = async (data) => {
@@ -52,7 +53,7 @@ const SignInSignUp = (props) => {
 
   const sendSignupData = async (data) => {
     console.log("signing up", data);
-    return fetch("http://127.0.0.1:8080/api/router/signup", {
+    return fetch("http://127.0.0.1:8080/api/signup", {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
       cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
@@ -68,6 +69,10 @@ const SignInSignUp = (props) => {
   };
 
   const validateFormData = (email, username, pwd1, pwd2, phone) => {
+    console.log("email", email, validateEmail(email));
+    console.log("password", pwd1, pwd2, validatePassword(pwd1, pwd2));
+    console.log("username", username, isAlphanumeric(username));
+    console.log("phone", phone, validatePhoneNumber(phone));
     return (
       validateEmail(email) &&
       validatePassword(pwd1, pwd2) &&
@@ -82,6 +87,7 @@ const SignInSignUp = (props) => {
       email: signupEmail.current.value,
       password: signupPassword.current.value,
       password2: signupPassword2.current.value,
+      phone: signupPhone.current.value,
     };
     if (
       validateFormData(
@@ -285,6 +291,7 @@ const SignInSignUp = (props) => {
                           Phone
                         </label>
                         <input
+                          ref={signupPhone}
                           type="number"
                           id="form6Example6"
                           className="form-control"

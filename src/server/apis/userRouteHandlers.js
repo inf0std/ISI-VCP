@@ -26,7 +26,7 @@ const handleLogin = (req, res, next) => {
   // next();
 };
 const handlesession = (req, res) => {
-  if (!req.session.user) {
+  if (!req.session.id) {
     return res.status(401).send("vous n ete pas connecter");
   }
   return res.status(200).json("welcome");
@@ -307,6 +307,11 @@ const handleupdatemail = async function (req, res, next) {
 
 const handlevalidateemail = function (req, res, next) {
   const token = req.query.token;
+  const email = req.query.email;
+  let decoded;
+  try {
+    decoded = jwt.verify(token, "byiuehgguihr398yhwubfwefj/fwijiohfwe");
+  } catch (err) {}
   User.updateOne(
     { emailtoken: token },
     { emailtoken: null, isverified: true }

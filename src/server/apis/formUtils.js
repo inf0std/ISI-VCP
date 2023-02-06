@@ -10,7 +10,6 @@ const validatePassword = (pwd1, pwd2) => {
 };
 
 const validatePhoneNumber = (phoneNumber) => {
-  phoneNumber = "" + phoneNumber;
   let re =
     /^(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?$/;
   return re.test(phoneNumber);

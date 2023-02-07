@@ -1,5 +1,11 @@
 import { useState, useRef } from "react";
-
+import {
+  validateEmail,
+  validatePassword,
+  validatePhoneNumber,
+  isAlphanumeric,
+} from "../../../../server/apis/formUtils";
+import alert from "../../../utils/alertUtils";
 const SignInSignUp = (props) => {
   const signinEmail = useRef();
   const signinPassword = useRef();
@@ -8,9 +14,11 @@ const SignInSignUp = (props) => {
   const signupEmail = useRef();
   const signupPassword = useRef();
   const signupPassword2 = useRef();
+  const signupPhone = useRef();
 
+  console.log("props", props);
   const sendSignInData = async (data) => {
-    return fetch("127.0.0.1:3000/login", {
+    return fetch("http://127.0.0.1:8080/api/signin", {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
       cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
@@ -35,16 +43,17 @@ const SignInSignUp = (props) => {
     sendSignInData(data)
       .then((response) => response.json())
       .then((data) => {
-        //display data in the search results
+        if (data._id) props.generalHandler.changeUser(data._id, data.username);
+        else alert("EMAIL OU MOT DE PASSE FAUX", "danger");
       })
       .catch((err) => {
-        //handeling search Errors
+        console.log("connexion", err);
       }); //*/
   };
 
   const sendSignupData = async (data) => {
     console.log("signing up", data);
-    return fetch("127.0.0.1:8080/api/router/signup", {
+    return fetch("http://127.0.0.1:8080/api/signup", {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
       cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
@@ -59,6 +68,18 @@ const SignInSignUp = (props) => {
     });
   };
 
+  const validateFormData = (email, username, pwd1, pwd2, phone) => {
+    console.log("email", email, validateEmail(email));
+    console.log("password", pwd1, pwd2, validatePassword(pwd1, pwd2));
+    console.log("username", username, isAlphanumeric(username));
+    console.log("phone", phone, validatePhoneNumber(phone));
+    return (
+      validateEmail(email) &&
+      validatePassword(pwd1, pwd2) &&
+      validatePhoneNumber(phone) &&
+      isAlphanumeric(username)
+    );
+  };
   const handleSignup = (e) => {
     e.preventDefault();
     let data = {
@@ -66,18 +87,38 @@ const SignInSignUp = (props) => {
       email: signupEmail.current.value,
       password: signupPassword.current.value,
       password2: signupPassword2.current.value,
+      phone: signupPhone.current.value,
     };
-    console.log(data);
-    sendSignupData(data)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        //display data in the search results
-      })
-      .catch((err) => {
-        console.log(err);
-        //handeling search Errors
-      }); //*/
+    if (
+      validateFormData(
+        data.email,
+        data.username,
+        data.password,
+        data.password2,
+        data.phone
+      )
+    ) {
+      console.log(data);
+      sendSignupData(data)
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          if (data._id)
+            alert(
+              "SUCCES!! VEUILLEZ VERIFIER VOTRE BOITE EMAIL POUR VALIDER VOTRE COMPTE",
+              "success"
+            );
+        })
+        .catch((err) => {
+          console.log(err);
+          //handeling search Errors
+        }); //*/
+    } else {
+      alert(
+        "MAUVAIS FORMAT POUR L'EMAIL, LE MOT DE PASSE, LE TELEPHONE OU LE NOM D'UTILISATEUR",
+        "danger"
+      );
+    }
   };
 
   return (
@@ -250,6 +291,7 @@ const SignInSignUp = (props) => {
                           Phone
                         </label>
                         <input
+                          ref={signupPhone}
                           type="number"
                           id="form6Example6"
                           className="form-control"

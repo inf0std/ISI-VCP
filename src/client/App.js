@@ -1,101 +1,76 @@
 import React, { useState, useRef, useEffect } from "react";
-import socketIOClient from "socket.io-client";
+import io from "socket.io-client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./views/Home";
-import Home2 from "./component/Home2/Home2"
+import Home from "./component/Home2/Home2";
 import Contact from "./views/Contact";
-//import Dashbord from "./views/dash";
-//import Dash from "./dash/Dash";
 import Chat from "./views/Chat";
-import VideoRoom from "./views/VideoRoom";
+import VideoRoom from "./views/VideoRoum";
 import Profile from "./component/Profile/Profile";
 import ProgrammerReunion from "./component/formulaire/modalForms/ProgramerLaReunion";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { getConversations } from "./utils/fetchUtils";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-const convs = [
-  {
-    name: "conv-1",
-    msgs: [
-      {
-        senderId: 1,
-        content: "hello",
-      },
-      {
-        senderId: 2,
-        content: "hello there",
-      },
-      {
-        senderId: 1,
-        content: "how are you doing",
-        seen: true,
-      },
-    ],
-  },
-  {
-    name: "conv-2",
-    msgs: [
-      {
-        senderId: 1,
-        content: "hello",
-      },
-      {
-        senderId: 2,
-        content: "hello there",
-      },
-      {
-        senderId: 1,
-        content: "how are you doing",
-      },
-      {
-        senderId: 1,
-        content: "fine, how about you",
-        seen: false,
-      },
-    ],
-  },
-];
-
+let socket = io.connect("http://localhost:8080");
 function App() {
   //state declaration
   const [convs, setConvs] = useState([]);
   const [user, setUser] = useState({ id: null, name: null });
-
-  /////
-  useEffect(() => {
-    fetch("http://127.0.0.1:8080/api/conversations", {
-      method: "GET",
-      headers: { Accept: "Application/json" },
-    })
-      .then((res) => res.json())
-      .then((result) => {
-        setConvs(result);
-      })
-      .catch((err) => console.log(err));
-  }, []);
-
-  const state = {
-    _user: user,
+  let localVars = {
+    user,
+    convs,
   };
+
+  useEffect(() => {
+    if (user.id) {
+      let socket = io("http://127.0.0.1:8080");
+      socket.emit("joinRoom", { room: `user-${user.id}` });
+      localVars.socket = socket;
+      getConversations(user.id).then((convs) => setConvs(convs));
+    } else setConvs([]);
+  }, [user]);
+
   const changeUser = (userId, userName) => {
     setUser({ id: userId, name: userName });
   };
+
+  const generalHandler = {
+    changeUser,
+  };
   return (
     <BrowserRouter>
+      {console.log("APP", user)}
       <Routes>
         <Route
           path="/"
           element={
-            <Home2 handlers={{ handleChangeUser: changeUser }} state={state} />
+            <Home generalHandler={generalHandler} localVars={localVars} />
           }
         />
-        <Route path="/Contact" element={<Contact user={user} />} />
-        <Route path="/Chat" element={<Chat convs={convs} />} />
-        {
-          //<Route path="/Dashbord" element={<Dashbord />} />
-          //<Route path="/Dash" element={<Dash />} />
-        }
-        <Route path="/VideoRoomUI" element={<VideoRoom state={state} />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route
+          path="/Contact"
+          element={
+            <Contact generalHandler={generalHandler} localVars={localVars} />
+          }
+        />
+        <Route
+          path="/Chat"
+          element={
+            <Chat generalHandler={generalHandler} localVars={localVars} />
+          }
+        />
+        <Route
+          path="/VideoRoomUI/:id"
+          element={
+            <VideoRoom generalHandler={generalHandler} localVars={localVars} />
+          }
+        />
+        <Route
+          path="/profile/:id"
+          generalHandler={generalHandler}
+          element={
+            <Profile generalHandler={generalHandler} localVars={localVars} />
+          }
+        />
         <Route path="/programmer" element={<ProgrammerReunion />} />
       </Routes>
     </BrowserRouter>

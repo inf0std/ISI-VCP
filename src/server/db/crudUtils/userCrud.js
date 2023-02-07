@@ -1,4 +1,3 @@
-
 const { default: mongoose } = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcryptjs");
@@ -40,7 +39,14 @@ const createUser = async (email, password) => {
           },
           isadmin: false,
           isverified: false,
-          emailtoken: crypto.randomBytes(64).toString("hex"),
+          emailtoken: jwt.sign(
+            {
+              nonce: crypto.randomBytes(64).toString("hex"),
+              email: email,
+              exp: Date.now() + 24 * 60 * 60 * 1000,
+            },
+            "byiuehgguihr398yhwubfwefj/fwijiohfwe"
+          ),
         });
         user
           .save(user)
@@ -77,8 +83,8 @@ const createUser = async (email, password) => {
   }
 };
 
-const verifyemail = (req, res) => {
-  const token = req.query.token;
+const verifyemail = (token, email) => {
+  User.findOne({ login });
   User.findOne({ emailtoken: token }).then((user) => {
     if (user) {
       (user.emailtoken = null), (user.isverified = true);

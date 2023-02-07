@@ -1,4 +1,14 @@
 const app = require("./src/server/server");
+/* const jwt = require("jsonwebtoken");
+let token;
+token = jwt.sign(
+  { msg: "hello there", exp: Date.now() + 24 * 60 * 60 * 1000 },
+  "qwertyuiop"
+);
+console.log(token);
+let decoded = jwt.verify(token, "qwertyuiop");
+console.log(decoded.exp);
+console.log(Date.now()); */
 
 /*
 const nodemailer = require("nodemailer");

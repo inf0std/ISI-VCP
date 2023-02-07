@@ -10,6 +10,12 @@ const nodemailer = require("nodemailer");
 const crypto = require("crypto");
 const { count } = require("console");
 const asyncHandler = require("express-async-handler");
+const {
+  validateEmail,
+  validatePassword,
+  validatePhoneNumber,
+  isAlphanumeric,
+} = require("./formUtils");
 
 const allUsers = asyncHandler(async (req, res) => {
   const keyword = req.query.search
@@ -27,10 +33,10 @@ const allUsers = asyncHandler(async (req, res) => {
 
 //email
 var transporter = nodemailer.createTransport({
-  service: "Gmail",
+  service: "gmail",
   auth: {
-    user: "ff_ahcene@esi.dz",
-    pass: "f1i3e12a8c5n5251996",
+    user: "seen.project.cpi@gmail.com",
+    pass: "imycppaougenucwm",
   },
   tls: {
     rejectUnauthorized: false,
@@ -39,9 +45,28 @@ var transporter = nodemailer.createTransport({
 
 //const sendEmail = (targetEmail, header, body);
 const registerUser = asyncHandler(async (req, res) => {
-  const { email, password } = req.body;
-
-  if (!email || !password) {
+  const { email, password, password2, username, phone } = req.body;
+  /* 
+  console.log(req.body);
+  console.log(
+    "email",
+    email,
+    "password",
+    password,
+    "password1",
+    password2,
+    "username",
+    username,
+    "phone",
+    phone
+  ); */
+  if (
+    !validateEmail(email) ||
+    !validatePassword(password, password2) ||
+    !validatePhoneNumber(phone) ||
+    !isAlphanumeric(username)
+  ) {
+    console.log("validation failed");
     res.status(400);
     throw new Error("Please Enter all the Feilds");
   }
@@ -58,6 +83,8 @@ const registerUser = asyncHandler(async (req, res) => {
       email,
       password,
     },
+    username: username,
+
     isadmin: false,
     isverified: false,
     emailtoken: crypto.randomBytes(64).toString("hex"),
@@ -75,14 +102,14 @@ const registerUser = asyncHandler(async (req, res) => {
 
     //send email verification
     var mailOptions = {
-      from: `Verify your email<${user.login.email}>`,
+      from: "ff_ahcene@esi.dz",
       to: user.login.email,
       subject: `${user.username}  verify your email`,
-      html: `<h2> ${user.username}! Thanks for registring on our site </h2>
-        <h4>Please verify your email to continue... </h4>
+      html: `<h2> ${user.username}! WELCOME TO THE SEEN FAMILY </h2>
+        <h4>Please verify your email by clicking on the link bellow to continue... </h4><p><br/>
         <a href = "http://127.0.0.1:8080/api/router/ver?email =${user.login.email}&token=${user.emailtoken}">
         verify your email
-        </a>`,
+        </a> <br>this link will only remain available for the next 24 hours</p>`,
     };
     //send email
     transporter.sendMail(mailOptions, function (error, info) {

@@ -13,7 +13,6 @@ const Chat = (props) => {
       <div className="row">
         {/* <NavBar /> */}
         <Conversations convs={props.convs} activate={setActiveConv} />
-        <ConversationTab myId={1} msgs={props.convs[activeConv].msgs} />
       </div>
     </div>
   );

@@ -24,8 +24,8 @@ const ConversationTab = (props) => {
           // width: "65vw"
         }}
         >
-          <input className="form-control mx-2" type="text" style={{}}></input>
-          <button className="btn btn-success btn-rounded col-1" onClick={sendMessage}style={{}}>send</button>
+          <input className="form-control mx-2" type="text"></input>
+          <button className="btn btn-success btn-rounded col-1" onClick={sendMessage}>send</button>
       </form>
     </div>
     </div>

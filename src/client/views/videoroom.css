@@ -1,0 +1,17 @@
+.container1{
+    background-color: rgb(97, 94, 94);
+    width:100%;
+    height: 100%;
+    position: fixed;
+
+}
+.container_video{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 75%;
+    background-color: black;
+    margin-left: 165px;
+    height: 900px;
+    
+}

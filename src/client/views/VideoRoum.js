@@ -1,12 +1,28 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import io from "socket.io-client";
+import Navbar from "./VideoRoom/components/navbar/Navbar";
+import "./videoroom.css";
+import {
+  addUser,
+  addUserBatch,
+  setupUserId,
+  setupSocket,
+  setupLocalStream,
+  setupStreams,
+  handleAnswer,
+  handleIce,
+  handleOffer,
+  handleLeaveEvent,
+} from "../peerConSetup";
 
 import Room from "../Room";
 import Video from "./Video";
 
 export default function VideoRoum({ generalHandler, localVars }) {
   const { roomid, userid } = useParams();
+
+  console.log(props);
   //rtcPeerConnecion establishement
   const constraints = (window.constraints = {
     audio: false,
@@ -21,6 +37,7 @@ export default function VideoRoum({ generalHandler, localVars }) {
   const [streams, setStreams] = useState([]);
   const [localStream, setLocalStream] = useState(null);
 
+  const [Nbr_Partipents, setNbr_Partipents] = useState();
   useEffect(() => {
     getLocalStream()
       .then((stream) => {
@@ -41,17 +58,29 @@ export default function VideoRoum({ generalHandler, localVars }) {
       streams
     );
     room.connect();
-  }, []);
-  console.log("nbstreams", streams.length);
+    setNbr_Partipents(streams.length);
+    setStreams([localStream, localStream, localStream, localStream]);
+  }, [Nbr_Partipents]);
   //localVideo.current.srcObject = localStream;
   return (
-    <div>
-      <Video stream={{ stream: localStream, id: userid }}></Video>
-      {streams.map((s) => {
-        console.log("stream", s);
-        console.log("nb stream", streams.length);
-        return <Video stream={s}></Video>;
-      })}
+    <div className="container1 bg-secondary" style={{ height: "650px" }}>
+      <Navbar />
+      <div
+        className="container-sm flex flex-col bg-black"
+        style={{ width: "830px" }}
+      >
+        <Video stream={localStream} Nbr_Partipents={Nbr_Partipents}></Video>
+        {streams.map((s, index) => {
+          console.log("stream", s);
+          return (
+            <Video
+              key={index}
+              stream={s}
+              Nbr_Partipents={Nbr_Partipents}
+            ></Video>
+          );
+        })}
+      </div>
     </div>
   );
 }

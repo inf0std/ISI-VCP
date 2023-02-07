@@ -1,4 +1,6 @@
-import { useRef, useEffect, useContext } from "react";
+import { useRef, useEffect } from "react";
+import classNames from "classnames";
+import "./Video.css";
 /*
 export default function Video(props) {
     const ref = useRef()
@@ -12,13 +14,28 @@ export default function Video(props) {
 }
  */
 
-const Video = ({ stream }) => {
+const Video = ({ stream, Nbr_Partipents }) => {
   const videoRef = useRef();
   useEffect(() => {
-    videoRef.current.srcObject = stream.stream;
-  }, [stream]);
+    console.log(Nbr_Partipents);
+    videoRef.current.srcObject = stream;
+  }, [Nbr_Partipents, stream]);
 
-  return <video ref={videoRef} key={stream.id} autoPlay></video>;
+  return (
+    <video
+      className={classNames({
+        video1: Nbr_Partipents + 1 === 1,
+        video2: Nbr_Partipents + 1 === 2,
+        video3_4: Nbr_Partipents + 1 >= 3,
+        video5_6: Nbr_Partipents + 1 >= 5,
+        video4_9: Nbr_Partipents + 1 >= 7,
+        video10_12: Nbr_Partipents + 1 >= 10,
+        video13_20: Nbr_Partipents + 1 >= 12,
+      })}
+      ref={videoRef}
+      autoPlay
+    ></video>
+  );
 };
 
 export default Video;

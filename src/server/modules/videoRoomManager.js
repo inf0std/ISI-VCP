@@ -53,7 +53,7 @@ const Room = (roomId) => {};
 //join with verification
 const joinRoomIfAuthorised = (userId, socketId, roomId) => {
   room = findRoom(roomId);
-  //if(!room)return {joined: false, notExists: true}
+  if (!room) return { joined: false, notExists: true };
   if (room.open) {
     return join(room, userId, socketId);
   } else if (room.programmedMembers.indexOf(userId) >= 0) {

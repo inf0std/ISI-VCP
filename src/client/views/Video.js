@@ -1,5 +1,5 @@
-import {useRef, useEffect, useContext} from "react"
-
+import { useRef, useEffect, useContext } from "react";
+/*
 export default function Video(props) {
     const ref = useRef()
      if (props.stream != null){
@@ -10,3 +10,15 @@ export default function Video(props) {
     <video className="video2" playsInline autoPlay ref={ref} />
   )
 }
+ */
+
+const Video = ({ stream }) => {
+  const videoRef = useRef();
+  useEffect(() => {
+    videoRef.current.srcObject = stream;
+  }, [stream]);
+
+  return <video ref={videoRef} autoPlay></video>;
+};
+
+export default Video;

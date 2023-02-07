@@ -10,27 +10,29 @@ import ProgrammerReunion from "./component/formulaire/modalForms/ProgramerLaReun
 import { getConversations } from "./utils/fetchUtils";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-let socket = io.connect("http://localhost:8080");
+let s = io.connect("http://localhost:8080");
 function App() {
   //state declaration
   const [convs, setConvs] = useState([]);
   const [user, setUser] = useState({ id: null, name: null });
-  let localVars = {
-    user,
-    convs,
-  };
+  const socket = useRef(s);
 
   useEffect(() => {
     if (user.id) {
-      let socket = io("http://127.0.0.1:8080");
-      socket.emit("joinRoom", { room: `user-${user.id}` });
-      localVars.socket = socket;
+      socket.current.emit("joinRoom", { room: `user-${user.id}` });
+      localVars.socket = socket.current;
       getConversations(user.id).then((convs) => setConvs(convs));
     } else setConvs([]);
   }, [user]);
 
   const changeUser = (userId, userName) => {
     setUser({ id: userId, name: userName });
+  };
+
+  let localVars = {
+    user,
+    convs,
+    socket: socket.current,
   };
 
   const generalHandler = {
@@ -59,7 +61,7 @@ function App() {
           }
         />
         <Route
-          path="/VideoRoomUI/:id"
+          path="/VideoRoomUI/:roomid/:userid"
           element={
             <VideoRoom generalHandler={generalHandler} localVars={localVars} />
           }

@@ -17,17 +17,22 @@ const ConversationTab = (props) => {
       </div>
       <div className="row d-flex justify-content-end aligh-self-end">
         <form
-        className="d-flex py-3 bg-light col-7 mx-3"
-        style={{
-          position: "fixed",
-          bottom: 0,
-          // width: "65vw"
-        }}
+          className="d-flex py-3 bg-light col-7 mx-3"
+          style={{
+            position: "fixed",
+            bottom: 0,
+            // width: "65vw"
+          }}
         >
           <input className="form-control mx-2" type="text"></input>
-          <button className="btn btn-success btn-rounded col-1" onClick={sendMessage}>send</button>
-      </form>
-    </div>
+          <button
+            className="btn btn-success btn-rounded col-1"
+            onClick={sendMessage}
+          >
+            send
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

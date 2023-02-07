@@ -54,11 +54,10 @@ const Room = (roomId) => {};
 const joinRoomIfAuthorised = (userId, socketId, roomId) => {
   room = findRoom(roomId);
   if (!room) return { joined: false, notExists: true };
-  if (room.open) {
-    return join(room, userId, socketId);
-  } else if (room.programmedMembers.indexOf(userId) >= 0) {
+  if (room.open || room.programmedMembers.indexOf(userId) >= 0) {
     return join(room, userId, socketId);
   }
+  return { joined: false, authorized: false };
 };
 
 //quitter la videoroom

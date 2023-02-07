@@ -15,10 +15,10 @@ export default function Video(props) {
 const Video = ({ stream }) => {
   const videoRef = useRef();
   useEffect(() => {
-    videoRef.current.srcObject = stream;
+    videoRef.current.srcObject = stream.stream;
   }, [stream]);
 
-  return <video ref={videoRef} autoPlay></video>;
+  return <video ref={videoRef} key={stream.id} autoPlay></video>;
 };
 
 export default Video;

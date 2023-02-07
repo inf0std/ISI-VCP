@@ -2,166 +2,157 @@ const offerOptions = {
   offerToReceiveAudio: 1,
   offerToReceiveVideo: 1,
 };
+
 let config = {};
-let socket;
-let userId;
-let localStream;
-let members = [];
-let setStreams;
-let streams;
 
-const setupSocket = (s) => {
-  socket = s;
-};
+export default class RoomHandler {
+  constructor(s, id, l_s, setstrm, strm) {
+    this.socket = s;
+    this.userId = id;
+    this.localStream = l_s;
+    this.members = [];
+    this.setStreams = setstrm;
+    this.streams = strm;
+  }
 
-const setupUserId = (id) => {
-  userId = id;
-};
-
-const setupStreams = (s, set) => {
-  streams = s;
-  setStreams = set;
-};
-
-const setupLocalStream = (local) => {
-  //console.log("setuplocalstream", local);
-  localStream = local;
-};
-
-const addUserBatch = (users) => {
-  console.log("addUserBatch", users);
-  users.forEach((user) => {
-    addUser(false, user);
-  });
-};
-
-const addUser = (joined, user) => {
-  console.log("addUser", user);
-  user.peer = createPeer();
-  var member = user;
-  members.push(member);
-  localStream.getTracks().forEach((track) => {
-    member.peer.addTrack(track, localStream);
-  });
-  member.peer.onicecandidate = (e) => {
-    if (e && e.candidate) sendIce(member.id, e.candidate);
+  setupSocket = (s) => {
+    this.socket = s;
   };
-  member.peer.ontrack = handleTrack(member.id);
-  if (!joined) sendOffer(member.id);
-  //console.log(members);
-};
 
-const handleOffer = (offer, id) => {
-  console.log("handleOffer", id);
-  let i = findMember(id);
-  members[i].peer.setRemoteDescription(new RTCSessionDescription(offer));
-  sendAnswer(id);
-};
+  setupUserId = (id) => {
+    this.userId = id;
+  };
 
-const handleAnswer = (answer, id) => {
-  console.log("handleAnswer", id);
-  let i = findMember(id);
-  members[i].peer.setRemoteDescription(new RTCSessionDescription(answer));
-};
+  setupStreams = (s, set) => {
+    this.streams = s;
+    this.setStreams = set;
+  };
 
-const handleIce = (id, ice) => {
-  //console.log("handleIce", id, ice);
-  let i = findMember(id);
-  members[i].peer.addIceCandidate(new RTCIceCandidate(ice));
-};
+  setupLocalStream = (local) => {
+    this.localStream = local;
+  };
 
-const findMember = (id) => {
-  let i = members.findIndex((user) => {
-    return user.id == id;
-  });
-  return i;
-};
-
-const createOffer = async (id) => {
-  let i = findMember(id);
-  return members[i].peer.createOffer(offerOptions);
-};
-
-const createAnswer = async (id) => {
-  let i = findMember(id);
-  return members[i].peer.createAnswer();
-};
-
-const sendOffer = (id) => {
-  console.log("sendOffer", id);
-  let i = findMember(id);
-  createOffer(id)
-    .then((offer) => {
-      members[i].peer.setLocalDescription(offer);
-      socket.emit("offer", {
-        senderId: userId,
-        receiverId: members[i].id,
-        offer: offer,
-        socketId: members[i].socketId,
-      });
-    })
-    .catch((err) => {
-      console.log(err);
+  addUserBatch = (users) => {
+    console.log("addUserBatch", users);
+    users.forEach((user) => {
+      console.log("user", user);
+      this.addUser(user);
     });
-};
+  };
 
-const sendAnswer = (id) => {
-  console.log("sendAnswer", id);
-  let i = findMember(id);
-  createAnswer(id)
-    .then((answer) => {
-      members[i].peer.setLocalDescription(answer);
-      socket.emit("answer", {
-        senderId: userId,
-        receiverId: members[i].id,
-        socketId: members[i].socketId,
-        answer: answer,
-      });
-    })
-    .catch((err) => {
-      console.log(err);
+  addJoinedUser = (user) => {
+    this.addUser(user);
+    this.sendOffer(user.id);
+  };
+
+  addUser = (user) => {
+    console.log("addUser", user);
+    this.members.push({ ...user, peer: this.createPeer(user.id) });
+  };
+
+  handleOffer = (offer, id) => {
+    console.log("handleOffer", id);
+    this.members[this.findMember(id)].peer.setRemoteDescription(
+      new RTCSessionDescription(offer)
+    );
+    this.sendAnswer(id);
+  };
+
+  handleAnswer = (answer, id) => {
+    console.log("handleAnswer", id);
+    this.members[this.findMember(id)].peer.setRemoteDescription(
+      new RTCSessionDescription(answer)
+    );
+  };
+
+  handleIce = (id, ice) => {
+    this.members[this.findMember(id)].peer.addIceCandidate(
+      new RTCIceCandidate(ice)
+    );
+  };
+
+  findMember = (id) => {
+    return this.members.findIndex((user) => {
+      return user.id == id;
     });
-};
+  };
 
-const sendIce = (id, ice) => {
-  //console.log("sendIce", id, ice);
-  let i = findMember(id);
-  socket.emit("ice", {
-    senderId: userId,
-    receiverId: id,
-    socketId: members[i].socketId,
-    ice: ice,
-  });
-};
+  createOffer = async (id) => {
+    return this.members[this.findMember(id)].peer.createOffer(offerOptions);
+  };
 
-const handleLeaveEvent = (id) => {
-  console.log("handleLeaveEvent", id);
-  let i = findMember(id);
-  members.splice(i, 1);
-  let s_copy = streams.slice();
-  s_copy.splice(i, 1);
-  setStreams(s_copy);
-};
+  createAnswer = async (id) => {
+    return this.members[this.findMember(id)].peer.createAnswer();
+  };
 
-const handleTrack = (id) => (e) => {
-  console.log("handleTrack", id, e.streams);
-  let i = findMember(id);
-  streams[i] = e.streams[0];
-  setStreams([...streams]);
-};
+  sendOffer = (id) => {
+    console.log("sendOffer", id);
+    let i = this.findMember(id);
+    this.createOffer(id)
+      .then((offer) => {
+        this.members[i].peer.setLocalDescription(offer);
+        this.socket.emit("offer", {
+          senderId: this.userId,
+          receiverId: this.members[i].id,
+          offer: offer,
+          socketId: this.members[i].socketId,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
-const createPeer = () => {
-  return new RTCPeerConnection(config);
-};
-module.exports = {
-  addUser,
-  addUserBatch,
-  setupUserId,
-  setupSocket,
-  setupLocalStream,
-  setupStreams,
-  handleAnswer,
-  handleIce,
-  handleOffer,
-  handleLeaveEvent,
-};
+  sendAnswer = (id) => {
+    console.log("sendAnswer", id);
+    let i = this.findMember(id);
+    this.createAnswer(id)
+      .then((answer) => {
+        this.members[i].peer.setLocalDescription(answer);
+        this.socket.emit("answer", {
+          senderId: this.userId,
+          receiverId: this.members[i].id,
+          socketId: this.members[i].socketId,
+          answer: answer,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  sendIce = (id) => (ice) => {
+    this.socket.emit("ice", {
+      senderId: this.userId,
+      receiverId: id,
+      socketId: this.members[this.findMember(id)].socketId,
+      ice: ice,
+    });
+  };
+
+  handleLeaveEvent = (id) => {
+    this.members.splice(this.findMember(id), 1);
+    let s_copy = this.streams.slice();
+    s_copy.splice(
+      s_copy.findIndex((s) => s.id == id),
+      1
+    );
+    this.setStreams(s_copy);
+  };
+
+  handleTrack = (id) => (e) => {
+    console.log("handleTrack");
+    this.setStreams([...this.streams, { stream: e.streams[0], id: id }]);
+  };
+
+  createPeer = (id) => {
+    let peer = new RTCPeerConnection(config);
+    peer.ontrack = this.handleTrack(id);
+    peer.onicecandidate = this.sendIce(id);
+    this.localStream &&
+      this.localStream
+        .getTracks()
+        .forEach((track) => peer.addTrack(track, this.localStream));
+    return peer;
+  };
+}

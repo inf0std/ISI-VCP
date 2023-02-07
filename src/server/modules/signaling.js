@@ -24,12 +24,25 @@ module.exports = (server) => {
       console.log(`user ${userId} attempts to join room ${roomId}`);
       let res = joinRoom(userId, socket.id, roomId);
       if (res.joined) {
-        socket.join(`video-${roomId}`);
+        if (res.type === "call" || res.type === "reunion")
+          socket.join(`video-${roomId}`);
         socket
           .to(`video-${roomId}`)
-          .emit("user-joined-video", { userId: userId });
+          .emit("user-joined-video", { id: userId, socketId: socket.id });
       }
       socket.emit("video-room", res);
+    });
+
+    socket.on("offer", ({ senderId, receiverId, socketId, offer }) => {
+      socket.to(socketId).emit("offer", { senderId, receiverId, offer });
+    });
+
+    socket.on("answer", ({ senderId, receiverId, socketId, answer }) => {
+      socket.to(socketId).emit("answer", { senderId, receiverId, answer });
+    });
+
+    socket.on("ice", ({ senderId, receiverId, socketId, ice }) => {
+      socket.to(socketId).emit("ice", { senderId, receiverId, ice });
     });
   });
 };

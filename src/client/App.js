@@ -1,45 +1,38 @@
 import React, { useState, useRef, useEffect } from "react";
-import socketIOClient from "socket.io-client";
+import io from "socket.io-client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./component/Home2/Home2";
 import Contact from "./views/Contact";
 import Chat from "./views/Chat";
-import VideoRoom from "./views/VideoRoom";
+import VideoRoom from "./views/VideoRoum";
 import Profile from "./component/Profile/Profile";
 import ProgrammerReunion from "./component/formulaire/modalForms/ProgramerLaReunion";
+import { getConversations } from "./utils/fetchUtils";
 import "bootstrap/dist/css/bootstrap.min.css";
 
+let s = io.connect("http://localhost:8080");
 function App() {
   //state declaration
   const [convs, setConvs] = useState([]);
   const [user, setUser] = useState({ id: null, name: null });
+  const socket = useRef(s);
 
-  /////
-  /*
   useEffect(() => {
-    fetch(`http://127.0.0.1:8080/api/user/${user.id}/conversations`, {
-      method: "GET",
-      headers: { Accept: "Application/json" },
-    })
-      .then((res) => res.json())
-      .then((result) => {
-        setConvs(result);
-      })
-      .catch((err) => console.log(err));
-  }, []);*/
+    if (user.id) {
+      socket.current.emit("joinRoom", { room: `user-${user.id}` });
+      localVars.socket = socket.current;
+      getConversations(user.id).then((convs) => setConvs(convs));
+    } else setConvs([]);
+  }, [user]);
+
+  const changeUser = (userId, userName) => {
+    setUser({ id: userId, name: userName });
+  };
+
   let localVars = {
     user,
     convs,
-  };
-  useEffect(() => {
-    let socket = socketIOClient("http://127.0.0.1:8080");
-    localVars.socket = socket;
-  });
-  console.log(user);
-
-  const changeUser = (userId, userName) => {
-    //console.log(userId, userName);
-    setUser({ id: userId, name: userName });
+    socket: socket.current,
   };
 
   const generalHandler = {
@@ -67,12 +60,8 @@ function App() {
             <Chat generalHandler={generalHandler} localVars={localVars} />
           }
         />
-        {
-          //<Route path="/Dashbord" element={<Dashbord />} />
-          //<Route path="/Dash" element={<Dash />} />
-        }
         <Route
-          path="/VideoRoomUI"
+          path="/VideoRoomUI/:roomid/:userid"
           element={
             <VideoRoom generalHandler={generalHandler} localVars={localVars} />
           }

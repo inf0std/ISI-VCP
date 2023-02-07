@@ -4,7 +4,6 @@ import Footer1 from "../Footer/Footer1";
 import Header from "../headers/ProfileHeader";
 
 function Home(props) {
-  console.log("home props", props);
   return (
     <div style={{ backgroundColor: "#a0969665" }}>
       <Navbar

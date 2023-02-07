@@ -1,8 +1,11 @@
 import Navbar from "../component/Home2/Navbar";
-const Contact = () => {
+const Contact = (props) => {
   return (
     <div class="" style={{ backgroundColor: "#a0969665", height: "650px" }}>
-      <Navbar />
+      <Navbar
+        generalHandler={props.generalHandler}
+        localVars={props.localVars}
+      />
       <div class="container text-center">
         <div class="row mb-5">
           <div class="col"></div>

@@ -149,13 +149,18 @@ const Navbar = (props) => {
                 </button>
               )}
               {props.localVars.user.id && (
-                <button
-                  className="btn btn-outline-success"
-                  onClick={logout}
-                  id="login-btn"
-                >
-                  Se deconecter
-                </button>
+                <>
+                  <button
+                    className="btn btn-outline-success"
+                    onClick={logout}
+                    id="login-btn"
+                  >
+                    Se deconecter
+                  </button>
+                  <img
+                    src={`http://127.0.0.1:8080/profile/${props.localVars.user.id}.jpg`}
+                  ></img>
+                </>
               )}
               {/*</Link>
               {/* {!props.userName ? "Se deconnecter" : "Se connecter"}*/}

@@ -68,4 +68,4 @@ const leaveRoom = (userId, roomId) => {};
 const findRoom = (roomId) => {
   return rooms.find((room) => room.id == roomId);
 };
-module.exports = { joinRoom };
+module.exports = { joinRoomIfAuthorised };

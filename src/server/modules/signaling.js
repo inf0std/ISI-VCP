@@ -1,4 +1,4 @@
-const { joinRoom } = require("./videoRoomManager");
+const { joinRoomIfAuthorised } = require("./videoRoomManager");
 
 module.exports = (server) => {
   //creation de serveur socketio
@@ -22,7 +22,7 @@ module.exports = (server) => {
 
     socket.on("video-room", ({ roomId, userId }) => {
       console.log(`user ${userId} attempts to join room ${roomId}`);
-      let res = joinRoom(userId, socket.id, roomId);
+      let res = joinRoomIfAuthorised(userId, socket.id, roomId);
       if (res.joined) {
         if (res.type === "call" || res.type === "reunion")
           socket.join(`video-${roomId}`);

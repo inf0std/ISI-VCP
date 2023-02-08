@@ -324,7 +324,7 @@ const addToGroup = async (IdC, IdU) => {
 
 const readobject = async (id, type) => {
   if (!id || !type) {
-    return { message: "Please Fill all the feilds" };
+    return console.log({ message: "not data" });
   }
   if (type === "reunion") {
     Reunion.findOne({ _id: id }, { archive: false })

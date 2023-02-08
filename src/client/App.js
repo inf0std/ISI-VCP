@@ -66,7 +66,7 @@ function App() {
           }
         />
         <Route
-          path="/profile/:id"
+          path="/profile"
           generalHandler={generalHandler}
           element={
             <Profile generalHandler={generalHandler} localVars={localVars} />

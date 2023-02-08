@@ -3,6 +3,8 @@ const bcrypt = require("bcrypt");
 
 const { User } = require("../schema/User");
 const Conversation = require("../schema/Conversation");
+const { Conference } = require("../schema/Conference");
+const { Reunion } = require("../schema/Reunion");
 
 //ajouter l'id de la conversation a la liste des converstions des utilisateurs
 const addConversationToUsers = (convId, usersId) => {
@@ -319,6 +321,7 @@ const addToGroup = async (IdC, IdU) => {
     return added;
   }
 };
+
 module.exports = {
   createGrpConversation,
   readNthTeenMessages,

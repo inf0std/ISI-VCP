@@ -33,9 +33,9 @@ module.exports = {
   connectDb,
 };
 
-/* // Use parsing middleware
+// Use parsing middleware
 app.use(
-  cors({
+  Cors({
     origin: "*",
   })
 );
@@ -47,24 +47,22 @@ app.use(
     saveUninitialized: true,
   })
 );
+
+app.use(express.json());
+app.use(express.urlencoded());
 //exemple de session
 app.get("/", (req, res) => {
   req.session.id = 1;
   res.send("hello");
 });
- */
+
 let port = 8080;
 http.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
-/* 
-app.use(cookieparser());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
 // Import the routes
 const userRoutes = require("./apis/router");
 // Using routes
-app.use("/api", userRoutes); */
+app.use("/api", userRoutes);
 
 module.exports = app;

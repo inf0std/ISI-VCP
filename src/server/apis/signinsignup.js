@@ -34,7 +34,7 @@ const allUsers = asyncHandler(async (req, res) => {
 
 //email
 var transporter = nodemailer.createTransport({
-  service: "gmail",
+  service: "Gmail",
   auth: {
     user: "seen.project.cpi@gmail.com",
     pass: "imycppaougenucwm",
@@ -47,20 +47,20 @@ var transporter = nodemailer.createTransport({
 //const sendEmail = (targetEmail, header, body);
 const registerUser = asyncHandler(async (req, res) => {
   const { email, password, password2, username, phone } = req.body;
-  /* 
+
   console.log(req.body);
   console.log(
     "email",
     email,
     "password",
     password,
-    "password1",
+    "password2",
     password2,
     "username",
     username,
     "phone",
     phone
-  ); */
+  );
   if (
     !validateEmail(email) ||
     !validatePassword(password, password2) ||
@@ -111,12 +111,12 @@ const registerUser = asyncHandler(async (req, res) => {
 
       //send email verification
       var mailOptions = {
-        from: "ff_ahcene@esi.dz",
+        from: "seen.project.cpi@gmail.com",
         to: user.login.email,
         subject: `${user.username}  verify your email`,
         html: `<h2> ${user.username}! WELCOME TO THE SEEN FAMILY </h2>
         <h4>Please verify your email by clicking on the link bellow to continue... </h4><p><br/>
-        <a href = "http://127.0.0.1:8080/api/router/ver?email =${user.login.email}&token=${user.emailtoken}">
+        <a href = "http://127.0.0.1:8080/api/ver/email =${user.login.email}/token=${user.emailtoken}">
         verify your email
         </a> <br>this link will only remain available for the next 24 hours</p>`,
       };

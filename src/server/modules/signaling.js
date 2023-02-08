@@ -17,14 +17,15 @@ module.exports = (server) => {
 
   //event handlers
   io.on("connection", (socket) => {
-    console.log(`user connected with socket ${socket.id}`);
+    console.log(`socket ${socket.id}`);
     //ajouter la socket au groupe de socket de l'utilisateur
     socket.on("user-room", ({ userId }) => {
+      console.log(`user ${userId} joined`);
       socket.join(`user-${userId}`);
       socket.uid = userId;
     });
 
-    socket.to(`user-${socket.uid.emit}`);
+    //socket.to(`user-${socket.uid}`);
 
     //gestion d'evenement des room video
     socket.on("video-room", ({ rid }) => {
@@ -37,22 +38,16 @@ module.exports = (server) => {
       //console.log(`user ${socket.uid} attempts to join room ${rid}`);
 
       let res = VManager.joinRoomIfAuthorised(rid, socket.uid, socket.id);
-      //console.log("join result", res);
       if (res.joined) {
-        //ajouter utilisateur a la room
         socket.join(`video-${rid}`);
         socket.vrid = rid;
         socket.p = res.isPart;
         if (res.isPart) {
-          //ajouter utilisateur au cote participant
-          //console.log("broadcasting part joined");
           socket.join(`video-${rid}-part`);
           socket
             .to(`video-${rid}`)
             .emit("part-joined", { id: socket.uid, sid: socket.id });
-          //console.log(socket.rooms);
         } else {
-          //ajouter  utilisateur cote audience
           socket.join(`video-${rid}-aud`);
           socket
             .to(`video-${rid}-part`)

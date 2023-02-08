@@ -6,6 +6,7 @@ const config = {};
 export default class Room {
   constructor(s, id, rid, l_s, setstrm, strm) {
     this.isPart = null;
+    this.roomMeta = {};
     this.part = [];
     this.aud = [];
     this.s = s;
@@ -41,27 +42,23 @@ export default class Room {
         dur,
       }) => {
         if (joined) {
+          this.addBachParticipants(part);
+          this.addBatchAudience(aud);
+          this.isPart = isPart;
+          this.roomMeta = { prgAud, prgPart, start, dur, mod, type };
         }
       }
     );
   };
-
-  /* setHandleUserJoined = () => {
-    this.s.on("user-joined-video", (data) => {
-      console.log()
-      this.room.addJoinedUser(data);
-    });
-  }; */
-
   setHandlePartJoined = () => {
     this.s.on("part-joined", (part) => {
-      console.log("a participent joined");
+      console.log("a participent joined", part);
       this.addJoinedPart(part);
     });
   };
   setHandleAudJoined = () => {
     this.s.on("aud-joined", (aud) => {
-      console.log("an audience joined");
+      console.log("an audience joined", aud);
       this.addJoinedAud(aud);
     });
   };
@@ -73,6 +70,7 @@ export default class Room {
   };
   setHandleAnswer = () => {
     this.s.on("answer", ({ id, answer }) => {
+      console.log("answer");
       this.handleAnswer(answer, id);
     });
   };
@@ -173,6 +171,7 @@ export default class Room {
   };
 
   findMember = (id) => {
+    console.log(this.part);
     let i = this.part.findIndex((p) => p.id == id);
     if (i >= 0) return [true, i];
     return [false, this.aud.findIndex((a) => a.id == id)];

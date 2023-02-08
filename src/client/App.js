@@ -40,7 +40,6 @@ function App() {
   };
   return (
     <BrowserRouter>
-      {console.log("APP", user)}
       <Routes>
         <Route
           path="/"

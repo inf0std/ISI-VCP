@@ -1,71 +1,120 @@
-//keep trace of opened videorooms
-let rooms = [
-  { id: 1, members: [], open: true, programmedMembers: [], type: "call" },
-  { id: 2, members: [], open: false, programmedMembers: [1, 3], type: "call" },
-  { id: 3, members: [], open: true, programmedMembers: [], type: "conference" },
-  { id: 4, members: [], open: true, programmedMembers: [], type: "debate" },
-  {
-    id: 5,
-    members: [],
-    open: false,
-    programmedMembers: [2, 3],
-    type: "reunion",
-  },
-  {
-    id: 6,
-    members: [],
-    open: false,
-    programmedMembers: [1, 2, 3],
-    type: "call",
-  },
-];
-
-//unconditional join
-const join = (room, userId, socketId) => {
-  //check if user already joined this videoroom
-  console.log("room", room);
-  user = room.members.find((member) => member.id == userId);
-  if (user) return { joined: false, alreadyJoined: true };
-  if (isParticipant(userId, room))
-    room.members.push({ id: userId, socketId: socketId });
-  return {
-    joined: true,
-    members: room.members,
-    open: room.open,
-    type: room.type,
-    participant: isParticipant(userId, room),
-    programmedMembers: room.programmedMembers,
-  };
-};
-
-const isParticipant = (userId, room) => {
-  if (room.open && (room.type === "call" || room.type === "reunion"))
-    return true;
-  if (room.type === "debate" || room.type === "conference")
-    return room.programmedMembers.findIndex((u) => u.id == userId) >= 0;
-  if (room.type === "call" || room.type === "reunion")
-    return room.programmedMembers.findIndex((u) => u.id == userId) >= 0;
-  return false;
-};
-//create a new room
-const Room = (roomId) => {};
-
-//join with verification
-const joinRoomIfAuthorised = (userId, socketId, roomId) => {
-  room = findRoom(roomId);
-  if (!room) return { joined: false, notExists: true };
-  if (room.open) {
-    return join(room, userId, socketId);
-  } else if (room.programmedMembers.indexOf(userId) >= 0) {
-    return join(room, userId, socketId);
+class VideoRoomManager {
+  constructor() {
+    this.rooms = [];
   }
-};
 
-//quitter la videoroom
-const leaveRoom = (userId, roomId) => {};
+  addRoom = (roomId, type, isOpen, prgAud, prgPart, mod, start, dur) => {
+    if (!this.findRoom(roomId))
+      this.rooms.push({
+        id: roomId,
+        type: type,
+        isOpen: isOpen,
+        aud: [],
+        part: [],
+        prgAud: prgAud,
+        prgPart: prgPart,
+        mod: mod,
+        start: start,
+        dur: dur,
+      });
+    else console.log(`Room with ID ${roomId} already exists`);
+  };
 
-//rechercher la videoroom
-const findRoom = (roomId) => {
-  return rooms.find((room) => room.id == roomId);
-};
-module.exports = { joinRoomIfAuthorised };
+  joinRoomIfAuthorised = (roomId, userId, socketId) => {
+    let room = this.findRoom(roomId);
+    if (this.isAlreadyJoined(roomId, userId))
+      return { joined: false, isjoined: true };
+    if (room) {
+      if (this.isAuthorised(roomId, userId)) {
+        if (this.isParticipant(roomId, userId)) {
+          return this.participate(room, userId, socketId);
+        }
+        return this.watch(room, userId, socketId);
+      }
+    }
+  };
+
+  loadRoom = (roomId, userId) => {};
+
+  leaveRoom = (roomId, userId, p) => {
+    let room = this.findRoom(roomId);
+    let uIndex;
+    if (p) {
+      uIndex = room.part.indexOf(userId);
+      if (uIndex >= 0) {
+        room.part.splice(uIndex, 1);
+        return true;
+      }
+      return false;
+    } else {
+      uIndex = room.aud.indexOf(userId);
+      if (uIndex >= 0) {
+        room.aud.splice(uIndex, 1);
+        return true;
+      }
+      return false;
+    }
+  };
+
+  participate = (room, userId, socketId) => {
+    room.part.push({ id: userId, sid: socketId });
+    return {
+      joined: true,
+      part: room.part,
+      prgPart: room.prgPart,
+      aud: room.aud,
+      isPart: true,
+      type: room.type,
+      mod: room.mod,
+      start: room.start,
+      dur: room.dur,
+    };
+  };
+
+  watch = (room, userId, socketId) => {
+    room.aud.push({ id: userId, sid: socketId });
+    return {
+      joined: true,
+      part: room.part,
+      prgPart: room.prgPart,
+      aud: [],
+      isPart: false,
+      type: room.type,
+      mod: room.mod,
+      start: room.start,
+      dur: room.dur,
+    };
+  };
+
+  isAuthorised = (roomId, userId) => {
+    let room = this.findRoom(roomId);
+    if (room.isOpen) return true;
+    if (room.prgAud.findIndex((id) => id == userId) >= 0) return true;
+    if (room.prgPart.indexOf((id) => id == userId) >= 0) return true;
+    return false;
+  };
+
+  isAlreadyJoined = (roomId, userId) => {
+    let room = this.findRoom(roomId);
+    if (room) {
+      if (room.part.findIndex((p) => p.id == userId) >= 0) return true;
+      return room.aud.findIndex((a) => a.id == userId) >= 0;
+    }
+    return false;
+  };
+
+  isAudience = (roomId, userId) => {
+    let room = this.findRoom(roomId);
+    return room.prgAud.indexOf(userId) >= 0;
+  };
+
+  isParticipant = (roomId, userId) => {
+    let room = this.findRoom(roomId);
+    return room.isOpen || room.prgPart.indexOf(userId) >= 0;
+  };
+
+  findRoom = (roomId) => {
+    return this.rooms.find((room) => room.id == roomId);
+  };
+}
+module.exports = new VideoRoomManager();

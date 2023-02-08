@@ -1,28 +1,15 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
-import io from "socket.io-client";
 import Navbar from "./VideoRoom/components/navbar/Navbar";
 import "./videoroom.css";
-import {
-  addUser,
-  addUserBatch,
-  setupUserId,
-  setupSocket,
-  setupLocalStream,
-  setupStreams,
-  handleAnswer,
-  handleIce,
-  handleOffer,
-  handleLeaveEvent,
-} from "../peerConSetup";
 
 import Room from "../Room";
 import Video from "./Video";
 
 export default function VideoRoum({ generalHandler, localVars }) {
   const { roomid, userid } = useParams();
-
-  console.log(props);
+  localVars.socket.emit("user-room", { userId: userid });
+  //console.log(props);
   //rtcPeerConnecion establishement
   const constraints = (window.constraints = {
     audio: false,
@@ -43,7 +30,7 @@ export default function VideoRoum({ generalHandler, localVars }) {
       .then((stream) => {
         //setupLocalStream(stream);
         setLocalStream(stream);
-        //localVideo.current.srcObject = stream;
+        //setStreams([stream, stream, stream, stream]);
       })
       .catch((err) => {
         console.log(err);
@@ -59,8 +46,8 @@ export default function VideoRoum({ generalHandler, localVars }) {
     );
     room.connect();
     setNbr_Partipents(streams.length);
-    setStreams([localStream, localStream, localStream, localStream]);
-  }, [Nbr_Partipents]);
+    //setStreams([localStream, localStream, localStream, localStream]);
+  }, []);
   //localVideo.current.srcObject = localStream;
   return (
     <div className="container1 bg-secondary" style={{ height: "650px" }}>
@@ -69,9 +56,9 @@ export default function VideoRoum({ generalHandler, localVars }) {
         className="container-sm flex flex-col bg-black"
         style={{ width: "830px" }}
       >
-        <Video stream={localStream} Nbr_Partipents={Nbr_Partipents}></Video>
+        <Video stream={localStream} Nbr_Partipents={streams.length}></Video>
         {streams.map((s, index) => {
-          console.log("stream", s);
+          //console.log("stream", s);
           return (
             <Video
               key={index}

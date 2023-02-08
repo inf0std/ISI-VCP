@@ -1,23 +1,43 @@
-import { useState, useEffect } from "react";
-// import NavBar from '../component/navbar/NavBar'
-import Conversations from "../component/conversations/conversations";
-import ConversationTab from "../component/conversationTab/conversationTab";
+import React, { useEffect, useRef, useState } from "react";
 
-import ChatHeader from "./Chat/ChatHeader";
-import ChatZone from "./Chat/ChatZone";
-import ChatList from "./Chat/ChatList";
-const Chat = ({ generalHandler, localVars }) => {
-  const [activeConv, setActiveConv] = useState(0);
-  const [msgs, setMsgs] = useState([]);
-  useEffect(() => {});
-  const sendMessage = () => {};
+const ChatUI = ({generalHandler, localVars}) => {
+  const msgRef = useRef()
+  const [messages, setMessages] = useState([]);
+  const [convId, setConvId] = useState(1)
+
+  useEffect(()=>{
+    localVars.socket.emit('user-room', {userId: 1})
+    localVars.socket.on('msg', ({cid, message})=>{
+      setMessages([...messages, message])
+    })
+  })
+  const handleSubmit = event => {
+    event.preventDefault();
+    localVars.socket.emit('msg', {cid: 1,
+      message:{
+        content: msgRef.current.value,
+         uid: localVars.user.id
+        }
+      })
+    msgRef.current.value=''
+  };
+
   return (
-<div>
-      <ChatHeader />
-      <ChatList />
-      <ChatZone />
-</div>
+    <div>
+      <ul>
+        {messages.map((m, index) => (
+          <li key={index}>{m.uid +' '+m.content}</li>
+        ))}
+      </ul>
+      <form onSubmit={handleSubmit}>
+        <input
+          ref={msgRef}
+          type="text"
+        />
+        <button type="submit" onClick={handleSubmit}>Send</button>
+      </form>
+    </div>
   );
 };
 
-export default Chat;
+export default ChatUI;

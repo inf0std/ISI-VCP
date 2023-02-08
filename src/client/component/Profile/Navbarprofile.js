@@ -72,8 +72,8 @@ const Navbarprofile = (props) => {
             
             Rechercher
           </button>
-          {/*<ImSearch style={{width:'25px', height:"25px",margin:"5px"}}/>    Icone de recherche 
-          pour la serachbar*/}
+          {/*<ImSearch style={{width:'25px', height:"25px",margin:"5px"}}/>    Icône de recherche 
+          pour la searchbar*/}
         </form>
         <ul style={{marginRight:"30px"}} className="navbar-nav ms-auto mb-2 mb-lg-0">
             
@@ -135,7 +135,7 @@ const Navbarprofile = (props) => {
               >
               <GoSignOut id="it" style={{width:'25px', height:"25px",margin:"5px"}}/>
               </Link>
-             {/* {!props.userName ? "Se deconnecter" : "Se connecter"}*/}
+             {/* {!props.userName ? "Se déconnecter" : "Se connecter"}*/}
 
             
             </li>

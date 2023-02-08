@@ -30,11 +30,11 @@ export default function Navbar() {
             <span>Audio</span>
             </div><div className='item' >
             <span className='icon'><TbScreenShare size=" 23px"  /></span>
-            <span>Share-Screen</span>
+            <span>Partage d'écran</span>
             </div>
             <div className='item' >
             <span className='icon'><BsChatLeftText  size=" 21.5px" /></span>
-            <span>Chat</span>
+            <span>Discuter</span>
             </div>
  
         </div>

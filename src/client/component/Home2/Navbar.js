@@ -155,7 +155,7 @@ const Navbar = (props) => {
                     onClick={logout}
                     id="login-btn"
                   >
-                    Se deconecter
+                    Se déconecter
                   </button>
                   <img
                     src={`http://127.0.0.1:8080/profile/${props.localVars.user.id}.jpg`}

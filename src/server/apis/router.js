@@ -86,7 +86,7 @@ router.get("/logout", destroysession);
 
 //signUp
 router.post("/signup", registerUser);
-router.get("/ver", handlevalidateemail);
+router.get("/ver/:email/:token", handlevalidateemail);
 router.get("/user/:id/contacts", handleUserContacts);
 
 router.get("/user/:id/conferences", handleuserconference);

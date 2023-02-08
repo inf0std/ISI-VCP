@@ -158,7 +158,7 @@ function Footer1() {
                   </li>
                   <li>
                     <a href="#">
-                      <i className="bx bxl-twitter"></i> Twiter
+                      <i className="bx bxl-twitter"></i> Twitter
                     </a>
                   </li>
                   <li>
@@ -199,12 +199,12 @@ function Footer1() {
                     <li>
                       <a href="#">
                         {" "}
-                        <i className="bx bxl-mongodb"></i> Mongo Db
+                        <i className="bx bxl-mongodb"></i> MongoDb
                       </a>
                     </li>
                     <li>
                       <a href="#">
-                        <SiWebrtc /> Web Rtc
+                        <SiWebrtc /> WebRtc
                       </a>
                     </li>
                   </ul>

@@ -39,12 +39,12 @@ export default function Messagerie() {
                       <div className="pt-1">
                         <p className="fw-bold mb-0">John Doe</p>
                         <p className="small text-muted">
-                          Hello, Are you there?
+                          Bonjour, êtes-vous là ?
                         </p>
                       </div>
                     </div>
                     <div className="pt-1">
-                      <p className="small text-muted mb-1">Just now</p>
+                      <p className="small text-muted mb-1">à l'instant</p>
                       <span className="badge bg-danger float-end">1</span>
                     </div>
                   </a>
@@ -61,12 +61,12 @@ export default function Messagerie() {
                       <div className="pt-1">
                         <p className="fw-bold mb-0">Danny Smith</p>
                         <p className="small text-muted">
-                          Lorem ipsum dolor sit.
+                          Bonjour.
                         </p>
                       </div>
                     </div>
                     <div className="pt-1">
-                      <p className="small text-muted mb-1">5 mins ago</p>
+                      <p className="small text-muted mb-1">Il y a 5 minutes</p>
                     </div>
                   </a>
                 </li>
@@ -82,12 +82,12 @@ export default function Messagerie() {
                       <div className="pt-1">
                         <p className="fw-bold mb-0">Alex Steward</p>
                         <p className="small text-muted">
-                          Lorem ipsum dolor sit.
+                          Seriez-vous disponible demain ?.
                         </p>
                       </div>
                     </div>
                     <div className="pt-1">
-                      <p className="small text-muted mb-1">Yesterday</p>
+                      <p className="small text-muted mb-1">Hier</p>
                     </div>
                   </a>
                 </li>
@@ -103,12 +103,12 @@ export default function Messagerie() {
                       <div className="pt-1">
                         <p className="fw-bold mb-0">Ashley Olsen</p>
                         <p className="small text-muted">
-                          Lorem ipsum dolor sit.
+                          Je peux pas.
                         </p>
                       </div>
                     </div>
                     <div className="pt-1">
-                      <p className="small text-muted mb-1">Yesterday</p>
+                      <p className="small text-muted mb-1">Hier</p>
                     </div>
                   </a>
                 </li>
@@ -124,12 +124,12 @@ export default function Messagerie() {
                       <div className="pt-1">
                         <p className="fw-bold mb-0">Kate Moss</p>
                         <p className="small text-muted">
-                          Lorem ipsum dolor sit.
+                          Merci.
                         </p>
                       </div>
                     </div>
                     <div className="pt-1">
-                      <p className="small text-muted mb-1">Yesterday</p>
+                      <p className="small text-muted mb-1">Hier</p>
                     </div>
                   </a>
                 </li>
@@ -145,12 +145,12 @@ export default function Messagerie() {
                       <div className="pt-1">
                         <p className="fw-bold mb-0">Lara Croft</p>
                         <p className="small text-muted">
-                          Lorem ipsum dolor sit.
+                          pas de soucis.
                         </p>
                       </div>
                     </div>
                     <div className="pt-1">
-                      <p className="small text-muted mb-1">Yesterday</p>
+                      <p className="small text-muted mb-1">Hier</p>
                     </div>
                   </a>
                 </li>
@@ -166,12 +166,12 @@ export default function Messagerie() {
                       <div className="pt-1">
                         <p className="fw-bold mb-0">Brad Pitt</p>
                         <p className="small text-muted">
-                          Lorem ipsum dolor sit.
+                          se revoir.
                         </p>
                       </div>
                     </div>
                     <div className="pt-1">
-                      <p className="small text-muted mb-1">5 mins ago</p>
+                      <p className="small text-muted mb-1">Il y a 5 minutes</p>
                       <span className="text-muted float-end">
                         <MDBIcon fas icon="check" />
                       </span>
@@ -196,14 +196,12 @@ export default function Messagerie() {
                 <MDBCardHeader className="d-flex justify-content-between p-3">
                   <p className="fw-bold mb-0">Brad Pitt</p>
                   <p className="text-muted small mb-0">
-                    <MDBIcon far icon="clock" /> 12 mins ago
+                    <MDBIcon far icon="clock" /> Il y a 12 minutes
                   </p>
                 </MDBCardHeader>
                 <MDBCardBody>
                   <p className="mb-0">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua.
+                    Comment se passe ta semaine ?.
                   </p>
                 </MDBCardBody>
               </MDBCard>
@@ -213,11 +211,11 @@ export default function Messagerie() {
                 <MDBCardHeader className="d-flex justify-content-between p-3">
                   <p class="fw-bold mb-0">Lara Croft</p>
                   <p class="text-muted small mb-0">
-                    <MDBIcon far icon="clock" /> 13 mins ago
+                    <MDBIcon far icon="clock" /> Il y a 13 minutes
                   </p>
                 </MDBCardHeader>
                 <MDBCardBody>
-                  <p className="mb-0">dfghjkl</p>
+                  <p className="mb-0">Non</p>
                 </MDBCardBody>
               </MDBCard>
               <img
@@ -238,11 +236,11 @@ export default function Messagerie() {
                 <MDBCardHeader className="d-flex justify-content-between p-3">
                   <p className="fw-bold mb-0">Brad Pitt</p>
                   <p className="text-muted small mb-0">
-                    <MDBIcon far icon="clock" /> 10 mins ago
+                    <MDBIcon far icon="clock" /> Il ya 12 minutes
                   </p>
                 </MDBCardHeader>
                 <MDBCardBody>
-                  <p className="mb-0">dfghjkl</p>
+                  <p className="mb-0">D'accord</p>
                 </MDBCardBody>
               </MDBCard>
             </li>
@@ -250,7 +248,7 @@ export default function Messagerie() {
               <MDBTextArea label="Message" id="textAreaExample" rows={4} />
             </li>
             <MDBBtn color="info" rounded className="float-end">
-              Send
+              Envoyer
             </MDBBtn>
           </MDBTypography>
         </MDBCol>

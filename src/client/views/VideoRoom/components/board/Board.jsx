@@ -78,7 +78,7 @@ export default class Board extends React.Component {
     <div className='sketch' id='sketch'>
         <canvas className='board' id='board'>
             
-                hello
+                Bonjour
             
         </canvas>
     </div>

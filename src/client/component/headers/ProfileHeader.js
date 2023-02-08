@@ -12,12 +12,12 @@ function ProfileHeaders() {
               alt="..."
             />
             <div className="col-lg-6 col-md-8 mx-auto">
-              <h1 className="fw-black">SEEN Comunity</h1>
+            <br/> <h1 className="fw-black">
+                SEEN Community</h1>
+              <br/>
               <p className="lead text-black">
-                outil de visioconférences, offre des activités en lignes, permet
-                d'organiser des réunions, créer des salles de conférences et
-                débats, discuter par messages grâce a une messagerie
-                instantanées
+              Notre outil de visioconférence offre une expérience de réunion en ligne complète et facile à utiliser. Il permet de mener des réunions en temps réel, de créer des salles de conférences virtuelles pour des débats en groupe,
+              et d'échanger des messages instantanément grâce à une messagerie intégrée. Avec notre plateforme, vous pouvez organiser des réunions à distance de manière efficace et collaborative, sans avoir à vous déplacer. Rejoignez dès maintenant une nouvelle ère de la collaboration en ligne!
               </p>
             </div>
           </div>
@@ -54,12 +54,9 @@ function ProfileHeaders() {
                     alt="..."
                   />
                   <div className="card-body">
-                    <h5 className="card-title">seen chat </h5>
+                    <h5 className="card-title">SEEN Chat </h5>
                     <p className="card-text">
-                      Vous pouvez envoyer un message privé à un utilisateur seul
-                      ou à un groupe entier. En tant qu'hôte, vous pouvez
-                      choisir avec qui les participants peuvent discuter ou
-                      encore désactiver complètement le chat.
+                    Communiquez en toute confidentialité avec notre chat SEEN. Avec notre fonctionnalité de messagerie privée, vous pouvez envoyer des messages à un seul utilisateur ou à un groupe entier. En tant qu'hôte, vous avez le pouvoir de contrôler la conversation en choisissant avec qui les participants peuvent discuter ou en désactivant complètement le chat si nécessaire.
                     </p>
                   </div>
                 </div>
@@ -75,13 +72,9 @@ function ProfileHeaders() {
                     alt="..."
                   />
                   <div className="card-body">
-                    <h5 className="card-title">seen room </h5>
+                    <h5 className="card-title">SEEN Room </h5>
                     <p className="card-text">
-                      apportent la collaboration par la vidéo dans n’importe
-                      quel espace – dans le bureau, dans la salle de classe ou à
-                      la maison – et permet d’interagir en temps réel avec les
-                      personnes et les participants distantsoffre une expérience
-                      intégrée pour.
+                    Notre solution apporte la collaboration par la vidéo dans n'importe quel environnement, que ce soit dans le bureau, dans la salle de classe ou à la maison. Il permet d'interagir en temps réel avec les personnes à distance, offrant une expérience de collaboration intégrée et fluide.
                     </p>
                   </div>
                 </div>
@@ -98,8 +91,7 @@ function ProfileHeaders() {
                   <div className="card-body">
                     <h5 className="card-title">Programmer des réunions </h5>
                     <p className="card-text">
-                      vous pouvez programmer et animer une réunion ou conférence
-                      n’importe quel moment et n’importe où.
+                    Avec notre outil, vous pouvez planifier et animer une réunion ou une conférence en tout temps et en tout lieu. Il vous permet de rester connecté et productif, peu importe où vous êtes.
                     </p>
                   </div>
                 </div>
@@ -115,8 +107,7 @@ function ProfileHeaders() {
                   <h5 className="card-title">Débat et conférences</h5>
                   <p className="card-text">
                     {" "}
-                    un formidable moyen d’exposer ou d’échanger et de développer
-                    son sens critique, ou encore d’éveiller les consciences.
+                    Notre solution propose un moyen formidable d'exposer, d'échanger et de développer son sens critique. Elle peut également servir à éveiller les consciences. Les débats et les conférences en ligne sont un moyen efficace de rassembler les idées et de les faire progresser.
                   </p>
                 </div>
               </div>

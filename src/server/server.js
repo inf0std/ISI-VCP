@@ -1,11 +1,10 @@
-const { default: mongoose, connect } = require("mongoose");
+//const { default: mongoose, connect } = require("mongoose");
 
 const cookieparser = require("cookie-parser");
 const Cors = require("cors");
 const session = require("express-session");
 const express = require("express");
 const app = express();
-app.use(Cors());
 const http = require("http").createServer(app);
 /* const io = new require("socket.io")(http, {
   cors: {
@@ -14,16 +13,18 @@ const http = require("http").createServer(app);
   },
 }); */
 require("./modules/signaling")(http);
+
+app.use(Cors());
 /* io.on("connection", (socket) => {
   console.log(`socket of id ${socket.id} has comnected`);
 }); */
 // DB Connection
 require("dotenv").config();
 
-connectDb().catch((err) => console.log("db not connected"));
+//connectDb().catch((err) => console.log("db not connected"));
 
 //connectDb().catch(err =>console.log('db not connected'));
-
+/* 
 async function connectDb() {
   await mongoose.connect("mongodb://127.0.0.1:27017/seendb");
   console.log("db connect");
@@ -31,11 +32,11 @@ async function connectDb() {
 
 module.exports = {
   connectDb,
-};
+}; */
 
-/* // Use parsing middleware
+// Use parsing middleware
 app.use(
-  cors({
+  Cors({
     origin: "*",
   })
 );
@@ -47,24 +48,22 @@ app.use(
     saveUninitialized: true,
   })
 );
+
+app.use(express.json());
+app.use(express.urlencoded());
 //exemple de session
 app.get("/", (req, res) => {
   req.session.id = 1;
   res.send("hello");
 });
- */
+
 let port = 8080;
 http.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
-/* 
-app.use(cookieparser());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
 // Import the routes
 const userRoutes = require("./apis/router");
 // Using routes
-app.use("/api", userRoutes); */
+app.use("/api", userRoutes);
 
 module.exports = app;

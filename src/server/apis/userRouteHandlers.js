@@ -66,6 +66,7 @@ const handleUserConversations = async (req, res, next) => {
     });
   }
 };
+
 const handleUserContacts = async (req, res, next) => {
   const id = req.params.id;
   console.log(id);
@@ -306,20 +307,21 @@ const handleupdatemail = async function (req, res, next) {
 };
 
 const handlevalidateemail = function (req, res, next) {
-  const token = req.query.token;
-  const email = req.query.email;
+  const token = req.params.token;
+  const email = req.params.email;
   let decoded;
   try {
     decoded = jwt.verify(token, "byiuehgguihr398yhwubfwefj/fwijiohfwe");
-  } catch (err) {}
-  User.updateOne(
-    { emailtoken: token },
-    { emailtoken: null, isverified: true }
-  ).then((user) => {
-    return console.log({
-      message: `${user.modifiedCount} updated successfully!`,
+    User.updateOne(
+      { "login.email": email },
+      { emailtoken: null, isverified: true }
+    ).then((user) => {
+      return console.log({
+        message: `${user.modifiedCount} updated successfully!`,
+      });
     });
-  });
+  } catch (err) {}
+
   next();
 };
 

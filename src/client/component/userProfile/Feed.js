@@ -5,9 +5,9 @@ export default function Feed (){
         <div className='feed'>
             <div className='feed_container'>
                 <div className='feed_imput'>
-                    <i class="bi bi-plus-square-fill"></i>Start meeting
-                    <i class="bi bi-plus-square-fill"></i>Start debate
-                    <i class="bi bi-plus-square-fill"></i>Start conference
+                    <i class="bi bi-plus-square-fill"></i>Commencer la réunion
+                    <i class="bi bi-plus-square-fill"></i>Commencer le débat
+                    <i class="bi bi-plus-square-fill"></i>Commencer la conférence
                     
 
                 </div>

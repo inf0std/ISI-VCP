@@ -12,12 +12,13 @@ function Headers() {
               alt="..."
             />
             <div class="col-lg-6 col-md-8 mx-auto">
-              <h1 class="fw-black">SEEN Comunity</h1>
+              <h1 class="fw-black">SEEN Community</h1>
               <p class="lead text-black">
-                outil de visioconférences, offre des activités en lignes, permet
-                d'organiser des réunions, créer des salles de conférences et
-                débats, discuter par messages grâce a une messagerie
-                instantanées
+              Notre outil de visioconférence offre une expérience de réunion en ligne complète et facile à utiliser. 
+              Il permet de mener des réunions en temps réel, de créer des salles de conférences virtuelles pour des débats en groupe, 
+              et d'échanger des messages instantanément grâce à une messagerie intégrée. Avec notre plateforme, 
+              vous pouvez organiser des réunions à distance de manière efficace et collaborative, sans avoir à vous déplacer. 
+                           Rejoignez dès maintenant une nouvelle ère de la collaboration en ligne!
               </p>
             </div>
           </div>

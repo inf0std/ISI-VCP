@@ -51,7 +51,7 @@ const ProgrammerReunion = (props) => {
                     aria-controls="chrono-reunion-pane"
                     aria-selected="true"
                   >
-                    étape01
+                    Étape 01
                   </button>
                 </li>
                 <li class="nav-item" role="presentation">
@@ -65,7 +65,7 @@ const ProgrammerReunion = (props) => {
                     aria-controls="audience-reunion-pane"
                     aria-selected="false"
                   >
-                    étape02
+                    Étape 02
                   </button>
                 </li>
                 <li class="nav-item" role="presentation">
@@ -79,7 +79,7 @@ const ProgrammerReunion = (props) => {
                     aria-controls="confirme-reunion-pane"
                     aria-selected="false"
                   >
-                    étape03
+                    Étape 03
                   </button>
                 </li>
               </ul>
@@ -129,7 +129,7 @@ const ProgrammerReunion = (props) => {
                       <div className="Heur">
                         <div class="form-outline mb-2 " className="heure">
                           <label class="form-label" for="form1Example2">
-                            heure
+                            Heure
                           </label>
                           <input
                             ref={heure}
@@ -195,7 +195,7 @@ const ProgrammerReunion = (props) => {
                     <form>
                       <div class="d-flex" className="participant">
                         <label class="form-label" for="form6Example5">
-                          audience
+                          Audience
                         </label>
                         <input
                           class="form-control me-2"
@@ -204,7 +204,7 @@ const ProgrammerReunion = (props) => {
                           aria-label="Search"
                         />
                         <button class="btn btn-outline-info" type="submit">
-                          Search
+                          Rechercher
                         </button>
                       </div>
                       <div className="ajout1"></div>
@@ -218,7 +218,7 @@ const ProgrammerReunion = (props) => {
                           className="btn btn-secondary btn-floating mx-1"
                           data-bs-dismiss="modal"
                         >
-                          Précedent
+                          Précédent
                         </button>
 
                         <button type="submit" class="btn btn-primary btn-block">
@@ -249,7 +249,7 @@ const ProgrammerReunion = (props) => {
                           <span>Durée :</span>
                         </div>
                         <div>
-                          <span>audience :</span>
+                          <span>Audience :</span>
                         </div>
                       </div>
 
@@ -264,7 +264,7 @@ const ProgrammerReunion = (props) => {
                           className="btn btn-secondary btn-floating mx-1"
                           data-bs-dismiss="modal"
                         >
-                          Précedent
+                          Précédent
                         </button>
 
                         <button type="submit" class="btn btn-primary btn-block">

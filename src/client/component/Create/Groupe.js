@@ -14,7 +14,7 @@ function valider() {
 function NewGroupe() {
   return (
     <div className='Formulaire'>
-     <h1> Créer un nouveau  groupe de discussion </h1>
+     <h1> Créer un nouveau groupe de discussion </h1>
     <Form>
       <Form.Group className="mb-3" controlId="formBasictext">
         <Form.Label>Nom du groupe </Form.Label>

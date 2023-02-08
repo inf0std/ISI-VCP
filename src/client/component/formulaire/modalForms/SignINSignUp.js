@@ -9,7 +9,6 @@ import alert from "../../../utils/alertUtils";
 const SignInSignUp = (props) => {
   const signinEmail = useRef();
   const signinPassword = useRef();
-
   const signupUsername = useRef();
   const signupEmail = useRef();
   const signupPassword = useRef();
@@ -105,7 +104,7 @@ const SignInSignUp = (props) => {
           console.log(data);
           if (data._id)
             alert(
-              "SUCCES!! VEUILLEZ VERIFIER VOTRE BOITE EMAIL POUR VALIDER VOTRE COMPTE",
+              "SUCCESS!! Veuillez vérifier votre adresse email pour confirmer votre compte",
               "success"
             );
         })
@@ -115,7 +114,7 @@ const SignInSignUp = (props) => {
         }); //*/
     } else {
       alert(
-        "MAUVAIS FORMAT POUR L'EMAIL, LE MOT DE PASSE, LE TELEPHONE OU LE NOM D'UTILISATEUR",
+        "MAUVAIS FORMAT pour L'EMAIL, LE MOT DE PASSE, LE TELEPHONE OU LE NOM D'UTILISATEUR",
         "danger"
       );
     }
@@ -193,18 +192,20 @@ const SignInSignUp = (props) => {
                           type="email"
                           id="signin-email"
                           className="form-control"
+                          placeholder="Votre adresse e-mail"
                           ref={signinEmail}
                         />
                       </div>
 
                       <div className="form-outline mb-4">
                         <label className="form-label" htmlFor="signin-pwd">
-                          mot de passe
+                          Mot de passe
                         </label>
                         <input
                           ref={signinPassword}
                           type="password"
                           id="signin-pwd"
+                          placeholder="Votre Mot de passe"
                           className="form-control"
                         />
                       </div>
@@ -224,13 +225,13 @@ const SignInSignUp = (props) => {
                               htmlFor="remember"
                             >
                               {" "}
-                              Remember me{" "}
+                              Se souvenir de moi {" "}
                             </label>
                           </div>
                         </div>
 
                         <div className="col">
-                          <a href="#!">Forgot password?</a>
+                          <a href="#!">Mot de passe oublié ?</a>
                         </div>
                       </div>
 
@@ -240,7 +241,7 @@ const SignInSignUp = (props) => {
                           className="btn btn-secondary btn-floating mx-1"
                           data-bs-dismiss="modal"
                         >
-                          annuler
+                          Annuler
                         </button>
 
                         <button
@@ -248,7 +249,7 @@ const SignInSignUp = (props) => {
                           type="submit"
                           className="btn btn-primary btn-block"
                         >
-                          connexion
+                          Connecter
                         </button>
                       </div>
                     </form>
@@ -263,40 +264,43 @@ const SignInSignUp = (props) => {
                     <form>
                       <div className="form-outline mb-4">
                         <label className="form-label" htmlFor="form6Example5">
-                          username
+                          Nom d'utilisateur
                         </label>
                         <input
                           ref={signupUsername}
                           type="email"
                           id="form6Example5"
                           className="form-control"
-                          value="fay"
+                          /*value="fay"*/
+                          placeholder="Smith_25"
                           required
                         />
                       </div>
                       <div className="form-outline mb-4">
                         <label className="form-label" htmlFor="form6Example5">
-                          email
+                          Email
                         </label>
                         <input
                           ref={signupEmail}
                           type="email"
                           id="form6Example5"
                           className="form-control"
-                          value="ahcene@gmail.com"
+                          /*value="ahcene@gmail.com"*/
+                          placeholder="Votre adresse e-mail"
                           required
                         />
                       </div>
 
                       <div className="form-outline mb-4">
                         <label className="form-label" htmlFor="form6Example6">
-                          Phone
+                          Téléphone
                         </label>
                         <input
                           ref={signupPhone}
                           type="number"
                           id="form6Example6"
-                          value="0792420998"
+                          /*value="0792420998"*/
+                          placeholder="Votre numéro de téléphone"
                           className="form-control"
                         />
                       </div>
@@ -308,13 +312,14 @@ const SignInSignUp = (props) => {
                               className="form-label"
                               htmlFor="form6Example1"
                             >
-                              mot de passe
+                              Mot de passe
                             </label>
                             <input
                               ref={signupPassword}
                               type="password"
                               className="form-control"
-                              value="azerty12@@"
+                              /*value="azerty12@@"*/
+                              placeholder="Smith12@"
                               required
                             />
                           </div>
@@ -325,13 +330,14 @@ const SignInSignUp = (props) => {
                               className="form-label"
                               htmlFor="form6Example2"
                             >
-                              Confirmation
+                              Confirmer 
                             </label>
                             <input
                               ref={signupPassword2}
                               type="password"
                               className="form-control"
-                              value="azerty12@@"
+                              /*value="azerty12@@"*/
+                              placeholder="Smith12@"
                               required
                             />
                           </div>
@@ -343,7 +349,7 @@ const SignInSignUp = (props) => {
                           className="btn btn-secondary btn-floating mx-1"
                           data-bs-dismiss="modal"
                         >
-                          annuler
+                          Annuler
                         </button>
 
                         <button
@@ -351,7 +357,7 @@ const SignInSignUp = (props) => {
                           type="submit"
                           className="btn btn-primary btn-block"
                         >
-                          inscription
+                          S'inscrire
                         </button>
                       </div>
                     </form>

@@ -29,7 +29,7 @@ const ConversationTab = (props) => {
             className="btn btn-success btn-rounded col-1"
             onClick={sendMessage}
           >
-            send
+            Envoyer
           </button>
         </form>
       </div>

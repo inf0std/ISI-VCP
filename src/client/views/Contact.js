@@ -30,6 +30,7 @@ const Contact = (props) => {
                   class="form-control"
                   id="exampleFormControlTextarea1"
                   rows="4"
+                  placeholder="Message"
                 ></textarea>
                 <label for="floatingInput">Message</label>
               </div>

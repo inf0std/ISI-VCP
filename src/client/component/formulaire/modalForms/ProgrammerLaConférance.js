@@ -8,7 +8,7 @@ const ProgrammerLaConférance = (props) => {
                 data-bs-toggle="modal"
                 data-bs-target="#signup-signin"
             >
-                Programmer La Conférance
+                Programmer La Conférence
             </button>
 
             <div className="modal fade" id="signup-signin">
@@ -17,13 +17,13 @@ const ProgrammerLaConférance = (props) => {
                         <div className="modal-header">
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">étape01</button>
+                                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Étape 01</button>
                                 </li>
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">étape02</button>
+                                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Étape 02</button>
                                 </li>
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="reunio-tab" data-bs-toggle="tab" data-bs-target="#reunio-tab-pane" type="button" role="tab" aria-controls="reunio-tab-pane" aria-selected="false">étape03</button>
+                                    <button class="nav-link" id="reunio-tab" data-bs-toggle="tab" data-bs-target="#reunio-tab-pane" type="button" role="tab" aria-controls="reunio-tab-pane" aria-selected="false">Étape 03</button>
                                 </li>
 
                             </ul>
@@ -56,7 +56,7 @@ const ProgrammerLaConférance = (props) => {
                                             </div>
                                             <div className="Heur-">
                                                 <div class="form-outline mb-2 " className="heure-">
-                                                    <label class="form-label" for="form1Example2">heure</label>
+                                                    <label class="form-label" for="form1Example2">Heure</label>
                                                     <input type="time" id="form1Example2" class="form-control" />
 
                                                 </div>
@@ -94,7 +94,7 @@ const ProgrammerLaConférance = (props) => {
                                             <div class="d-flex" className="participant-" >
                                                 <label class="form-label" for="form6Example5">Participants</label>
                                                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                                                <button class="btn btn-outline-info" type="submit">Search</button>
+                                                <button class="btn btn-outline-info" type="submit">Rechercher</button>
                                             </div>
                                             <div className="ajout-">
 
@@ -107,7 +107,7 @@ const ProgrammerLaConférance = (props) => {
                                                     className="btn btn-secondary btn-floating mx-1"
                                                     data-bs-dismiss="modal"
                                                 >
-                                                    Précedent
+                                                    Précédent
                                                 </button>
 
                                                 <button type="submit" class="btn btn-primary btn-block">Suivant</button>
@@ -139,7 +139,7 @@ const ProgrammerLaConférance = (props) => {
                                                     className="btn btn-secondary btn-floating mx-1"
                                                     data-bs-dismiss="modal"
                                                 >
-                                                    Précedent
+                                                    Précédent
                                                 </button>
 
                                                 <button type="submit" class="btn btn-primary btn-block">Confirmer</button>

@@ -34,7 +34,7 @@ function NewOrganization() {
       </div>
 
       <div class="mb-3">
-         <label for="exampleFormControlInput1" class="form-label">Joindre un Fichier</label>
+         <label for="exampleFormControlInput1" class="form-label">Importer un Fichier</label>
          <input type="file" class="form-control" id="exampleFormControlInput1"   />
       </div>
 

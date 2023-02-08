@@ -270,6 +270,7 @@ const SignInSignUp = (props) => {
                           type="email"
                           id="form6Example5"
                           className="form-control"
+                          value="fay"
                           required
                         />
                       </div>
@@ -282,6 +283,7 @@ const SignInSignUp = (props) => {
                           type="email"
                           id="form6Example5"
                           className="form-control"
+                          value="ahcene@gmail.com"
                           required
                         />
                       </div>
@@ -294,6 +296,7 @@ const SignInSignUp = (props) => {
                           ref={signupPhone}
                           type="number"
                           id="form6Example6"
+                          value="0792420998"
                           className="form-control"
                         />
                       </div>
@@ -311,6 +314,7 @@ const SignInSignUp = (props) => {
                               ref={signupPassword}
                               type="password"
                               className="form-control"
+                              value="azerty12@@"
                               required
                             />
                           </div>
@@ -327,6 +331,7 @@ const SignInSignUp = (props) => {
                               ref={signupPassword2}
                               type="password"
                               className="form-control"
+                              value="azerty12@@"
                               required
                             />
                           </div>

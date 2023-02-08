@@ -322,41 +322,7 @@ const addToGroup = async (IdC, IdU) => {
   }
 };
 
-const readobject = async (id, type) => {
-  if (!id || !type) {
-    return console.log({ message: "not data" });
-  } else {
-    if (type === "reunion") {
-      Reunion.findOne({ _id: id }, { archive: false })
-        .exec()
-        .then((rs) => {
-          return rs;
-        })
-        .catch((err) => {
-          return {
-            message: "Error not find Reunion with id = " + id,
-          };
-        });
-    } else if (type === "conference") {
-      Conference.findOne({ _id: id }, { archive: false })
-        .exec()
-        .then((rs) => {
-          return rs;
-        })
-        .catch((err) => {
-          return {
-            message: "Error not find conference with id = " + id,
-          };
-        });
-    } else {
-      return {
-        message: "object not found ",
-      };
-    }
-  }
-};
 module.exports = {
-  readobject,
   createGrpConversation,
   readNthTeenMessages,
   addConversation,

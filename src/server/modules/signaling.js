@@ -44,6 +44,8 @@ module.exports = (server) => {
     });
   
 
+    socket.to(`user-${socket.uid.emit}`);
+
     //gestion d'evenement des room video
     socket.on("video-room", ({ rid }) => {
       if (socket.vrid)

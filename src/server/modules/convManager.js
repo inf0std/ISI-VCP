@@ -18,7 +18,8 @@ class ConvManager {
         let conv = this.findConv(convId);
         if(conv) conv.msgs.push(msg)
    }
-   findRoom = (convId) => {
+   findConv = (convId) => {
      return this.convs.find((conv) => conv.id == convId);
    };
 }
+module.exports = new ConvManager();

@@ -6,15 +6,19 @@ const ChatUI = ({generalHandler, localVars}) => {
   const [convId, setConvId] = useState(1)
 
   useEffect(()=>{
-    localVars.socket.on('msg', ({cid, content})=>{
-      setMessages([...messages, content])
+    localVars.socket.emit('user-room', {userId: 1})
+    localVars.socket.on('msg', ({cid, message})=>{
+      setMessages([...messages, message])
     })
   })
   const handleSubmit = event => {
     event.preventDefault();
-    setMessages([...messages, message]);
-    setMessage("");
-    localVars.socket.emit('msg', {cid: convId,content: msgRef.current.value})
+    localVars.socket.emit('msg', {cid: 1,
+      message:{
+        content: msgRef.current.value,
+         uid: localVars.user.id
+        }
+      })
     msgRef.current.value=''
   };
 
@@ -22,14 +26,13 @@ const ChatUI = ({generalHandler, localVars}) => {
     <div>
       <ul>
         {messages.map((m, index) => (
-          <li key={index}>{m}</li>
+          <li key={index}>{m.uid +' '+m.content}</li>
         ))}
       </ul>
       <form onSubmit={handleSubmit}>
         <input
           ref={msgRef}
           type="text"
-          onChange={e => setMessage(e.target.value)}
         />
         <button type="submit" onClick={handleSubmit}>Send</button>
       </form>

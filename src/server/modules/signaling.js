@@ -1,4 +1,7 @@
+const convManager = require("./convManager");
+convManager.addConv(1, "", null, [1,2,3], [])
 const VManager = require("./videoRoomManager");
+
 
 VManager.addRoom(1, "call", true, [], [], null, 0, 0);
 VManager.addRoom(2, "debate", true, [], [], null, 0, 0);
@@ -7,7 +10,7 @@ VManager.addRoom(4, "conference", true, [], [], null, 0, 0);
 VManager.addRoom(5, "call", false, [1, 4, 5], [], null, 0, 0);
 VManager.addRoom(6, "call", true, [], [], null, 0, 0);
 module.exports = (server) => {
-  //creation de serveur socketio
+  //creation de serveur socketioss
   const io = require("socket.io")(server, {
     cors: { origin: "http://localhost:3000", methods: ["GET"] },
   });
@@ -23,6 +26,23 @@ module.exports = (server) => {
       socket.join(`user-${userId}`);
       socket.uid = userId;
     });
+/* 
+    socket.on('join-conv', ({id})=>{
+      let conv = convManager.findConv(id);
+      if(conv){
+        socket.join
+      }
+    }) */
+
+    socket.on ('msg',({id, message})=>{
+      console.log(`Received message: ${message}`);
+      convManager.addMsg(id, message);
+      convManager.findConv(id).members.forEach(uid=>{
+        socket.to(`user-${uid}`).emit('msg', {id, message})
+      })
+      io.emit('new-message', message);
+    });
+  
 
     //gestion d'evenement des room video
     socket.on("video-room", ({ rid }) => {
@@ -106,5 +126,7 @@ module.exports = (server) => {
         s.vrid = null;
       }
     };
+
   });
+
 };

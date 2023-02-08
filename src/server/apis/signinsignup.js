@@ -104,6 +104,7 @@ const registerUser = asyncHandler(async (req, res) => {
         name: user.username,
         email: user.login.email,
         isAdmin: user.isAdmin,
+        phone: user.phone,
         pic: user.pic,
         emailtoken: user.emailtoken,
       });

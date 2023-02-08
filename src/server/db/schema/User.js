@@ -73,6 +73,7 @@ const userSchema = new mongoose.Schema(
     isadmin: { type: Boolean, default: false, required: true },
     isverified: { type: Boolean, default: false, required: true },
     emailtoken: { type: String, trim: true },
+    phone: { type: Number },
     contacts: [
       {
         type: mongoose.SchemaTypes.ObjectID,

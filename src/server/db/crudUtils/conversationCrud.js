@@ -3,6 +3,8 @@ const bcrypt = require("bcrypt");
 
 const { User } = require("../schema/User");
 const Conversation = require("../schema/Conversation");
+const { Conference } = require("../schema/Conference");
+const { Reunion } = require("../schema/Reunion");
 
 //ajouter l'id de la conversation a la liste des converstions des utilisateurs
 const addConversationToUsers = (convId, usersId) => {
@@ -319,7 +321,28 @@ const addToGroup = async (IdC, IdU) => {
     return added;
   }
 };
+
+const readobject = async (id, type) => {
+  if (!id || !type) {
+    return { message: "Please Fill all the feilds" };
+  }
+  if (type === "reunion") {
+    Reunion.findOne({ _id: id }, { archive: false })
+      .exec()
+      .then((rs) => {
+        return rs;
+      });
+  }
+  if (type === "conference") {
+    Conference.findOne({ _id: id }, { archive: false })
+      .exec()
+      .then((rs) => {
+        return rs;
+      });
+  }
+};
 module.exports = {
+  readobject,
   createGrpConversation,
   readNthTeenMessages,
   addConversation,

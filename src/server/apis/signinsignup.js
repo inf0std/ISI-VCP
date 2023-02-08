@@ -10,6 +10,7 @@ const nodemailer = require("nodemailer");
 const crypto = require("crypto");
 const { count } = require("console");
 const asyncHandler = require("express-async-handler");
+
 const {
   validateEmail,
   validatePassword,
@@ -76,52 +77,61 @@ const registerUser = asyncHandler(async (req, res) => {
   if (userExists) {
     res.status(400);
     throw new Error("User already exists");
-  }
+  } else {
+    const user = await User.create({
+      login: {
+        email,
+        password,
+      },
+      username: username,
+      phone: phone,
 
-  const user = await User.create({
-    login: {
-      email,
-      password,
-    },
-    username: username,
-
-    isadmin: false,
-    isverified: false,
-    emailtoken: crypto.randomBytes(64).toString("hex"),
-  });
-
-  if (user) {
-    res.status(201).json({
-      _id: user._id,
-      name: user.username,
-      email: user.login.email,
-      isAdmin: user.isAdmin,
-      pic: user.pic,
-      token: user.emailtoken,
+      isadmin: false,
+      isverified: false,
+      emailtoken: jwt.sign(
+        {
+          nonce: crypto.randomBytes(64).toString("hex"),
+          email: email,
+          exp: Date.now() + 24 * 60 * 60 * 1000,
+        },
+        "byiuehgguihr398yhwubfwefj/fwijiohfwe"
+      ),
     });
 
-    //send email verification
-    var mailOptions = {
-      from: "ff_ahcene@esi.dz",
-      to: user.login.email,
-      subject: `${user.username}  verify your email`,
-      html: `<h2> ${user.username}! WELCOME TO THE SEEN FAMILY </h2>
+    if (user) {
+      res.status(201).json({
+        _id: user._id,
+        name: user.username,
+        email: user.login.email,
+        isAdmin: user.isAdmin,
+        pic: user.pic,
+        emailtoken: user.emailtoken,
+      });
+
+      //send email verification
+      var mailOptions = {
+        from: "ff_ahcene@esi.dz",
+        to: user.login.email,
+        subject: `${user.username}  verify your email`,
+        html: `<h2> ${user.username}! WELCOME TO THE SEEN FAMILY </h2>
         <h4>Please verify your email by clicking on the link bellow to continue... </h4><p><br/>
         <a href = "http://127.0.0.1:8080/api/router/ver?email =${user.login.email}&token=${user.emailtoken}">
         verify your email
         </a> <br>this link will only remain available for the next 24 hours</p>`,
-    };
-    //send email
-    transporter.sendMail(mailOptions, function (error, info) {
-      if (error) {
-        console.log(error);
-      } else {
-        console.log("verification email is sent to your gmail account");
-      }
-    });
-  } else {
-    res.status(400);
-    throw new Error("User not found");
+      };
+      //send email
+      transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log("verification email is sent to your gmail account");
+        }
+      });
+    } else {
+      res.status(400);
+      throw new Error("User not found");
+    }
   }
 });
+
 module.exports = { registerUser, allUsers };

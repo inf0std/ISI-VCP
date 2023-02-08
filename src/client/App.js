@@ -18,7 +18,7 @@ function App() {
   
   const [convs, setConvs] = useState([]);
   const [user, setUser] = useState({ id: null, name: null });
-  const socket = useRef(s);
+  const socket = useRef();
 
   useEffect(() => {
     if (user.id) {
@@ -70,7 +70,7 @@ function App() {
             <VideoRoom generalHandler={generalHandler} localVars={localVars} />
           }
         />
-        <Route path="/room/:roomid"element={<Room />}/>
+        <Route path="/createroom/room/:roomid"element={<Room />}/>
         
         <Route path="/createroom"element={<CreateRoom/>}/>
         <Route

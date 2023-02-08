@@ -15,8 +15,6 @@ export function ContextProvider ({children}){
     const roomID = useParams();
     const nbrPart= useRef(0)
     const [screenShId, setScreenShId] = useState()
-    const [me, setMe]= useState()
-    const senders = useRef([])
     const oldtrack = useRef(null)
 
     useEffect(()=>{

@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
 // import NavBar from '../component/navbar/NavBar'
-import Conversations from "../component/conversations/conversations";
-import ConversationTab from "../component/conversationTab/conversationTab";
 
 import ChatHeader from "./Chat/ChatHeader";
 import ChatZone from "./Chat/ChatZone";

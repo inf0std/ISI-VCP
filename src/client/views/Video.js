@@ -21,14 +21,14 @@ const Video = ({ stream , Nbr_Partipents}) => {
     videoRef.current.srcObject = stream;
   }, [Nbr_Partipents,stream]);
 
-  return <video className={classNames(
+  return <video className={`'rounded-3', ${classNames(
     {'video1':Nbr_Partipents+1 ===1,
       'video2':Nbr_Partipents+1 === 2,
       'video3_4':Nbr_Partipents+1 >=3,
       'video5_6':Nbr_Partipents+1 >=5,
       'video4_9':Nbr_Partipents+1 >=7,
       'video10_12':Nbr_Partipents+1 >=10,
-      'video13_20':Nbr_Partipents+1 >=12,})}
+      'video13_20':Nbr_Partipents+1 >=12,})}`}
    ref={videoRef} autoPlay></video>;
 };
 

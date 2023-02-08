@@ -65,7 +65,7 @@ export default function VideoRoum(props) {
     s.emit("video-room", { roomId: roomid, userId: userid });
     setupUserId(userid);
     setNbr_Partipents(streams.length)
-    setStreams([localStream,localStream,localStream,localStream])
+    setStreams([localStream,localStream,localStream])
   }, [Nbr_Partipents]);
   //localVideo.current.srcObject = localStream;
   return (

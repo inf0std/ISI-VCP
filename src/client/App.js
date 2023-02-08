@@ -9,10 +9,13 @@ import Profile from "./component/Profile/Profile";
 import ProgrammerReunion from "./component/formulaire/modalForms/ProgramerLaReunion";
 import { getConversations } from "./utils/fetchUtils";
 import "bootstrap/dist/css/bootstrap.min.css";
+import CreateRoom from './views/videoR/routes/CreateRoom'
+import Room from './views/videoR/routes/Room'
 
-let s = io.connect("http://localhost:8080");
+//let s = io.connect("http://localhost:8080");
 function App() {
   //state declaration
+  
   const [convs, setConvs] = useState([]);
   const [user, setUser] = useState({ id: null, name: null });
   const socket = useRef(s);
@@ -38,6 +41,7 @@ function App() {
   const generalHandler = {
     changeUser,
   };
+  
   return (
     <BrowserRouter>
       {console.log("APP", user)}
@@ -66,6 +70,9 @@ function App() {
             <VideoRoom generalHandler={generalHandler} localVars={localVars} />
           }
         />
+        <Route path="/room/:roomid"element={<Room />}/>
+        
+        <Route path="/createroom"element={<CreateRoom/>}/>
         <Route
           path="/profile/:id"
           generalHandler={generalHandler}

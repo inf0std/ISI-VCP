@@ -17,13 +17,12 @@ import Room from './views/videoR/routes/Room'
 =======
  */
 let s = io.connect("http://localhost:8080");
->>>>>>> 5280bf87c5fb19854265c7635f9aa8fc44d63c7d
 function App() {
   //state declaration
   
   const [convs, setConvs] = useState([]);
   const [user, setUser] = useState({ id: null, name: null });
-  const socket = useRef();
+  const socket = useRef(s);
 
   useEffect(() => {
     if (user.id) {

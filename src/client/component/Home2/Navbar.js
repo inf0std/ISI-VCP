@@ -1,7 +1,9 @@
 import { useRef } from "react";
 import { FaUsers } from "react-icons/fa";
 import { FaRegComments } from "react-icons/fa";
-import { FaHome } from "react-icons/fa";
+import { MdAlternateEmail } from "react-icons/md";
+import { FiSearch } from "react-icons/fi";
+import { FaHome  } from "react-icons/fa";
 import { GoSignOut } from "react-icons/go";
 import { Link } from "react-router-dom";
 import SignInSignUp from "../formulaire/modalForms/SignINSignUp";
@@ -67,10 +69,10 @@ const Navbar = (props) => {
           href="#"
         >
           <img
-            style={{ width: "100%", height: "80px", marginTop: "-26px" }}
+            style={{ width: "70%", height: "80px", marginTop: "-26px" , boxShadow:"inherit"}}
             src="logo.png"
           />
-        </a>
+          </a>
         <button
           className="navbar-toggler"
           type="button"
@@ -84,24 +86,29 @@ const Navbar = (props) => {
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <form className="d-flex ms-auto">
+          {
+              <FiSearch
+                        id="it"
+                        style={{ width: "16px", height: "16px", marginLeft: "8px",marginTop:"13px",position:"absolute" }}
+                      />}
             <input
               className="form-control me-2 vw-25"
               type="search"
-              placeholder="Rechercher"
+              placeholder="   Rechercher"
               aria-label="Search"
+            
+            
             />
 
             <button className="btn btn-outline-success" type="submit">
-              Rechercher
-            </button>
-            {/*<ImSearch style={{width:'25px', height:"25px",margin:"5px"}}/>    Icone de recherche 
-          pour la serachbar*/}
+                Rechercher
+            </button> 
           </form>
           <ul
-            style={{ marginRight: "30px" }}
+            style={{ marginRight: "3px" }}
             className="navbar-nav ms-auto mb-2 mb-lg-0"
           >
-            <li style={{ margin: "0px 30px 0px 30px" }} className="nav-item">
+            <li style={{ margin: "0px 0px 0px 0px" }} className="nav-item">
               <Link
                 to="/"
                 className="nav-link"
@@ -116,7 +123,7 @@ const Navbar = (props) => {
               </Link>
             </li>
 
-            <li style={{ margin: "0px 30px 0px 30px" }} className="nav-item">
+            <li style={{ margin: "0px 30px 0px 3px" }} className="nav-item">
               <Link
                 to="/Contact"
                 className="nav-link"
@@ -124,14 +131,14 @@ const Navbar = (props) => {
                 tabIndex="-1"
                 aria-disabled="true"
               >
-                <FaUsers
+                <MdAlternateEmail
                   id="it"
                   style={{ width: "25px", height: "25px", margin: "5px" }}
                 />
               </Link>
             </li>
 
-            <li style={{ margin: "0px 30px 0px 30px" }} className="nav-item">
+            <li  className="nav-item">
               {/*<Link
                 to="/"
                 className="nav-link"
@@ -141,6 +148,7 @@ const Navbar = (props) => {
               >*/}
               {!props.localVars.user.id && (
                 <button
+                  style={{marginTop:"5px"}}
                   className="btn btn-outline-success"
                   onClick={showLoginModal}
                   id="login-btn"

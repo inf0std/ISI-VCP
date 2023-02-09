@@ -1,8 +1,7 @@
 import React from "react";
-
 function ProfileHeaders() {
   return (
-    <div>
+    <div style={{backgroundColor: "rgba(234, 238, 238, 0.651)"}}>
       <main>
         <section className="py-0 text-center container">
           <div className="row py-lg-1">
@@ -10,12 +9,13 @@ function ProfileHeaders() {
               src="/media/img/img.jpg"
               className="img-fluid rounded-start"
               alt="..."
+              
             />
             <div className="col-lg-6 col-md-8 mx-auto">
             <br/> <h1 className="fw-black">
                 SEEN Community</h1>
               <br/>
-              <p className="lead text-black">
+              <p className="lead text-black" style={{marginBlock: "auto" ,width: "900px" ,marginLeft: "-190px",WebkitTextStrokeWidth: "thin"}}>
               Notre outil de visioconférence offre une expérience de réunion en ligne complète et facile à utiliser. Il permet de mener des réunions en temps réel, de créer des salles de conférences virtuelles pour des débats en groupe,
               et d'échanger des messages instantanément grâce à une messagerie intégrée. Avec notre plateforme, vous pouvez organiser des réunions à distance de manière efficace et collaborative, sans avoir à vous déplacer. Rejoignez dès maintenant une nouvelle ère de la collaboration en ligne!
               </p>
@@ -26,14 +26,15 @@ function ProfileHeaders() {
         <div className="album py-5 bg-gray">
           <div className="container">
             <div className="row row-cols-1 row-cols-sm-2 g-3">
-              <div className="col rounded-5">
+              <div className="col rounded-5" >
                 <div className="card shadow-sm rounded-4">
                   <img
                     src="/media/img/cof.jpg"
                     className="img-fluid rounded-4"
                     alt="..."
+                
                   />
-                  <div className="card-body">
+                  <div className="card-body" >
                     <h5 className="card-title">Réunions gérées</h5>
                     <p className="card-text">
                       Dans une réunion en tant qu’organisateur vous pouvez
@@ -49,7 +50,7 @@ function ProfileHeaders() {
               <div className="col ">
                 <div className="card shadow-sm rounded-4">
                   <img
-                    src="/media/img/msg.jpg"
+                    src="/media/img/chat.png"
                     className="img-fluid rounded-4"
                     alt="..."
                   />
@@ -118,5 +119,6 @@ function ProfileHeaders() {
     </div>
   );
 }
+
 
 export default ProfileHeaders;

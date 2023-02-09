@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+import { useState, useEffect } from "react";
+// import NavBar from '../component/navbar/NavBar'
+=======
 import React, { useEffect, useRef, useState } from "react";
 
 const ChatUI = ({generalHandler, localVars}) => {
@@ -21,6 +25,7 @@ const ChatUI = ({generalHandler, localVars}) => {
       })
     msgRef.current.value=''
   };
+>>>>>>> 5280bf87c5fb19854265c7635f9aa8fc44d63c7d
 
   return (
     <div>

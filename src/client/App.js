@@ -9,13 +9,21 @@ import Profile from "./component/Profile/Profile";
 import ProgrammerReunion from "./component/formulaire/modalForms/ProgramerLaReunion";
 import { getConversations } from "./utils/fetchUtils";
 import "bootstrap/dist/css/bootstrap.min.css";
+<<<<<<< HEAD
+import CreateRoom from './views/videoR/routes/CreateRoom'
+import Room from './views/videoR/routes/Room'
+
+//let s = io.connect("http://localhost:8080");
+=======
  */
 let s = io.connect("http://localhost:8080");
+>>>>>>> 5280bf87c5fb19854265c7635f9aa8fc44d63c7d
 function App() {
   //state declaration
+  
   const [convs, setConvs] = useState([]);
   const [user, setUser] = useState({ id: null, name: null });
-  const socket = useRef(s);
+  const socket = useRef();
 
   useEffect(() => {
     if (user.id) {
@@ -38,6 +46,7 @@ function App() {
   const generalHandler = {
     changeUser,
   };
+  
   return (
     <BrowserRouter>
       <Routes>
@@ -65,6 +74,9 @@ function App() {
             <VideoRoom generalHandler={generalHandler} localVars={localVars} />
           }
         />
+        <Route path="/createroom/room/:roomid"element={<Room />}/>
+        
+        <Route path="/createroom"element={<CreateRoom/>}/>
         <Route
           path="/profile"
           generalHandler={generalHandler}

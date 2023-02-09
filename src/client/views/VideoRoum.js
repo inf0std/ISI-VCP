@@ -35,7 +35,6 @@ export default function VideoRoum({ generalHandler, localVars }) {
       .catch((err) => {
         console.log(err);
       });
-<<<<<<< HEAD
     let s = props.localVars.socket;
     setupSocket(s);
     setupStreams(streams, setStreams);
@@ -50,8 +49,7 @@ export default function VideoRoum({ generalHandler, localVars }) {
     setupUserId(userid);
     setNbr_Partipents(streams.length)
     setStreams([localStream,localStream,localStream])
-  }, [Nbr_Partipents]);
-=======
+    }, [Nbr_Partipents]);
     const { socket, user } = localVars;
     let room = new Room(
       socket,
@@ -64,8 +62,7 @@ export default function VideoRoum({ generalHandler, localVars }) {
     room.connect();
     setNbr_Partipents(streams.length);
     //setStreams([localStream, localStream, localStream, localStream]);
-  }, []);
->>>>>>> 5280bf87c5fb19854265c7635f9aa8fc44d63c7d
+
   //localVideo.current.srcObject = localStream;
   return (
     <div className="container1 bg-secondary" style={{ height: "650px" }}>

@@ -10,19 +10,16 @@ const ws = socketIOClient(WS)
 export function ContextProvider ({children}){
     const flag = useRef(false)
     const [peers, setPeers] = useState([]);
-    const [stream, setstream]= useState()
+    const [videostream, setstream]= useState()
     const peersRef = useRef([]);
     const roomID = useParams();
     const nbrPart= useRef(0)
-    const [screenShId, setScreenShId] = useState()
-    const oldtrack = useRef(null)
 
     useEffect(()=>{
         if (flag.current === false){
             flag.current = true
 
             navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(stream => {
-                oldtrack.current = stream.getTracks()[0]
                 setstream(stream)
                 ws.emit("join room", roomID);
                 ws.on("all users", (users, nbr) => {
@@ -87,42 +84,23 @@ export function ContextProvider ({children}){
     
             return peer;
         }
-        const switchStream =(stream)=>{
-            setstream(stream);
-            Object.values(peersRef).forEach((connection)=>{
-                const videoTrack = stream?.getTracks().find(track => track.kind === 'video');
-                connection.replaceTrack(videoTrack)
-                .catch((err)=> console.log(err))
-            })
-    }
     function shareScreen() {
         
+        var track = videostream.getTracks().find(track => track.kind === 'video');
         navigator.mediaDevices
-        .getDisplayMedia({ cursor: true })
+        .getDisplayMedia({ video:true, audio:true })
         .then((stream) => {
-            setstream(stream)
-          const screenTrack = stream.getTracks()[0];       
-
-          peersRef.current.forEach(({ peer }) => {
-            console.log(peer)
-            // replaceTrack (oldTrack, newTrack, oldStream);
-            peer.replaceTrack(
-              peer.streams[0].getTracks().find((track) => track.kind === 'video'),
-              screenTrack,
-              stream
-            );
-          });
-    })}
-        const shareScreenn=()=>{
-            if (screenShId){
-                navigator.mediaDevices.getUserMedia({video : true , audio: true}).then(switchStream)
-            }else{
-                navigator.mediaDevices.getDisplayMedia({}).then(switchStream)
-            }
-        }
+            Object.values(peersRef).forEach((peer)=>{
+            
+          const screenTrack = stream.getTracks()[0];
+          
+          peer.removeTrack(track)
+          peer.addTrack(screenTrack)
+        }) }    
+        )}
    
     return(
-        <RoomContext.Provider value={{ws,stream, peers, nbrPart, shareScreen}}>
+        <RoomContext.Provider value={{ws,videostream, peers, nbrPart, shareScreen}}>
             {children}
         </RoomContext.Provider>
     )

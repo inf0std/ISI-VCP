@@ -4,17 +4,18 @@ import {Video} from "./Video"
 import Navbar from "../component/Navbar"
 import './Room.css'
 export default function Room() {
-  const {stream, peers} = useContext(RoomContext)
+  const {videoStream, peers} = useContext(RoomContext)
   const VideoRef = useRef() 
   useEffect(()=>{
-    if (stream !=null){
-      if (VideoRef.current) VideoRef.current.srcObject = stream;
-}},[stream])
+    if (videoStream !=null){
+      if (VideoRef.current) VideoRef.current.srcObject = videoStream;
+}},[videoStream])
 
   return (
-    <div className="">
+    <div className="container1 bg-secondary" style={{ height: "650px" }}>
       <Navbar />
-      <div className="">
+      <div className="container-sm flex flex-col bg-black"
+        style={{ width: "830px" }}>
       <video className= ''ref={VideoRef} autoPlay />
       {peers.map((peer, index) => {
                 return (

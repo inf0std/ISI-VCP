@@ -1,10 +1,9 @@
-<<<<<<< HEAD
+
 /*const { joinRoomIfAuthorised } = require("./videoRoomManager");
 =======
 const convManager = require("./convManager");
 convManager.addConv(1, "", null, [1,2,3], [])
 const VManager = require("./videoRoomManager");
->>>>>>> 5280bf87c5fb19854265c7635f9aa8fc44d63c7d
 
 
 VManager.addRoom(1, "call", true, [], [], null, 0, 0);
@@ -36,7 +35,7 @@ module.exports = (server) => {
       if(conv){
         socket.join
       }
-    }) */
+    }) 
 
     socket.on ('msg',({id, message})=>{
       console.log(`Received message: ${message}`);

@@ -17,7 +17,6 @@ import Room from './views/videoR/routes/Room'
 =======
  */
 let s = io.connect("http://localhost:8080");
->>>>>>> 5280bf87c5fb19854265c7635f9aa8fc44d63c7d
 function App() {
   //state declaration
   

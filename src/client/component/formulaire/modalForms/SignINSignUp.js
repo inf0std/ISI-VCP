@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useRef } from "react";
 import {
   validateEmail,
   validatePassword,
@@ -125,7 +125,7 @@ const SignInSignUp = (props) => {
       <button
         type="button"
         id="loginModalBtn"
-        className="btn btn-primary"
+        className="btn btn-primary btn"
         data-bs-toggle="modal"
         data-bs-target="#signup-signin"
         hidden
@@ -153,6 +153,7 @@ const SignInSignUp = (props) => {
                 </li>
                 <li className="nav-item" role="presentation">
                   <button
+                  
                     className="nav-link"
                     id="profile-tab"
                     data-bs-toggle="tab"
@@ -237,6 +238,7 @@ const SignInSignUp = (props) => {
 
                       <div className="d-flex justify-content-center">
                         <button
+                          
                           type="button"
                           className="btn btn-secondary btn-floating mx-1"
                           data-bs-dismiss="modal"
@@ -245,6 +247,7 @@ const SignInSignUp = (props) => {
                         </button>
 
                         <button
+                          
                           onClick={handleConnection}
                           type="submit"
                           className="btn btn-primary btn-block"
@@ -345,6 +348,7 @@ const SignInSignUp = (props) => {
                       </div>
                       <div className="d-flex justify-content-center">
                         <button
+                        
                           type="button"
                           className="btn btn-secondary btn-floating mx-1"
                           data-bs-dismiss="modal"
@@ -353,9 +357,10 @@ const SignInSignUp = (props) => {
                         </button>
 
                         <button
+              
                           onClick={handleSignup}
                           type="submit"
-                          className="btn btn-primary btn-block"
+                          className="btn  btn-primary btn-block"
                         >
                           S'inscrire
                         </button>
@@ -371,5 +376,7 @@ const SignInSignUp = (props) => {
     </>
   );
 };
+
+
 
 export default SignInSignUp;

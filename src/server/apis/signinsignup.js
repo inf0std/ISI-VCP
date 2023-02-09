@@ -230,7 +230,7 @@ const registerUser = asyncHandler(async (req, res) => {
                   <tr>
                     <td align="center" valign="top" style="padding: 36px 24px;">
                       <a href="#" target="_blank" style="display: inline-block;">
-                        <img src="../../../public/media/img/img.jpg" alt="Logo" border="0" width="48" style="display: block; width: 48px; max-width: 48px; min-width: 48px;">
+                        <img src="../../../public/logo.png" alt="Logo" border="0" width="48" style="display: block; width: 48px; max-width: 48px; min-width: 48px;">
                       </a>
                     </td>
                   </tr>

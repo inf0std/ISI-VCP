@@ -5,7 +5,7 @@ import {FaHome} from "react-icons/fa";
 import {GoSignOut}  from "react-icons/go";
 import {ImSearch} from "react-icons/im";
 import { Link } from "react-router-dom";
-
+import { FiSearch } from "react-icons/fi";
 import './navbar.css';
 const Navbarprofile = (props) => {
   const searchBtn = useRef();
@@ -42,7 +42,7 @@ const Navbarprofile = (props) => {
     <nav id='nev' className="navbar navbar-expand-lg navbar-light bg-light justefy-content-end">
     <div className="container-fluid">
       <a style={{width:'120px',height:'45px',marginLeft:'40px'}}  className="navbar-brand" href="#">
-      <img style={{width:'100%' ,height:'80px',marginTop:'-26px'}} src="logo.png"/>
+      <img style={{ width: "70%", height: "80px", marginTop: "-26px" , boxShadow:"inherit"}} src="logo.png"/>
       </a>
       <button
         className="navbar-toggler"
@@ -57,10 +57,15 @@ const Navbarprofile = (props) => {
       </button>
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
         <form className="d-flex ms-auto">
+          {
+              <FiSearch
+                        id="it"
+                        style={{ width: "16px", height: "16px", marginLeft: "8px",marginTop:"13px",position:"absolute" }}
+                      />}
           <input
             className="form-control me-2 vw-25"
             type="search"
-            placeholder="Rechercher"
+            placeholder="   Rechercher"
             aria-label="Search"
           />
           

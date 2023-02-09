@@ -29,7 +29,7 @@ function ProfileHeaders() {
               <div className="col rounded-5" >
                 <div className="card shadow-sm rounded-4">
                   <img
-                    src="/media/img/cof.jpg"
+                    src="/media/img/Col1.png"
                     className="img-fluid rounded-4"
                     alt="..."
                 
@@ -68,7 +68,8 @@ function ProfileHeaders() {
               <div className="col">
                 <div className="card shadow-sm rounded-4">
                   <img
-                    src="/media/img/rom.jpg"
+                    src="/media/img/col6.png
+                    "
                     className="img-fluid rounded-4"
                     alt="..."
                   />

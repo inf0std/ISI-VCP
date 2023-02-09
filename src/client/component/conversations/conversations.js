@@ -1,25 +1,11 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import ConvElement from "./convElement";
 import logo from "../../logo.png";
-const COnversations = (props) => {
-  this.state = {
-    data: [],
-  };
 
+import config from "../../config.json";
+const Conversations = ({ user, changeUser, convs, setActive }) => {
   const searchInput = useRef();
 
-  const [data, setData] = useState([]);
-  useEffect(() => {
-    fetch("127.0.0.1:8080/api/conversations", {
-      method: "GET",
-      headers: { Accept: "Application/json" },
-    })
-      .then((res) => res.json())
-      .then((result) => {
-        setData(result);
-      })
-      .catch((err) => console.log(err));
-  }, []);
   return (
     <div className="col-sm-4 border bg-light" style={{}}>
       {
@@ -47,19 +33,20 @@ const COnversations = (props) => {
         {
           //affichage de la liste des conversation
         }
-        {props.convs.map((conv, index) => {
-          return (
-            <ConvElement
-              index={index}
-              conv={conv}
-              activate={props.activate}
-              msg={conv.msgs[conv.msgs.length - 1]}
-            />
-          );
-        })}
+        {convs.length > 0 &&
+          convs.map((conv, index) => {
+            return (
+              <ConvElement
+                index={index}
+                conv={conv}
+                setActive={setActive}
+                msg={conv.msgs[conv.msgs.length - 1]}
+              />
+            );
+          })}
       </div>
     </div>
   );
 };
 
-export default COnversations;
+export default Conversations;

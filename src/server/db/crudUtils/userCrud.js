@@ -10,18 +10,6 @@ const nodemailer = require("nodemailer");
 const crypto = require("crypto");
 const { count } = require("console");
 
-//email
-var transporter = nodemailer.createTransport({
-  service: "Gmail",
-  auth: {
-    user: "seen.project.cpi@gmail.com",
-    pass: "dehbaarxnwdujndl",
-  },
-  tls: {
-    rejectUnauthorized: false,
-  },
-});
-
 //register
 const createUser = async (email, password) => {
   if (!email || !password) {
@@ -60,57 +48,23 @@ const createUser = async (email, password) => {
                 err.message || "Some error occurred while saving the user.",
             });
           });
-
-        //send email verification
-        var mailOptions = {
-          from: '"Verify your email"<mira98315@gmail.com>',
-          to: user.login.email,
-          subject: `${user.username}  verify your email`,
-          html: `<h2> ${user.username}! Thanks for registring on our site </h2>
-        <h4>Please verify your email to continue... </h4>
-        <a href = "http://127.0.0.1:8080/api/ver?token=${user.emailtoken}">verify your email</a>`,
-        };
-        //send email
-        transporter.sendMail(mailOptions, function (error, info) {
-          if (error) {
-            console.log(error);
-          } else {
-            console.log("verification email is sent to your gmail account");
-          }
-        });
       }
     });
   }
 };
 
-const verifyemail = (token, email) => {
-  User.findOne({ login });
-  User.findOne({ emailtoken: token }).then((user) => {
-    if (user) {
-      (user.emailtoken = null), (user.isverified = true);
-    } else {
-      console.log("email is not verified");
-    }
-  });
-};
-
-//create token
-const createToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET);
-};
-
 //authenticate
 const auth = async (email, password) => {
-  console.log("email", email);
+  console.log(`email ${email}, password ${password}`);
   if (!email || !password) {
-    return console.log(404, "veuilleur saisir data");
+    throw Error("missing password or email");
   } else {
     return User.findOne({ "login.email": email }).then(async (user) => {
-      if (user && (await user.matchPassword(password))) {
-        const token = createToken(user._id);
+      console.log(`user ${user}`);
+      if (user && user.matchPassword(password)) {
+        /* const token = genLoginToken(user._id);
         console.log(token);
-        cookie("access-token", token);
-        return user;
+        cookie("access-token", token) */ return user;
       } else {
         return console.log("Invalid Email or Password");
       }
@@ -281,36 +235,8 @@ const deleteUser = async (id) => {
   }
 };
 
-/*
-  User.findById(id1)
-    .select("contacts")
-    .exec()
-    .then((contacts) => {
-      if (contacts.contacts.indexOf(id2) < -1) {
-        try {
-          //contacts.push(id2);
-          User.findByIdAndUpdate(
-            id1,
-            { $push: { contacts: id2 } },
-            { new: true }
-          );
-          User.findByIdAndUpdate(
-            id2,
-            { $push: { contacts: id1 } },
-            { new: true }
-          );
-        } catch (e) {
-          console.log(e.message);
-          throw e;
-        }
-      }
-    });
-;
-*/
-
 module.exports = {
   auth,
-  verifyemail,
   createUser,
   readoneUser,
   UpdateLogin,

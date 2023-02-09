@@ -7,31 +7,11 @@ const express = require("express");
 const app = express();
 app.use(Cors());
 const http = require("http").createServer(app);
-/* const io = new require("socket.io")(http, {
-  cors: {
-    origin: "http://localhost:3000",
-    methods: ["GET", "POST"],
-  },
-}); */
-require("./modules/signaling")(http);
-/* io.on("connection", (socket) => {
-  console.log(`socket of id ${socket.id} has comnected`);
-}); */
-// DB Connection
-require("dotenv").config();
 
-connectDb().catch((err) => console.log("db not connected"));
+require("./modules/signaling")(http);
+require("./db/db");
 
 //connectDb().catch(err =>console.log('db not connected'));
-
-async function connectDb() {
-  await mongoose.connect("mongodb://127.0.0.1:27017/seendb");
-  console.log("db connect");
-}
-
-module.exports = {
-  connectDb,
-};
 
 // Use parsing middleware
 app.use(
@@ -60,9 +40,8 @@ let port = 8080;
 http.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
-// Import the routes
-const userRoutes = require("./apis/router");
-// Using routes
-app.use("/api", userRoutes);
+//app.use("/api", require("./apis/router"));
+app.use("/api/account", require("./apis/accountRouter"));
+app.use("/api/user", require("./apis/userRouter"));
 
 module.exports = app;

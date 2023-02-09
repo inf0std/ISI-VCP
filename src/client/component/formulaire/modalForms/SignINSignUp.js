@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   validateEmail,
   validatePassword,
@@ -6,7 +7,15 @@ import {
   isAlphanumeric,
 } from "../../../../server/apis/formUtils";
 import alert from "../../../utils/alertUtils";
-const SignInSignUp = (props) => {
+import {
+  sendSigninData,
+  sendSignupData,
+} from "../../../utils/dataFetcherUtils";
+
+import config from "../../../config.json";
+const SignInSignUp = ({ changeUser }) => {
+  const navigate = useNavigate();
+
   const signinEmail = useRef();
   const signinPassword = useRef();
 
@@ -16,9 +25,8 @@ const SignInSignUp = (props) => {
   const signupPassword2 = useRef();
   const signupPhone = useRef();
 
-  console.log("props", props);
-  const sendSignInData = async (data) => {
-    return fetch("http://127.0.0.1:8080/api/signin", {
+  /* const sendSignInData = async (data) => {
+    return fetch(`${config.app_url}:${config.app_port}/api/account/login`, {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
       cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
@@ -31,7 +39,7 @@ const SignInSignUp = (props) => {
       referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
       body: JSON.stringify(data), // body data type must match "Content-Type" header
     });
-  };
+  }; */
 
   const handleConnection = (e) => {
     e.preventDefault();
@@ -39,21 +47,25 @@ const SignInSignUp = (props) => {
       email: signinEmail.current.value,
       password: signinPassword.current.value,
     };
-    console.log("signing in", data);
-    sendSignInData(data)
+    sendSigninData(data)
       .then((response) => response.json())
-      .then((data) => {
-        if (data._id) props.generalHandler.changeUser(data._id, data.username);
-        else alert("EMAIL OU MOT DE PASSE FAUX", "danger");
+      .then((user) => {
+        if (user._id) {
+          console.log(user);
+          console.log(user._id, user.name, user.token);
+          changeUser(user._id, user.name, user.token);
+          navigate("/");
+        } else alert("EMAIL OU MOT DE PASSE FAUX", "danger");
       })
       .catch((err) => {
         console.log("connexion", err);
+        navigate("/");
       }); //*/
   };
-
+  /* 
   const sendSignupData = async (data) => {
     console.log("signing up", data);
-    return fetch("http://127.0.0.1:8080/api/signup", {
+    return fetch(`${config.app_url}:${config.app_port}/api/account/signup`, {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
       cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
@@ -66,7 +78,7 @@ const SignInSignUp = (props) => {
       referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
       body: JSON.stringify(data), // body data type must match "Content-Type" header
     });
-  };
+  }; */
 
   const validateFormData = (email, username, pwd1, pwd2, phone) => {
     console.log("email", email, validateEmail(email));
@@ -103,15 +115,16 @@ const SignInSignUp = (props) => {
         .then((response) => response.json())
         .then((data) => {
           console.log(data);
-          if (data._id)
-            alert(
-              "SUCCES!! VEUILLEZ VERIFIER VOTRE BOITE EMAIL POUR VALIDER VOTRE COMPTE",
-              "success"
-            );
+          if (data.message) console.log(data.message);
+          alert(
+            "SUCCES!! VEUILLEZ VERIFIER VOTRE BOITE EMAIL POUR VALIDER VOTRE COMPTE",
+            "success"
+          );
+          navigate("/profile/1");
         })
         .catch((err) => {
           console.log(err);
-          //handeling search Errors
+          navigate("/profile/1");
         }); //*/
     } else {
       alert(
@@ -283,7 +296,7 @@ const SignInSignUp = (props) => {
                           type="email"
                           id="form6Example5"
                           className="form-control"
-                          value="ahcene@gmail.com"
+                          value="ff_ahcene@esi.dz"
                           required
                         />
                       </div>

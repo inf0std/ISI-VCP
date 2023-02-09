@@ -1,22 +1,31 @@
-import { useState, useEffect } from "react";
+import config from "../config.json";
+import { useState, useRef, useEffect } from "react";
+import io from "socket.io-client";
 // import NavBar from '../component/navbar/NavBar'
 import Conversations from "../component/conversations/conversations";
 import ConversationTab from "../component/conversationTab/conversationTab";
 
-import ChatHeader from "./Chat/ChatHeader";
-import ChatZone from "./Chat/ChatZone";
-import ChatList from "./Chat/ChatList";
-const Chat = ({ generalHandler, localVars }) => {
+const Chat = ({ user, chageUser }) => {
+  const [convs, setConvs] = useState([]);
   const [activeConv, setActiveConv] = useState(0);
-  const [msgs, setMsgs] = useState([]);
+  const [isLoading, setIsloading] = useState(true);
+  const socket = useRef(null);
   useEffect(() => {});
-  const sendMessage = () => {};
+
+  const sendMsg = (cid, msg) => {
+    socket.current.emit("msg", { cid, msg });
+  };
   return (
-<div>
-      <ChatHeader />
-      <ChatList />
-      <ChatZone />
-</div>
+    <div
+      className="container-fluid py-5 my-0"
+      style={{ width: "100%", height: "100%" }}
+    >
+      <div className="row">
+        {/* <NavBar /> */}
+        <Conversations convs={convs} setActive={setActiveConv} />
+        <ConversationTab myId={1} id={activeConv} />
+      </div>
+    </div>
   );
 };
 

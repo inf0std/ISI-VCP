@@ -27,7 +27,7 @@ const {
   handleuserreunion,
   handleuserconference,
   handleuserorganisations,
-  handlevalidateemail,
+  handleValidateEmail,
   handleUpdateUser,
 } = require("./userRouteHandlers");
 const {
@@ -81,12 +81,10 @@ router.get("/", function (req, res) {
 //////
 //signIn
 router.post("/signin", handleLogin);
-router.get("/profile", handlesession);
-router.get("/logout", destroysession);
 
 //signUp
 router.post("/signup", registerUser);
-router.get("/ver/:email/:token", handlevalidateemail);
+router.get("/ver/:email/:token", handleValidateEmail);
 router.get("/user/:id/contacts", handleUserContacts);
 
 router.get("/user/:id/conferences", handleuserconference);

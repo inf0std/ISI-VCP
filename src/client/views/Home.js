@@ -1,11 +1,11 @@
 import SignInSignUp from "../component/formulaire/modalForms/SignINSignUp";
 import DefaultNav from "../component/navBars/DefaultNav";
-const Home = (props) => {
+const Home = ({ user, changeUser }) => {
   return (
     <div className="Container">
-      <DefaultNav user={props.state._user} />
+      <DefaultNav user={user} />
       {!props.state._user.name && (
-        <SignInSignUp handlers={{ user: props.handlers.handleChangeUser }} />
+        <SignInSignUp user={user} changeUser={changeUser} />
       )}
     </div>
   );

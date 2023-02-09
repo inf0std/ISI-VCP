@@ -3,13 +3,10 @@ import Navbar from "./Navbar";
 import Footer1 from "../Footer/Footer1";
 import Header from "../headers/ProfileHeader";
 
-function Home(props) {
+function Home({ user, changeUser }) {
   return (
     <div style={{ backgroundColor: "#a0969665" }}>
-      <Navbar
-        generalHandler={props.generalHandler}
-        localVars={props.localVars}
-      />
+      <Navbar changeUser={changeUser} user={user} />
       <Header />
       <Footer1 />
     </div>

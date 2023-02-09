@@ -6,7 +6,9 @@ import { GoSignOut } from "react-icons/go";
 import { Link } from "react-router-dom";
 import SignInSignUp from "../formulaire/modalForms/SignINSignUp";
 
-const Navbar = (props) => {
+import config from "../../config.json";
+
+const Navbar = ({ user, changeUser }) => {
   const searchBtn = useRef();
   const searchResults = useRef();
   const searchInput = useRef();
@@ -15,7 +17,7 @@ const Navbar = (props) => {
     e.preventDefault();
     let data = searchInput.current.value;
     //*
-    fetch(`http://127.0.0.1:3000/api/user/${props.localVars.user.id}/search`, {
+    fetch(`${config.app_url}:${config.app_port}/api/user/${user.id}/search`, {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
       cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
@@ -42,11 +44,11 @@ const Navbar = (props) => {
   };
 
   const logout = () => {
-    fetch(`http://127.0.0.1:8080/api/user/${props.localVars.user.id}/logout`)
+    fetch(`${config.app_url}:${config.app_port}/api/account/${user.id}/logout`)
       .then((res) => res.json(res))
       .then((data) => {
         if (data.loggedOut) {
-          props.generalHandler.changeUser(null, null);
+          changeUser(null, null, null);
         }
       })
       .catch((err) => {
@@ -59,7 +61,7 @@ const Navbar = (props) => {
       id="nev"
       className="navbar navbar-expand-lg navbar-light bg-light justefy-content-end"
     >
-      <SignInSignUp generalHandler={props.generalHandler} />
+      <SignInSignUp user={user} changeUser={changeUser} />
       <div className="container-fluid">
         <a
           style={{ width: "120px", height: "45px", marginLeft: "40px" }}
@@ -139,7 +141,7 @@ const Navbar = (props) => {
                 tabIndex="-1"
                 aria-disabled="true"
               >*/}
-              {!props.localVars.user.id && (
+              {!user.id && (
                 <button
                   className="btn btn-outline-success"
                   onClick={showLoginModal}
@@ -148,7 +150,7 @@ const Navbar = (props) => {
                   Se connecter
                 </button>
               )}
-              {props.localVars.user.id && (
+              {user.id && (
                 <>
                   <button
                     className="btn btn-outline-success"
@@ -158,12 +160,10 @@ const Navbar = (props) => {
                     Se deconecter
                   </button>
                   <img
-                    src={`http://127.0.0.1:8080/profile/${props.localVars.user.id}.jpg`}
+                    src={`http://127.0.0.1:8080/profile/${user.id}/img`}
                   ></img>
                 </>
               )}
-              {/*</Link>
-              {/* {!props.userName ? "Se deconnecter" : "Se connecter"}*/}
             </li>
           </ul>
         </div>

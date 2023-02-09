@@ -1,6 +1,6 @@
 import React from "react";
 import MessagesTab from "../messagesTab/MessagesTab";
-import NavBar from "../navbar/NavBar";
+import NavBar from "./navbar/NavBar";
 
 const ConversationTab = (props) => {
   const sendMessage = (event) => {

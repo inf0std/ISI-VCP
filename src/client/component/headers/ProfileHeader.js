@@ -25,9 +25,9 @@ function ProfileHeaders() {
 
         <div className="album py-5 bg-gray">
           <div className="container">
-            <div className="row row-cols-1 row-cols-sm-2 g-3">
-              <div className="col rounded-5">
-                <div className="card shadow-sm rounded-4">
+            <div className="row">
+              <div className="d-flex align-items-stretch">
+                <div className="card col-md-6 shadow-sm rounded-4">
                   <img
                     src="/media/img/cof.jpg"
                     className="img-fluid rounded-4"
@@ -45,9 +45,7 @@ function ProfileHeaders() {
                     </p>
                   </div>
                 </div>
-              </div>
-              <div className="col ">
-                <div className="card shadow-sm rounded-4">
+                <div className="card col-md-6 shadow-sm rounded-4">
                   <img
                     src="/media/img/msg.jpg"
                     className="img-fluid rounded-4"
@@ -66,9 +64,9 @@ function ProfileHeaders() {
               </div>
             </div>
             <div style={{ height: "25px" }}></div>
-            <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-              <div className="col">
-                <div className="card shadow-sm rounded-4">
+            <div className="row ">
+              <div className="d-flex align-items-stretch">
+                <div className="card col-md-4 shadow-sm rounded-4">
                   <img
                     src="/media/img/rom.jpg"
                     className="img-fluid rounded-4"
@@ -85,10 +83,7 @@ function ProfileHeaders() {
                     </p>
                   </div>
                 </div>
-              </div>
-
-              <div className="col">
-                <div className="card shadow-sm rounded-4">
+                <div className="card col-md-4 shadow-sm rounded-4">
                   <img
                     src="/media/img/deb.jpg"
                     className="img-fluid rounded-4"
@@ -103,21 +98,22 @@ function ProfileHeaders() {
                     </p>
                   </div>
                 </div>
-              </div>
 
-              <div className="card shadow-sm rounded-4">
-                <img
-                  src="/media/img/romm.jpg"
-                  className="img-fluid rounded-4"
-                  alt="..."
-                />
-                <div className="card-body">
-                  <h5 className="card-title">Débat et conférences</h5>
-                  <p className="card-text">
-                    {" "}
-                    un formidable moyen d’exposer ou d’échanger et de développer
-                    son sens critique, ou encore d’éveiller les consciences.
-                  </p>
+                <div className="card col-md-4shadow-sm rounded-4">
+                  <img
+                    src="/media/img/romm.jpg"
+                    className="img-fluid rounded-4"
+                    alt="..."
+                  />
+                  <div className="card-body">
+                    <h5 className="card-title">Débat et conférences</h5>
+                    <p className="card-text">
+                      {" "}
+                      un formidable moyen d’exposer ou d’échanger et de
+                      développer son sens critique, ou encore d’éveiller les
+                      consciences.
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>

@@ -1,85 +1,62 @@
-const { default: mongoose } = require("mongoose");
-var express = require("express");
-const validator = require("validator");
-
 const createError = require("http-errors");
 const { User } = require("../db/schema/User");
 const Conversation = require("../db/schema/Conversation");
-const { createUser } = require("./signinsignup");
+const { genLoginToken, genEmailToken } = require("./tokens");
+const jwt = require("jsonwebtoken");
+const { auth } = require("../db/crudUtils/userCrud");
 
-const { readoneUser, auth } = require("../db/crudUtils/userCrud");
-const { updatepasse, updateemail } = require("../db/crudUtils/userCrud");
-
-const handleLogin = (req, res, next) => {
+const handleLogin = (req, res) => {
   console.log("Login attempt");
   const { email, password } = req.body;
   auth(email, password)
     .then((user) => {
+      let token = genLoginToken(user._id);
       req.session.id = user._id;
-      res.status(200).json({ _id: user._id, username: user.username });
+      res.cookie("id", user._id);
+      res.status(200).json({
+        _id: user._id,
+        name: user.username,
+        token: token,
+      });
     })
     .catch((err) => {
       res.json({
         message: "ERROR",
       });
     });
-  // next();
 };
-const handlesession = (req, res) => {
-  if (!req.session.id) {
-    return res.status(401).send("vous n ete pas connecter");
-  }
-  return res.status(200).json("welcome");
-};
-
-const destroysession = (req, res) => {
-  req.session.destroy();
-
-  return res.status(200).json("disconnected");
-};
-
-/*const handleSignUp = (req, res, next) => {
-  const { email, password } = req.body;
-  createUser(email, password)
-    .then((user) => {
-      res.status(200).json(user);
-    })
-    .catch((err) => {
-      res.json({
-        message: "ERROR",
-      });
-    });
-  next();
-};*/
 
 const handleUserConversations = async (req, res, next) => {
   const id = req.params.id;
-  console.log(id);
-  const conv = await User.findById(id).select("conversations");
-  if (conv) {
-    console.log(conv);
-    res.status(200).json(conv);
-  } else {
-    console.log(err);
-    res.json({
-      message: "ERROR",
+  User.findById(id)
+    .select("conversations")
+    .then((convs) => {
+      console.log(convs);
+      res.status(200).json(convs);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(404).send({
+        error: "conv not exists",
+      });
     });
-  }
 };
 
 const handleUserContacts = async (req, res, next) => {
   const id = req.params.id;
   console.log(id);
-  const con = await User.findById(id).select("contacts");
-  if (con) {
-    console.log(con);
-    res.status(200).json(con);
-  } else {
-    console.log(err);
-    res.json({
-      message: "ERROR",
+  User.findById(id)
+    .select("contacts")
+    .then((cons) => {
+      console.log(cons);
+      res.status(200).json(cons);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(404).send({
+        error: "con not exists",
+      });
     });
-  }
 };
 
 const handleuserorganisations = async (req, res, next) => {
@@ -99,52 +76,19 @@ const handleuserorganisations = async (req, res, next) => {
 const handleuserreunion = async (req, res, next) => {
   const id = req.params.id;
   console.log(id);
-  const con = await User.findById(id).select("reunions");
-  if (con) {
-    console.log(con);
-    res.status(200).json(con);
-  } else {
-    console.log(err);
-    res.json({
-      message: "ERROR",
-    });
-  }
-};
-/*
-const handleuserorganisations = function (req, res, next) {
-  const id = req.params.id;
-  console.log(id);
-  User.findById(id)
-    .select("organisations")
-    .then((organisations) => {
-      console.log(organisations);
-      res.status(200).json(organisations);
-    })
-    .catch((err) => {
-      console.log(err);
-      res.json({
-        message: "ERROR",
-      });
-    });
-};*/
-/*
-const handleuserreunion = function (req, res, next) {
-  const id = req.params.id;
-  console.log(id);
   User.findById(id)
     .select("reunions")
     .then((reunions) => {
-      console.log(reunions);
-      res.status(200).json(reunions);
+      console.log(con);
+      res.status(200).json(con);
     })
     .catch((err) => {
       console.log(err);
-      res.json({
+      res.status(404).status({
         message: "ERROR",
       });
     });
-  next();
-};*/
+};
 const handleuserconference = function (req, res, next) {
   const id = req.params.id;
   console.log(id);
@@ -163,24 +107,6 @@ const handleuserconference = function (req, res, next) {
   next();
 };
 
-/*
-const handleconvesationmsg = function (req, res, next) {
-  const id = req.params.id;
-  console.log(id);
-  readallMessages(id)
-    .then((Messages) => {
-      console.log(Messages);
-      res.status(200).json(Messages);
-    })
-    .catch((err) => {
-      console.log(err);
-      res.json({
-        message: "ERROR",
-      });
-    });
-  next();
-};*/
-
 const handleconvesationmsg = async (req, res, next) => {
   const id = req.params.id;
   console.log(id);
@@ -195,23 +121,6 @@ const handleconvesationmsg = async (req, res, next) => {
     res.status(200).json(messages);
   }
 };
-
-/*
-const handleconversation = function (req, res, next) {
-  const id = req.params.id;
-  console.log(id);
-  readConversation(id)
-    .then((Conversation) => {
-      console.log(Conversation);
-      res.status(200).json(Conversation);
-    })
-    .catch((err) => {
-      console.log(err);
-      res.json({
-        message: "ERROR",
-      });
-    });
-};*/
 
 const handleupdatepasse = async function (req, res, next) {
   const newpasse = req.body.newpasse;
@@ -245,36 +154,6 @@ const handleupdatepasse = async function (req, res, next) {
   next();
 };
 
-/*
-
-const handleupdatepasse = function (req, res, next) {
-  const newpasse = req.body;
-  const id = req.params.id;
-  try {
-    const resultat = updatepasse(id, newpasse);
-    console.log(resultat);
-    if (!resultat) {
-      res.json("not updated");
-    } else {
-      res.status(200).json("updated");
-    }
-  } catch (err) {}
-  next();
-};*/
-/*
-const handleupdatemail = function (req, res, next) {
-  const newemail = req.body.newemail;
-  const id = req.params.id;
-  try {
-    updateemail(id, newemail);
-
-    res.status(200).json("updated");
-  } catch (err) {
-    res.json("not updated");
-  }
-  next();
-};*/
-
 const handleupdatemail = async function (req, res, next) {
   const newemail = req.body;
   const id = req.params.id;
@@ -306,25 +185,6 @@ const handleupdatemail = async function (req, res, next) {
   next();
 };
 
-const handlevalidateemail = function (req, res, next) {
-  const token = req.params.token;
-  const email = req.params.email;
-  let decoded;
-  try {
-    decoded = jwt.verify(token, "byiuehgguihr398yhwubfwefj/fwijiohfwe");
-    User.updateOne(
-      { "login.email": email },
-      { emailtoken: null, isverified: true }
-    ).then((user) => {
-      return console.log({
-        message: `${user.modifiedCount} updated successfully!`,
-      });
-    });
-  } catch (err) {}
-
-  next();
-};
-
 const handleUpdateUser = async function (req, res, next) {
   const newUser = req.body;
   const id = req.params.id;
@@ -344,20 +204,39 @@ const handleUpdateUser = async function (req, res, next) {
     console.log(error.message);
     throw error;
   }
-  next();
 };
 
+const handleGetData = (req, res) => {
+  let id = req.params.id;
+  User.findById(id)
+    .then((user) => {
+      res.status(200).json(user);
+    })
+    .catch((err) => {
+      res.status(404).send({ error: "user not exists" });
+    });
+};
+
+handleGetConversation = (req, res) => {
+  let id = req.params.id;
+  let convId = req.params.convId;
+  Conversation.findOne({ _id: convId, users: id })
+    .then((conv) => {
+      res.status(200).json(conv);
+    })
+    .catch((err) => {
+      res.status(404).send({ error: "conversation not exist" });
+    });
+};
 module.exports = {
+  handleGetData,
   handleLogin,
-  handlesession,
-  destroysession,
   handleUserConversations,
   handleUserContacts,
   handleconvesationmsg,
   handleuserorganisations,
   handleuserreunion,
   handleuserconference,
-  handlevalidateemail,
   handleupdatepasse,
   handleupdatemail,
   handleUpdateUser,

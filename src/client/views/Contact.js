@@ -1,11 +1,9 @@
 import Navbar from "../component/Home2/Navbar";
-const Contact = (props) => {
+import config from "../config.json";
+const Contact = ({ user, changeUser }) => {
   return (
     <div class="" style={{ backgroundColor: "#a0969665", height: "650px" }}>
-      <Navbar
-        generalHandler={props.generalHandler}
-        localVars={props.localVars}
-      />
+      <Navbar user={user} changeUser={changeUser} />
       <div class="container text-center">
         <div class="row mb-5">
           <div class="col"></div>

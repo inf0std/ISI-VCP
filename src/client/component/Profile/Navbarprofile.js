@@ -1,12 +1,12 @@
 import { useState, useRef, useEffect } from "react";
-import {FaUsers} from "react-icons/fa";
-import {FaRegComments} from"react-icons/fa";
-import {FaHome} from "react-icons/fa";
-import {GoSignOut}  from "react-icons/go";
-import {ImSearch} from "react-icons/im";
+import { FaUsers } from "react-icons/fa";
+import { FaRegComments } from "react-icons/fa";
+import { FaHome } from "react-icons/fa";
+import { GoSignOut } from "react-icons/go";
+import { ImSearch } from "react-icons/im";
 import { Link } from "react-router-dom";
 
-import './navbar.css';
+import "./navbar.css";
 const Navbarprofile = (props) => {
   const searchBtn = useRef();
   const searchResults = useRef();
@@ -39,112 +39,106 @@ const Navbarprofile = (props) => {
   };
 
   return (
-    <nav id='nev' className="navbar navbar-expand-lg navbar-light bg-light justefy-content-end">
-    <div className="container-fluid">
-      <a style={{width:'120px',height:'45px',marginLeft:'40px'}}  className="navbar-brand" href="#">
-      <img style={{width:'100%' ,height:'80px',marginTop:'-26px'}} src="logo.png"/>
-      </a>
-      <button
-        className="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span className="navbar-toggler-icon"></span>
-      </button>
-      <div className="collapse navbar-collapse" id="navbarSupportedContent">
-        <form className="d-flex ms-auto">
-          <input
-            className="form-control me-2 vw-25"
-            type="search"
-            placeholder="Rechercher"
-            aria-label="Search"
+    <nav
+      id="nev"
+      className="navbar navbar-expand-lg navbar-light bg-light justefy-content-end"
+    >
+      <div className="container-fluid">
+        <a
+          style={{ width: "120px", height: "45px", marginLeft: "40px" }}
+          className="navbar-brand"
+          href="#"
+        >
+          <img
+            style={{ width: "100%", height: "80px", marginTop: "-26px" }}
+            src="logo.png"
           />
-          
-          
-          <button
-            className="btn btn-outline-success"
-            type="submit"
-          >
-            
-            Rechercher
-          </button>
-          {/*<ImSearch style={{width:'25px', height:"25px",margin:"5px"}}/>    Icone de recherche 
-          pour la serachbar*/}
-        </form>
-        <ul style={{marginRight:"30px"}} className="navbar-nav ms-auto mb-2 mb-lg-0">
-            
-            <li style={{margin:"0px 30px 0px 30px"}} className="nav-item">
+        </a>
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+          <form className="d-flex ms-auto">
+            <input
+              className="form-control me-2 vw-25"
+              type="search"
+              placeholder="Rechercher"
+              aria-label="Search"
+            />
 
-            <li className="nav-item">
+            <button className="btn btn-outline-success" type="submit">
+              Rechercher
+            </button>
+          </form>
+          <ul
+            style={{ marginRight: "30px" }}
+            className="navbar-nav ms-auto mb-2 mb-lg-0"
+          >
+            <li style={{ margin: "0px 30px 0px 30px" }} className="nav-item">
               <a className="nav-link active" aria-current="page" href="#">
-              <FaHome id="it" style={{width:'25px', height:"25px",margin:"5px"}}/>
-                
+                <FaHome
+                  id="it"
+                  style={{ width: "25px", height: "25px", margin: "5px" }}
+                />
               </a>
             </li>
-              
-                
-              
-            </li>
 
-
-            <li style={{margin:"0px 30px 0px 30px"}}  className="nav-item">
-           
-            <Link
+            <li style={{ margin: "0px 30px 0px 30px" }} className="nav-item">
+              <Link
                 to="/Contact"
                 className="nav-link"
                 href="#"
-                tabindex="-1"
+                tabIndex="-1"
                 aria-disabled="true"
               >
-                <FaUsers id="it" style={{width:'25px', height:"25px",margin:"5px"}}/>
+                <FaUsers
+                  id="it"
+                  style={{ width: "25px", height: "25px", margin: "5px" }}
+                />
               </Link>
-             
-             
-               
             </li>
 
-            
-            <li style={{margin:"0px 30px 0px 30px"}} className="nav-item">
-            <Link
+            <li style={{ margin: "0px 30px 0px 30px" }} className="nav-item">
+              <Link
                 to="/Chat"
                 className="nav-link"
                 href="#"
-                tabindex="-1"
+                tabIndex="-1"
                 aria-disabled="true"
               >
-                <FaRegComments id="it" style={{width:'25px', height:"25px",margin:"5px"}}/>
+                <FaRegComments
+                  id="it"
+                  style={{ width: "25px", height: "25px", margin: "5px" }}
+                />
               </Link>
-             
-                
-              
-              
-
             </li>
 
-            <li style={{margin:"0px 30px 0px 30px"}}  className="nav-item">
-            <Link
+            <li style={{ margin: "0px 30px 0px 30px" }} className="nav-item">
+              <Link
                 to="/"
                 className="nav-link"
                 href="#"
-                tabindex="-1"
+                tabIndex="-1"
                 aria-disabled="true"
               >
-              <GoSignOut id="it" style={{width:'25px', height:"25px",margin:"5px"}}/>
+                <GoSignOut
+                  id="it"
+                  style={{ width: "25px", height: "25px", margin: "5px" }}
+                />
               </Link>
-             {/* {!props.userName ? "Se deconnecter" : "Se connecter"}*/}
-
-            
             </li>
           </ul>
+        </div>
       </div>
-    </div>
-  </nav>
- 
- 
+    </nav>
   );
 };
 

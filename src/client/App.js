@@ -22,7 +22,7 @@ function App() {
   
   const [convs, setConvs] = useState([]);
   const [user, setUser] = useState({ id: null, name: null });
-  const socket = useRef();
+  const socket = useRef(s);
 
   useEffect(() => {
     if (user.id) {

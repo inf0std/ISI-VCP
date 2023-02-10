@@ -7,6 +7,7 @@ import Contact from "./views/Contact";
 import VideoRoom from "./views/VideoRoum";
 import Profile from "./component/Profile/Profile";
 import ProgrammerReunion from "./component/formulaire/modalForms/ProgramerLaReunion";
+import Room from "./views/VideoCall/Room";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
@@ -14,7 +15,7 @@ function App() {
 
   const [convs, setConvs] = useState([]);
   const [user, setUser] = useState({ id: null, name: null });
-  const socket = useRef(s);
+  const socket = useRef();
 
   const changeUser = (id, name, token) => {
     setUser({ id, name, token });
@@ -27,7 +28,7 @@ function App() {
           path="/"
           element={<Home user={user} changeUser={changeUser} />}
         />
-        <Route path="/videoRoom/:uid/:rid" element={<VideoRoom />} />
+        <Route path="/room/:roomid" element={<Room />} />
         <Route
           path="/Contact/:id"
           element={<Contact user={user} changeUser={changeUser} />}

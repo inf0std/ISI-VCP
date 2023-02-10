@@ -42,7 +42,7 @@ function ProfileHeaders() {
               <div className="d-flex align-items-stretch">
                 <div className="card col-md-6 shadow-sm rounded-4">
                   <img
-                    src="/media/img/cof.jpg"
+                    src="/media/img/Col1.png"
                     className="img-fluid rounded-4"
                     alt="..."
                   />
@@ -84,7 +84,8 @@ function ProfileHeaders() {
               <div className="d-flex align-items-stretch">
                 <div className="card col-md-4 shadow-sm rounded-4">
                   <img
-                    src="/media/img/rom.jpg"
+                    src="/media/img/col6.png
+                    "
                     className="img-fluid rounded-4"
                     alt="..."
                   />

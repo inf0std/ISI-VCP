@@ -10,7 +10,11 @@ import ProgrammerReunion from "./component/formulaire/modalForms/ProgramerLaReun
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
-  const [user, setUser] = useState({ id: null, name: null, token: null });
+  //state declaration
+
+  const [convs, setConvs] = useState([]);
+  const [user, setUser] = useState({ id: null, name: null });
+  const socket = useRef(s);
 
   const changeUser = (id, name, token) => {
     setUser({ id, name, token });

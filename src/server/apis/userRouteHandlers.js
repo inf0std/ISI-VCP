@@ -94,10 +94,8 @@ const handleSearchPeople = (req, res) => {
   const id = req.params.id;
   const query = req.query.query;
 
-  User.find({ username: { $regex: RegExp(`^.*${query}.*$`, "i") } }).then(
-    (users) => {
-      res.status(200).json();
-    }
+  User.find({ username: { $regex: RegExp(`^.*${query}.*$`, "i") } }).toArray(
+    (arr) => {}
   );
 };
 const handleuserconference = function (req, res, next) {

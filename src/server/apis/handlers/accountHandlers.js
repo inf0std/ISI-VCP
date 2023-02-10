@@ -7,6 +7,8 @@ const {
   validatePhoneNumber,
   isAlphanumeric,
 } = require("../formUtils");
+
+const jwt = require("jsonwebtoken");
 const { User } = require("../../db/schema/User");
 const { auth } = require("../../db/crudUtils/userCrud");
 
@@ -23,7 +25,7 @@ const handleSignup = async (req, res) => {
   } else {
     User.findOne({ "login.email": email }).then((user) => {
       if (user) {
-        res.status(400).send({ error: "email exist deja" });
+        res.status(400).json({ error: "email exist deja" });
       } else {
         User.create({
           login: {
@@ -38,7 +40,12 @@ const handleSignup = async (req, res) => {
           emailtoken: genEmailToken(email),
         })
           .then((user) => {
-            sendLinkValidationEmail(email, user.id, user.username);
+            sendLinkValidationEmail(
+              email,
+              user.id,
+              user.username,
+              user.emailtoken
+            );
             res.status(201).send({ message: "Signup seccessful" });
           })
           .catch((err) => {
@@ -69,31 +76,73 @@ const handleLogin = (req, res) => {
     });
 };
 
-const handleValidateEmail = function (req, res, next) {
+const handleLogout = (req, res) => {
+  console.log("attempt to logout");
+  req.session.id = null;
+  req.session.token = null;
+  res.clearCookie("id");
+  res.clearCookie("token");
+  res.redirect("http://localhost:3000/?loggedout=true");
+};
+
+const handleValidateEmail = (req, res) => {
+  console.log("validation attempt");
   const id = req.params.id;
-  const token = req.params.token;
-  const email = req.params.email;
+  const token = req.query.token;
+  const email = req.query.email;
+  console.log(email, id, token);
   let decoded;
   try {
     decoded = jwt.verify(token, process.env.JWT_SECRET);
-    User.findById(id).then((user) => {
-      if (user.login.email == email && user.emailtoken == token)
-        User.updateOne(
-          { "login.email": email },
-          { emailtoken: null, isverified: true }
-        ).then((user) => {
-          return console.log({
-            message: `${user.modifiedCount} updated successfully!`,
-          });
+  } catch (err) {
+    let newToken = genEmailToken(email);
+    User.updateOne({ "login.email": email }, { emailtoken: newToken }).then(
+      (res) => {
+        if (res.modifiedCount > 0)
+          sendLinkValidationEmail(email, id, "SEEN_USER", newToken);
+        else verificationLinkUnvalid(res);
+      }
+    );
+    return;
+  }
+  console.log(decoded);
+  User.findOne({ "login.email": email }).then((user) => {
+    console.log(user);
+    if (
+      user.login.email == email &&
+      user.emailtoken == token &&
+      user._id == id
+    ) {
+      console.log("updating");
+      User.updateOne(
+        { "login.email": email },
+        { emailtoken: null, isverified: true }
+      ).then((user) => {
+        return console.log({
+          message: `${user.modifiedCount} updated successfully!`,
         });
-    });
-  } catch (err) {}
-
-  next();
+      });
+      verified(res);
+      return;
+    } else verificationLinkUnvalid(res);
+    return;
+  });
 };
 
+const sentNewVerificationLink = (res) => {
+  res.redirect("/?verified=false&verificationresent=true");
+};
+
+const verificationLinkUnvalid = (res) => {
+  res.redirect("/?verified=false&verificationresent=flase&unvalidlink=true");
+};
+
+const verified = (res) => {
+  res.redirect("/?verified=true");
+};
 module.exports = {
   handleLogin,
   handleSignup,
   handleValidateEmail,
+  handleLogout,
 };

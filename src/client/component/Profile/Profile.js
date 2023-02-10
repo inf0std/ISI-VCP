@@ -6,7 +6,7 @@ import "./Sidebar.css";
 export default function Profile({ user, changeUser }) {
   const navigate = useNavigate();
   useEffect(() => {
-    if (!user.id) navigate("/");
+    //if (!user.id) navigate("/");
   }, []);
 
   return (

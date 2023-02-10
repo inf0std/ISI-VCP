@@ -16,12 +16,12 @@ const HomeFooter = () => {
       <div className="col mb-3"></div>
 
       <div className="col mb-3">
-        <h5>Realisé Par</h5>
+        <h5>Réalisé Par</h5>
         <ul>
           <li>
             <a href="#">
               <i className="bx bxl-linkedin-square"></i>{" "}
-              <i className="bx bxl-github"></i> Ahcene Faical (chef d'équipe)
+              <i className="bx bxl-github"></i> Ahcene Faïçal (chef d'équipe)
             </a>
           </li>
           <li>
@@ -136,17 +136,17 @@ const HomeFooter = () => {
         <ul className="nav flex-column">
           <li className="nav-item mb-2">
             <a href="#" className="nav-link p-0 text-muted">
-              Home
+              Accueil
             </a>
           </li>
           <li className="nav-item mb-2">
             <a href="#" className="nav-link p-0 text-muted">
-              Features
+              Fonctionnalités
             </a>
           </li>
           <li className="nav-item mb-2">
             <a href="#" className="nav-link p-0 text-muted">
-              Pricing
+              Tarif
             </a>
           </li>
           <li className="nav-item mb-2">
@@ -156,7 +156,7 @@ const HomeFooter = () => {
           </li>
           <li className="nav-item mb-2">
             <a href="#" className="nav-link p-0 text-muted">
-              About
+              Sur nous
             </a>
           </li>
         </ul>
@@ -167,17 +167,17 @@ const HomeFooter = () => {
         <ul className="nav flex-column">
           <li className="nav-item mb-2">
             <a href="#" className="nav-link p-0 text-muted">
-              Home
+              Accueil
             </a>
           </li>
           <li className="nav-item mb-2">
             <a href="#" className="nav-link p-0 text-muted">
-              Features
+            Fonctionnalités
             </a>
           </li>
           <li className="nav-item mb-2">
             <a href="#" className="nav-link p-0 text-muted">
-              Pricing
+              Tarif
             </a>
           </li>
           <li className="nav-item mb-2">
@@ -187,7 +187,7 @@ const HomeFooter = () => {
           </li>
           <li className="nav-item mb-2">
             <a href="#" className="nav-link p-0 text-muted">
-              About
+              Sur nous
             </a>
           </li>
         </ul>

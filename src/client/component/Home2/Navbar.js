@@ -1,9 +1,12 @@
 import { useRef } from "react";
 import { FaUsers } from "react-icons/fa";
 import { FaRegComments } from "react-icons/fa";
+import { MdAlternateEmail } from "react-icons/md";
+import { FiSearch } from "react-icons/fi";
 import { FaHome } from "react-icons/fa";
 import { GoSignOut } from "react-icons/go";
 import { Link } from "react-router-dom";
+import { logout } from "../../utils/dataFetcherUtils";
 import SignInSignUp from "../formulaire/modalForms/SignINSignUp";
 
 import config from "../../config.json";
@@ -43,19 +46,6 @@ const Navbar = ({ user, changeUser }) => {
     document.getElementById("loginModalBtn").click();
   };
 
-  const logout = () => {
-    fetch(`${config.app_url}:${config.app_port}/api/account/${user.id}/logout`)
-      .then((res) => res.json(res))
-      .then((data) => {
-        if (data.loggedOut) {
-          changeUser(null, null, null);
-        }
-      })
-      .catch((err) => {
-        console.log("logout", err);
-      });
-  };
-
   return (
     <nav
       id="nev"
@@ -69,7 +59,12 @@ const Navbar = ({ user, changeUser }) => {
           href="#"
         >
           <img
-            style={{ width: "100%", height: "80px", marginTop: "-26px" }}
+            style={{
+              width: "70%",
+              height: "80px",
+              marginTop: "-26px",
+              boxShadow: "inherit",
+            }}
             src="logo.png"
           />
         </a>
@@ -86,24 +81,34 @@ const Navbar = ({ user, changeUser }) => {
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <form className="d-flex ms-auto">
+            {
+              <FiSearch
+                id="it"
+                style={{
+                  width: "16px",
+                  height: "16px",
+                  marginLeft: "8px",
+                  marginTop: "13px",
+                  position: "absolute",
+                }}
+              />
+            }
             <input
               className="form-control me-2 vw-25"
               type="search"
-              placeholder="Rechercher"
+              placeholder="   Rechercher"
               aria-label="Search"
             />
 
             <button className="btn btn-outline-success" type="submit">
               Rechercher
             </button>
-            {/*<ImSearch style={{width:'25px', height:"25px",margin:"5px"}}/>    Icone de recherche 
-          pour la serachbar*/}
           </form>
           <ul
-            style={{ marginRight: "30px" }}
+            style={{ marginRight: "3px" }}
             className="navbar-nav ms-auto mb-2 mb-lg-0"
           >
-            <li style={{ margin: "0px 30px 0px 30px" }} className="nav-item">
+            <li style={{ margin: "0px 0px 0px 0px" }} className="nav-item">
               <Link
                 to="/"
                 className="nav-link"
@@ -118,7 +123,7 @@ const Navbar = ({ user, changeUser }) => {
               </Link>
             </li>
 
-            <li style={{ margin: "0px 30px 0px 30px" }} className="nav-item">
+            <li style={{ margin: "0px 30px 0px 3px" }} className="nav-item">
               <Link
                 to="/Contact"
                 className="nav-link"
@@ -126,14 +131,14 @@ const Navbar = ({ user, changeUser }) => {
                 tabIndex="-1"
                 aria-disabled="true"
               >
-                <FaUsers
+                <MdAlternateEmail
                   id="it"
                   style={{ width: "25px", height: "25px", margin: "5px" }}
                 />
               </Link>
             </li>
 
-            <li style={{ margin: "0px 30px 0px 30px" }} className="nav-item">
+            <li className="nav-item">
               {/*<Link
                 to="/"
                 className="nav-link"
@@ -143,6 +148,7 @@ const Navbar = ({ user, changeUser }) => {
               >*/}
               {!user.id && (
                 <button
+                  style={{ marginTop: "5px" }}
                   className="btn btn-outline-success"
                   onClick={showLoginModal}
                   id="login-btn"
@@ -154,10 +160,14 @@ const Navbar = ({ user, changeUser }) => {
                 <>
                   <button
                     className="btn btn-outline-success"
-                    onClick={logout}
-                    id="login-btn"
+                    onClick={() => {
+                      console.log("logging out");
+                      changeUser(null, null);
+                      logout();
+                    }}
+                    id="logout-btn"
                   >
-                    Se deconecter
+                    Se déconecter
                   </button>
                   <img
                     src={`http://127.0.0.1:8080/profile/${user.id}/img`}

@@ -21,6 +21,17 @@ const Video = ({ stream, Nbr_Partipents }) => {
     videoRef.current.srcObject = stream;
   }, [Nbr_Partipents, stream]);
 
+<<<<<<< HEAD
+  return <video className={`'rounded-3', ${classNames(
+    {'video1':Nbr_Partipents+1 ===1,
+      'video2':Nbr_Partipents+1 === 2,
+      'video3_4':Nbr_Partipents+1 >=3,
+      'video5_6':Nbr_Partipents+1 >=5,
+      'video4_9':Nbr_Partipents+1 >=7,
+      'video10_12':Nbr_Partipents+1 >=10,
+      'video13_20':Nbr_Partipents+1 >=12,})}`}
+   ref={videoRef} autoPlay></video>;
+=======
   return (
     <video
       className={classNames({
@@ -36,6 +47,7 @@ const Video = ({ stream, Nbr_Partipents }) => {
       autoPlay
     ></video>
   );
+>>>>>>> 5280bf87c5fb19854265c7635f9aa8fc44d63c7d
 };
 
 export default Video;

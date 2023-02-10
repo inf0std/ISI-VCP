@@ -1,3 +1,4 @@
+const urlJoin = require("proper-url-join");
 const nodemailer = require("nodemailer");
 
 var transporter = nodemailer.createTransport({
@@ -20,12 +21,18 @@ const emailBody = (email, id, name, token) => {
     subject: `${name}  verify your email`,
     html: `<h2> DEAR ${name}! WELCOME TO THE SEEN FAMILY </h2>
         <h4>Please verify your email by clicking on the link bellow to continue... </h4><p><br/>
-        <a href = "${process.env.APP_URL}/api/account/ver/${id}/${email}/${token}">
+        <a href = "${emailVerificationLink(id, email, token)}">
         verify your email
         </a> <br>this link will only remain available for the next 24 hours</p>`,
   };
 };
+const emailVerificationLink = (id, email, token) => {
+  return urlJoin(process.env.APP_URL, `api/account/ver/${id}`, {
+    query: { email: email, token: token },
+  });
+};
 const sendLinkValidationEmail = (email, id, name, token) => {
+  console.log("send email", email, id, name, token);
   transporter
     .sendMail(emailBody(email, id, name, token))
     .then((info) => {

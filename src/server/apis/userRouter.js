@@ -36,6 +36,7 @@ userRouter.get("/:id", handleGetData);
 userRouter.get("/:id/conferences", handleuserconference);
 userRouter.get("/:id/reunions", handleuserreunion);
 userRouter.get("/:id/contacts", handleUserContacts);
+//userRouter.get("/:id/people", handleSearchPeople);
 userRouter.get("/:id/conversations", handleUserConversations);
 userRouter.get("/:id/conversations/:convId", handleGetConversation); /* 
 userRouter.post("/programme/conference", handleProgrammeConference);

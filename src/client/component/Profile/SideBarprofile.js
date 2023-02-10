@@ -14,7 +14,7 @@ export default function SideBarProfile() {
         <div className="side-menu">
           <center>
             <img src="kaka.jpg" />
-            <h2>kaka</h2>
+            <h2>Jhon</h2>
           </center>
 
           <ul className="">

@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { logout } from "../../utils/dataFetcherUtils";
 const DefaultNav = (props) => {
   const searchBtn = useRef();
   const searchResults = useRef();
@@ -86,7 +87,11 @@ const DefaultNav = (props) => {
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#" onClick={showLoginModal}>
+              <a
+                className="nav-link"
+                href="#"
+                onClick={!props.user.name ? showLoginModal : logout}
+              >
                 {!props.user.name ? "Se connecter" : "Se deconnecter"}
               </a>
             </li>

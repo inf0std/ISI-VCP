@@ -1,73 +1,105 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
-import Navbar from "./VideoRoom/components/navbar/Navbar";
-import "./videoroom.css";
+import SimplePeer from "simple-peer";
+import io from "socket.io-client";
+let s = io.connect("http://localhost:8080");
+const VideoChat = () => {
+  const { uid, rid } = useParams();
+  console.log(uid, rid);
+  const [stream, setStream] = useState(null);
+  const [peers, setPeers] = useState([]);
+  const socket = useRef(s);
+  const [id, setId] = useState(null);
+  const [screenShare, setScreenShare] = useState(false);
+  const [joined, setJoined] = useState(false);
 
-import Room from "../Room";
-import Video from "./Video";
+  useEffect(() => {
+    const getMedia = screenShare
+      ? navigator.mediaDevices.getDisplayMedia
+      : navigator.mediaDevices.getUserMedia;
 
-export default function VideoRoum({ generalHandler, localVars }) {
-  const { roomid, userid } = useParams();
-  localVars.socket.emit("user-room", { userId: userid });
-  //console.log(props);
-  //rtcPeerConnecion establishement
-  const constraints = (window.constraints = {
-    audio: false,
-    video: true,
-  });
+    getMedia({ video: true, audio: true }).then((stream) => {
+      setStream(stream);
+    });
+  }, []);
+  useEffect(() => {
+    //socket.current.emit("join", { rid, id: uid });
+    socket.current.on("joined", ({ id, sid }) => {
+      console.log(`user ${id} joined`);
+      //const peer = setupPeer(id, sid, true);
+    });
+    socket.current.on("ids", ({ ids }) => {
+      console.log(`all joined users `, ids);
+      ids.forEach((u) => {
+        let peer = setupPeer(u.id, u.sid, false);
+      });
+      console.log(peers);
+    });
+    socket.current.on("peer-disconnected", (id) => {
+      const peerIndex = peers.findIndex((peer) => peer.id === id);
+      if (peerIndex === -1) return;
+      peers[peerIndex].peer.destroy();
+      setPeers((prevPeers) =>
+        prevPeers.filter((_, index) => index !== peerIndex)
+      );
+    });
 
-  const getLocalStream = async () => {
-    return navigator.mediaDevices.getUserMedia(constraints);
+    socket.current.on("offer", (offer) => {
+      const p = setupPeer(false);
+      p.peer.signal(offer.offer);
+    });
+
+    socket.current.on("answer", (answer) => {
+      const peer = peers.find((peer) => peer.id === answer.id);
+      if (!peer) return;
+      peer.peer.signal(answer.answer);
+    });
+  }, [joined]);
+
+  const setupPeer = (id, sid, init) => {
+    const peer = new SimplePeer({
+      initiator: init,
+      stream,
+    });
+
+    peer.on("signal", (offer) => {
+      socket.current.emit("offer", { id, sid, offer });
+    });
+
+    peer.on("stream", (remoteStream) => {
+      const newPeers = [...peers];
+      newPeers.push({ id, sid, peer, stream: remoteStream });
+      setPeers(newPeers);
+    });
+
+    return { id, peer };
   };
 
-  //let peer = new RTCPeerConnection();
-  const [streams, setStreams] = useState([]);
-  const [localStream, setLocalStream] = useState(null);
-
-  const [Nbr_Partipents, setNbr_Partipents] = useState();
-  useEffect(() => {
-    getLocalStream()
-      .then((stream) => {
-        //setupLocalStream(stream);
-        setLocalStream(stream);
-        //setStreams([stream, stream, stream, stream]);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    const { socket, user } = localVars;
-    let room = new Room(
-      socket,
-      user.id,
-      roomid,
-      localStream,
-      setStreams,
-      streams
-    );
-    room.connect();
-    setNbr_Partipents(streams.length);
-    //setStreams([localStream, localStream, localStream, localStream]);
-  }, []);
-  //localVideo.current.srcObject = localStream;
   return (
-    <div className="container1 bg-secondary" style={{ height: "650px" }}>
-      <Navbar />
-      <div
-        className="container-sm flex flex-col bg-black"
-        style={{ width: "830px" }}
+    <div>
+      <p>Your ID: {id}</p>
+
+      <button onClick={() => setScreenShare(!screenShare)}>
+        {screenShare ? "Stop Screen Share" : "Start Screen Share"}
+      </button>
+      <button
+        onClick={(e) => {
+          socket.current.emit("join", { rid, id: uid });
+          e.target.disanled = true;
+        }}
       >
-        <Video stream={localStream} Nbr_Partipents={streams.length}></Video>
-        {streams.map((s, index) => {
-          //console.log("stream", s);
-          return (
-            <Video
-              key={index}
-              stream={s}
-              Nbr_Partipents={Nbr_Partipents}
-            ></Video>
-          );
-        })}
-      </div>
+        {" "}
+        se connecter
+      </button>
+      {peers.map((peer) => (
+        <video
+          key={peer.id}
+          autoPlay={true}
+          src={URL.createObjectURL(peer.stream)}
+        />
+      ))}
     </div>
   );
-}
+};
+
+export default VideoChat;

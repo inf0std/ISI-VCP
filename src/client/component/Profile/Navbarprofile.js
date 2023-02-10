@@ -6,29 +6,18 @@ import { GoSignOut } from "react-icons/go";
 import { ImSearch } from "react-icons/im";
 import { Link } from "react-router-dom";
 
+import { searchUsers } from "../../utils/dataFetcherUtils";
+
+import logo from "../../logo.png";
+
 import "./navbar.css";
 const Navbarprofile = (props) => {
+  const [searchRes, setSearchRes] = useState([]);
   const searchBtn = useRef();
-  const searchResults = useRef();
   const searchInput = useRef();
 
   const handleSearch = (e) => {
-    e.preventDefault();
-    let data = searchInput.current.value;
-    //*
-    fetch("127.0.0.1:3000/search", {
-      method: "POST", // *GET, POST, PUT, DELETE, etc.
-      mode: "cors", // no-cors, *cors, same-origin
-      cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-      credentials: "same-origin", // include, *same-origin, omit
-      headers: {
-        "Content-Type": "application/json",
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      redirect: "follow", // manual, *follow, error
-      referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-      body: JSON.stringify(data), // body data type must match "Content-Type" header
-    })
+    searchUsers(searchInput)
       .then((response) => response.json())
       .then((data) => {
         //display data in the search results
@@ -51,7 +40,7 @@ const Navbarprofile = (props) => {
         >
           <img
             style={{ width: "100%", height: "80px", marginTop: "-26px" }}
-            src="logo.png"
+            src={logo}
           />
         </a>
         <button

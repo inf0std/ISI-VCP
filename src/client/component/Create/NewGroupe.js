@@ -8,7 +8,7 @@ import { FaSearch } from "react-icons/fa";
 import './NewGroupe.css';
 
 function valider() {
-  alert('Vous avez créé un nouveau groupe !');
+  alert('Vous avez créé un nouveau groupe!');
 }
 
 function NewGroupe() {

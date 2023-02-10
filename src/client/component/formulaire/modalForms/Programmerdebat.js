@@ -92,7 +92,7 @@ const Programmerdebat = (props) => {
                     aria-controls="chrono-debat-tab"
                     aria-selected="true"
                   >
-                    étape01
+                    Étape 01
                   </button>
                 </li>
                 <li className="nav-item" role="presentation">
@@ -106,7 +106,7 @@ const Programmerdebat = (props) => {
                     aria-controls="participant-debat-pane"
                     aria-selected="false"
                   >
-                    étape02
+                    Étape 02
                   </button>
                 </li>
                 <li className="nav-item" role="presentation">
@@ -120,7 +120,7 @@ const Programmerdebat = (props) => {
                     aria-controls="audience-debat-pane"
                     aria-selected="false"
                   >
-                    étape03
+                    Étape 03
                   </button>
                 </li>
                 <li className="nav-item" role="presentation">
@@ -134,7 +134,7 @@ const Programmerdebat = (props) => {
                     aria-controls="confirmation-debat-pane"
                     aria-selected="false"
                   >
-                    étape04
+                    Étape 04
                   </button>
                 </li>
               </ul>
@@ -184,7 +184,7 @@ const Programmerdebat = (props) => {
                       <div style={{ width: "auto" }}>
                         <div className="form-outline mb-2 ">
                           <label className="form-label" htmlFor="debat-heure">
-                            heure
+                            Heure
                           </label>
                           <input
                             ref={heure}
@@ -262,7 +262,7 @@ const Programmerdebat = (props) => {
                           aria-label="Search"
                         />
                         <button className="btn btn-outline-info" type="submit">
-                          Search
+                          Rechercher
                         </button>
                       </div>
                       <div className="ajout_">
@@ -275,7 +275,7 @@ const Programmerdebat = (props) => {
                           className="btn btn-secondary btn-floating mx-1"
                           onClick={handlePrecedent1}
                         >
-                          Précedent
+                          Précédent
                         </button>
 
                         <button
@@ -301,7 +301,7 @@ const Programmerdebat = (props) => {
                           className="form-label"
                           htmlFor="debat-audience-search"
                         >
-                          Audiance
+                          Audience
                         </label>
 
                         <input
@@ -312,7 +312,7 @@ const Programmerdebat = (props) => {
                           aria-label="Search"
                         />
                         <button className="btn btn-outline-info" type="submit">
-                          Search
+                          Rechercher
                         </button>
                       </div>
                       <div className="chek">
@@ -340,7 +340,7 @@ const Programmerdebat = (props) => {
                           className="btn btn-secondary btn-floating mx-1"
                           onClick={handlePrecedent2}
                         >
-                          Précedent
+                          Précédent
                         </button>
 
                         <button
@@ -396,7 +396,7 @@ const Programmerdebat = (props) => {
                           className="btn btn-secondary btn-floating mx-1"
                           onClick={handlePrecedent3}
                         >
-                          Précedent
+                          Précédent
                         </button>
 
                         <button

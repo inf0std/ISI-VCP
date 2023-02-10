@@ -1,20 +1,9 @@
-import config from "../config.json";
-import { useState, useRef, useEffect } from "react";
-import io from "socket.io-client";
+import { useState } from "react";
 // import NavBar from '../component/navbar/NavBar'
 import Conversations from "../component/conversations/conversations";
-import ConversationTab from "../component/conversationTab/conversationTab";
-
-const Chat = ({ user, chageUser }) => {
-  const [convs, setConvs] = useState([]);
+import ConversationTab from "../component/conversationTab/ConversationTab";
+const Chat = (props) => {
   const [activeConv, setActiveConv] = useState(0);
-  const [isLoading, setIsloading] = useState(true);
-  const socket = useRef(null);
-  useEffect(() => {});
-
-  const sendMsg = (cid, msg) => {
-    socket.current.emit("msg", { cid, msg });
-  };
   return (
     <div
       className="container-fluid py-5 my-0"
@@ -22,8 +11,13 @@ const Chat = ({ user, chageUser }) => {
     >
       <div className="row">
         {/* <NavBar /> */}
-        <Conversations convs={convs} setActive={setActiveConv} />
-        <ConversationTab myId={1} id={activeConv} />
+        <Conversations convs={props.convs} activate={setActiveConv} />
+        <ConversationTab
+          myId={1}
+          id={activeConv}
+          msgs={props.convs[activeConv].msgs}
+          socket={props.socket}
+        />
       </div>
     </div>
   );

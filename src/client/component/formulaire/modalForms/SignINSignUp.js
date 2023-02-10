@@ -18,28 +18,11 @@ const SignInSignUp = ({ changeUser }) => {
 
   const signinEmail = useRef();
   const signinPassword = useRef();
-
   const signupUsername = useRef();
   const signupEmail = useRef();
   const signupPassword = useRef();
   const signupPassword2 = useRef();
   const signupPhone = useRef();
-
-  /* const sendSignInData = async (data) => {
-    return fetch(`${config.app_url}:${config.app_port}/api/account/login`, {
-      method: "POST", // *GET, POST, PUT, DELETE, etc.
-      mode: "cors", // no-cors, *cors, same-origin
-      cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-      credentials: "same-origin", // include, *same-origin, omit
-      headers: {
-        "Content-Type": "application/json",
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      redirect: "follow", // manual, *follow, error
-      referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-      body: JSON.stringify(data), // body data type must match "Content-Type" header
-    });
-  }; */
 
   const handleConnection = (e) => {
     e.preventDefault();
@@ -62,23 +45,6 @@ const SignInSignUp = ({ changeUser }) => {
         navigate("/");
       }); //*/
   };
-  /* 
-  const sendSignupData = async (data) => {
-    console.log("signing up", data);
-    return fetch(`${config.app_url}:${config.app_port}/api/account/signup`, {
-      method: "POST", // *GET, POST, PUT, DELETE, etc.
-      mode: "cors", // no-cors, *cors, same-origin
-      cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-      credentials: "same-origin", // include, *same-origin, omit
-      headers: {
-        "Content-Type": "application/json",
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      redirect: "follow", // manual, *follow, error
-      referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-      body: JSON.stringify(data), // body data type must match "Content-Type" header
-    });
-  }; */
 
   const validateFormData = (email, username, pwd1, pwd2, phone) => {
     console.log("email", email, validateEmail(email));
@@ -115,12 +81,16 @@ const SignInSignUp = ({ changeUser }) => {
         .then((response) => response.json())
         .then((data) => {
           console.log(data);
-          if (data.message) console.log(data.message);
-          alert(
-            "SUCCES!! VEUILLEZ VERIFIER VOTRE BOITE EMAIL POUR VALIDER VOTRE COMPTE",
-            "success"
-          );
-          navigate("/profile/1");
+          if (data.message) {
+            console.log(data.message);
+            alert(
+              "SUCCES!! VEUILLEZ VERIFIER VOTRE BOITE EMAIL POUR VALIDER VOTRE COMPTE",
+              "success"
+            );
+            document.getElementById("signup-signin").classList.remove("show");
+          } else if (data.error) {
+            alert(`inscription echoue ${data.error}`, "danger");
+          }
         })
         .catch((err) => {
           console.log(err);
@@ -128,7 +98,7 @@ const SignInSignUp = ({ changeUser }) => {
         }); //*/
     } else {
       alert(
-        "MAUVAIS FORMAT POUR L'EMAIL, LE MOT DE PASSE, LE TELEPHONE OU LE NOM D'UTILISATEUR",
+        "MAUVAIS FORMAT pour L'EMAIL, LE MOT DE PASSE, LE TELEPHONE OU LE NOM D'UTILISATEUR",
         "danger"
       );
     }
@@ -139,7 +109,7 @@ const SignInSignUp = ({ changeUser }) => {
       <button
         type="button"
         id="loginModalBtn"
-        className="btn btn-primary"
+        className="btn btn-primary btn"
         data-bs-toggle="modal"
         data-bs-target="#signup-signin"
         hidden
@@ -206,18 +176,20 @@ const SignInSignUp = ({ changeUser }) => {
                           type="email"
                           id="signin-email"
                           className="form-control"
+                          placeholder="Votre adresse e-mail"
                           ref={signinEmail}
                         />
                       </div>
 
                       <div className="form-outline mb-4">
                         <label className="form-label" htmlFor="signin-pwd">
-                          mot de passe
+                          Mot de passe
                         </label>
                         <input
                           ref={signinPassword}
                           type="password"
                           id="signin-pwd"
+                          placeholder="Votre Mot de passe"
                           className="form-control"
                         />
                       </div>
@@ -237,13 +209,13 @@ const SignInSignUp = ({ changeUser }) => {
                               htmlFor="remember"
                             >
                               {" "}
-                              Remember me{" "}
+                              Se souvenir de moi{" "}
                             </label>
                           </div>
                         </div>
 
                         <div className="col">
-                          <a href="#!">Forgot password?</a>
+                          <a href="#!">Mot de passe oublié ?</a>
                         </div>
                       </div>
 
@@ -253,7 +225,7 @@ const SignInSignUp = ({ changeUser }) => {
                           className="btn btn-secondary btn-floating mx-1"
                           data-bs-dismiss="modal"
                         >
-                          annuler
+                          Annuler
                         </button>
 
                         <button
@@ -261,7 +233,7 @@ const SignInSignUp = ({ changeUser }) => {
                           type="submit"
                           className="btn btn-primary btn-block"
                         >
-                          connexion
+                          Connecter
                         </button>
                       </div>
                     </form>
@@ -276,40 +248,39 @@ const SignInSignUp = ({ changeUser }) => {
                     <form>
                       <div className="form-outline mb-4">
                         <label className="form-label" htmlFor="form6Example5">
-                          username
+                          Nom d'utilisateur
                         </label>
                         <input
                           ref={signupUsername}
                           type="email"
                           id="form6Example5"
                           className="form-control"
-                          value="fay"
+                          placeholder="Smith_25"
                           required
                         />
                       </div>
                       <div className="form-outline mb-4">
                         <label className="form-label" htmlFor="form6Example5">
-                          email
+                          Email
                         </label>
                         <input
                           ref={signupEmail}
                           type="email"
                           id="form6Example5"
                           className="form-control"
-                          value="ff_ahcene@esi.dz"
                           required
                         />
                       </div>
 
                       <div className="form-outline mb-4">
                         <label className="form-label" htmlFor="form6Example6">
-                          Phone
+                          Téléphone
                         </label>
                         <input
                           ref={signupPhone}
                           type="number"
                           id="form6Example6"
-                          value="0792420998"
+                          placeholder="Votre numéro de téléphone"
                           className="form-control"
                         />
                       </div>
@@ -321,13 +292,13 @@ const SignInSignUp = ({ changeUser }) => {
                               className="form-label"
                               htmlFor="form6Example1"
                             >
-                              mot de passe
+                              Mot de passe
                             </label>
                             <input
                               ref={signupPassword}
                               type="password"
                               className="form-control"
-                              value="azerty12@@"
+                              placeholder="Smith12@"
                               required
                             />
                           </div>
@@ -338,13 +309,13 @@ const SignInSignUp = ({ changeUser }) => {
                               className="form-label"
                               htmlFor="form6Example2"
                             >
-                              Confirmation
+                              Confirmer
                             </label>
                             <input
                               ref={signupPassword2}
                               type="password"
                               className="form-control"
-                              value="azerty12@@"
+                              placeholder="Smith12@"
                               required
                             />
                           </div>
@@ -356,15 +327,15 @@ const SignInSignUp = ({ changeUser }) => {
                           className="btn btn-secondary btn-floating mx-1"
                           data-bs-dismiss="modal"
                         >
-                          annuler
+                          Annuler
                         </button>
 
                         <button
                           onClick={handleSignup}
                           type="submit"
-                          className="btn btn-primary btn-block"
+                          className="btn  btn-primary btn-block"
                         >
-                          inscription
+                          S'inscrire
                         </button>
                       </div>
                     </form>

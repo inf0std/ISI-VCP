@@ -89,6 +89,17 @@ const handleuserreunion = async (req, res, next) => {
       });
     });
 };
+
+const handleSearchPeople = (req, res) => {
+  const id = req.params.id;
+  const query = req.query.query;
+
+  User.find({ username: { $regex: RegExp(`^.*${query}.*$`, "i") } }).then(
+    (users) => {
+      res.status(200).json();
+    }
+  );
+};
 const handleuserconference = function (req, res, next) {
   const id = req.params.id;
   console.log(id);

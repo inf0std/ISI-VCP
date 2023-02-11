@@ -1,9 +1,14 @@
+import * as process from "process";
+
 import React from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App";
 //import {ContextProvider} from './views/videoR/routes/RoomContext';
 import reportWebVitals from "./reportWebVitals";
+window.global = window;
+window.process = process;
+window.Buffer = [];
 //import "bootstrap/dist/css/bootstrap.min.css";
 const root = createRoot(document.getElementById("root"));
 root.render(

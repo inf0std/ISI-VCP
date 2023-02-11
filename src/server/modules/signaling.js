@@ -18,7 +18,7 @@ module.exports = (server) => {
     });
 
     socket.on("offre", ({ signal, socketid }) => {
-      socket.to(socketid).emit("offre", { signal, socket: socket.id });
+      socket.to(socketid).emit("offre", { signal, socketid: socket.id });
     });
 
     socket.on("answer", ({ signal, socketid }) => {

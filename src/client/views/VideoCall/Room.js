@@ -10,7 +10,9 @@ import {
 import { BiMicrophoneOff, BiMicrophone } from "react-icons/bi";
 import { HiUsers } from "react-icons/hi";
 import Peer from "simple-peer";
-import Video from "./videocall.css";
+import "./videocall.css";
+import Chat from "./chat/Chat";
+
 export default function Room() {
   const s = useRef(io.connect("localhost:8080"));
   const { roomid } = useParams();
@@ -184,6 +186,7 @@ export default function Room() {
           </div>
         </div>
       </div>
+      <Chat />
     </div>
   );
 }

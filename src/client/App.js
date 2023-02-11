@@ -14,7 +14,7 @@ function App() {
 
   const [convs, setConvs] = useState([]);
   const [user, setUser] = useState({ id: null, name: null });
-  const socket = useRef(s);
+  //const socket = useRef(s);
 
   const changeUser = (id, name, token) => {
     setUser({ id, name, token });

@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import SideBarProfile from "./SideBarprofile";
 import Navbarprofile from "./Navbarprofile";
 import React, { useState, useEffect } from "react";
@@ -21,10 +21,11 @@ import {
   MDBListGroupItem,
 } from "mdb-react-ui-kit";
 const Profile = (props) => {
+  const { id } = useParams();
   const [user, setUser] = useState({});
 
   useEffect(() => {
-    fetch(`http://localhost:8080/api/user/${props.match.params.id}/contacts`)
+    fetch(`http://localhost:8080/api/user/${id}/contacts`)
       .then((res) => res.json())
       .then((data) => setUser(data))
       .catch((err) => console.error(err));

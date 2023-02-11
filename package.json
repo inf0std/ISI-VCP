@@ -29,9 +29,11 @@
     "http-errors": "^2.0.0",
     "jest": "^27.5.1",
     "jsonwebtoken": "^8.5.1",
+    "mdb-react-ui-kit": "^5.1.0",
     "mongoose": "^6.8.1",
     "nodemailer": "^6.8.0",
     "nodemon": "^2.0.20",
+    "peerjs": "^1.4.7",
     "proper-url-join": "^2.1.1",
     "react": "^18.2.0",
     "react-chat-engine": "^1.11.28",
@@ -46,7 +48,6 @@
     "styled-component": "^2.8.0",
     "url-join": "^5.0.0",
     "validator": "^13.7.0",
-    "peerjs": "^1.4.7",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

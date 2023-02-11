@@ -17,11 +17,11 @@ module.exports = (server) => {
     });
 
     socket.on("offre", ({ signal, socketid }) => {
-      socket.to(socketid).emit("offre", { signal, socketid });
+      socket.to(socketid).emit("offre", { signal, socketid: socket.id });
     });
     socket.on("answer", ({ signal, socketid }) => {
       console.log("jai recu un answer");
-      socket.to(socketid).emit("answer", { signal, socketid });
+      socket.to(socketid).emit("answer", { signal, socketid: socket.id });
     });
   });
 };

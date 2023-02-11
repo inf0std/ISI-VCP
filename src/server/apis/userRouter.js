@@ -13,11 +13,14 @@ const userRouter = require("express").Router();
 
 userRouter.use((req, res, next) => {
   let id = req.params.id;
+  console.log("credentials validation", id);
   if (req.session.id) {
+    console.log("session exists", id)
     if (req.session.id == id) {
+      console.log("session id ")
       next();
-      return;
     } else {
+      console.log(req.)
       res.status(401).send({ error: "Unauthorised" });
     }
   } else if (req.cookies.token) {

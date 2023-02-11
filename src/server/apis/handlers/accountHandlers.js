@@ -7,11 +7,14 @@ const {
   validatePhoneNumber,
   isAlphanumeric,
 } = require("../formUtils");
-
+const fs = require("fs");
 const jwt = require("jsonwebtoken");
 const { User } = require("../../db/schema/User");
 const { auth } = require("../../db/crudUtils/userCrud");
 
+const sendProfileImage = (req, res) => {
+  const id = req.params.id;
+};
 const handleSignup = async (req, res) => {
   const { email, password, password2, username, phone } = req.body;
 

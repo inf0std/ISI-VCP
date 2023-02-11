@@ -1,7 +1,10 @@
 module.exports = (server) => {
   //creation de serveur socketio
   const io = require("socket.io")(server, {
-    cors: { origin: "http://localhost:3000", methods: ["GET", "POST"] },
+    cors: {
+      origin: "http://localhost:3000",
+      methods: ["GET", "POST"],
+    },
   });
   rooms = {};
   io.on("connection", (socket) => {

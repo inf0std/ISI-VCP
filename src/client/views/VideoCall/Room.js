@@ -16,7 +16,7 @@ import Chat from "./chat/Chat";
 export default function Room() {
   const s = useRef(io.connect("localhost:8080"));
   const { roomid } = useParams();
-  const [localStream, setLocalStream] = useState(null);
+  const localStream = useRef(null);
   const ref = useRef("");
   const [peers, setpeers] = useState([]);
   const [streams, setstreams] = useState([]);
@@ -33,23 +33,29 @@ export default function Room() {
       navigator.mediaDevices
         .getUserMedia({ video: true, audio: true })
         .then((stream) => {
-          setLocalStream(stream);
-          ref.current.srcObject = stream;
+          console.log("recuperer stream avec succes", stream);
+          localStream.current = stream;
+          ref.current.srcObject = localStream.current;
+          s.current.emit("join", roomid);
         });
-      s.current.emit("join", roomid);
+
       s.current.on("joined", ({ roomid, socketid }) => {
+        console.log("userJoined", socketid);
         const peer = new Peer({
           initiator: true,
           trickle: false,
         });
-        peer.addStream(ref.current.srcObject);
+        console.log("the stream to add ", ref.current.srcObject);
+        peer.addStream(localStream.current);
         peer.on("stream", (stream) => {
           //setstreams([
+          console.log("received stream", stream);
           addVideo(stream, socketid, false);
           streams.push({ stream: stream, id: socketid });
         });
 
         peer.on("signal", (signal) => {
+          console.log("sending offer");
           s.current.emit("offre", { signal, socketid });
         });
         //setpeers([...peers, ]);
@@ -61,15 +67,17 @@ export default function Room() {
           initiator: false,
           trickle: false,
         });
-        peer.addStream(ref.current.srcObject);
+        console.log("stream to be added", ref.current.srcObject, localStream);
+        peer.addStream(localStream.current);
         peers.push({ id: socketid, peer: peer });
         peer.on("signal", (signal) => {
           s.current.emit("answer", { signal, socketid });
-          console.log("jai recu un signal", socketid);
+          console.log("j'envoie une reponse", socketid);
         });
         peer.signal(signal);
         peer.on("stream", (stream) => {
           //setstreams([
+          console.log("j'ai recu un stream", stream);
           addVideo(stream, socketid, false);
           setstreams([...streams, { stream: stream, id: socketid }]);
           //console.log(streams.stream);

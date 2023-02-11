@@ -10,7 +10,7 @@ export default function SideBarProfile() {
   return (
     <>
       <Programmerdebat />
-      <nav className="">
+      <nav className="fixed-left">
         <div className="side-menu">
           <center>
             <img src="kaka.jpg" />

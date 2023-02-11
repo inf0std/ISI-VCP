@@ -194,7 +194,7 @@ const handleupdatemail = async function (req, res, next) {
   next();
 };
 
-const handleUpdateUser = async function (req, res, next) {
+const handleUpdateUserData = async function (req, res, next) {
   const newUser = req.body;
   const id = req.params.id;
   if (!newUser || !id) {
@@ -205,13 +205,14 @@ const handleUpdateUser = async function (req, res, next) {
     const result = await User.findByIdAndUpdate(id, newuser, { new: true });
     console.log(result);
     if (!result) {
-      res.json("user not update");
+      res.status(500).json({ error: "user not update" });
+      return;
     }
-    res.status(200).json("updated");
+    res.status(200).json(result);
     console.log(result);
   } catch (error) {
     console.log(error.message);
-    throw error;
+    res.status(500).json({ error: "an error has occured while updating user" });
   }
 };
 
@@ -226,17 +227,33 @@ const handleGetData = (req, res) => {
     });
 };
 
-handleGetConversation = (req, res) => {
+const handleGetConversation = (req, res) => {
   let id = req.params.id;
   let convId = req.params.convId;
-  Conversation.findOne({ _id: convId, users: id })
+  Conversation.findById({ convId })
     .then((conv) => {
-      res.status(200).json(conv);
+      if (conv.users.toArray().indexOf(id) >= 0) {
+        res.status(200).json(conv);
+      }
     })
     .catch((err) => {
       res.status(404).send({ error: "conversation not exist" });
     });
 };
+const handleAddContact = (req, res) => {
+  const id = req.params.id;
+  const cid = req.params.cid;
+  User.findByIdAndUpdate(cid, { $push: { contacts: id } }, { new: true })
+    .then((user1) => {
+      User.findByIdAndUpdate(id, { $push: { contacts: cid } }, { new: true })
+        .then((user2) => {
+          res.status(200).json({ message: "added successfully" });
+        })
+        .catch((err) => {});
+    })
+    .catch((err) => {});
+};
+
 module.exports = {
   handleGetData,
   handleLogin,
@@ -248,5 +265,7 @@ module.exports = {
   handleuserconference,
   handleupdatepasse,
   handleupdatemail,
-  handleUpdateUser,
+  handleUpdateUserData,
+  handleAddContact,
+  handleGetConversation,
 };

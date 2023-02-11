@@ -7,6 +7,9 @@ const {
   handleuserreunion,
   handleuserconference,
   handleGetData,
+  handleUpdateUserData,
+  handleAddContact,
+  handleGetConversation,
 } = require("./userRouteHandlers");
 
 const userRouter = require("express").Router();
@@ -35,13 +38,17 @@ userRouter.use((req, res, next) => {
     }
   }
 });
-userRouter.get("/:id", handleGetData);
+userRouter.get("/:id/profile", handleGetData);
 userRouter.get("/:id/conferences", handleuserconference);
 userRouter.get("/:id/reunions", handleuserreunion);
 userRouter.get("/:id/contacts", handleUserContacts);
+userRouter.get("/:id/addcontact/:cid", handleAddContact);
 //userRouter.get("/:id/people", handleSearchPeople);
 userRouter.get("/:id/conversations", handleUserConversations);
-userRouter.get("/:id/conversations/:convId", handleGetConversation); /* 
+userRouter.get("/:id/conversations/:convId", handleGetConversation);
+
+userRouter.put("/:id/profile", handleUpdateUserData);
+/* 
 userRouter.post("/programme/conference", handleProgrammeConference);
 userRouter.post("/programme/reunion", handleProgrammeReunion);
 userRouter.post("/programme/debate", handleProgrammeDebate); */

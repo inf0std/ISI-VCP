@@ -169,9 +169,12 @@ const Navbar = ({ user, changeUser }) => {
                   >
                     Se déconecter
                   </button>
-                  <img
-                    src={`http://127.0.0.1:8080/profile/${user.id}/img`}
-                  ></img>
+
+                  <Link to={`/profile/${user.id}`}>
+                    <img
+                      src={`${config.app_url}:${config.app_port}/api/account/profile/${user.id}/img`}
+                    ></img>
+                  </Link>
                 </>
               )}
             </li>

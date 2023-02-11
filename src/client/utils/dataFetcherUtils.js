@@ -6,10 +6,6 @@ const sendSigninData = (data) => {
   );
 };
 
-const logout = () => {
-  console.log("sending logout req");
-  return fetch(`${config.app_url}:${config.app_port}/api/account/logout`);
-};
 const sendSignupData = (data) => {
   return post(
     {
@@ -21,6 +17,14 @@ const sendSignupData = (data) => {
     },
     `${config.app_url}:${config.app_port}/api/account/signup`
   );
+};
+
+const logout = () => {
+  console.log("sending logout req");
+  return fetch(`${config.app_url}:${config.app_port}/api/account/logout`);
+};
+const getData = (id) => {
+  return get(`${config.app_url}:${config.app_port}/api/user/${id}/profile`);
 };
 
 const searchPeople = (query) => {
@@ -37,7 +41,7 @@ const fetchConversation = (uid, cid) => {
   );
 };
 const fetchVideoCallData = (data) => {};
-const fetchContacts = (data) => {};
+const fetchContacts = () => {};
 let get = async (path) => {
   return fetch(path);
 };
@@ -75,5 +79,6 @@ export {
   fetchConversation,
   fetchConversations,
   fetchContacts,
+  getData,
   logout,
 };

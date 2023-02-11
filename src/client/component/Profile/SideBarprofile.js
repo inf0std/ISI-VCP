@@ -51,8 +51,7 @@ function SideBarProfile() {
   return (
     <>
       <Programmerdebat />
-   
-      <nav className="">
+      <nav className="fixed-left">
         <div className="side-menu">
           <center>
           

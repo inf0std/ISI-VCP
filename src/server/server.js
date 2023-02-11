@@ -8,7 +8,7 @@ const app = express();
 const http = require("http").createServer(app);
 
 require("./modules/signaling")(http);
-//require("./db/db");
+require("./db/db");
 
 // Use parsing middleware
 app.use(cors());

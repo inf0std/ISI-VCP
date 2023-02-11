@@ -15,7 +15,7 @@ function App() {
 
   const [convs, setConvs] = useState([]);
   const [user, setUser] = useState({ id: null, name: null });
-  const socket = useRef();
+  //const socket = useRef(s);
 
   const changeUser = (id, name, token) => {
     setUser({ id, name, token });
@@ -28,7 +28,7 @@ function App() {
           path="/"
           element={<Home user={user} changeUser={changeUser} />}
         />
-        <Route path="/room/:roomid" element={<Room />} />
+        <Route path="/room/:roomid/:uid" element={<Room />} />
         <Route
           path="/Contact/:id"
           element={<Contact user={user} changeUser={changeUser} />}
@@ -38,7 +38,6 @@ function App() {
           path="/profile/:id"
           element={<Profile user={user} changeUser={changeUser} />}
         />
-        <Route path="/programmer" element={<ProgrammerReunion />} />
       </Routes>
     </BrowserRouter>
   );

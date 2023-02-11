@@ -11,9 +11,6 @@ export default function () {
       timestamp: new Date().getTime(),
       author: s.id,
     };
-    console.log(messageData);
-    console.log(s);
-    console.log(roomid);
     s.emit("send-message", roomid, messageData);
   };
   return (

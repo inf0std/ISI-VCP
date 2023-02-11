@@ -24,15 +24,15 @@ module.exports = (server) => {
       console.log("jai recu un answer");
       socket.to(socketid).emit("answer", { signal, socketid: socket.id });
     });
-    socket.on("send-message", (roomId, message) => {
-      if (chats[roomId]) {
-        chats[roomId].push(message);
+    socket.on("send-message", (roomid, message) => {
+      if (chats[roomid]) {
+        chats[roomid].push(message);
       } else {
-        chats[roomId] = [message];
+        chats[roomid] = [message];
       }
       console.log(message);
-      console.log(roomId);
-      socket.to(roomId).emit("add-message", message);
+      console.log(roomid);
+      socket.emit("add-message", message);
     });
   });
 };

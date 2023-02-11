@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef, Children } from "react";
 import io from "socket.io-client";
 import { useParams } from "react-router-dom";
 import { TbScreenShare } from "react-icons/tb";
+import s from "./Socket";
 import {
   BsCameraVideoOff,
   BsCameraVideo,
@@ -13,6 +14,7 @@ import Peer from "simple-peer";
 import "./videocall.css";
 import "./chat/chat.css";
 import Chat from "./chat/Chat";
+import ChatBubble from "./chat/ChatBubble";
 
 export default function Room() {
   const s = useRef(io.connect("localhost:8080"));
@@ -23,10 +25,7 @@ export default function Room() {
   const [streams, setstreams] = useState([]);
   const flag = useRef(false);
   const [nbv, setnbv] = useState(1);
-  const videoConstraints = {
-    height: window.innerHeight / 2,
-    width: window.innerWidth / 2,
-  };
+
   useEffect(() => {
     if (flag.current === false) {
       flag.current = true;
@@ -188,7 +187,7 @@ export default function Room() {
         </div>
       </div>
       <div className="chat">
-        <Chat socket={s} />
+        <Chat />
       </div>
     </div>
   );

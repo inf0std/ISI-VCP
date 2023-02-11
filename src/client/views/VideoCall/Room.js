@@ -16,7 +16,7 @@ import Chat from "./chat/Chat";
 
 export default function Room() {
   const s = useRef(io.connect("localhost:8080"));
-  const { roomid } = useParams();
+  const { roomid, uid } = useParams();
   const localStream = useRef(null);
   const ref = useRef("");
   const [peers, setpeers] = useState([]);
@@ -27,6 +27,8 @@ export default function Room() {
     height: window.innerHeight / 2,
     width: window.innerWidth / 2,
   };
+
+  const msgRef = useRef(this);
   useEffect(() => {
     if (flag.current === false) {
       flag.current = true;
@@ -37,7 +39,7 @@ export default function Room() {
           console.log("recuperer stream avec succes", stream);
           localStream.current = stream;
           ref.current.srcObject = localStream.current;
-          s.current.emit("join", roomid);
+          s.current.emit("join", { roomid, uid });
         });
 
       s.current.on("joined", ({ roomid, socketid }) => {
@@ -157,46 +159,81 @@ export default function Room() {
   };
   return (
     <div className="container1 bg-black" style={{ height: window.innerHeight }}>
-      <div id="video-tab" className="container_video flex flex-col">
-        <video className="vid1" ref={ref} autoPlay />
-      </div>
-      <div className="ligne1">
-        <div className="menu">
-          <div className="item">
-            <span className="icon">
-              <HiUsers size=" 23px" />
-            </span>
-            <span>Participants</span>
-          </div>
+      <div id="video-space">
+        <div id="video-tab" className="container_video flex flex-col">
+          <video className="vid1" ref={ref} autoPlay />
+        </div>
+        <div className="ligne1">
+          <div className="menu">
+            <div className="item">
+              <span className="icon">
+                <HiUsers size=" 23px" />
+              </span>
+              <span>Participants</span>
+            </div>
 
-          <div className="item">
-            <span className="icon">
-              <BsCameraVideo size=" 23px" />
-            </span>
-            <span>Camera</span>
-          </div>
-          <div className="item">
-            <span className="icon">
-              <BiMicrophoneOff size=" 23.5px" />
-            </span>
-            <span>Audio</span>
-          </div>
-          <div className="item" onClick={screenshare}>
-            <span className="icon">
-              <TbScreenShare size=" 23px" />
-            </span>
-            <span>Share-Screen</span>
-          </div>
-          <div className="item">
-            <span className="icon">
-              <BsChatLeftText size=" 21.5px" />
-            </span>
-            <span>Chat</span>
+            <div className="item">
+              <span className="icon">
+                <BsCameraVideo size=" 23px" />
+              </span>
+              <span>Camera</span>
+            </div>
+            <div className="item">
+              <span className="icon">
+                <BiMicrophoneOff size=" 23.5px" />
+              </span>
+              <span>Audio</span>
+            </div>
+            <div className="item" onClick={screenshare}>
+              <span className="icon">
+                <TbScreenShare size=" 23px" />
+              </span>
+              <span>Share-Screen</span>
+            </div>
+            <div className="item">
+              <span className="icon">
+                <BsChatLeftText size=" 21.5px" />
+              </span>
+              <span>Chat</span>
+            </div>
           </div>
         </div>
       </div>
-      <div className="chat">
-        <Chat socket={s} />
+      <div
+        className="chat"
+        style={{
+          display: "inline",
+          position: "absolute",
+          right: "0px",
+          top: "0px",
+          bottom: " 20px",
+          backgroundColor: "grey",
+          width: window.innerWidth / 5,
+          height: window.height,
+        }}
+      >
+        <div id="messages"> </div>
+        <div style={{ position: "absolute", right: "0px", bottom: "0px" }}>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              s.current.emit("msg", {
+                roomid,
+                msg: {
+                  content: msgRef.current.value,
+                  timestamp: Date.now(),
+                  sender: uid,
+                },
+              });
+              msgRef.current.value = "";
+            }}
+          >
+            <input ref={msgRef} type={"text"} placeholder="message" />
+            <button style={{ display: "inline" }} type="submit">
+              envoyer
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );

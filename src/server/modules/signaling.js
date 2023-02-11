@@ -7,18 +7,18 @@ module.exports = (server) => {
     },
   });
   const rooms = {};
-  const chats = {};
   io.on("connection", (socket) => {
     console.log("socket connected");
-    socket.on("join", (roomid) => {
+
+    socket.on("join", ({ uid, roomid }) => {
       if (rooms[roomid]) {
+        socket.emit("msgs", { msgs: rooms[roomid].msgs });
+        socket.to(roomid).emit("joined", { uid, roomid, socketid: socket.id });
         socket.join(roomid);
-        socket.to(roomid).emit("joined", { roomid, socketid: socket.id });
       } else {
-        rooms[roomid] = [socket.id];
-        //socket.emit("joined", { roomid, socketid: socket.id });
+        socket.join(roomid);
+        rooms[roomid] = { msgs: [] };
       }
-      socket.join(roomid);
     });
 
     socket.on("offre", ({ signal, socketid }) => {
@@ -29,60 +29,12 @@ module.exports = (server) => {
       console.log("jai recu un answer");
       socket.to(socketid).emit("answer", { signal, socketid: socket.id });
     });
-    socket.on("send-message", (roomId, message) => {
-      if (chats[roomId]) {
-        chats[roomId].push(message);
-      } else {
-        chats[roomId] = [message];
-      }
-      console.log(message);
-      console.log(roomId);
-      socket.to(roomId).emit("add-message", message);
+
+    socket.on("msg", ({ roomid, message }) => {
+      rooms[roomid].msgs.push(message);
+      console.log(rooms[roomid].msgs);
+      //io.to(roomid).emit("msg", { message });
+      socket.to(roomid).emit("msg", { message });
     });
   });
 };
-
-/* 
-  const rooms = {};
-  io.on("connection", (socket) => {
-    console.log("socket connected");
-    socket.on("join", ({ rid, id }) => {
-      console.log(rid, id);
-      if (!rooms[rid]) rooms[rid] = [];
-      if (!socket.rid) {
-        console.log(rooms);
-        socket.emit("ids", { ids: rooms[rid] });
-        rooms[rid].push({ id, sid: socket.id });
-        console.log(rooms);
-        socket.uid = id;
-        socket.to(rid).emit("joined", { id: id, sid: socket.id });
-        socket.join(rid);
-        socket.rid = rid;
-      }
-    });
-
-    socket.on("offer", (offer) => {
-      socket.to(offer.sid, {
-        id: offer.id,
-        sid: socket.id,
-        offer: offer.offer,
-      });
-    });
-
-    socket.on("answer", (answer) => {
-      socket.to(answer.sid, {
-        id: answer.id,
-        sid: socket.id,
-        offer: answer.answer,
-      });
-    });
-
-    socket.on("disconnect", () => {
-      socket.rooms.forEach((room) => {
-        socket.emit("peer-disconnected", socket.uid);
-        socket.leave(room);
-      });
-    });
-  });
-};
- */

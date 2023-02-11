@@ -1,1 +1,3 @@
-const profileMenu = () => {};
+const profileMenu = () => {
+  return <></>;
+};

@@ -48,6 +48,7 @@ userRouter.get("/:id/conversations", handleUserConversations);
 userRouter.get("/:id/conversations/:convId", handleGetConversation);
 
 userRouter.put("/:id/profile", handleUpdateUserData);
+userRouter.post("/:id/profile/img");
 /* 
 userRouter.post("/programme/conference", handleProgrammeConference);
 userRouter.post("/programme/reunion", handleProgrammeReunion);

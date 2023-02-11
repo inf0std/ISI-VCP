@@ -11,6 +11,7 @@ import { BiMicrophoneOff, BiMicrophone } from "react-icons/bi";
 import { HiUsers } from "react-icons/hi";
 import Peer from "simple-peer";
 import "./videocall.css";
+import "./chat/chat.css";
 import Chat from "./chat/Chat";
 
 export default function Room() {
@@ -194,7 +195,9 @@ export default function Room() {
           </div>
         </div>
       </div>
-      <Chat />
+      <div className="chat">
+        <Chat socket={s} />
+      </div>
     </div>
   );
 }

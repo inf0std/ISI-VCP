@@ -6,7 +6,8 @@ module.exports = (server) => {
       methods: ["GET", "POST"],
     },
   });
-  rooms = {};
+  const rooms = {};
+  const chats = {};
   io.on("connection", (socket) => {
     console.log("socket connected");
     socket.on("join", (roomid) => {
@@ -27,6 +28,16 @@ module.exports = (server) => {
     socket.on("answer", ({ signal, socketid }) => {
       console.log("jai recu un answer");
       socket.to(socketid).emit("answer", { signal, socketid: socket.id });
+    });
+    socket.on("send-message", (roomId, message) => {
+      if (chats[roomId]) {
+        chats[roomId].push(message);
+      } else {
+        chats[roomId] = [message];
+      }
+      console.log(message);
+      console.log(roomId);
+      socket.to(roomId).emit("add-message", message);
     });
   });
 };

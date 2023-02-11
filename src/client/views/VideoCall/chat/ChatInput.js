@@ -1,26 +1,40 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { RiSendPlaneFill } from "react-icons/ri";
+import { useParams } from "react-router-dom";
+import s from "../Socket";
 export default function () {
   const [message, setMessage] = useState();
+  const roomid = useParams();
+  const sendMessage = (msg) => {
+    const messageData = {
+      content: msg,
+      timestamp: new Date().getTime(),
+      author: s.id,
+    };
+    console.log(messageData);
+    console.log(s);
+    console.log(roomid);
+    s.emit("send-message", roomid, messageData);
+  };
   return (
     <div>
       <form
         onSubmit={(e) => {
           e.preventDefault();
+          sendMessage(message);
           setMessage("");
         }}
-        className="btn1"
+        className="formular"
       >
         <div>
           <div className="flex">
             <textarea
-              className=" border rounded h-8"
+              className=" border rounded-3  "
               onChange={(e) => setMessage(e.target.value)}
               value={message}
             />
-
-            <button type="submit" className="px-2">
-              <RiSendPlaneFill color="blue" size="1.5rem" />
+            <button type="submit">
+              <RiSendPlaneFill color="blue" size="2rem" />
             </button>
           </div>
         </div>

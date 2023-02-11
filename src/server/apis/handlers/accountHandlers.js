@@ -25,7 +25,7 @@ const handleSignup = async (req, res) => {
   } else {
     User.findOne({ "login.email": email }).then((user) => {
       if (user) {
-        res.status(400).json({ error: "email exist deja" });
+        res.status(400).json({ error: "Email existe déjà, connecter vous!" });
       } else {
         User.create({
           login: {
@@ -46,11 +46,11 @@ const handleSignup = async (req, res) => {
               user.username,
               user.emailtoken
             );
-            res.status(201).send({ message: "Signup seccessful" });
+            res.status(201).send({ message: "Inscription réussie" });
           })
           .catch((err) => {
             console.log(err);
-            res.status(400).send({ error: "creation Echoue" });
+            res.status(400).send({ error: "Création Échoué" });
           });
       }
     });
@@ -119,7 +119,7 @@ const handleValidateEmail = (req, res) => {
         { emailtoken: null, isverified: true }
       ).then((user) => {
         return console.log({
-          message: `${user.modifiedCount} updated successfully!`,
+          message: `${user.modifiedCount} Mise à jour réussie!`,
         });
       });
       verified(res);

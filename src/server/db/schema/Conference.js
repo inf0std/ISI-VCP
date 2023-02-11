@@ -45,12 +45,10 @@ const conferenceSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    tags: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Tag",
-      },
-    ],
+    description: {
+      type: String,
+      default: 'Do not miss it',
+    },
   },
   { timestamps: true }
 );

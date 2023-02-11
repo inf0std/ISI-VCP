@@ -15,12 +15,12 @@ userRouter.use((req, res, next) => {
   let id = req.params.id;
   console.log("credentials validation", id);
   if (req.session.id) {
-    console.log("session exists", id)
+    console.log("session exists", id);
     if (req.session.id == id) {
-      console.log("session id ")
+      console.log("session id ");
       next();
     } else {
-      console.log(req.)
+      console.log(req.session.id);
       res.status(401).send({ error: "Unauthorised" });
     }
   } else if (req.cookies.token) {

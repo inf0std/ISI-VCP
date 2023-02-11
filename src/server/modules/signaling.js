@@ -3,7 +3,32 @@ module.exports = (server) => {
   const io = require("socket.io")(server, {
     cors: { origin: "http://localhost:3000", methods: ["GET", "POST"] },
   });
+  rooms = {};
+  io.on("connection", (socket) => {
+    console.log("socket connected");
+    socket.on("join", (roomid) => {
+      if (rooms[roomid]) {
+        socket.join(roomid);
+        socket.to(roomid).emit("joined", { roomid, socketid: socket.id });
+      } else {
+        rooms[roomid] = [socket.id];
+        //socket.emit("joined", { roomid, socketid: socket.id });
+      }
+      socket.join(roomid);
+    });
 
+    socket.on("offre", ({ signal, socketid }) => {
+      socket.to(socketid).emit("offre", { signal, socket: socket.id });
+    });
+
+    socket.on("answer", ({ signal, socketid }) => {
+      console.log("jai recu un answer");
+      socket.to(socketid).emit("answer", { signal, socketid: socket.id });
+    });
+  });
+};
+
+/* 
   const rooms = {};
   io.on("connection", (socket) => {
     console.log("socket connected");
@@ -46,3 +71,4 @@ module.exports = (server) => {
     });
   });
 };
+ */

@@ -3,8 +3,10 @@ import { FaUsers } from "react-icons/fa";
 import { FaRegComments } from "react-icons/fa";
 import { FaHome } from "react-icons/fa";
 import { GoSignOut } from "react-icons/go";
+import { MdAlternateEmail } from "react-icons/md";
 import { ImSearch } from "react-icons/im";
 import { Link } from "react-router-dom";
+
 
 import { searchUsers } from "../../utils/dataFetcherUtils";
 
@@ -81,15 +83,15 @@ const Navbarprofile = (props) => {
               </a>
             </li>
 
-            <li style={{ margin: "0px 30px 0px 30px" }} className="nav-item">
+            <li style={{ margin: "0px 30px 0px 3px" }} className="nav-item">
               <Link
-                to="/Contact"
+                to="Contact"
                 className="nav-link"
                 href="#"
                 tabIndex="-1"
                 aria-disabled="true"
               >
-                <FaUsers
+                <MdAlternateEmail
                   id="it"
                   style={{ width: "25px", height: "25px", margin: "5px" }}
                 />

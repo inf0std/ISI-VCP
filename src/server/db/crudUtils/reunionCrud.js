@@ -9,26 +9,17 @@ const createReunion = async (
   reunion_Name,
   participantsName,
   Date_begin,
-  Duration
+  Duration,
+  Desc
 ) => {
   // idU = id of user
-  if (!reunion_Name) {
-    return { message: "Content can not be empty!" };
-  }
-  if (!participantsName) {
-    return { message: "You must select for minimum a user!" };
-  }
-  if (!Duration) {
-    return { message: "You must set the duration!" };
-  }
-  if (!Date_begin) {
-    return { message: "You must set the Date_begin!" };
-  }
+  
   const reunion = new Reunion({
     reunion_Name: reunion_Name,
     participantsName: participantsName,
     videocall: [idU],
     Date_begin: Date_begin,
+    Desc: Desc,
     Duration: Duration,
     reunion_Host: idU,
     reunion_moderateur: idU,

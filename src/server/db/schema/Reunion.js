@@ -1,3 +1,4 @@
+const { time } = require("console");
 const mongoose = require("mongoose");
 
 const reunionSchema = new mongoose.Schema(
@@ -41,10 +42,12 @@ const reunionSchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
     },
-
     Duration: {
       type: Number,
       default: 40,
+    },
+    Desc: {
+      type: String,
     },
     archive: {
       type: Boolean,

@@ -30,13 +30,7 @@ module.exports = (server) => {
       socket.to(socketid).emit("answer", { signal, socketid: socket.id });
     });
     socket.on("send-message", (roomid, message) => {
-      if (chats[roomid]) {
-        chats[roomid].push(message);
-      } else {
-        chats[roomid] = [message];
-      }
-      console.log(message);
-      console.log(roomid);
+      rooms[roomid].msgs.push(message);
       socket.emit("add-message", message);
     });
   });

@@ -41,7 +41,7 @@ const peerConfig = {
   ],
 }
 export default function Room() {
-  const s = useRef(io.connect(config.io_url));
+  const s = useRef(io(config.io_url));
   const inputRef = useRef();
   const isSelf = useRef();
   const { roomid, uid } = useParams();
@@ -56,7 +56,7 @@ export default function Room() {
       flag.current = true;
 
       navigator.mediaDevices
-        .getUserMedia({ video: true, audio: true })
+        .getUserMedia({ video: {width: {exact: 100}, height: {exact: 80}}, audio: true })
         .then((stream) => {
           console.log("recuperer stream avec succes", stream);
           localStream.current = stream;

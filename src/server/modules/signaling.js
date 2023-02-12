@@ -2,7 +2,7 @@ module.exports = (server) => {
   //creation de serveur socketio
   const io = require("socket.io")(server, {
     cors: {
-      origin: "http://localhost:3000",
+      origin: process.env.APP_URL,
       methods: ["GET", "POST"],
     },
   });

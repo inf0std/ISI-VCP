@@ -1,24 +1,16 @@
 import React, { useContext, useRef } from "react";
+import s from "../Socket";
+import "./chat.css";
 
 export default function ChatBubble({ message }) {
-  const isSelf = useRef();
-
+  const isSelf = message.author === s.id;
   return (
-    <div>
-      <div
-        className={
-          isSelf ? "m-1 flex pl-10 justify-end" : "m-1 flex pr-10 justify-start"
-        }
-      >
-        <div
-          className={
-            isSelf
-              ? "inline-block py-2 px-4 rounded bg-blue-400 "
-              : "inline-block py-2 px-4 rounded bg-blue-600"
-          }
-        >
-          {message.content}
-        </div>
+    <div
+      className=""
+      style={{ width: "400px", height: "450px", backgroundColor: "white" }}
+    >
+      <div>
+        <div>{message.content}</div>
       </div>
     </div>
   );

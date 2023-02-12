@@ -37,7 +37,7 @@ const SignInSignUp = ({ changeUser }) => {
           console.log(user);
           console.log(user._id, user.name, user.token);
           changeUser(user._id, user.name, user.token);
-          navigate("/");
+          navigate(`/profile/${user._id}`);
         } else alert("EMAIL OU MOT DE PASSE FAUX", "danger");
       })
       .catch((err) => {
@@ -88,6 +88,7 @@ const SignInSignUp = ({ changeUser }) => {
               "success"
             );
             document.getElementById("signup-signin").classList.remove("show");
+            navigate("/");
           } else if (data.error) {
             alert(`inscription echoue ${data.error}`, "danger");
           }

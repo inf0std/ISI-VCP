@@ -1,48 +1,52 @@
-import React, { useRef, useState, useEffect, memo } from "react";
-import { useParams } from "react-router-dom";
+import React, { useRef, useEffect, useState } from "react";
 import ChatBubble from "./ChatBubble";
 import ChatInput from "./ChatInput";
 //import s from "../Socket";
 import "./chat.css";
 
-const Chat = ({ s, name }) => {
-  const { roomid } = useParams();
+export default function Chat({ s, send_msg }) {
   const flag = useRef(false);
-  const [msgList, setMsgList] = useState([]);
+  const isSelf = useRef();
+
   useEffect(() => {
-    if (!flag) {
-      flag = true;
-      s.on("msg", ({ message }) => {
-        msgList.push(message);
-        setMsgList(msgList);
-        console.log("received", message);
-        console.log(msgList);
-      });
-      s.on("msgs", ({ msgs }) => {
-        msgList.concat(msgs);
-        setMsgList(msgList);
-        console.log("received", msgList);
+    if (flag.current == false) {
+      flag.current = true;
+      s.on("add-message", (message) => {
+        isSelf.current = message.author === s.id;
+        const msg_element = document.querySelector("#msg");
+        const vid = document.createElement("p");
+        const vidi = document.createElement("small");
+        const pere = document.createElement("div");
+        vid.innerHTML = message.content;
+        vidi.innerHTML = "ferhat";
+        pere.classList.add("pere");
+        if (isSelf) {
+          vid.classList.add("message-user");
+          vidi.classList.add("user");
+        } else {
+          vid.classList.add("message-other");
+          vidi.classList.add("other");
+        }
+        pere.appendChild(vid);
+        pere.appendChild(vidi);
+        msg_element.appendChild(pere);
       });
     }
-  }, [msgList]);
+  }, []);
   return (
     <div className="chat_height">
       <div className="w-64 flex flex-col h-full justify ">
-        <div>
-          {msgList.map((msg) => {
-            return (
-              <>
-                <p>{msg.name}</p>
-                <p>{msg.content}</p>
-              </>
-            );
-          })}
+        <div
+          className={
+            isSelf
+              ? "m-1 flex pl-10 justify-end"
+              : "m-1 flex pr-10 justify-start"
+          }
+        >
+          <div id="msg"></div>
         </div>
-
-        <ChatInput s={s} name={name} />
+        <ChatInput s={s} send_msg={send_msg} />
       </div>
     </div>
   );
-};
-
-export default Chat;
+}

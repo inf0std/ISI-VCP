@@ -2,37 +2,25 @@
   width: 100%;
 }
 .container_video {
-  left: 30px;
-  width: auto;
+  position: relative;
+  left: 50px;
+  width: 63%;
   height: 100vh;
-}
-#video-tab {
-  display: flexbox;
-  position: absolute;
-  height: 100%;
 }
 .vid1 {
-  margin: auto;
-  flex: 1;
-  height: 100vh;
+  margin-left: 5px;
+  height: 92vh;
+  border-radius: 8px;
 }
 .vid2 {
-  margin: auto;
-  flex: 1;
-  height: 50vh;
-  display: inline-block;
+  margin-left: 5px;
+  height: 44vh;
+  border-radius: 6px;
 }
 .vid5 {
-  display: inline-block;
-  margin: auto;
-  flex: 1;
-  height: 33vh;
-}
-.vid10 {
-  display: inline-block;
-  margin: auto;
-  flex: 1;
-  height: 25vh;
+  margin-left: 5px;
+  height: 29vh;
+  border-radius: 3px;
 }
 .ligne1 {
   position: fixed;

@@ -3,6 +3,7 @@ import io from "socket.io-client";
 import config from "../../config.json";
 import { useParams } from "react-router-dom";
 import { TbScreenShare } from "react-icons/tb";
+import { RiSendPlaneFill } from "react-icons/ri";
 import {
   BsCameraVideoOff,
   BsCameraVideo,
@@ -13,7 +14,6 @@ import { HiUsers } from "react-icons/hi";
 import Peer from "simple-peer";
 import "./videocall.css";
 import "./chat/chat.css";
-import Chat from "./chat/Chat";
 
 const mediaConstraint = {
 
@@ -42,6 +42,8 @@ const peerConfig = {
 }
 export default function Room() {
   const s = useRef(io.connect(config.io_url));
+  const inputRef = useRef();
+  const isSelf = useRef();
   const { roomid, uid } = useParams();
   const localStream = useRef(null);
   const ref = useRef("");
@@ -49,12 +51,6 @@ export default function Room() {
   const [streams, setstreams] = useState([]);
   const flag = useRef(false);
   const [nbv, setnbv] = useState(1);
-  const videoConstraints = {
-    height: window.innerHeight / 2,
-    width: window.innerWidth / 2,
-  };
-
-  const msgRef = useRef(this);
   useEffect(() => {
     if (flag.current === false) {
       flag.current = true;
@@ -74,6 +70,10 @@ export default function Room() {
           initiator: true,
           trickle: false,
           config: peerConfig
+        });
+        peer.on("data", (data) => {
+          let message = JSON.parse(data.toString());
+          addmessage(message);
         });
         console.log("the stream to add ", ref.current.srcObject);
         peer.addStream(localStream.current);
@@ -101,6 +101,10 @@ export default function Room() {
         console.log("stream to be added", ref.current.srcObject, localStream);
         peer.addStream(localStream.current);
         peers.push({ id: socketid, peer: peer });
+        peer.on("data", (data) => {
+          let message = JSON.parse(data.toString());
+          addmessage(message);
+        });
         peer.on("signal", (signal) => {
           s.current.emit("answer", { signal, socketid });
           console.log("j'envoie une reponse", socketid);
@@ -185,12 +189,89 @@ export default function Room() {
       });
     });
   };
+
+  const addmessage = (message) => {
+    console.log("me", s.current.id);
+
+    console.log("author", message.author);
+    let self = message.author === s.current.id;
+    const msg_element = document.querySelector("#msg");
+    const vid = document.createElement("p");
+    const vidi = document.createElement("small");
+    const pere = document.createElement("div");
+    vid.innerHTML = message.content;
+    vidi.innerHTML = message.name;
+    pere.classList.add("pere");
+    if (self) {
+      vid.classList.add("message-user");
+      vidi.classList.add("user");
+    } else {
+      vid.classList.add("message-other");
+      vidi.classList.add("other");
+    }
+    pere.appendChild(vid);
+    pere.appendChild(vidi);
+    msg_element.appendChild(pere);
+  };
+  const sendMessage = (msg) => {
+    const messageData = {
+      name: "ferhat",
+      content: msg,
+      timestamp: new Date().getTime(),
+      author: s.current.id,
+    };
+    peers.forEach((peer) => {
+      peer.peer.send(JSON.stringify(messageData));
+    });
+  };
   return (
     <div className="container1 bg-black" style={{ height: window.innerHeight }}>
       <div id="video-space">
         <div id="video-tab" className="container_video flex flex-col">
           <video className="vid1" ref={ref} autoPlay />
         </div>
+
+        <div className="chat">
+          <div className="chat_height">
+            <div className="w-64 flex flex-col h-full justify ">
+              <div
+                className={
+                  isSelf
+                    ? "m-1 flex pl-10 justify-end"
+                    : "m-1 flex pr-10 justify-start"
+                }
+              >
+                <div id="msg"></div>
+              </div>
+              <div>
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    sendMessage(inputRef.current.value);
+                    addmessage({
+                      name: "ferhat",
+                      content: inputRef.current.value,
+                      timestamp: Date.now(),
+                      author: s.current.id,
+                    });
+                    inputRef.current.value = "";
+                  }}
+                  className="formular"
+                >
+                  <div>
+                    <div className="flex">
+                      <textarea className=" border rounded-3" ref={inputRef} />
+                      <button type="submit">
+                        <RiSendPlaneFill color="blue" size="2rem" />
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div className="ligne1">
           <div className="menu">
             <div className="item">
@@ -225,42 +306,6 @@ export default function Room() {
               <span>Chat</span>
             </div>
           </div>
-        </div>
-      </div>
-      <div
-        className="chat"
-        style={{
-          display: "inline",
-          position: "absolute",
-          right: "0px",
-          top: "0px",
-          bottom: " 20px",
-          backgroundColor: "grey",
-          width: window.innerWidth / 5,
-          height: window.height,
-        }}
-      >
-        <div id="messages"> </div>
-        <div style={{ position: "absolute", right: "0px", bottom: "0px" }}>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              s.current.emit("msg", {
-                roomid,
-                msg: {
-                  content: msgRef.current.value,
-                  timestamp: Date.now(),
-                  sender: uid,
-                },
-              });
-              msgRef.current.value = "";
-            }}
-          >
-            <input ref={msgRef} type={"text"} placeholder="message" />
-            <button style={{ display: "inline" }} type="submit">
-              envoyer
-            </button>
-          </form>
         </div>
       </div>
     </div>

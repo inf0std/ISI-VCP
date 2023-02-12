@@ -287,7 +287,7 @@ const emailBody = (email, id, name, token) => {
   
 };
 const emailVerificationLink = (id, email, token) => {
-  return urlJoin(process.env.APP_URL, `api/account/ver/${id}`, {
+  return urlJoin(process.env.APP_URL, `api/account/verify/${id}`, {
     query: { email: email, token: token },
   });
 };

@@ -1,5 +1,4 @@
 {
-  "app_url": "http://localhost",
-  "app_port": "8080",
-  "db": ["seen.project.cpi@gmail.com", "f1i3e12a@@@"]
+  "app_url": "https://seen.ngrok.io",
+  "io_url": "https://seen.ngrok.io"
 }

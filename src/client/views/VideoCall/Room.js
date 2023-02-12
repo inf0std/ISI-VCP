@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef, Children } from "react";
 import io from "socket.io-client";
+import config from "../../config.json";
 import { useParams } from "react-router-dom";
 import { TbScreenShare } from "react-icons/tb";
 import { RiSendPlaneFill } from "react-icons/ri";
@@ -15,11 +16,39 @@ import "./videocall.css";
 import "./chat/chat.css";
 import { useNavigate } from "react-router-dom";
 
+const mediaConstraint = {
+
+}
+const peerConfig = {
+  iceServers: [
+    {
+      urls: "stun:relay.metered.ca:80",
+    },
+    {
+      urls: "turn:relay.metered.ca:80",
+      username: "aab6710f1446c8a22c6f85ab",
+      credential: "oT7ojrV4R69DAF1o",
+    },
+    {
+      urls: "turn:relay.metered.ca:443",
+      username: "aab6710f1446c8a22c6f85ab",
+      credential: "oT7ojrV4R69DAF1o",
+    },
+    {
+      urls: "turn:relay.metered.ca:443?transport=tcp",
+      username: "aab6710f1446c8a22c6f85ab",
+      credential: "oT7ojrV4R69DAF1o",
+    },
+  ],
+}
 export default function Room() {
+<<<<<<< HEAD
+  const s = useRef(io(config.io_url));
+=======
   const Navigate = useNavigate();
+>>>>>>> a8b0fb79e437342a4c60b4c63983128d0865a6e5
   const inputRef = useRef();
   const isSelf = useRef();
-  const s = useRef(io.connect("localhost:8080"));
   const { roomid, uid } = useParams();
   const localStream = useRef(null);
   const ref = useRef("");
@@ -32,10 +61,14 @@ export default function Room() {
       flag.current = true;
 
       navigator.mediaDevices
+<<<<<<< HEAD
+        .getUserMedia({ video: {width: {exact: 100}, height: {exact: 80}}, audio: true })
+=======
         .getUserMedia({
           video: { width: { exact: 144 }, height: { exact: 100 } },
           audio: true,
         })
+>>>>>>> a8b0fb79e437342a4c60b4c63983128d0865a6e5
         .then((stream) => {
           console.log("recuperer stream avec succes", stream);
           localStream.current = stream;
@@ -48,6 +81,7 @@ export default function Room() {
         const peer = new Peer({
           initiator: true,
           trickle: false,
+          config: peerConfig
         });
         peer.on("data", (data) => {
           let message = JSON.parse(data.toString());
@@ -74,6 +108,7 @@ export default function Room() {
         let peer = new Peer({
           initiator: false,
           trickle: false,
+          config: peerConfig,
         });
         console.log("stream to be added", ref.current.srcObject, localStream);
         peer.addStream(localStream.current);
@@ -245,7 +280,7 @@ export default function Room() {
                     addmessage({
                       name: "ferhat",
                       content: inputRef.current.value,
-                      timestamp: new Date().getTime(),
+                      timestamp: Date.now(),
                       author: s.current.id,
                     });
                     inputRef.current.value = "";

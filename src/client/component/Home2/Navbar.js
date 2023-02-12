@@ -46,12 +46,16 @@ const Navbar = ({ user, changeUser }) => {
     document.getElementById("loginModalBtn").click();
   };
 
+  const hideLoginModal = ()=>{
+    document.getElementById("loginModalBtn").click();
+  }
+
   return (
     <nav
       id="nev"
       className="navbar navbar-expand-lg navbar-light bg-light justefy-content-end"
     >
-      <SignInSignUp user={user} changeUser={changeUser} />
+      <SignInSignUp user={user} changeUser={changeUser}  finish = {hideLoginModal}/>
       <div className="container-fluid">
         <a
           style={{ width: "120px", height: "45px", marginLeft: "40px" }}

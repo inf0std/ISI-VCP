@@ -4,9 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./component/Home2/Home2";
 import Contact from "./views/Contact";
 //import Chat from "./views/Chat";
-import VideoRoom from "./views/VideoRoum";
 import Profile from "./component/Profile/Profile";
-import ProgrammerReunion from "./component/formulaire/modalForms/ProgramerLaReunion";
 import Room from "./views/VideoCall/Room";
 import "bootstrap/dist/css/bootstrap.min.css";
 

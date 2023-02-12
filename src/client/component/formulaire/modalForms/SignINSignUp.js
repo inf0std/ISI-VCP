@@ -13,7 +13,7 @@ import {
 } from "../../../utils/dataFetcherUtils";
 
 import config from "../../../config.json";
-const SignInSignUp = ({ changeUser }) => {
+const SignInSignUp = ({ changeUser, finish }) => {
   const navigate = useNavigate();
 
   const signinEmail = useRef();
@@ -43,7 +43,8 @@ const SignInSignUp = ({ changeUser }) => {
       })
       .catch((err) => {
         console.log("connexion", err);
-        navigate("/");
+        finish();
+        navigate(`/`);
       }); //*/
   };
 
@@ -88,7 +89,7 @@ const SignInSignUp = ({ changeUser }) => {
               "SUCCES!! Veuillez Verifier votre boite email pour valider votre compte",
               "success"
             );
-            document.getElementById("signup-signin").classList.remove("show");
+            finish()
             navigate("/");
           } else if (data.error) {
             alert(`inscription echoue ${data.error}`, "danger");

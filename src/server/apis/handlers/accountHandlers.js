@@ -85,7 +85,7 @@ const handleLogout = (req, res) => {
   req.session.token = null;
   res.clearCookie("id");
   res.clearCookie("token");
-  res.redirect("http://localhost:3000/?loggedout=true");
+  res.redirect(`/?loggedout=true`);
 };
 
 const handleValidateEmail = (req, res) => {

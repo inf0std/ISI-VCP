@@ -34,7 +34,8 @@ module.exports = (server) => {
     });
 
     socket.on("disconnect", () => {
-      console.log(socket.rooms);
+      
+      console.log("socket leaving", Object.keys(socket.rooms));
     });
   });
 };

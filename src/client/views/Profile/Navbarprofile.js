@@ -21,6 +21,7 @@ const Navbarprofile = (props) => {
       .then((response) => response.json())
       .then((data) => {
         //display data in the search results
+        setSearchRes(data)
       })
       .catch((err) => {
         //handeling search Errors

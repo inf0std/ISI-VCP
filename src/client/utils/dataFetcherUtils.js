@@ -2,7 +2,7 @@ import config from "../config.json";
 const sendSigninData = (data) => {
   return post(
     { email: data.email, password: data.password },
-    `${config.app_url}/api/account/login`
+    `/api/account/login`
   );
 };
 

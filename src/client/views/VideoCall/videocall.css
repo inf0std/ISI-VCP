@@ -3,22 +3,24 @@
 }
 .container_video {
   position: relative;
-  left: 30px;
+  left: 50px;
   width: 63%;
-  height: 300px;
+  height: 100vh;
 }
 .vid1 {
-  width: 94%;
+  margin-left: 5px;
+  height: 92vh;
   border-radius: 8px;
 }
 .vid2 {
-  width: 46%;
-  margin: 3px;
+  margin-left: 5px;
+  height: 44vh;
   border-radius: 6px;
 }
 .vid5 {
-  width: 30%;
-  margin: 3px;
+  margin-left: 5px;
+  height: 29vh;
+  border-radius: 3px;
 }
 .ligne1 {
   position: fixed;

@@ -18,14 +18,13 @@ import ChatBubble from "./chat/ChatBubble";
 
 export default function Room() {
   const s = useRef(io.connect("localhost:8080"));
-  const { roomid } = useParams();
-  const [localStream, setLocalStream] = useState(null);
+  const { roomid, uid } = useParams();
+  const localStream = useRef(null);
   const ref = useRef("");
   const [peers, setpeers] = useState([]);
   const [streams, setstreams] = useState([]);
   const flag = useRef(false);
   const [nbv, setnbv] = useState(1);
-
   useEffect(() => {
     if (flag.current === false) {
       flag.current = true;
@@ -33,23 +32,29 @@ export default function Room() {
       navigator.mediaDevices
         .getUserMedia({ video: true, audio: true })
         .then((stream) => {
-          setLocalStream(stream);
-          ref.current.srcObject = stream;
+          console.log("recuperer stream avec succes", stream);
+          localStream.current = stream;
+          ref.current.srcObject = localStream.current;
+          s.current.emit("join", { roomid, uid });
         });
-      s.current.emit("join", roomid);
+
       s.current.on("joined", ({ roomid, socketid }) => {
+        console.log("userJoined", socketid);
         const peer = new Peer({
           initiator: true,
           trickle: false,
         });
-        peer.addStream(ref.current.srcObject);
+        console.log("the stream to add ", ref.current.srcObject);
+        peer.addStream(localStream.current);
         peer.on("stream", (stream) => {
           //setstreams([
+          console.log("received stream", stream);
           addVideo(stream, socketid, false);
           streams.push({ stream: stream, id: socketid });
         });
 
         peer.on("signal", (signal) => {
+          console.log("sending offer");
           s.current.emit("offre", { signal, socketid });
         });
         //setpeers([...peers, ]);
@@ -61,15 +66,17 @@ export default function Room() {
           initiator: false,
           trickle: false,
         });
-        peer.addStream(ref.current.srcObject);
+        console.log("stream to be added", ref.current.srcObject, localStream);
+        peer.addStream(localStream.current);
         peers.push({ id: socketid, peer: peer });
         peer.on("signal", (signal) => {
           s.current.emit("answer", { signal, socketid });
-          console.log("jai recu un signal", socketid);
+          console.log("j'envoie une reponse", socketid);
         });
         peer.signal(signal);
         peer.on("stream", (stream) => {
           //setstreams([
+          console.log("j'ai recu un stream", stream);
           addVideo(stream, socketid, false);
           setstreams([...streams, { stream: stream, id: socketid }]);
           //console.log(streams.stream);
@@ -148,41 +155,43 @@ export default function Room() {
   };
   return (
     <div className="container1 bg-black" style={{ height: window.innerHeight }}>
-      <div id="video-tab" className="container_video flex flex-col">
-        <video className="vid1" ref={ref} autoPlay />
-      </div>
-      <div className="ligne1">
-        <div className="menu">
-          <div className="item">
-            <span className="icon">
-              <HiUsers size=" 23px" />
-            </span>
-            <span>Participants</span>
-          </div>
+      <div id="video-space">
+        <div id="video-tab" className="container_video flex flex-col">
+          <video className="vid1" ref={ref} autoPlay />
+        </div>
+        <div className="ligne1">
+          <div className="menu">
+            <div className="item">
+              <span className="icon">
+                <HiUsers size=" 23px" />
+              </span>
+              <span>Participants</span>
+            </div>
 
-          <div className="item">
-            <span className="icon">
-              <BsCameraVideo size=" 23px" />
-            </span>
-            <span>Camera</span>
-          </div>
-          <div className="item">
-            <span className="icon">
-              <BiMicrophoneOff size=" 23.5px" />
-            </span>
-            <span>Audio</span>
-          </div>
-          <div className="item" onClick={screenshare}>
-            <span className="icon">
-              <TbScreenShare size=" 23px" />
-            </span>
-            <span>Share-Screen</span>
-          </div>
-          <div className="item">
-            <span className="icon">
-              <BsChatLeftText size=" 21.5px" />
-            </span>
-            <span>Chat</span>
+            <div className="item">
+              <span className="icon">
+                <BsCameraVideo size=" 23px" />
+              </span>
+              <span>Camera</span>
+            </div>
+            <div className="item">
+              <span className="icon">
+                <BiMicrophoneOff size=" 23.5px" />
+              </span>
+              <span>Audio</span>
+            </div>
+            <div className="item" onClick={screenshare}>
+              <span className="icon">
+                <TbScreenShare size=" 23px" />
+              </span>
+              <span>Share-Screen</span>
+            </div>
+            <div className="item">
+              <span className="icon">
+                <BsChatLeftText size=" 21.5px" />
+              </span>
+              <span>Chat</span>
+            </div>
           </div>
         </div>
       </div>

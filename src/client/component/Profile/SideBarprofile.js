@@ -1,20 +1,62 @@
-import React from "react";
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 import Programmerdebat from "../formulaire/modalForms/Programmerdebat";
-import "./Sidebar.css";
+import ProgrammerReun from "../formulaire/modalForms/ProgramerLaReunion";
+import ProgrammerConf from "../formulaire/modalForms/ProgrammerLaConférance";
+import ConsultConf from "../formulaire/modalForms/consulterConf";
 
-export default function SideBarProfile() {
+import "./Sidebar.css";
+import { useParams,useNavigate } from "react-router-dom";
+import logo from './avatar.png'; 
+
+function SideBarProfile() {
+  const [user, setUser] = useState({});
+  const [referencedUser, setReferencedUser] = useState({});
+  const { id } = useParams();
+  const [idFromButtonClick, setIdFromButtonClick] = useState({});
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8080/api/user/${id}`)
+      .then((res) => {
+        setUser(res.data);
+        // Fetch the referenced user using the contact reference id
+        axios
+          .get(`http://localhost:8080/api/user/${res.data.contacts}`)
+          .then((res) => {
+            setReferencedUser(res.data);
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
+
   const handleProgDebat = (e) => {
     e.preventDefault();
     document.getElementById("prg-deb-btn").click();
   };
+  const handleProgReun = (d) => {
+    d.preventDefault();
+    document.getElementById("prg-deb-btn").click();
+  };
+  const handleProgConf = (c) => {
+    c.preventDefault();
+    document.getElementById("prg-deb-btn").click();
+  };
+    const navigate = useNavigate();
+    const handleClick = () => navigate(`Consulter`);
   return (
     <>
       <Programmerdebat />
-      <nav className="">
+      <nav className="fixed-left">
         <div className="side-menu">
           <center>
-            <img src="kaka.jpg" />
-            <h2>Jhon</h2>
+          
+          <img src={logo} alt="Logo" />
+            <h2>{user.username}</h2>
           </center>
 
           <ul className="">
@@ -31,12 +73,17 @@ export default function SideBarProfile() {
               </a>
               <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li>
-                  <a className="dropdown-item" href="#">
+                <a
+                    className="dropdown-item"
+                    href="#"
+                    onClick={handleProgReun}
+                  >
                     Programmer
                   </a>
                 </li>
-                <li>
-                  <a className="dropdown-item" href="#">
+                <li> 
+                  <a  className="dropdown-item"  href=""
+                    onClick={handleClick}>
                     Consulter
                   </a>
                 </li>
@@ -56,7 +103,13 @@ export default function SideBarProfile() {
               </a>
               <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li>
-                  <button className="dropdown-item">Programmer</button>
+                <a
+                    className="dropdown-item"
+                    href="#"
+                    onClick={handleProgConf}
+                  >
+                    Programmer
+                  </a>
                 </li>
                 <li>
                   <a className="dropdown-item" href="#">
@@ -94,13 +147,10 @@ export default function SideBarProfile() {
                 </li>
               </ul>
             </li>
-
-            <li>
-              <a>Enregistrement</a>
-            </li>
           </ul>
         </div>
       </nav>
     </>
   );
 }
+export default SideBarProfile;

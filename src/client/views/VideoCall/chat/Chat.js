@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import ChatBubble from "./ChatBubble";
 import ChatInput from "./ChatInput";
-import s from "../Socket";
+//import s from "../Socket";
 import "./chat.css";
 
 export default function Chat() {

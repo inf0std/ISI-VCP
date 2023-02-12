@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema(
       trim: true,
     },
     pic: {
-      type: String,
+      type: Buffer,
       default:
         "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
     },
@@ -76,7 +76,7 @@ const userSchema = new mongoose.Schema(
     phone: { type: String },
     contacts: [
       {
-        type: mongoose.SchemaTypes.ObjectID,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "User",
       },
     ],
@@ -98,6 +98,7 @@ userSchema.pre("save", async function (next) {
   const salt = await bcrypt.genSalt(10);
   this.login.password = await bcrypt.hash(this.login.password, salt);
 });
-
-const User = mongoose.model("User", userSchema);
+const User= mongoose.model("User", userSchema);
 module.exports = { User, userSchema };
+
+

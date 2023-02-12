@@ -19,6 +19,20 @@ const sendSignupData = (data) => {
   );
 };
 
+const sendData = (data) => {
+  return post(
+    {
+      reunion_Name: data.reunion_Name,
+      desc:data.desc,
+      Date_begin:data.Date_begin ,
+     // heure: data.heure,
+     // participantsName: data.participantsName,
+      Duration: data.Duration,
+    },
+    `${config.app_url}:${config.app_port}/api/account/progReun`
+  );
+};
+
 const logout = () => {
   console.log("sending logout req");
   return fetch(`${config.app_url}:${config.app_port}/api/account/logout`);
@@ -81,4 +95,5 @@ export {
   fetchContacts,
   getData,
   logout,
+  sendData,
 };

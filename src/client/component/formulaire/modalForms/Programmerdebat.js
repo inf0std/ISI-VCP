@@ -1,18 +1,55 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import { useParams, useNavigate, Form, Link } from "react-router-dom";
+
+import alert from "../../../utils/alertUtils";
+import {
+  sendData
+} from "../../../utils/dataFetcherUtils";
 import "./Programmerdebat.css";
-const Programmerdebat = (props) => {
-  const debatInfo = useRef({});
-  const [titre, date, heure, dure, desc, participants, audienceAll, audience] =
-    [
-      useRef(),
-      useRef(),
-      useRef(),
-      useRef(),
-      useRef(),
-      useRef(),
-      useRef(),
-      useRef(),
-    ];
+const Programmerdebat = () => {
+  const { id } = useParams();
+  const titre = useRef();
+  const desc = useRef();
+  const date = useRef();
+  const heure = useRef();
+  const dure = useRef();
+  const audience = useRef();
+  const [status, setStatus] = useState("");
+  const navigate = useNavigate();
+  const handleSubmit = e => {
+    e.preventDefault();
+    let data = {
+
+      reunion_Name: titre.current.value,
+      desc: desc.current.value,
+      date: date.current.value,
+      //  heure: heure.current.value,
+      // audience: audience.current.value,
+      Duration: dure.current.value,
+    }
+
+    console.log(data);
+    sendData(data)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        if (data.message) {
+          console.log(data.message);
+          alert(
+            "data sent",
+            "success"
+          );
+          navigate(`/profile/${id}`)
+        } else if (data.error) {
+          alert(`echoue ${data.error}`, "danger");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        navigate("/profile/1");
+      });
+  }
+
 
   const showTab1 = () => {
     document.getElementById("chrono-debat").click();
@@ -66,7 +103,7 @@ const Programmerdebat = (props) => {
     e.preventDefault();
   };
   return (
-    <>
+    <div onSubmit={handleSubmit}>
       <button
         type="button"
         className="btn btn-primary"
@@ -182,40 +219,30 @@ const Programmerdebat = (props) => {
                         />
                       </div>
                       <div style={{ width: "auto" }}>
-                        <div className="form-outline mb-2 ">
-                          <label className="form-label" htmlFor="debat-heure">
-                            Heure
-                          </label>
-                          <input
-                            ref={heure}
-                            type="time"
-                            id="debat-heure"
-                            className="form-control"
-                          />
-                        </div>
+
                         <div className="form-outline mb-4">
                           <label className="form-label" htmlFor="form1Example2">
                             Durée
                           </label>
                           <input
                             ref={dure}
-                            type="time"
+                            type="number"
                             id="debat-dure"
                             className="form-control"
                           />
                         </div>
                       </div>
-                      <div className="form-floating">
+                      <div className="form-floating mb-4">
+                        Description
                         <label
-                          className="form-label"
-                          htmlFor="debat-description"
-                        >
-                          Description
+                          className="form-label" htmlFor="debat-description" >
+
                         </label>
-                        <textarea
+                        <textarea style={{ height: "100px" }}
                           ref={desc}
+                          type="text"
                           className="form-control"
-                          placeholder="ajouter une description à votre Débat"
+                          placeholder="Ajouter une description à votre Débat"
                           id="debat-description"
                         ></textarea>
                       </div>
@@ -230,192 +257,23 @@ const Programmerdebat = (props) => {
                         </button>
 
                         <button
-                          className="btn btn-primary btn-block"
-                          onClick={handleSuivant1}
-                        >
-                          Suivant{" "}
-                        </button>
-                      </div>
-                    </form>
-                  </div>
-
-                  <div
-                    className="tab-pane fade"
-                    id="participant-debat-pane"
-                    role="tabpanel"
-                    aria-labelledby="participant-debat"
-                    tabIndex="0"
-                  >
-                    <form>
-                      <div className="d-flex">
-                        <label
-                          className="form-label"
-                          htmlFor="debat-part-search"
-                        >
-                          Participants{" "}
-                        </label>
-                        <input
-                          className="form-control me-2"
-                          type="search"
-                          id="debat-part-search"
-                          placeholder="Search"
-                          aria-label="Search"
-                        />
-                        <button className="btn btn-outline-info" type="submit">
-                          Rechercher
-                        </button>
-                      </div>
-                      <div className="ajout_">
-                        <ul ref={participants}></ul>
-                      </div>
-
-                      <div className="d-flex justify-content-center">
-                        <button
-                          type="button"
-                          className="btn btn-secondary btn-floating mx-1"
-                          onClick={handlePrecedent1}
-                        >
-                          Précédent
-                        </button>
-
-                        <button
-                          onClick={handleSuivant2}
-                          className="btn btn-primary btn-block"
-                        >
-                          Suivant
-                        </button>
-                      </div>
-                    </form>
-                  </div>
-
-                  <div
-                    className="tab-pane fade"
-                    id="audience-debat-pane"
-                    role="tabpanel"
-                    aria-labelledby="participant-debat"
-                    tabIndex="0"
-                  >
-                    <form>
-                      <div className="d-flex">
-                        <label
-                          className="form-label"
-                          htmlFor="debat-audience-search"
-                        >
-                          Audience
-                        </label>
-
-                        <input
-                          className="form-control me-2"
-                          type="search"
-                          id="debat-audience-search"
-                          placeholder="Search"
-                          aria-label="Search"
-                        />
-                        <button className="btn btn-outline-info" type="submit">
-                          Rechercher
-                        </button>
-                      </div>
-                      <div className="chek">
-                        <label
-                          className="form-check-label"
-                          htmlFor="debat-audience-all"
-                        >
-                          Tout Le Monde
-                        </label>
-                        <input
-                          ref={audienceAll}
-                          className="form-check-input"
-                          type="checkbox"
-                          value=""
-                          id="debat-audience-all"
-                          required
-                        />
-                      </div>
-                      <div>
-                        <ul ref={audience}></ul>
-                      </div>
-                      <div className="d-flex justify-content-center">
-                        <button
-                          type="button"
-                          className="btn btn-secondary btn-floating mx-1"
-                          onClick={handlePrecedent2}
-                        >
-                          Précédent
-                        </button>
-
-                        <button
                           type="submit"
                           className="btn btn-primary btn-block"
-                          onClick={handleSuivant3}
-                        >
-                          Suivant
-                        </button>
-                      </div>
-                    </form>
-                  </div>
-
-                  <div
-                    className="tab-pane fade"
-                    id="confirmation-debat-pane"
-                    role="tabpanel"
-                    aria-labelledby="confirmation-debat"
-                    tabIndex="0"
-                  >
-                    <form>
-                      <div className="spane_">
-                        <div>
-                          <p>
-                            <span>Titre :</span>
-                          </p>
-                        </div>
-                        <div>
-                          <p>
-                            <span>Date :</span>
-                          </p>
-                        </div>
-                        <div>
-                          <p>
-                            <span>Description :</span>
-                          </p>
-                        </div>
-                        <div>
-                          <p>
-                            <span>Durée :</span>
-                          </p>
-                        </div>
-                        <div>
-                          <p>
-                            <span>Participants :</span>
-                          </p>
-                        </div>
-                      </div>
-
-                      <div className="d-flex justify-content-center">
-                        <button
-                          type="button"
-                          className="btn btn-secondary btn-floating mx-1"
-                          onClick={handlePrecedent3}
-                        >
-                          Précédent
-                        </button>
-
-                        <button
-                          type="submit"
-                          className="btn btn-primary btn-block"
-                          onClick={confirmer}
-                        >
+                          //onClick={confirmer}
+                         
+                        > {status && <p>{status}</p>}
                           Confirmer
                         </button>
                       </div>
                     </form>
                   </div>
                 </div>
-              </div>
             </div>
           </div>
         </div>
       </div>
-    </>
+   </div> </div>
+
   );
 };
 

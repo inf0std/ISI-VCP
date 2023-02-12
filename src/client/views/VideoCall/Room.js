@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef, Children } from "react";
 import io from "socket.io-client";
+import config from "../../config.json";
 import { useParams } from "react-router-dom";
 import { TbScreenShare } from "react-icons/tb";
 import {
@@ -15,7 +16,7 @@ import "./chat/chat.css";
 import Chat from "./chat/Chat";
 
 export default function Room() {
-  const s = useRef(io.connect("localhost:8080"));
+  const s = useRef(io.connect(config.io_url));
   const { roomid, uid } = useParams();
   const localStream = useRef(null);
   const ref = useRef("");

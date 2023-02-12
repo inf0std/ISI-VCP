@@ -8,6 +8,7 @@ app.use(express.static(path.join(__dirname, "public/build")));
 console.log(path.join(__dirname, "public"));
 console.log(process.env.APP_URL);
 console.log(urlJoin(process.env.APP_URL));
+
 /* 
 const { genLoginToken } = require("./src/server/apis/tokens");
 

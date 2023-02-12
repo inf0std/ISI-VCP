@@ -32,5 +32,9 @@ module.exports = (server) => {
     socket.on("end", ({ roomid, sid }) => {
       socket.to(roomid).emit("end", { sid });
     });
+
+    socket.on("disconnect", () => {
+      console.log(socket.rooms);
+    });
   });
 };

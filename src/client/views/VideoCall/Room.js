@@ -32,7 +32,10 @@ export default function Room() {
       flag.current = true;
 
       navigator.mediaDevices
-        .getUserMedia({ video: true, audio: true })
+        .getUserMedia({
+          video: { width: { exact: 144 }, height: { exact: 100 } },
+          audio: true,
+        })
         .then((stream) => {
           console.log("recuperer stream avec succes", stream);
           localStream.current = stream;
@@ -96,7 +99,7 @@ export default function Room() {
       const classChoice = (nb) => {
         if (nb < 2) return "vid1";
         if (nb < 5) return "vid2";
-        if (nb < 10) return "vid3";
+        if (nb < 10) return "vid5";
       };
       const addVideo = (stream, id, screen) => {
         let oldc = classChoice(nbv);
@@ -211,6 +214,10 @@ export default function Room() {
     s.current.emit("end", { roomid, sid: s.current.id });
     Navigate("/profile/1");
   };
+  const muted = () => {
+    const tracks = localStream.current.getAudioTracks();
+    tracks.forEach((track) => (track.muted = true));
+  };
   return (
     <div className="container1 bg-black" style={{ height: window.innerHeight }}>
       <div id="video-space">
@@ -274,7 +281,7 @@ export default function Room() {
               </span>
               <span>Camera</span>
             </div>
-            <div className="item">
+            <div className="item" onClick={muted}>
               <span className="icon">
                 <BiMicrophoneOff size=" 23.5px" />
               </span>

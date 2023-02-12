@@ -2,21 +2,23 @@ import React, { useEffect, useState, useRef, Children } from "react";
 import io from "socket.io-client";
 import { useParams } from "react-router-dom";
 import { TbScreenShare } from "react-icons/tb";
-import s from "./Socket";
+import { RiSendPlaneFill } from "react-icons/ri";
 import {
   BsCameraVideoOff,
   BsCameraVideo,
   BsChatLeftText,
 } from "react-icons/bs";
 import { BiMicrophoneOff, BiMicrophone } from "react-icons/bi";
-import { HiUsers } from "react-icons/hi";
+import { HiUsers, HiOutlinePhoneMissedCall } from "react-icons/hi";
 import Peer from "simple-peer";
 import "./videocall.css";
 import "./chat/chat.css";
-import Chat from "./chat/Chat";
-import ChatBubble from "./chat/ChatBubble";
+import { useNavigate } from "react-router-dom";
 
 export default function Room() {
+  const Navigate = useNavigate();
+  const inputRef = useRef();
+  const isSelf = useRef();
   const s = useRef(io.connect("localhost:8080"));
   const { roomid, uid } = useParams();
   const localStream = useRef(null);
@@ -44,6 +46,10 @@ export default function Room() {
           initiator: true,
           trickle: false,
         });
+        peer.on("data", (data) => {
+          let message = JSON.parse(data.toString());
+          addmessage(message);
+        });
         console.log("the stream to add ", ref.current.srcObject);
         peer.addStream(localStream.current);
         peer.on("stream", (stream) => {
@@ -69,6 +75,10 @@ export default function Room() {
         console.log("stream to be added", ref.current.srcObject, localStream);
         peer.addStream(localStream.current);
         peers.push({ id: socketid, peer: peer });
+        peer.on("data", (data) => {
+          let message = JSON.parse(data.toString());
+          addmessage(message);
+        });
         peer.on("signal", (signal) => {
           s.current.emit("answer", { signal, socketid });
           console.log("j'envoie une reponse", socketid);
@@ -119,6 +129,14 @@ export default function Room() {
         let peer = peers.find((peer) => peer.id == socketid).peer;
         peer.signal(signal);
       });
+      s.current.on("end", ({ sid }) => {
+        console.log("recived end event");
+        const vid = document.getElementById(sid);
+        vid.remove();
+        let index = peers.findIndex((peer) => peer.id == sid);
+        peers[index].peer.destroy();
+        peers.splice(index, 1);
+      });
     }
   }, []);
 
@@ -153,12 +171,94 @@ export default function Room() {
       });
     });
   };
+
+  const addmessage = (message) => {
+    console.log("me", s.current.id);
+
+    console.log("author", message.author);
+    let self = message.author === s.current.id;
+    const msg_element = document.querySelector("#msg");
+    const vid = document.createElement("p");
+    const vidi = document.createElement("small");
+    const pere = document.createElement("div");
+    vid.innerHTML = message.content;
+    vidi.innerHTML = message.name;
+    pere.classList.add("pere");
+    if (self) {
+      vid.classList.add("message-user");
+      vidi.classList.add("user");
+    } else {
+      vid.classList.add("message-other");
+      vidi.classList.add("other");
+    }
+    pere.appendChild(vid);
+    pere.appendChild(vidi);
+    msg_element.appendChild(pere);
+    msg_element.scrollTop = msg_element.scrollHeight;
+  };
+  const sendMessage = (msg) => {
+    const messageData = {
+      name: "ferhat",
+      content: msg,
+      timestamp: new Date().getTime(),
+      author: s.current.id,
+    };
+    peers.forEach((peer) => {
+      peer.peer.send(JSON.stringify(messageData));
+    });
+  };
+  const end_call = () => {
+    s.current.emit("end", { roomid, sid: s.current.id });
+    Navigate("/profile/1");
+  };
   return (
     <div className="container1 bg-black" style={{ height: window.innerHeight }}>
       <div id="video-space">
         <div id="video-tab" className="container_video flex flex-col">
           <video className="vid1" ref={ref} autoPlay />
         </div>
+
+        <div className="chat">
+          <div className="chat_height">
+            <div className="w-64 flex flex-col h-full justify ">
+              <div
+                className={
+                  isSelf
+                    ? "m-1 flex pl-10 justify-end"
+                    : "m-1 flex pr-10 justify-start"
+                }
+              >
+                <div id="msg"></div>
+              </div>
+              <div>
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    sendMessage(inputRef.current.value);
+                    addmessage({
+                      name: "ferhat",
+                      content: inputRef.current.value,
+                      timestamp: new Date().getTime(),
+                      author: s.current.id,
+                    });
+                    inputRef.current.value = "";
+                  }}
+                  className="formular"
+                >
+                  <div>
+                    <div className="flex">
+                      <textarea className=" border rounded-3" ref={inputRef} />
+                      <button type="submit">
+                        <RiSendPlaneFill color="blue" size="2rem" />
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div className="ligne1">
           <div className="menu">
             <div className="item">
@@ -192,11 +292,14 @@ export default function Room() {
               </span>
               <span>Chat</span>
             </div>
+            <div className="item" onClick={end_call}>
+              <span className="icon">
+                <HiOutlinePhoneMissedCall size=" 21.5px" />
+              </span>
+              <span>end</span>
+            </div>
           </div>
         </div>
-      </div>
-      <div className="chat">
-        <Chat />
       </div>
     </div>
   );

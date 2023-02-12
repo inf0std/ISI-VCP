@@ -4,7 +4,7 @@ import ChatInput from "./ChatInput";
 //import s from "../Socket";
 import "./chat.css";
 
-export default function Chat() {
+export default function Chat({ s, send_msg }) {
   const flag = useRef(false);
   const isSelf = useRef();
 
@@ -45,7 +45,7 @@ export default function Chat() {
         >
           <div id="msg"></div>
         </div>
-        <ChatInput />
+        <ChatInput s={s} send_msg={send_msg} />
       </div>
     </div>
   );

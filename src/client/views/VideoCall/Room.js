@@ -15,6 +15,31 @@ import "./videocall.css";
 import "./chat/chat.css";
 import Chat from "./chat/Chat";
 
+const mediaConstraint = {
+
+}
+const peerConfig = {
+  iceServers: [
+    {
+      urls: "stun:relay.metered.ca:80",
+    },
+    {
+      urls: "turn:relay.metered.ca:80",
+      username: "aab6710f1446c8a22c6f85ab",
+      credential: "oT7ojrV4R69DAF1o",
+    },
+    {
+      urls: "turn:relay.metered.ca:443",
+      username: "aab6710f1446c8a22c6f85ab",
+      credential: "oT7ojrV4R69DAF1o",
+    },
+    {
+      urls: "turn:relay.metered.ca:443?transport=tcp",
+      username: "aab6710f1446c8a22c6f85ab",
+      credential: "oT7ojrV4R69DAF1o",
+    },
+  ],
+}
 export default function Room() {
   const s = useRef(io.connect(config.io_url));
   const { roomid, uid } = useParams();
@@ -48,6 +73,7 @@ export default function Room() {
         const peer = new Peer({
           initiator: true,
           trickle: false,
+          config: peerConfig
         });
         console.log("the stream to add ", ref.current.srcObject);
         peer.addStream(localStream.current);
@@ -70,6 +96,7 @@ export default function Room() {
         let peer = new Peer({
           initiator: false,
           trickle: false,
+          config: peerConfig,
         });
         console.log("stream to be added", ref.current.srcObject, localStream);
         peer.addStream(localStream.current);

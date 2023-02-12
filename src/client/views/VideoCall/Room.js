@@ -9,12 +9,14 @@ import {
   BsChatLeftText,
 } from "react-icons/bs";
 import { BiMicrophoneOff, BiMicrophone } from "react-icons/bi";
-import { HiUsers } from "react-icons/hi";
+import { HiUsers, HiOutlinePhoneMissedCall } from "react-icons/hi";
 import Peer from "simple-peer";
 import "./videocall.css";
 import "./chat/chat.css";
+import { useNavigate } from "react-router-dom";
 
 export default function Room() {
+  const Navigate = useNavigate();
   const inputRef = useRef();
   const isSelf = useRef();
   const s = useRef(io.connect("localhost:8080"));
@@ -127,6 +129,14 @@ export default function Room() {
         let peer = peers.find((peer) => peer.id == socketid).peer;
         peer.signal(signal);
       });
+      s.current.on("end", ({ sid }) => {
+        console.log("recived end event");
+        const vid = document.getElementById(sid);
+        vid.remove();
+        let index = peers.findIndex((peer) => peer.id == sid);
+        peers[index].peer.destroy();
+        peers.splice(index, 1);
+      });
     }
   }, []);
 
@@ -184,6 +194,7 @@ export default function Room() {
     pere.appendChild(vid);
     pere.appendChild(vidi);
     msg_element.appendChild(pere);
+    msg_element.scrollTop = msg_element.scrollHeight;
   };
   const sendMessage = (msg) => {
     const messageData = {
@@ -195,6 +206,10 @@ export default function Room() {
     peers.forEach((peer) => {
       peer.peer.send(JSON.stringify(messageData));
     });
+  };
+  const end_call = () => {
+    s.current.emit("end", { roomid, sid: s.current.id });
+    Navigate("/profile/1");
   };
   return (
     <div className="container1 bg-black" style={{ height: window.innerHeight }}>
@@ -276,6 +291,12 @@ export default function Room() {
                 <BsChatLeftText size=" 21.5px" />
               </span>
               <span>Chat</span>
+            </div>
+            <div className="item" onClick={end_call}>
+              <span className="icon">
+                <HiOutlinePhoneMissedCall size=" 21.5px" />
+              </span>
+              <span>end</span>
             </div>
           </div>
         </div>

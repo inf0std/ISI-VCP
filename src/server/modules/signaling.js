@@ -29,9 +29,8 @@ module.exports = (server) => {
       console.log("jai recu un answer");
       socket.to(socketid).emit("answer", { signal, socketid: socket.id });
     });
-    socket.on("send-message", (roomid, message) => {
-      rooms[roomid].msgs.push(message);
-      socket.emit("add-message", message);
+    socket.on("end", ({ roomid, sid }) => {
+      socket.to(roomid).emit("end", { sid });
     });
   });
 };

@@ -10,10 +10,11 @@ import {
   BsChatLeftText,
 } from "react-icons/bs";
 import { BiMicrophoneOff, BiMicrophone } from "react-icons/bi";
-import { HiUsers } from "react-icons/hi";
+import { HiUsers, HiOutlinePhoneMissedCall } from "react-icons/hi";
 import Peer from "simple-peer";
 import "./videocall.css";
 import "./chat/chat.css";
+import { useNavigate } from "react-router-dom";
 
 const mediaConstraint = {
 
@@ -41,7 +42,11 @@ const peerConfig = {
   ],
 }
 export default function Room() {
+<<<<<<< HEAD
   const s = useRef(io(config.io_url));
+=======
+  const Navigate = useNavigate();
+>>>>>>> a8b0fb79e437342a4c60b4c63983128d0865a6e5
   const inputRef = useRef();
   const isSelf = useRef();
   const { roomid, uid } = useParams();
@@ -56,7 +61,14 @@ export default function Room() {
       flag.current = true;
 
       navigator.mediaDevices
+<<<<<<< HEAD
         .getUserMedia({ video: {width: {exact: 100}, height: {exact: 80}}, audio: true })
+=======
+        .getUserMedia({
+          video: { width: { exact: 144 }, height: { exact: 100 } },
+          audio: true,
+        })
+>>>>>>> a8b0fb79e437342a4c60b4c63983128d0865a6e5
         .then((stream) => {
           console.log("recuperer stream avec succes", stream);
           localStream.current = stream;
@@ -122,7 +134,7 @@ export default function Room() {
       const classChoice = (nb) => {
         if (nb < 2) return "vid1";
         if (nb < 5) return "vid2";
-        if (nb < 10) return "vid3";
+        if (nb < 10) return "vid5";
       };
       const addVideo = (stream, id, screen) => {
         let oldc = classChoice(nbv);
@@ -154,6 +166,14 @@ export default function Room() {
         console.log(socketid, peers);
         let peer = peers.find((peer) => peer.id == socketid).peer;
         peer.signal(signal);
+      });
+      s.current.on("end", ({ sid }) => {
+        console.log("recived end event");
+        const vid = document.getElementById(sid);
+        vid.remove();
+        let index = peers.findIndex((peer) => peer.id == sid);
+        peers[index].peer.destroy();
+        peers.splice(index, 1);
       });
     }
   }, []);
@@ -212,6 +232,7 @@ export default function Room() {
     pere.appendChild(vid);
     pere.appendChild(vidi);
     msg_element.appendChild(pere);
+    msg_element.scrollTop = msg_element.scrollHeight;
   };
   const sendMessage = (msg) => {
     const messageData = {
@@ -223,6 +244,14 @@ export default function Room() {
     peers.forEach((peer) => {
       peer.peer.send(JSON.stringify(messageData));
     });
+  };
+  const end_call = () => {
+    s.current.emit("end", { roomid, sid: s.current.id });
+    Navigate("/profile/1");
+  };
+  const muted = () => {
+    const tracks = localStream.current.getAudioTracks();
+    tracks.forEach((track) => (track.muted = true));
   };
   return (
     <div className="container1 bg-black" style={{ height: window.innerHeight }}>
@@ -287,7 +316,7 @@ export default function Room() {
               </span>
               <span>Camera</span>
             </div>
-            <div className="item">
+            <div className="item" onClick={muted}>
               <span className="icon">
                 <BiMicrophoneOff size=" 23.5px" />
               </span>
@@ -304,6 +333,12 @@ export default function Room() {
                 <BsChatLeftText size=" 21.5px" />
               </span>
               <span>Chat</span>
+            </div>
+            <div className="item" onClick={end_call}>
+              <span className="icon">
+                <HiOutlinePhoneMissedCall size=" 21.5px" />
+              </span>
+              <span>end</span>
             </div>
           </div>
         </div>

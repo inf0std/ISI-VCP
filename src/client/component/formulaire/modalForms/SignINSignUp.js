@@ -13,7 +13,7 @@ import {
 } from "../../../utils/dataFetcherUtils";
 
 import config from "../../../config.json";
-const SignInSignUp = ({ changeUser }) => {
+const SignInSignUp = ({ changeUser, finish }) => {
   const navigate = useNavigate();
 
   const signinEmail = useRef();
@@ -38,11 +38,13 @@ const SignInSignUp = ({ changeUser }) => {
           console.log(user._id, user.name, user.token);
           changeUser(user._id, user.name, user.token);
           navigate(`/profile/${user._id}`);
-        } else alert("EMAIL OU MOT DE PASSE FAUX", "danger");
+        } else {
+          alert("Email ou mot de passe FAUX", "danger")};
       })
       .catch((err) => {
         console.log("connexion", err);
-        navigate("/");
+        finish();
+        navigate(`/`);
       }); //*/
   };
 
@@ -84,10 +86,10 @@ const SignInSignUp = ({ changeUser }) => {
           if (data.message) {
             console.log(data.message);
             alert(
-              "SUCCES!! VEUILLEZ VERIFIER VOTRE BOITE EMAIL POUR VALIDER VOTRE COMPTE",
+              "SUCCES!! Veuillez Verifier votre boite email pour valider votre compte",
               "success"
             );
-            document.getElementById("signup-signin").classList.remove("show");
+            finish()
             navigate("/");
           } else if (data.error) {
             alert(`inscription echoue ${data.error}`, "danger");
@@ -99,7 +101,7 @@ const SignInSignUp = ({ changeUser }) => {
         }); //*/
     } else {
       alert(
-        "MAUVAIS FORMAT pour L'EMAIL, LE MOT DE PASSE, LE TELEPHONE OU LE NOM D'UTILISATEUR",
+        "MAUVAIS FORMAT pour l'email, le mot de passe , le téléphone ou le nom d'utilisateur",
         "danger"
       );
     }
@@ -157,7 +159,7 @@ const SignInSignUp = ({ changeUser }) => {
                 data-bs-dismiss="modal"
               ></button>*/}
             </div>
-
+            <div id="alert-container"></div>
             <div className="modal-body">
               <div className="modal-body mx-3">
                 <div className="tab-content" id="myTabContent">

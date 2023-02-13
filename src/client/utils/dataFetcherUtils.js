@@ -2,7 +2,7 @@ import config from "../config.json";
 const sendSigninData = (data) => {
   return post(
     { email: data.email, password: data.password },
-    `/api/account/login`
+    `http://localhost:80/api/account/login`
   );
 };
 
@@ -16,20 +16,6 @@ const sendSignupData = (data) => {
       username: data.username,
     },
     `${config.app_url}/api/account/signup`
-  );
-};
-
-const sendData = (data) => {
-  return post(
-    {
-      reunion_Name: data.reunion_Name,
-      desc:data.desc,
-      Date_begin:data.Date_begin ,
-     // heure: data.heure,
-     // participantsName: data.participantsName,
-      Duration: data.Duration,
-    },
-    `${config.app_url}:${config.app_port}/api/account/progReun`
   );
 };
 
@@ -86,5 +72,4 @@ export {
   fetchContacts,
   getData,
   logout,
-  sendData,
 };

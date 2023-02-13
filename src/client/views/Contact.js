@@ -1,6 +1,7 @@
 import React, {useEffect} from "react";
 import {useNavigate} from 'react-router-dom';
 import Navbar from "../component/Home2/Navbar";
+import "./Contacts.css"
 const Contact = (props) => {
  
 

@@ -14,7 +14,7 @@ require("./db/db");
 // Use parsing middleware
 app.use(cors());
 console.log(path.join(__dirname, "public"));
-app.use(express.static(path.join(__dirname, "../../build")));
+//app.use(express.static(path.join(__dirname, "../../build")));
 app.use(
   session({
     secret: "f1i40chouh//e209u",
@@ -26,7 +26,7 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded());
 
-let port = process.env.PORT || 80;
+let port = process.env.APP_PORT || 80;
 http.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });

@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
@@ -29,17 +28,17 @@ function ConsultConf() {
   const [idFromButtonClick, setIdFromButtonClick] = useState({});
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/api/user/${id}`)
+      .get(`http://localhost:80/api/user/${id}`)
       .then((res) => {
         setUser(res.data);
         const conferenceId = res.data.conferences;
-        console.log('here6',conferenceId)
+        console.log("here6", conferenceId);
         // Fetch the referenced user using the contact reference id
         axios
-          .get(`http://localhost:8080/api/conference/${conferenceId}`)
+          .get(`http://localhost:80/api/conference/${conferenceId}`)
           .then((res) => {
             setReferencedUser(res.data);
-            console.log('here5',res.data)
+            console.log("here5", res.data);
           })
           .catch((err) => {
             console.error(err);
@@ -100,7 +99,7 @@ function ConsultConf() {
                     </MDBCol>
                     <MDBCol sm="9">
                       <MDBCardText className="text-muted">
-                        {referencedUser.duration} 
+                        {referencedUser.duration}
                       </MDBCardText>
                     </MDBCol>
                     <MDBCol sm="9">

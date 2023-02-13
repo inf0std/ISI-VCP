@@ -1,12 +1,14 @@
 import { useRef, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
+import config from "../../../config.json";
 import { useParams, useNavigate, Form, Link } from "react-router-dom";
 
 import alert from "../../../utils/alertUtils";
-import { sendData } from "../../../utils/dataFetcherUtils";
+//import { sendData } from "../../../utils/dataFetcherUtils";
 import "./Programmerdebat.css";
 const Programmerdebat = () => {
   const { id } = useParams();
-  const titre = useRef();
+  const lien = useRef();
   const desc = useRef();
   const date = useRef();
   const heure = useRef();
@@ -14,10 +16,10 @@ const Programmerdebat = () => {
   const audience = useRef();
   const [status, setStatus] = useState("");
   const navigate = useNavigate();
-  const handleSubmit = (e) => {
+  /* const handleSubmit = (e) => {
     e.preventDefault();
     let data = {
-      reunion_Name: titre.current.value,
+      reunion_Name: lien.current.value,
       desc: desc.current.value,
       date: date.current.value,
       //  heure: heure.current.value,
@@ -41,9 +43,9 @@ const Programmerdebat = () => {
       .catch((err) => {
         console.log(err);
         navigate("/profile/1");
-      });
-  };
-
+      }); 
+  };*/
+  /* 
   const showTab1 = () => {
     document.getElementById("chrono-debat").click();
   };
@@ -94,9 +96,9 @@ const Programmerdebat = () => {
 
   const confirmer = (e) => {
     e.preventDefault();
-  };
+  }; */
   return (
-    <div onSubmit={handleSubmit}>
+    <div /* onSubmit={handleSubmit} */>
       <button
         type="button"
         className="btn btn-primary"
@@ -188,16 +190,53 @@ const Programmerdebat = () => {
                   >
                     <form>
                       <div className="form-outline mb-4">
-                        <label className="form-label" htmlFor="debat-titre">
-                          Titre
+                        <label className="form-label" htmlFor="debat-lien">
+                          lien
                         </label>
                         <input
-                          ref={titre}
+                          ref={lien}
                           type="Text"
-                          id="debat-titre"
+                          id="debat-lien"
                           className="form-control"
                         />
                       </div>
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          lien.current.value = `/room/${id}/${uuidv4()}`;
+                        }}
+                        className="btn btn-primary btn-block"
+                        //onClick={confirmer}
+                      >
+                        {" "}
+                        {status && <p>{status}</p>}
+                        Generer lien
+                      </button>
+                      <button
+                        className="btn btn-primary btn-block"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          lien.current.select();
+                          document.execCommand("copy");
+                        }}
+                        //onClick={confirmer}
+                      >
+                        {" "}
+                        {status && <p>{status}</p>}
+                        Copier lien
+                      </button>
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          navigate(lien.current.value);
+                        }}
+                        className="btn btn-primary btn-block"
+                        //onClick={confirmer}
+                      >
+                        {" "}
+                        {status && <p>{status}</p>}
+                        Rejoindre
+                      </button>
 
                       <div className="form-outline mb-4">
                         <label className="form-label" htmlFor="date-debat">

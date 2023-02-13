@@ -16,9 +16,7 @@ import "./videocall.css";
 import "./chat/chat.css";
 import { useNavigate } from "react-router-dom";
 
-const mediaConstraint = {
-
-}
+const mediaConstraint = {};
 const peerConfig = {
   iceServers: [
     {
@@ -58,7 +56,10 @@ export default function Room({user}) {
       flag.current = true;
 
       navigator.mediaDevices
-        .getUserMedia({ video: {width: {exact: 100}, height: {exact: 80}}, audio: true })
+        .getUserMedia({
+          video: { width: { exact: 100 }, height: { exact: 80 } },
+          audio: true,
+        })
         .then((stream) => {
           console.log("recuperer stream avec succes", stream);
           localStream.current = stream;
@@ -71,7 +72,7 @@ export default function Room({user}) {
         const peer = new Peer({
           initiator: true,
           trickle: false,
-          config: peerConfig
+          config: peerConfig,
         });
         peer.on("data", (data) => {
           let message = JSON.parse(data.toString());

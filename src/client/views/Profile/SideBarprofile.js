@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react'
-import axios from 'axios'
-import Programmerdebat from "../formulaire/modalForms/Programmerdebat";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import Programmerdebat from "../../component/formulaire/modalForms/Programmerdebat";
 
 import "./Sidebar.css";
-import { useParams,useNavigate } from "react-router-dom";
-import logo from './avatar.png'; 
+import { useParams, useNavigate } from "react-router-dom";
+import logo from "./avatar.png";
 
 function SideBarProfile() {
   const [user, setUser] = useState({});
@@ -13,12 +13,12 @@ function SideBarProfile() {
   const [idFromButtonClick, setIdFromButtonClick] = useState({});
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/api/user/${id}`)
+      .get(`http://localhost:80/api/user/${id}`)
       .then((res) => {
         setUser(res.data);
         // Fetch the referenced user using the contact reference id
         axios
-          .get(`http://localhost:8080/api/user/${res.data.contacts}`)
+          .get(`http://localhost:80/api/user/${res.data.contacts}`)
           .then((res) => {
             setReferencedUser(res.data);
           })
@@ -43,16 +43,15 @@ function SideBarProfile() {
     c.preventDefault();
     document.getElementById("prg-deb-btn").click();
   };
-    const navigate = useNavigate();
-    const handleClick = () => navigate(`Consulter`);
+  const navigate = useNavigate();
+  const handleClick = () => navigate(`Consulter`);
   return (
     <>
       <Programmerdebat />
       <nav className="fixed-left">
         <div className="side-menu">
           <center>
-          
-          <img src={logo} alt="Logo" />
+            <img src={logo} alt="Logo" />
             <h2>{user.username}</h2>
           </center>
 
@@ -70,7 +69,7 @@ function SideBarProfile() {
               </a>
               <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li>
-                <a
+                  <a
                     className="dropdown-item"
                     href="#"
                     onClick={handleProgReun}
@@ -78,9 +77,8 @@ function SideBarProfile() {
                     Programmer
                   </a>
                 </li>
-                <li> 
-                  <a  className="dropdown-item"  href=""
-                    onClick={handleClick}>
+                <li>
+                  <a className="dropdown-item" href="" onClick={handleClick}>
                     Consulter
                   </a>
                 </li>
@@ -100,7 +98,7 @@ function SideBarProfile() {
               </a>
               <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li>
-                <a
+                  <a
                     className="dropdown-item"
                     href="#"
                     onClick={handleProgConf}

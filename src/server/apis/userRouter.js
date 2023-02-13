@@ -14,7 +14,7 @@ const {
 
 const userRouter = require("express").Router();
 
-userRouter.use((req, res, next) => {
+/* userRouter.use((req, res, next) => {
   let id = req.params.id;
   console.log("credentials validation", id);
   if (req.session.id) {
@@ -37,7 +37,7 @@ userRouter.use((req, res, next) => {
       res.status(400).send({ error: "token expired" });
     }
   }
-});
+}); */
 userRouter.get("/:id/profile", handleGetData);
 userRouter.get("/:id/conferences", handleuserconference);
 userRouter.get("/:id/reunions", handleuserreunion);

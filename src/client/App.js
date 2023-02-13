@@ -16,12 +16,18 @@ function App() {
   const [user, setUser] = useState({ id: null, name: null });
   //const socket = useRef(s);
 
-  useEffect (()=>{
-    getData().then(response=>response.json()).then(data=>{
-      setUser({id: data._id, name: data.name,token: data.token, all: data})
-    })
-  })
-
+  useEffect(() => {
+    getData()
+      .then((response) => response.json())
+      .then((data) => {
+        setUser({
+          id: data._id,
+          name: data.name,
+          token: data.token,
+          all: data,
+        });
+      });
+  }, []);
 
   const changeUser = (id, name, token) => {
     setUser({ id, name, token });
@@ -34,14 +40,14 @@ function App() {
           path="/"
           element={<Home user={user} changeUser={changeUser} />}
         />
-        <Route path="/room/:roomid" element={<Room user={user}/>} />
+        <Route path="/room/:id/:roomid" element={<Room user={user} />} />
         <Route
           path="/Contact"
           element={<Contact user={user} changeUser={changeUser} />}
         />
 
         <Route
-          path="/profile"
+          path="/profile/:id"
           element={<Profile user={user} changeUser={changeUser} />}
         />
       </Routes>

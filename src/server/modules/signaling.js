@@ -2,7 +2,7 @@ module.exports = (server) => {
   //creation de serveur socketio
   const io = require("socket.io")(server, {
     cors: {
-      origin: process.env.APP_URL,
+      origin: "http://localhost:3000", //process.env.APP_URL,
       methods: ["GET", "POST"],
     },
   });
@@ -34,7 +34,6 @@ module.exports = (server) => {
     });
 
     socket.on("disconnect", () => {
-      
       console.log("socket leaving", Object.keys(socket.rooms));
     });
   });

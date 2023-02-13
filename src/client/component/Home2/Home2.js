@@ -2,7 +2,6 @@ import React from "react";
 import Navbar from "./Navbar";
 import Footer1 from "../Footer/Footer1";
 import Header from "../headers/ProfileHeader";
-import ChatBubble from "../../views/VideoCall/chat/ChatBubble";
 
 function Home({ user, changeUser }) {
   return (

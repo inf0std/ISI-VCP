@@ -21,7 +21,7 @@ const ChatHeader = (props) => {
         >
           <img
             src={
-              /* `http://127.0.0.1:8080/api/router/conversation/${props.conv.id}/image.jpg` */
+              /* `http://127.0.0.1:80/api/router/conversation/${props.conv.id}/image.jpg` */
               "he"
             }
           />

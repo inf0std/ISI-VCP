@@ -40,6 +40,7 @@ const SignInSignUp = ({ changeUser, finish }) => {
           console.log(user);
           console.log(user._id, user.name, user.token);
           changeUser(user._id, user.name, user.token);
+          finish();
           navigate(`/profile/${user._id}`);
         } else {
           alert("Email ou mot de passe FAUX", "danger");

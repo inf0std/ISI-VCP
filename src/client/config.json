@@ -1,4 +1,4 @@
 {
   "app_url": "http://localhost:80",
-  "io_url": "https://localhost:80"
+  "io_url": "http://localhost:80"
 }

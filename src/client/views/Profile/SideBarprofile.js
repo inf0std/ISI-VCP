@@ -13,12 +13,12 @@ function SideBarProfile() {
   const [idFromButtonClick, setIdFromButtonClick] = useState({});
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/api/user/${id}`)
+      .get(`http://localhost:80/api/user/${id}`)
       .then((res) => {
         setUser(res.data);
         // Fetch the referenced user using the contact reference id
         axios
-          .get(`http://localhost:8080/api/user/${res.data.contacts}`)
+          .get(`http://localhost:80/api/user/${res.data.contacts}`)
           .then((res) => {
             setReferencedUser(res.data);
           })

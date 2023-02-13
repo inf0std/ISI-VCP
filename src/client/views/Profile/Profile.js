@@ -1,4 +1,5 @@
 import SideBarProfile from "./SideBarprofile";
+import config from "../../config.json";
 import Navbarprofile from "./Navbarprofile";
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
@@ -23,13 +24,15 @@ function Profile() {
   const [idFromButtonClick, setIdFromButtonClick] = useState({});
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/api/user/${id}`)
+      .get(`http://localhost:80/api/user/${id}`)
       .then((res) => {
         setUser(res.data);
+        console.log(res.data);
         // Fetch the referenced user using the contact reference id
         axios
-          .get(`http://localhost:8080/api/user/${res.data.contacts}`)
+          .get(`http://localhost:80/api/user/${res.data.contacts}`)
           .then((res) => {
+            console.log(res.data);
             setReferencedUser(res.data);
           })
           .catch((err) => {

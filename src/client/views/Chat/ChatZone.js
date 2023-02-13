@@ -16,9 +16,7 @@ const ChatZone = (props) => {
         {props.msgs.map((msg) => {
           return (
             <div>
-              <img
-                src={`http:127.0.0.1:8080/profile/${msg.senderId}.jpg`}
-              ></img>
+              <img src={`http:127.0.0.1:80/profile/${msg.senderId}.jpg`}></img>
               <div style={{ borderRadius: "10px" }}>
                 <p></p>
               </div>

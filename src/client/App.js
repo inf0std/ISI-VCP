@@ -5,7 +5,7 @@ import Home from "./component/Home2/Home2";
 import Contact from "./views/Contact";
 //import Chat from "./views/Chat";
 import { getData } from "./utils/dataFetcherUtils";
-import Profile from "./component/Profile/Profile";
+import Profile from "./views/Profile/Profile";
 import Room from "./views/VideoCall/Room";
 import "bootstrap/dist/css/bootstrap.min.css";
 

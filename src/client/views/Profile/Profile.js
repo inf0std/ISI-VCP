@@ -3,7 +3,6 @@ import Navbarprofile from "./Navbarprofile";
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { getData } from "../../utils/dataFetcherUtils";
-import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 import axios from "axios";

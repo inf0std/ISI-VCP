@@ -41,7 +41,7 @@ const peerConfig = {
     },
   ],
 }
-export default function Room() {
+export default function Room({user}) {
   const s = useRef(io(config.io_url));
   const Navigate = useNavigate();
   const inputRef = useRef();
@@ -226,7 +226,7 @@ export default function Room() {
   };
   const sendMessage = (msg) => {
     const messageData = {
-      name: "ferhat",
+      name: user.name,
       content: msg,
       timestamp: new Date().getTime(),
       author: s.current.id,

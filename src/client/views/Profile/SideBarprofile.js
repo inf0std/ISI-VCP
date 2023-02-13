@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Programmerdebat from "../formulaire/modalForms/Programmerdebat";
-import ProgrammerReun from "../formulaire/modalForms/ProgramerLaReunion";
-import ProgrammerConf from "../formulaire/modalForms/ProgrammerLaConférance";
-import ConsultConf from "../formulaire/modalForms/consulterConf";
 
 import "./Sidebar.css";
 import { useParams,useNavigate } from "react-router-dom";

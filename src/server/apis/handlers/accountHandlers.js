@@ -63,6 +63,7 @@ const handleSignup = async (req, res) => {
 const handleLogin = (req, res) => {
   console.log("Login attempt");
   const { email, password } = req.body;
+  console.log(email, password);
   auth(email, password)
     .then((user) => {
       let token = genLoginToken(user._id);
@@ -73,6 +74,7 @@ const handleLogin = (req, res) => {
       res.status(200).send({ _id: user.id, name: user.username, token: token });
     })
     .catch((err) => {
+      console.log(err);
       res.json({
         message: "ERROR",
       });

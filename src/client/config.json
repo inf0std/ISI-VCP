@@ -1,4 +1,4 @@
 {
-  "app_url": "https://seen.ngrok.io",
-  "io_url": "https://seen.ngrok.io"
+  "app_url": "http://localhost:80",
+  "io_url": "https://localhost:80"
 }

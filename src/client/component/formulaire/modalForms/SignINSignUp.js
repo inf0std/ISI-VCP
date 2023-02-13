@@ -31,7 +31,10 @@ const SignInSignUp = ({ changeUser, finish }) => {
       password: signinPassword.current.value,
     };
     sendSigninData(data)
-      .then((response) => response.json())
+      .then((response) => {
+        console.log(response);
+        return response.json();
+      })
       .then((user) => {
         if (user._id) {
           console.log(user);
@@ -39,7 +42,8 @@ const SignInSignUp = ({ changeUser, finish }) => {
           changeUser(user._id, user.name, user.token);
           navigate(`/profile/${user._id}`);
         } else {
-          alert("Email ou mot de passe FAUX", "danger")};
+          alert("Email ou mot de passe FAUX", "danger");
+        }
       })
       .catch((err) => {
         console.log("connexion", err);
@@ -89,7 +93,7 @@ const SignInSignUp = ({ changeUser, finish }) => {
               "SUCCES!! Veuillez Verifier votre boite email pour valider votre compte",
               "success"
             );
-            finish()
+            finish();
             navigate("/");
           } else if (data.error) {
             alert(`inscription echoue ${data.error}`, "danger");
